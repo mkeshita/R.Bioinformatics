@@ -15,7 +15,11 @@ Namespace Web.Packages
 
         <Extension>
         Public Function GetDetails(pkg As Package) As Package
-            Dim page As String = pkg.GetURL.GET
+            Return pkg.GetDetails(pkg.GetURL.GET)
+        End Function
+
+        <Extension>
+        Public Function GetDetails(ByRef pkg As Package, html As String) As Package
 
         End Function
 

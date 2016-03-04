@@ -9,6 +9,10 @@ Imports SMRUCC.R.CRAN.Bioconductor.Web.Packages
 Module Program
 
     Public Sub Main()
+
+        Call Test.Main()
+
+
         Call RSystem.InitDefault()
         Call New InstallPackage(Repository.LoadDefault).ShowDialog()
     End Sub
