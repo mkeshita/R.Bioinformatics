@@ -10,10 +10,10 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("BioConductor")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("蓝思生物信息工程师工作站")> 
-<Assembly: AssemblyProduct("BioConductor")> 
-<Assembly: AssemblyCopyright("Copyright © 蓝思生物信息工程师工作站 2014")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyCompany("蓝思生物信息工程师工作站")>
+<Assembly: AssemblyProduct("GCModeller")>
+<Assembly: AssemblyCopyright("Copyright © SMRUCC 2016")>
+<Assembly: AssemblyTrademark("Bioconductor")>
 
 <Assembly: ComVisible(False)>
 
