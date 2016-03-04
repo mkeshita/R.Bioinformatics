@@ -67,7 +67,7 @@ Namespace Web
             Catch ex As Exception
                 ex = New Exception(file, ex)
 
-                Dim __new As New Repository
+                Dim __new As Repository = New WebService().Repository
                 Call __new.Save(file, Encodings.ASCII)
                 Return __new
             End Try

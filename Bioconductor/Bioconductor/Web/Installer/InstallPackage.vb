@@ -4,6 +4,7 @@ Imports SMRUCC.R.CRAN.Bioconductor.Web
 Imports SMRUCC.R.CRAN.Bioconductor.Web.Packages
 
 Public Class InstallPackage
+    Implements IDisposable
 
     Sub New()
 
@@ -254,5 +255,9 @@ Public Class InstallPackage
         Catch ex As Exception
 
         End Try
+    End Sub
+
+    Private Sub InstallPackage_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        tasks.Dispose()
     End Sub
 End Class

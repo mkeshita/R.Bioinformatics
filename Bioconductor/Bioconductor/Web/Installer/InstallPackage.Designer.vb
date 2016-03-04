@@ -240,7 +240,7 @@ Partial Class InstallPackage
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(21, 140)
+        Me.Label5.Location = New System.Drawing.Point(24, 129)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(65, 16)
         Me.Label5.TabIndex = 5
@@ -249,7 +249,7 @@ Partial Class InstallPackage
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(21, 117)
+        Me.Label4.Location = New System.Drawing.Point(24, 106)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(47, 16)
         Me.Label4.TabIndex = 4
@@ -260,7 +260,7 @@ Partial Class InstallPackage
         Me.Label3.Font = New System.Drawing.Font("Microsoft YaHei", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(13, 56)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(577, 55)
+        Me.Label3.Size = New System.Drawing.Size(577, 48)
         Me.Label3.TabIndex = 3
         Me.Label3.Text = "Title"
         '
