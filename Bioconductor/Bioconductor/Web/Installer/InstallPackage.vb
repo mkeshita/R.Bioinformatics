@@ -97,7 +97,11 @@ Public Class InstallPackage
 
         LinkLabel3.Text = $"browseVignettes(""{Current.Package}"")"
 
-        __currVer = RSystem.packageVersion(Current.Package)
+        If Not tasks.RunningTask Then
+            __currVer = RSystem.packageVersion(Current.Package)
+        Else
+            __currVer = "-.-.-"
+        End If
 
         If String.IsNullOrEmpty(__currVer) Then
             Label4.Text = "This package is not installed yet."
@@ -193,9 +197,15 @@ Public Class InstallPackage
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
         If ListBox1.SelectedIndex >= 0 Then
             Dim item As Package = searchResult(ListBox1.SelectedIndex)
+            Dim ver As String = ""
+
+            If Not tasks.RunningTask Then
+                ver = RSystem.packageVersion(item.Package)
+            End If
+
             TextBox2.Text =
                 $"Name:" & vbTab & item.Package & vbCrLf &
-                 "Version:" & vbTab & RSystem.packageVersion(item.Package) & vbCrLf &
+                 "Version:" & vbTab & ver & vbCrLf &
                  "Title:" & vbTab & item.Title & vbCrLf &
                  "Maintainer:" & vbTab & item.Maintainer & vbCrLf &
                  "Category:" & vbTab & item.Category.ToString & vbCrLf & vbCrLf &
@@ -241,6 +251,10 @@ Public Class InstallPackage
     End Sub
 
     Private Sub LinkLabel3_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel3.LinkClicked
+        If tasks.RunningTask Then
+            Return
+        End If
+
         Try
             Call RSystem.REngine.WriteLine(LinkLabel3.Text)
         Catch ex As Exception
@@ -249,6 +263,10 @@ Public Class InstallPackage
     End Sub
 
     Private Sub LinkLabel4_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel4.LinkClicked
+        If tasks.RunningTask Then
+            Return
+        End If
+
         Dim R As String = "??" & Current.Package
         Try
             Call RSystem.REngine.WriteLine(R)
