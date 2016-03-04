@@ -9,6 +9,10 @@ Module Program
 
     Public Sub Main()
         Call RSystem.InitDefault()
+
+        Dim nn = RSystem.packageVersion("snow")
+        nn = RSystem.packageVersion("snowx")
+
         Call New InstallPackage(Repository.LoadDefault).ShowDialog()
 
         Dim bc As WebService = WebService.Default

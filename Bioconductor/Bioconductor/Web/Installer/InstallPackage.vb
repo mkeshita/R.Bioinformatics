@@ -79,6 +79,9 @@ Public Class InstallPackage
             _Current = pack
 
             Label2.Text = pack.Package
+            Label3.Text = pack.Title
+            Label5.Text = pack.Maintainer
+
             LinkLabel2.Enabled = True
             LinkLabel1.Enabled = True
         Else

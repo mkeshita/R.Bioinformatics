@@ -1,4 +1,5 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports System.Text.RegularExpressions
 
 Public Module Installed
@@ -10,6 +11,11 @@ End Module
 
 Public Module Install
 
+    ''' <summary>
+    ''' 查看目标程序包是否已经安装在R系统里面
+    ''' </summary>
+    ''' <param name="packageName"></param>
+    ''' <returns></returns>
     Public Function Packages(packageName As String) As Boolean
         Try
             Call RSystem.REngine.Evaluate($"install.packages('{packageName}')")
@@ -37,11 +43,22 @@ Public Module RSystem
     End Sub
 
     ''' <summary>
+    ''' Parses and returns the ‘DESCRIPTION’ file of a package.
+    ''' </summary>
+    ''' <param name="pkg">a character string with the package name.</param>
+    ''' <returns></returns>
+    Public Function packageVersion(pkg As String) As String
+        Dim R As String = $"packageVersion(""{pkg}"")"
+        Dim result = REngine.WriteLine(R)
+        Return result.Get(Scan0)
+    End Function
+
+    ''' <summary>
     ''' Is the R engine server is running?
     ''' </summary>
     ''' <param name="REngine"></param>
     ''' <returns></returns>
-    <Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ServicesRunning(REngine As REngine) As Boolean
         Return Not REngine Is Nothing AndAlso REngine.IsRunning
     End Function
