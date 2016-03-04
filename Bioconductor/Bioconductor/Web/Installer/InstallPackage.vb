@@ -114,10 +114,33 @@ Public Class InstallPackage
         End If
     End Sub
 
+    Dim searchResult As Package()
+
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If Not String.IsNullOrEmpty(TextBox1.Text) Then
             Dim term As String = TextBox1.Text
+            Dim result = Repository.Search(term)
 
+            Call ListBox1.Items.Clear()
+
+            For Each x In result
+                Call ListBox1.Items.Add($"[{x.Package}] {x.Title}")
+            Next
+
+            searchResult = result
+        End If
+    End Sub
+
+    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
+        If ListBox1.SelectedIndex >= 0 Then
+            Dim item As Package = searchResult(ListBox1.SelectedIndex)
+            TextBox2.Text =
+                $"Name:" & vbTab & item.Package & vbCrLf &
+                 "Version:" & vbTab & RSystem.packageVersion(item.Package) & vbCrLf &
+                 "Title:" & vbTab & item.Title & vbCrLf &
+                 "Maintainer:" & vbTab & item.Maintainer & vbCrLf &
+                 "Category:" & vbTab & item.Category.ToString & vbCrLf & vbCrLf &
+                 "URL:" & vbTab & item.GetURL
         End If
     End Sub
 End Class
