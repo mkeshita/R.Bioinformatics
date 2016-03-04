@@ -9,12 +9,11 @@ and
 VisualBasic Parallel Computing Framework
 [https://github.com/xieguigang/Microsoft.VisualBasic.Parallel](https://github.com/xieguigang/Microsoft.VisualBasic.Parallel)
 
-<p>
+
 
 ![](https://raw.githubusercontent.com/SMRUCC/R.Bioinformatics/master/Bioconductor/bioconductor_logo_rgb.jpg)
 
-<br />
+
 
 ![](https://github.com/SMRUCC/R.Bioinformatics/blob/master/Bioconductor/screenshot.png?raw=true)
 
-</p>
