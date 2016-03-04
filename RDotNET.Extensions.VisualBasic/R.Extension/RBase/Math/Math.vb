@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports RDotNET.Extensions.RBase.Vectors
+Imports RDotNET.Extensions.VisualBasic.RBase.Vectors
 
 Namespace RBase.MathExtension
 

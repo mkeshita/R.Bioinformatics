@@ -1,7 +1,7 @@
 ﻿Namespace RBase.Vectors
 
     Public Class Vector : Inherits GenericVector(Of Double)
-        Implements Generic.IEnumerable(Of Double)
+        Implements IEnumerable(Of Double)
 
         Default Public Overloads Property ElementWhere(Conditions As BooleanVector) As Vector
             Get

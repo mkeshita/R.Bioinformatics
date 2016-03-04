@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic
-Imports RDotNET.Extensions.RBase.Vectors
+Imports RDotNET.Extensions.VisualBasic.RBase.Vectors
 
 Namespace RBase
 
@@ -54,6 +54,15 @@ Namespace RBase
 
         Public Const NULL As Object = Nothing
         Public Const NAN As Double = Double.NaN
+
+        ''' <summary>
+        ''' Warnings and its print method print the variable last.warning in a pleasing form.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Warnings() As String()
+            Dim out = RSystem.REngine.WriteLine("warnings()")
+            Return out
+        End Function
 
         ''' <summary>
         ''' Generates a warning message that corresponds to its argument(s) and (optionally) the expression or function from which it was called.

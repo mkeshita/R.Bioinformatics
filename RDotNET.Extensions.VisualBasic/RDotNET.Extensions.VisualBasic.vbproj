@@ -85,13 +85,23 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IRScript.vb" />
-    <Compile Include="BnLearn\BnlearnInference.vb" />
-    <Compile Include="BnLearn\BnlearnModelling.vb" />
-    <Compile Include="BnLearn\NetworkParameters.vb" />
-    <Compile Include="REngine.vb" />
-    <Compile Include="System.vb" />
-    <Compile Include="RBase.vb" />
+    <Compile Include="Packages\Graphics\GraphicsDevice.vb" />
+    <Compile Include="Packages\Graphics\PieChart.vb" />
+    <Compile Include="Services\IRScript.vb" />
+    <Compile Include="Packages\BnLearn\BnlearnInference.vb" />
+    <Compile Include="Packages\BnLearn\BnlearnModelling.vb" />
+    <Compile Include="Packages\BnLearn\NetworkParameters.vb" />
+    <Compile Include="R.Extension\RBase\Math\Math.vb" />
+    <Compile Include="R.Extension\RBase\Math\Poisson.vb" />
+    <Compile Include="R.Extension\RBase\Math\Skellam.vb" />
+    <Compile Include="R.Extension\RBase\PrimitiveAPI\Etc.vb" />
+    <Compile Include="R.Extension\RBase\PrimitiveAPI\PrimitiveAPI.vb" />
+    <Compile Include="R.Extension\RBase\Vectors\BooleanVector.vb" />
+    <Compile Include="R.Extension\RBase\Vectors\GenericVector%28Of T%29.vb" />
+    <Compile Include="R.Extension\RBase\Vectors\VECTOR.vb" />
+    <Compile Include="R.Extension\REngine.vb" />
+    <Compile Include="Services\Serialization.vb" />
+    <Compile Include="R.Extension\System.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -128,15 +138,20 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic_Framework\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
+    <ProjectReference Include="..\..\Microsoft.VisualBasic_Framework\DocumentFormats\DocumentFormat.Csv\DocumentFormat.Csv.vbproj">
+      <Project>{1d8910c2-ada2-4306-96dc-a61b494522ed}</Project>
+      <Name>DocumentFormat.Csv</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Microsoft.VisualBasic_Framework\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\R.NET\RDotNet.vbproj">
+    <ProjectReference Include="..\RDotNET\RDotNet.vbproj">
       <Project>{21c35138-455b-4833-9756-b2629f972a22}</Project>
       <Name>RDotNet</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

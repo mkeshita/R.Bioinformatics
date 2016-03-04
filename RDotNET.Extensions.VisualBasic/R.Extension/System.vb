@@ -26,10 +26,10 @@ Public Module RSystem
     Private Const SPLIT_REGX_EXPRESSION As String = "[,] (?=(?:[^""]|""[^""]*"")*$)"
 
     Public Const Scan0 As Integer = 0
-    Public Property REngine As REngine
+    Public ReadOnly Property REngine As REngine
 
     Public Sub Initialize(ByRef REngine As REngine)
-        RSystem.REngine = REngine
+        RSystem._REngine = REngine
     End Sub
 
     ''' <summary>
@@ -76,7 +76,7 @@ Public Module RSystem
     ''' <remarks></remarks>
     Public Function Source(path As String) As String()
         Dim Cmd As String = String.Format("source(""{0}"");", path)
-        REngine = REngine << Push(Cmd)
+        _REngine = REngine << Push(Cmd)
         Return REngine.StandardOutput
     End Function
 
