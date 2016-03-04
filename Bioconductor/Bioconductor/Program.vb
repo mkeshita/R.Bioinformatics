@@ -10,9 +10,7 @@ Module Program
 
     Public Sub Main()
 
-        Call Test.Main()
-
-
+        '  Call Test.Main()
         Call RSystem.InitDefault()
         Call New InstallPackage(Repository.LoadDefault).ShowDialog()
     End Sub

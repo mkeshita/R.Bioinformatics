@@ -20,6 +20,15 @@ Namespace Web.Packages
         "source(""http://bioconductor.org/biocLite.R"");" & vbCrLf &
         "biocLite(""{0}"")"
 
+        Public ReadOnly Property HasDetails As Boolean
+            Get
+                ' 这些信息都是需要从网络上面下载的
+                Return Not Details Is Nothing OrElse
+                    Not Archives Is Nothing OrElse
+                    Not String.IsNullOrEmpty(Description)
+            End Get
+        End Property
+
         Public ReadOnly Property InstallScript As String
             Get
                 Return String.Format(INSTALL_SCRIPT, Package)
