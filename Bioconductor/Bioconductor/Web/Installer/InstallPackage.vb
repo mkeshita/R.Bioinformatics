@@ -67,6 +67,6 @@ Public Class InstallPackage
     End Sub
 
     Private Sub TreeView1_NodeMouseClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles TreeView1.NodeMouseClick
-
+        Dim sNode As TreeNode = e.Node
     End Sub
 End Class
