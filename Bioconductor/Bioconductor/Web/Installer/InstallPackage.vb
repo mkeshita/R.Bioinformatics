@@ -79,27 +79,31 @@ Public Class InstallPackage
 
         If Not pack Is Nothing Then
             _Current = pack
-
-            Label2.Text = pack.Package
-            Label3.Text = pack.Title
-            Label5.Text = pack.Maintainer
-
-            __currVer = RSystem.packageVersion(pack.Package)
-
-            If String.IsNullOrEmpty(__currVer) Then
-                Label4.Text = "This package is not installed yet."
-                LinkLabel1.Text = "Click to install!"
-            Else
-                Label4.Text = "Installed version: " & __currVer
-                LinkLabel1.Text = "Click check update."
-            End If
-
-            LinkLabel2.Enabled = True
-            LinkLabel1.Enabled = True
+            Call __updateInfo()
         Else
             LinkLabel2.Enabled = False
             LinkLabel1.Enabled = False
         End If
+    End Sub
+
+    Private Sub __updateInfo()
+
+        Label2.Text = Current.Package
+        Label3.Text = Current.Title
+        Label5.Text = Current.Maintainer
+
+        __currVer = RSystem.packageVersion(Current.Package)
+
+        If String.IsNullOrEmpty(__currVer) Then
+            Label4.Text = "This package is not installed yet."
+            LinkLabel1.Text = "Click to install!"
+        Else
+            Label4.Text = "Installed version: " & __currVer
+            LinkLabel1.Text = "Click check update."
+        End If
+
+        LinkLabel2.Enabled = True
+        LinkLabel1.Enabled = True
     End Sub
 
     Private Sub LinkLabel2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
@@ -128,8 +132,12 @@ Public Class InstallPackage
             Next
 
             searchResult = result
+
+            TabControl1.SelectedIndex = 1
         End If
     End Sub
+
+    Dim currentSelect As Package
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
         If ListBox1.SelectedIndex >= 0 Then
@@ -141,6 +149,30 @@ Public Class InstallPackage
                  "Maintainer:" & vbTab & item.Maintainer & vbCrLf &
                  "Category:" & vbTab & item.Category.ToString & vbCrLf & vbCrLf &
                  "URL:" & vbTab & item.GetURL
+            currentSelect = item
         End If
+    End Sub
+
+    Private Sub InstallUpdateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InstallUpdateToolStripMenuItem.Click
+        If Not currentSelect Is Nothing Then
+            Dim script As String = currentSelect.InstallScript
+            Call RSystem.REngine.Evaluate(script)
+        End If
+    End Sub
+
+    Private Sub ViewOnBioconductorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewOnBioconductorToolStripMenuItem.Click
+        Dim url As String = currentSelect.GetURL
+        Call Process.Start(url)
+    End Sub
+
+    Private Sub ViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewToolStripMenuItem.Click
+        _Current = currentSelect
+
+        Call __updateInfo()
+        TabControl1.SelectedIndex = 0
+    End Sub
+
+    Private Sub EMailAuthorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EMailAuthorToolStripMenuItem.Click
+        Call Process.Start("mailto://xie.guigang@gcmodeller.org")
     End Sub
 End Class

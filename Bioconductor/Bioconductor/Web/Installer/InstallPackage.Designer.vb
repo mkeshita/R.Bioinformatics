@@ -22,6 +22,7 @@ Partial Class InstallPackage
     'Do not modify it using the code editor.
     <Global.System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(InstallPackage))
         Me.TreeView1 = New System.Windows.Forms.TreeView()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
@@ -43,6 +44,12 @@ Partial Class InstallPackage
         Me.Label2 = New System.Windows.Forms.Label()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ViewOnBioconductorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.InstallUpdateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UpdateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -52,8 +59,7 @@ Partial Class InstallPackage
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ListBox1 = New System.Windows.Forms.ListBox()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.EMailAuthorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabControl2.SuspendLayout()
@@ -61,6 +67,7 @@ Partial Class InstallPackage
         Me.TabPage4.SuspendLayout()
         Me.TabPage5.SuspendLayout()
         Me.TabPage2.SuspendLayout()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -276,6 +283,52 @@ Partial Class InstallPackage
         Me.TabPage2.Text = "Search Result"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
+        'TextBox2
+        '
+        Me.TextBox2.BackColor = System.Drawing.Color.White
+        Me.TextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBox2.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox2.Location = New System.Drawing.Point(6, 447)
+        Me.TextBox2.Multiline = True
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.ReadOnly = True
+        Me.TextBox2.Size = New System.Drawing.Size(584, 205)
+        Me.TextBox2.TabIndex = 1
+        '
+        'ListBox1
+        '
+        Me.ListBox1.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.ListBox1.FormattingEnabled = True
+        Me.ListBox1.ItemHeight = 16
+        Me.ListBox1.Location = New System.Drawing.Point(6, 6)
+        Me.ListBox1.Name = "ListBox1"
+        Me.ListBox1.Size = New System.Drawing.Size(584, 436)
+        Me.ListBox1.TabIndex = 0
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewToolStripMenuItem, Me.ViewOnBioconductorToolStripMenuItem, Me.InstallUpdateToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(192, 70)
+        '
+        'ViewToolStripMenuItem
+        '
+        Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
+        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+        Me.ViewToolStripMenuItem.Text = "View"
+        '
+        'ViewOnBioconductorToolStripMenuItem
+        '
+        Me.ViewOnBioconductorToolStripMenuItem.Name = "ViewOnBioconductorToolStripMenuItem"
+        Me.ViewOnBioconductorToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+        Me.ViewOnBioconductorToolStripMenuItem.Text = "View on Bioconductor"
+        '
+        'InstallUpdateToolStripMenuItem
+        '
+        Me.InstallUpdateToolStripMenuItem.Name = "InstallUpdateToolStripMenuItem"
+        Me.InstallUpdateToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+        Me.InstallUpdateToolStripMenuItem.Text = "Install or Update"
+        '
         'MenuStrip1
         '
         Me.MenuStrip1.BackColor = System.Drawing.Color.White
@@ -318,7 +371,7 @@ Partial Class InstallPackage
         '
         'AboutToolStripMenuItem
         '
-        Me.AboutToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem1, Me.HomeToolStripMenuItem})
+        Me.AboutToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem1, Me.HomeToolStripMenuItem, Me.EMailAuthorToolStripMenuItem})
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
         Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
         Me.AboutToolStripMenuItem.Text = "Help"
@@ -326,34 +379,20 @@ Partial Class InstallPackage
         'AboutToolStripMenuItem1
         '
         Me.AboutToolStripMenuItem1.Name = "AboutToolStripMenuItem1"
-        Me.AboutToolStripMenuItem1.Size = New System.Drawing.Size(107, 22)
+        Me.AboutToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
         Me.AboutToolStripMenuItem1.Text = "About"
         '
         'HomeToolStripMenuItem
         '
         Me.HomeToolStripMenuItem.Name = "HomeToolStripMenuItem"
-        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
+        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.HomeToolStripMenuItem.Text = "Home"
         '
-        'ListBox1
+        'EMailAuthorToolStripMenuItem
         '
-        Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.ItemHeight = 16
-        Me.ListBox1.Location = New System.Drawing.Point(6, 6)
-        Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(584, 436)
-        Me.ListBox1.TabIndex = 0
-        '
-        'TextBox2
-        '
-        Me.TextBox2.BackColor = System.Drawing.Color.White
-        Me.TextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox2.Location = New System.Drawing.Point(6, 447)
-        Me.TextBox2.Multiline = True
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.ReadOnly = True
-        Me.TextBox2.Size = New System.Drawing.Size(584, 205)
-        Me.TextBox2.TabIndex = 1
+        Me.EMailAuthorToolStripMenuItem.Name = "EMailAuthorToolStripMenuItem"
+        Me.EMailAuthorToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.EMailAuthorToolStripMenuItem.Text = "EMail Author"
         '
         'InstallPackage
         '
@@ -385,6 +424,7 @@ Partial Class InstallPackage
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)
@@ -423,4 +463,9 @@ Partial Class InstallPackage
     Friend WithEvents PropertyGrid2 As Windows.Forms.PropertyGrid
     Friend WithEvents TextBox2 As Windows.Forms.TextBox
     Friend WithEvents ListBox1 As Windows.Forms.ListBox
+    Friend WithEvents ContextMenuStrip1 As Windows.Forms.ContextMenuStrip
+    Friend WithEvents ViewToolStripMenuItem As Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ViewOnBioconductorToolStripMenuItem As Windows.Forms.ToolStripMenuItem
+    Friend WithEvents InstallUpdateToolStripMenuItem As Windows.Forms.ToolStripMenuItem
+    Friend WithEvents EMailAuthorToolStripMenuItem As Windows.Forms.ToolStripMenuItem
 End Class
