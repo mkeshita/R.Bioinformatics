@@ -99,15 +99,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Test.vb" />
-    <Compile Include="Web\Packages\Extensions.vb" />
-    <Compile Include="Web\Packages\pkgInfo\Details.vb" />
-    <Compile Include="Web\Packages\pkgInfo\Archives.vb" />
+    <Compile Include="Web\pkgInfo\Extensions.vb" />
+    <Compile Include="Web\pkgInfo\Details\Details.vb" />
+    <Compile Include="Web\pkgInfo\Details\Archives.vb" />
     <Compile Include="Web\Repository.vb" />
-    <Compile Include="Web\Packages\BiocTypes.vb" />
+    <Compile Include="Web\pkgInfo\BiocTypes.vb" />
     <Compile Include="Web\Version.vb" />
     <Compile Include="Web\Installer\biocLite.vb" />
-    <Compile Include="Web\Packages\Package.vb" />
-    <Compile Include="Packages\WGCNA.vb" />
+    <Compile Include="Web\pkgInfo\Package.vb" />
+    <Compile Include="biocPkgs\WGCNA.vb" />
     <Compile Include="Web\Installer\InstallPackage.Designer.vb">
       <DependentUpon>InstallPackage.vb</DependentUpon>
     </Compile>
