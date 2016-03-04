@@ -22,27 +22,29 @@ Partial Class InstallPackage
     'Do not modify it using the code editor.
     <Global.System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.ListView1 = New Global.System.Windows.Forms.ListView()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(InstallPackage))
+        Me.TreeView1 = New System.Windows.Forms.TreeView()
         Me.SuspendLayout()
         '
-        'ListView1
+        'TreeView1
         '
-        Me.ListView1.Location = New Global.System.Drawing.Point(73, 125)
-        Me.ListView1.Name = "ListView1"
-        Me.ListView1.Size = New Global.System.Drawing.Size(461, 378)
-        Me.ListView1.TabIndex = 0
-        Me.ListView1.UseCompatibleStateImageBehavior = False
+        Me.TreeView1.Location = New System.Drawing.Point(34, 66)
+        Me.TreeView1.Name = "TreeView1"
+        Me.TreeView1.Size = New System.Drawing.Size(280, 405)
+        Me.TreeView1.TabIndex = 0
         '
         'InstallPackage
         '
-        Me.AutoScaleDimensions = New Global.System.Drawing.SizeF(6.0!, 12.0!)
-        Me.AutoScaleMode = Global.System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New Global.System.Drawing.Size(723, 652)
-        Me.Controls.Add(Me.ListView1)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(723, 706)
+        Me.Controls.Add(Me.TreeView1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "InstallPackage"
-        Me.Text = "Form1"
+        Me.Text = "BiocViews"
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents ListView1 As Global.System.Windows.Forms.ListView
+
+    Friend WithEvents TreeView1 As Windows.Forms.TreeView
 End Class
