@@ -100,6 +100,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Test.vb" />
+    <Compile Include="Web\Installer\bioc.Designer.vb">
+      <DependentUpon>bioc.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Web\Installer\bioc.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Web\pkgInfo\Extensions.vb" />
     <Compile Include="Web\pkgInfo\Details\Details.vb" />
     <Compile Include="Web\pkgInfo\Details\Archives.vb" />
@@ -134,6 +140,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Web\Installer\bioc.resx">
+      <DependentUpon>bioc.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Web\Installer\InstallPackage.resx">
       <DependentUpon>InstallPackage.vb</DependentUpon>
     </EmbeddedResource>
