@@ -175,4 +175,18 @@ Public Class InstallPackage
     Private Sub EMailAuthorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EMailAuthorToolStripMenuItem.Click
         Call Process.Start("mailto://xie.guigang@gcmodeller.org")
     End Sub
+
+    Private Sub UpdateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UpdateToolStripMenuItem.Click
+        Dim bioc As New WebService
+        _Repository = bioc.Repository
+        Call Repository.Save(Web.Repository.DefaultFile, Encodings.ASCII)
+    End Sub
+
+    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
+        Using saveFile As New SaveFileDialog With {.Filter = "JSON Database(*.json)|*.json"}
+            If saveFile.ShowDialog = DialogResult.OK Then
+                Call Repository.Save(saveFile.FileName, Encodings.ASCII)
+            End If
+        End Using
+    End Sub
 End Class

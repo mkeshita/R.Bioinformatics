@@ -349,24 +349,24 @@ Partial Class InstallPackage
         'UpdateToolStripMenuItem
         '
         Me.UpdateToolStripMenuItem.Name = "UpdateToolStripMenuItem"
-        Me.UpdateToolStripMenuItem.Size = New System.Drawing.Size(112, 22)
+        Me.UpdateToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.UpdateToolStripMenuItem.Text = "Update"
         '
         'SaveToolStripMenuItem
         '
         Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(112, 22)
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.SaveToolStripMenuItem.Text = "Save"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(109, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(149, 6)
         '
         'CloseToolStripMenuItem
         '
         Me.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem"
-        Me.CloseToolStripMenuItem.Size = New System.Drawing.Size(112, 22)
+        Me.CloseToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.CloseToolStripMenuItem.Text = "Close"
         '
         'AboutToolStripMenuItem
@@ -379,19 +379,19 @@ Partial Class InstallPackage
         'AboutToolStripMenuItem1
         '
         Me.AboutToolStripMenuItem1.Name = "AboutToolStripMenuItem1"
-        Me.AboutToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
+        Me.AboutToolStripMenuItem1.Size = New System.Drawing.Size(143, 22)
         Me.AboutToolStripMenuItem1.Text = "About"
         '
         'HomeToolStripMenuItem
         '
         Me.HomeToolStripMenuItem.Name = "HomeToolStripMenuItem"
-        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
         Me.HomeToolStripMenuItem.Text = "Home"
         '
         'EMailAuthorToolStripMenuItem
         '
         Me.EMailAuthorToolStripMenuItem.Name = "EMailAuthorToolStripMenuItem"
-        Me.EMailAuthorToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.EMailAuthorToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
         Me.EMailAuthorToolStripMenuItem.Text = "EMail Author"
         '
         'InstallPackage

@@ -33,6 +33,12 @@ Namespace Web
 
         ReadOnly __repository As Repository
 
+        Public ReadOnly Property Repository As Repository
+            Get
+                Return __repository
+            End Get
+        End Property
+
         Sub New()
             __repository = New Repository With {
                 .version = Web.Version.GetVersion
