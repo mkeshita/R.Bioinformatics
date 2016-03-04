@@ -40,6 +40,8 @@ Partial Class InstallPackage
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
@@ -96,6 +98,8 @@ Partial Class InstallPackage
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.LinkLabel2)
+        Me.TabPage1.Controls.Add(Me.Label2)
         Me.TabPage1.Controls.Add(Me.LinkLabel1)
         Me.TabPage1.Location = New System.Drawing.Point(4, 25)
         Me.TabPage1.Name = "TabPage1"
@@ -108,7 +112,7 @@ Partial Class InstallPackage
         'LinkLabel1
         '
         Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Location = New System.Drawing.Point(313, 589)
+        Me.LinkLabel1.Location = New System.Drawing.Point(334, 572)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(84, 16)
         Me.LinkLabel1.TabIndex = 0
@@ -184,6 +188,25 @@ Partial Class InstallPackage
         Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.HomeToolStripMenuItem.Text = "Home"
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(26, 30)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(42, 16)
+        Me.Label2.TabIndex = 1
+        Me.Label2.Text = "Label2"
+        '
+        'LinkLabel2
+        '
+        Me.LinkLabel2.AutoSize = True
+        Me.LinkLabel2.Location = New System.Drawing.Point(26, 572)
+        Me.LinkLabel2.Name = "LinkLabel2"
+        Me.LinkLabel2.Size = New System.Drawing.Size(125, 16)
+        Me.LinkLabel2.TabIndex = 2
+        Me.LinkLabel2.TabStop = True
+        Me.LinkLabel2.Text = "View on Bioconductor"
+        '
         'InstallPackage
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 16.0!)
@@ -232,4 +255,6 @@ Partial Class InstallPackage
     Friend WithEvents AboutToolStripMenuItem1 As Windows.Forms.ToolStripMenuItem
     Friend WithEvents HomeToolStripMenuItem As Windows.Forms.ToolStripMenuItem
     Friend WithEvents UpdateToolStripMenuItem As Windows.Forms.ToolStripMenuItem
+    Friend WithEvents LinkLabel2 As Windows.Forms.LinkLabel
+    Friend WithEvents Label2 As Windows.Forms.Label
 End Class

@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Test.vb" />
+    <Compile Include="Web\Packages\Extensions.vb" />
     <Compile Include="Web\Repository.vb" />
     <Compile Include="Web\Packages\BiocTypes.vb" />
     <Compile Include="Web\Version.vb" />
