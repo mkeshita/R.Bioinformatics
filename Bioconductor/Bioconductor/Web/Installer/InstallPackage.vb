@@ -47,4 +47,12 @@ Public Class InstallPackage
 
         Return root
     End Function
+
+    Private Sub CloseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CloseToolStripMenuItem.Click
+        Call Close()
+    End Sub
+
+    Private Sub HomeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HomeToolStripMenuItem.Click
+        Call Process.Start("http://master.bioconductor.org/")
+    End Sub
 End Class
