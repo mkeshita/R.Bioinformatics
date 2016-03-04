@@ -39,6 +39,12 @@ Public Class InstallPackage
         Dim root As New TreeNode With {
             .Text = type.Description
         }
+        Dim childs = (From x As Package In packs.AsParallel Select New TreeNode With {.Text = x.Package}).ToArray
+
+        For Each child In childs
+            Call root.Nodes.Add(child)
+        Next
+
         Return root
     End Function
 End Class
