@@ -30,6 +30,8 @@ Partial Class InstallPackage
         Me.Button1 = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.LinkLabel4 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel3 = New System.Windows.Forms.LinkLabel()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
@@ -60,8 +62,6 @@ Partial Class InstallPackage
         Me.AboutToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EMailAuthorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.LinkLabel3 = New System.Windows.Forms.LinkLabel()
-        Me.LinkLabel4 = New System.Windows.Forms.LinkLabel()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabControl2.SuspendLayout()
@@ -146,6 +146,26 @@ Partial Class InstallPackage
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "bioc Info"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'LinkLabel4
+        '
+        Me.LinkLabel4.AutoSize = True
+        Me.LinkLabel4.Location = New System.Drawing.Point(346, 628)
+        Me.LinkLabel4.Name = "LinkLabel4"
+        Me.LinkLabel4.Size = New System.Drawing.Size(74, 16)
+        Me.LinkLabel4.TabIndex = 8
+        Me.LinkLabel4.TabStop = True
+        Me.LinkLabel4.Text = "Search helps"
+        '
+        'LinkLabel3
+        '
+        Me.LinkLabel3.AutoSize = True
+        Me.LinkLabel3.Location = New System.Drawing.Point(346, 603)
+        Me.LinkLabel3.Name = "LinkLabel3"
+        Me.LinkLabel3.Size = New System.Drawing.Size(141, 16)
+        Me.LinkLabel3.TabIndex = 7
+        Me.LinkLabel3.TabStop = True
+        Me.LinkLabel3.Text = "browseVignettes(""{pkg}"")"
         '
         'TabControl2
         '
@@ -291,7 +311,7 @@ Partial Class InstallPackage
         '
         Me.TextBox2.BackColor = System.Drawing.Color.White
         Me.TextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox2.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox2.Font = New System.Drawing.Font("Microsoft YaHei", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TextBox2.Location = New System.Drawing.Point(6, 447)
         Me.TextBox2.Multiline = True
         Me.TextBox2.Name = "TextBox2"
@@ -397,26 +417,6 @@ Partial Class InstallPackage
         Me.EMailAuthorToolStripMenuItem.Name = "EMailAuthorToolStripMenuItem"
         Me.EMailAuthorToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
         Me.EMailAuthorToolStripMenuItem.Text = "EMail Author"
-        '
-        'LinkLabel3
-        '
-        Me.LinkLabel3.AutoSize = True
-        Me.LinkLabel3.Location = New System.Drawing.Point(346, 603)
-        Me.LinkLabel3.Name = "LinkLabel3"
-        Me.LinkLabel3.Size = New System.Drawing.Size(141, 16)
-        Me.LinkLabel3.TabIndex = 7
-        Me.LinkLabel3.TabStop = True
-        Me.LinkLabel3.Text = "browseVignettes(""{pkg}"")"
-        '
-        'LinkLabel4
-        '
-        Me.LinkLabel4.AutoSize = True
-        Me.LinkLabel4.Location = New System.Drawing.Point(346, 628)
-        Me.LinkLabel4.Name = "LinkLabel4"
-        Me.LinkLabel4.Size = New System.Drawing.Size(74, 16)
-        Me.LinkLabel4.TabIndex = 8
-        Me.LinkLabel4.TabStop = True
-        Me.LinkLabel4.Text = "Search helps"
         '
         'InstallPackage
         '

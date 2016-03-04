@@ -113,21 +113,31 @@ Public Class InstallPackage
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         If Not Current Is Nothing Then
-            Call __runR(Current.InstallScript)
+            Call __runR(Current.InstallScript, Current.Package)
         End If
     End Sub
 
     Dim tasks As New Microsoft.VisualBasic.Parallel.TaskQueue(Of Boolean)
 
-    Private Sub __runR(script As String)
-        Call tasks.Enqueue(AddressOf New __runRScript With {.script = script}.run)
+    Private Sub __runR(script As String, pkg As String)
+        Call tasks.Enqueue(AddressOf New __runRScript(pkg, Me) With {.script = script}.run)
     End Sub
 
     Private Class __runRScript
         Public script As String
+        Public package As String
+        Public host As Form
+
+        Sub New(pkg As String, host As Form)
+            Me.package = pkg
+            Me.host = host
+        End Sub
 
         Public Function run() As Boolean
+            Dim pre As String = host.Text
+
             Try
+                Call host.Invoke(Sub() host.Text = $"""biocLite.R"" installing {package}...")
                 Call RSystem.REngine.Evaluate(script)
                 Return True
             Catch ex As Exception
@@ -136,6 +146,8 @@ Public Class InstallPackage
                 Call App.LogException(ex)
                 Return False
             End Try
+
+            host.Invoke(Sub() host.Text = pre)
         End Function
     End Class
 
@@ -176,7 +188,7 @@ Public Class InstallPackage
 
     Private Sub InstallUpdateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InstallUpdateToolStripMenuItem.Click
         If Not currentSelect Is Nothing Then
-            Call __runR(currentSelect.InstallScript)
+            Call __runR(currentSelect.InstallScript, currentSelect.Package)
         End If
     End Sub
 
