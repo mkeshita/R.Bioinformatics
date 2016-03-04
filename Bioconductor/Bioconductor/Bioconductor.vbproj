@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{62626D99-02D6-47E7-80EE-5739A73FC62F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>SMRUCC.R.CRAN.Bioconductor.Test</StartupObject>
+    <StartupObject>SMRUCC.R.CRAN.Bioconductor.Program</StartupObject>
     <RootNamespace>SMRUCC.R.CRAN.Bioconductor</RootNamespace>
     <AssemblyName>Bioconductor</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -73,8 +73,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Test.vb" />
+    <Compile Include="Web\Version.vb" />
+    <Compile Include="Web\Installer\biocLite.vb" />
     <Compile Include="Web\Package.vb" />
-    <Compile Include="WGCNA.vb" />
+    <Compile Include="Packages\WGCNA.vb" />
     <Compile Include="Web\Installer\InstallPackage.Designer.vb">
       <DependentUpon>InstallPackage.vb</DependentUpon>
     </Compile>

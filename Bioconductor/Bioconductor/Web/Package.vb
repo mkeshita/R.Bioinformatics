@@ -1,9 +1,13 @@
 ﻿Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Web
 
-    Public Structure Package
-        Dim Package, Maintainer, Title As String
+    Public Class Package
+
+        Public Property Package As String
+        Public Property Maintainer As String
+        Public Property Title As String
 
         Const INSTALL_SCRIPT As String =
         "source(""http://bioconductor.org/biocLite.R"");" & vbCrLf &
@@ -16,24 +20,28 @@ Namespace Web
         End Property
 
         Public Overrides Function ToString() As String
-            Return Package
+            Return Me.GetJson
         End Function
 
-        Friend Shared Function parse(strText As String) As Package
-            Const Item As String = "<td>.+?</td>"
+        Const RegexItem As String = "<td>.+?</td>"
 
-            Dim Tokens As String() = (From m As Match In Regex.Matches(strText, Item, RegexOptions.Singleline + RegexOptions.IgnoreCase) Select m.Value).ToArray
-            Dim Package As String = GetValue(Tokens(0))
-            Dim Maintainer As String = GetValue(Tokens(1))
-            Dim Title As String = GetValue(Tokens(2))
+        Public Shared Function Parser(html As String) As Package
+            Dim Tokens As String() = Regex.Matches(html, RegexItem, RegexOptions.Singleline + RegexOptions.IgnoreCase).ToArray
+            Dim Package As String = __getValue(Tokens(0))
+            Dim Maintainer As String = __getValue(Tokens(1))
+            Dim Title As String = __getValue(Tokens(2))
 
-            Return New Package With {.Package = Package, .Maintainer = Maintainer, .Title = Title}
+            Return New Package With {
+                .Package = Package,
+                .Maintainer = Maintainer,
+                .Title = Title
+            }
         End Function
 
-        Private Shared Function GetValue(strText As String) As String
-            Dim value As String = Regex.Match(strText, ">[^<]+?</").Value
+        Private Shared Function __getValue(s As String) As String
+            Dim value As String = Regex.Match(s, ">[^<]+?</").Value
             value = Mid(value, 2, Len(value) - 3)
             Return value
         End Function
-    End Structure
+    End Class
 End Namespace

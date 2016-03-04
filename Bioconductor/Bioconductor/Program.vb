@@ -11,6 +11,5 @@ Module Program
 
         Dim bc = New WebService
         Console.WriteLine(bc.Version)
-        Call bc.Initialize()
     End Sub
 End Module
