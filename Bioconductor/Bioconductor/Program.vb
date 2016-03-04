@@ -4,10 +4,16 @@ Imports System.Net
 Imports System.Text.RegularExpressions
 Imports SMRUCC.R.CRAN.Bioconductor.Web
 Imports RDotNET.Extensions.VisualBasic
+Imports SMRUCC.R.CRAN.Bioconductor.Web.Packages
 
 Module Program
 
     Public Sub Main()
+
+        Dim ppp = Repository.LoadDefault
+        Dim ddd = ppp.softwares.First.GetDetails
+
+
         Call RSystem.InitDefault()
 
         Dim nn = RSystem.packageVersion("snow")

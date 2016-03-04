@@ -60,6 +60,8 @@ Partial Class InstallPackage
         Me.AboutToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EMailAuthorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LinkLabel3 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel4 = New System.Windows.Forms.LinkLabel()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabControl2.SuspendLayout()
@@ -128,6 +130,8 @@ Partial Class InstallPackage
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.LinkLabel4)
+        Me.TabPage1.Controls.Add(Me.LinkLabel3)
         Me.TabPage1.Controls.Add(Me.TabControl2)
         Me.TabPage1.Controls.Add(Me.Label5)
         Me.TabPage1.Controls.Add(Me.Label4)
@@ -349,24 +353,24 @@ Partial Class InstallPackage
         'UpdateToolStripMenuItem
         '
         Me.UpdateToolStripMenuItem.Name = "UpdateToolStripMenuItem"
-        Me.UpdateToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.UpdateToolStripMenuItem.Size = New System.Drawing.Size(112, 22)
         Me.UpdateToolStripMenuItem.Text = "Update"
         '
         'SaveToolStripMenuItem
         '
         Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(112, 22)
         Me.SaveToolStripMenuItem.Text = "Save"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(149, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(109, 6)
         '
         'CloseToolStripMenuItem
         '
         Me.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem"
-        Me.CloseToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CloseToolStripMenuItem.Size = New System.Drawing.Size(112, 22)
         Me.CloseToolStripMenuItem.Text = "Close"
         '
         'AboutToolStripMenuItem
@@ -393,6 +397,26 @@ Partial Class InstallPackage
         Me.EMailAuthorToolStripMenuItem.Name = "EMailAuthorToolStripMenuItem"
         Me.EMailAuthorToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
         Me.EMailAuthorToolStripMenuItem.Text = "EMail Author"
+        '
+        'LinkLabel3
+        '
+        Me.LinkLabel3.AutoSize = True
+        Me.LinkLabel3.Location = New System.Drawing.Point(346, 603)
+        Me.LinkLabel3.Name = "LinkLabel3"
+        Me.LinkLabel3.Size = New System.Drawing.Size(141, 16)
+        Me.LinkLabel3.TabIndex = 7
+        Me.LinkLabel3.TabStop = True
+        Me.LinkLabel3.Text = "browseVignettes(""{pkg}"")"
+        '
+        'LinkLabel4
+        '
+        Me.LinkLabel4.AutoSize = True
+        Me.LinkLabel4.Location = New System.Drawing.Point(346, 628)
+        Me.LinkLabel4.Name = "LinkLabel4"
+        Me.LinkLabel4.Size = New System.Drawing.Size(74, 16)
+        Me.LinkLabel4.TabIndex = 8
+        Me.LinkLabel4.TabStop = True
+        Me.LinkLabel4.Text = "Search helps"
         '
         'InstallPackage
         '
@@ -468,4 +492,6 @@ Partial Class InstallPackage
     Friend WithEvents ViewOnBioconductorToolStripMenuItem As Windows.Forms.ToolStripMenuItem
     Friend WithEvents InstallUpdateToolStripMenuItem As Windows.Forms.ToolStripMenuItem
     Friend WithEvents EMailAuthorToolStripMenuItem As Windows.Forms.ToolStripMenuItem
+    Friend WithEvents LinkLabel4 As Windows.Forms.LinkLabel
+    Friend WithEvents LinkLabel3 As Windows.Forms.LinkLabel
 End Class
