@@ -9,7 +9,7 @@ Module Program
     Public Sub Main()
         Call New InstallPackage().ShowDialog()
 
-        Dim bc = New WebService
+        Dim bc As WebService = WebService.Default
         Console.WriteLine(bc.Version)
     End Sub
 End Module

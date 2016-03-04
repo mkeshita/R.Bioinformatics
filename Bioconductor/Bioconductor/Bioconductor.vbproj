@@ -73,9 +73,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Test.vb" />
+    <Compile Include="Web\Repository.vb" />
+    <Compile Include="Web\Packages\BiocTypes.vb" />
     <Compile Include="Web\Version.vb" />
     <Compile Include="Web\Installer\biocLite.vb" />
-    <Compile Include="Web\Package.vb" />
+    <Compile Include="Web\Packages\Package.vb" />
     <Compile Include="Packages\WGCNA.vb" />
     <Compile Include="Web\Installer\InstallPackage.Designer.vb">
       <DependentUpon>InstallPackage.vb</DependentUpon>
