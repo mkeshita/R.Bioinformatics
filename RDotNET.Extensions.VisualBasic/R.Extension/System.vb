@@ -32,6 +32,10 @@ Public Module RSystem
         RSystem._REngine = REngine
     End Sub
 
+    Public Sub InitDefault()
+        Call Initialize(RDotNET.Extensions.VisualBasic.REngine.StartEngineServices)
+    End Sub
+
     ''' <summary>
     ''' Is the R engine server is running?
     ''' </summary>

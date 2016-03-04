@@ -20,6 +20,8 @@ Public Class InstallPackage
 
         ' Add any initialization after the InitializeComponent() call.
         Me.Repository = repository
+
+        ToolStripManager.Renderer = New ChromeUIRender
     End Sub
 
     Public ReadOnly Property Repository As Repository
@@ -54,5 +56,17 @@ Public Class InstallPackage
 
     Private Sub HomeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HomeToolStripMenuItem.Click
         Call Process.Start("http://master.bioconductor.org/")
+    End Sub
+
+    Private Sub AboutToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem1.Click
+        Call Process.Start("https://github.com/SMRUCC/R.Bioinformatics")
+    End Sub
+
+    Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
+
+    End Sub
+
+    Private Sub TreeView1_NodeMouseClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles TreeView1.NodeMouseClick
+
     End Sub
 End Class
