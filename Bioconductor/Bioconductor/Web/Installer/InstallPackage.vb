@@ -83,6 +83,8 @@ Public Class InstallPackage
         Else
             LinkLabel2.Enabled = False
             LinkLabel1.Enabled = False
+            LinkLabel3.Enabled = False
+            LinkLabel4.Enabled = False
         End If
     End Sub
 
@@ -91,6 +93,8 @@ Public Class InstallPackage
         Label2.Text = Current.Package
         Label3.Text = Current.Title
         Label5.Text = Current.Maintainer
+
+        LinkLabel3.Text = $"browseVignettes(""{Current.Package}"")"
 
         __currVer = RSystem.packageVersion(Current.Package)
 
@@ -109,10 +113,14 @@ Public Class InstallPackage
 
         PropertyGrid1.SelectedObject = Current.Details
         PropertyGrid2.SelectedObject = Current.Archives
-        WebBrowser1.DocumentText = Current.Description
+
+        Call Current.Description.SaveTo(App.HOME & "/biocHTML.html")
+        Call WebBrowser1.Navigate(App.HOME & "/biocHTML.html")
 
         LinkLabel2.Enabled = True
         LinkLabel1.Enabled = True
+        LinkLabel3.Enabled = True
+        LinkLabel4.Enabled = True
     End Sub
 
     Private Sub LinkLabel2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
@@ -229,5 +237,22 @@ Public Class InstallPackage
                 Call Repository.Save(saveFile.FileName, Encodings.ASCII)
             End If
         End Using
+    End Sub
+
+    Private Sub LinkLabel3_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel3.LinkClicked
+        Try
+            Call RSystem.REngine.WriteLine(LinkLabel3.Text)
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub LinkLabel4_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel4.LinkClicked
+        Dim R As String = "??" & Current.Package
+        Try
+            Call RSystem.REngine.WriteLine(R)
+        Catch ex As Exception
+
+        End Try
     End Sub
 End Class

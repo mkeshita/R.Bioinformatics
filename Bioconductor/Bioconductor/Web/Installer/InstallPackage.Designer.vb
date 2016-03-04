@@ -172,10 +172,10 @@ Partial Class InstallPackage
         Me.TabControl2.Controls.Add(Me.TabPage3)
         Me.TabControl2.Controls.Add(Me.TabPage4)
         Me.TabControl2.Controls.Add(Me.TabPage5)
-        Me.TabControl2.Location = New System.Drawing.Point(17, 257)
+        Me.TabControl2.Location = New System.Drawing.Point(6, 162)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
-        Me.TabControl2.Size = New System.Drawing.Size(559, 324)
+        Me.TabControl2.Size = New System.Drawing.Size(584, 428)
         Me.TabControl2.TabIndex = 6
         '
         'TabPage3
@@ -184,7 +184,7 @@ Partial Class InstallPackage
         Me.TabPage3.Location = New System.Drawing.Point(4, 25)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(551, 295)
+        Me.TabPage3.Size = New System.Drawing.Size(576, 399)
         Me.TabPage3.TabIndex = 0
         Me.TabPage3.Text = "Information"
         Me.TabPage3.UseVisualStyleBackColor = True
@@ -196,8 +196,8 @@ Partial Class InstallPackage
         Me.WebBrowser1.Location = New System.Drawing.Point(3, 3)
         Me.WebBrowser1.MinimumSize = New System.Drawing.Size(20, 20)
         Me.WebBrowser1.Name = "WebBrowser1"
-        Me.WebBrowser1.ScrollBarsEnabled = False
-        Me.WebBrowser1.Size = New System.Drawing.Size(545, 289)
+        Me.WebBrowser1.ScriptErrorsSuppressed = True
+        Me.WebBrowser1.Size = New System.Drawing.Size(570, 393)
         Me.WebBrowser1.TabIndex = 0
         '
         'TabPage4
@@ -206,7 +206,7 @@ Partial Class InstallPackage
         Me.TabPage4.Location = New System.Drawing.Point(4, 25)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(551, 295)
+        Me.TabPage4.Size = New System.Drawing.Size(576, 399)
         Me.TabPage4.TabIndex = 1
         Me.TabPage4.Text = "Details"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -216,7 +216,7 @@ Partial Class InstallPackage
         Me.PropertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PropertyGrid1.Location = New System.Drawing.Point(3, 3)
         Me.PropertyGrid1.Name = "PropertyGrid1"
-        Me.PropertyGrid1.Size = New System.Drawing.Size(545, 289)
+        Me.PropertyGrid1.Size = New System.Drawing.Size(570, 393)
         Me.PropertyGrid1.TabIndex = 0
         '
         'TabPage5
@@ -224,7 +224,7 @@ Partial Class InstallPackage
         Me.TabPage5.Controls.Add(Me.PropertyGrid2)
         Me.TabPage5.Location = New System.Drawing.Point(4, 25)
         Me.TabPage5.Name = "TabPage5"
-        Me.TabPage5.Size = New System.Drawing.Size(551, 295)
+        Me.TabPage5.Size = New System.Drawing.Size(576, 399)
         Me.TabPage5.TabIndex = 2
         Me.TabPage5.Text = "Package Archives"
         Me.TabPage5.UseVisualStyleBackColor = True
@@ -234,13 +234,13 @@ Partial Class InstallPackage
         Me.PropertyGrid2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PropertyGrid2.Location = New System.Drawing.Point(0, 0)
         Me.PropertyGrid2.Name = "PropertyGrid2"
-        Me.PropertyGrid2.Size = New System.Drawing.Size(551, 295)
+        Me.PropertyGrid2.Size = New System.Drawing.Size(576, 399)
         Me.PropertyGrid2.TabIndex = 0
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(14, 211)
+        Me.Label5.Location = New System.Drawing.Point(21, 140)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(65, 16)
         Me.Label5.TabIndex = 5
@@ -249,7 +249,7 @@ Partial Class InstallPackage
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(14, 178)
+        Me.Label4.Location = New System.Drawing.Point(21, 117)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(47, 16)
         Me.Label4.TabIndex = 4
@@ -258,16 +258,16 @@ Partial Class InstallPackage
         'Label3
         '
         Me.Label3.Font = New System.Drawing.Font("Microsoft YaHei", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(13, 89)
+        Me.Label3.Location = New System.Drawing.Point(13, 56)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(577, 75)
+        Me.Label3.Size = New System.Drawing.Size(577, 55)
         Me.Label3.TabIndex = 3
         Me.Label3.Text = "Title"
         '
         'LinkLabel2
         '
         Me.LinkLabel2.AutoSize = True
-        Me.LinkLabel2.Location = New System.Drawing.Point(14, 603)
+        Me.LinkLabel2.Location = New System.Drawing.Point(22, 603)
         Me.LinkLabel2.Name = "LinkLabel2"
         Me.LinkLabel2.Size = New System.Drawing.Size(125, 16)
         Me.LinkLabel2.TabIndex = 2
@@ -279,7 +279,7 @@ Partial Class InstallPackage
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft YaHei", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(135, Byte), Integer), CType(CType(177, Byte), Integer), CType(CType(63, Byte), Integer))
-        Me.Label2.Location = New System.Drawing.Point(12, 36)
+        Me.Label2.Location = New System.Drawing.Point(12, 18)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(156, 28)
         Me.Label2.TabIndex = 1
@@ -288,7 +288,7 @@ Partial Class InstallPackage
         'LinkLabel1
         '
         Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Location = New System.Drawing.Point(14, 628)
+        Me.LinkLabel1.Location = New System.Drawing.Point(21, 628)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(84, 16)
         Me.LinkLabel1.TabIndex = 0
