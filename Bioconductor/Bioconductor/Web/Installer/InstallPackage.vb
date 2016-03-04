@@ -68,5 +68,10 @@ Public Class InstallPackage
 
     Private Sub TreeView1_NodeMouseClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles TreeView1.NodeMouseClick
         Dim sNode As TreeNode = e.Node
+        Dim pack As Package = Repository.GetPackage(sNode.Text)
+
+        If Not pack Is Nothing Then
+
+        End If
     End Sub
 End Class
