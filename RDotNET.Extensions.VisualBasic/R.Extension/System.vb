@@ -49,8 +49,19 @@ Public Module RSystem
     ''' <returns></returns>
     Public Function packageVersion(pkg As String) As String
         Dim R As String = $"packageVersion(""{pkg}"")"
-        Dim result = REngine.WriteLine(R)
-        Return result.Get(Scan0)
+        Dim result As String()
+        Try
+            result = REngine.WriteLine(R)
+        Catch ex As Exception
+            ex = New Exception(R, ex)
+            Call App.LogException(ex)
+            Return ""
+        End Try
+        Dim ver As String = result.Get(Scan0)
+        If Not String.IsNullOrEmpty(ver) Then
+            ver = String.Join(".", Regex.Matches(ver, "\d+").ToArray)
+        End If
+        Return ver
     End Function
 
     ''' <summary>

@@ -71,6 +71,8 @@ Public Class InstallPackage
 
     End Sub
 
+    Dim __currVer As String
+
     Private Sub TreeView1_NodeMouseClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles TreeView1.NodeMouseClick
         Dim sNode As TreeNode = e.Node
         Dim pack As Package = Repository.GetPackage(sNode.Text)
@@ -81,6 +83,16 @@ Public Class InstallPackage
             Label2.Text = pack.Package
             Label3.Text = pack.Title
             Label5.Text = pack.Maintainer
+
+            __currVer = RSystem.packageVersion(pack.Package)
+
+            If String.IsNullOrEmpty(__currVer) Then
+                Label4.Text = "This package is not installed yet."
+                LinkLabel1.Text = "Click to install!"
+            Else
+                Label4.Text = "Installed version: " & __currVer
+                LinkLabel1.Text = "Click check update."
+            End If
 
             LinkLabel2.Enabled = True
             LinkLabel1.Enabled = True
