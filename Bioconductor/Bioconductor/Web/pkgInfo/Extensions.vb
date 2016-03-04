@@ -31,7 +31,7 @@ Namespace Web.Packages
         End Function
 
         <Extension>
-        Public Function GetDetails(pkg As Package) As Package
+        Public Function GetDetails(ByRef pkg As Package) As Package
             Return pkg.GetDetails(pkg.GetURL.GET)
         End Function
 

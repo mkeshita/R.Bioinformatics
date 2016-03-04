@@ -102,6 +102,15 @@ Public Class InstallPackage
             LinkLabel1.Text = "Click check update."
         End If
 
+        If Not Current.HasDetails Then
+            Call _Current.GetDetails
+            Call Repository.Save(Web.Repository.DefaultFile, Encodings.ASCII)
+        End If
+
+        PropertyGrid1.SelectedObject = Current.Details
+        PropertyGrid2.SelectedObject = Current.Archives
+        WebBrowser1.DocumentText = Current.Description
+
         LinkLabel2.Enabled = True
         LinkLabel1.Enabled = True
     End Sub
