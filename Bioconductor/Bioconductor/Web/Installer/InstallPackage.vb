@@ -113,10 +113,31 @@ Public Class InstallPackage
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         If Not Current Is Nothing Then
-            Dim script As String = Current.InstallScript
-            Call RSystem.REngine.Evaluate(script)
+            Call __runR(Current.InstallScript)
         End If
     End Sub
+
+    Dim tasks As New Microsoft.VisualBasic.Parallel.TaskQueue(Of Boolean)
+
+    Private Sub __runR(script As String)
+        Call tasks.Enqueue(AddressOf New __runRScript With {.script = script}.run)
+    End Sub
+
+    Private Class __runRScript
+        Public script As String
+
+        Public Function run() As Boolean
+            Try
+                Call RSystem.REngine.Evaluate(script)
+                Return True
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Critical, "biocLite.R")
+                ex = New Exception(script, ex)
+                Call App.LogException(ex)
+                Return False
+            End Try
+        End Function
+    End Class
 
     Dim searchResult As Package()
 
@@ -155,8 +176,7 @@ Public Class InstallPackage
 
     Private Sub InstallUpdateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InstallUpdateToolStripMenuItem.Click
         If Not currentSelect Is Nothing Then
-            Dim script As String = currentSelect.InstallScript
-            Call RSystem.REngine.Evaluate(script)
+            Call __runR(currentSelect.InstallScript)
         End If
     End Sub
 
