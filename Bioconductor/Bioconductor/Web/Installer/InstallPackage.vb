@@ -113,4 +113,11 @@ Public Class InstallPackage
             Call RSystem.REngine.Evaluate(script)
         End If
     End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If Not String.IsNullOrEmpty(TextBox1.Text) Then
+            Dim term As String = TextBox1.Text
+
+        End If
+    End Sub
 End Class

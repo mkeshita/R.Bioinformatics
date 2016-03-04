@@ -29,6 +29,16 @@ Partial Class InstallPackage
         Me.Button1 = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.TabControl2 = New System.Windows.Forms.TabControl()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.PropertyGrid1 = New System.Windows.Forms.PropertyGrid()
+        Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.PropertyGrid2 = New System.Windows.Forms.PropertyGrid()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
@@ -42,11 +52,15 @@ Partial Class InstallPackage
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.TabControl2.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
+        Me.TabPage4.SuspendLayout()
+        Me.TabPage5.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -107,6 +121,7 @@ Partial Class InstallPackage
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.TabControl2)
         Me.TabPage1.Controls.Add(Me.Label5)
         Me.TabPage1.Controls.Add(Me.Label4)
         Me.TabPage1.Controls.Add(Me.Label3)
@@ -120,6 +135,103 @@ Partial Class InstallPackage
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "bioc Info"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'TabControl2
+        '
+        Me.TabControl2.Controls.Add(Me.TabPage3)
+        Me.TabControl2.Controls.Add(Me.TabPage4)
+        Me.TabControl2.Controls.Add(Me.TabPage5)
+        Me.TabControl2.Location = New System.Drawing.Point(17, 257)
+        Me.TabControl2.Name = "TabControl2"
+        Me.TabControl2.SelectedIndex = 0
+        Me.TabControl2.Size = New System.Drawing.Size(559, 324)
+        Me.TabControl2.TabIndex = 6
+        '
+        'TabPage3
+        '
+        Me.TabPage3.Controls.Add(Me.WebBrowser1)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(551, 295)
+        Me.TabPage3.TabIndex = 0
+        Me.TabPage3.Text = "Information"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'WebBrowser1
+        '
+        Me.WebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WebBrowser1.IsWebBrowserContextMenuEnabled = False
+        Me.WebBrowser1.Location = New System.Drawing.Point(3, 3)
+        Me.WebBrowser1.MinimumSize = New System.Drawing.Size(20, 20)
+        Me.WebBrowser1.Name = "WebBrowser1"
+        Me.WebBrowser1.ScrollBarsEnabled = False
+        Me.WebBrowser1.Size = New System.Drawing.Size(545, 289)
+        Me.WebBrowser1.TabIndex = 0
+        '
+        'TabPage4
+        '
+        Me.TabPage4.Controls.Add(Me.PropertyGrid1)
+        Me.TabPage4.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage4.Size = New System.Drawing.Size(551, 295)
+        Me.TabPage4.TabIndex = 1
+        Me.TabPage4.Text = "Details"
+        Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'PropertyGrid1
+        '
+        Me.PropertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PropertyGrid1.Location = New System.Drawing.Point(3, 3)
+        Me.PropertyGrid1.Name = "PropertyGrid1"
+        Me.PropertyGrid1.Size = New System.Drawing.Size(545, 289)
+        Me.PropertyGrid1.TabIndex = 0
+        '
+        'TabPage5
+        '
+        Me.TabPage5.Controls.Add(Me.PropertyGrid2)
+        Me.TabPage5.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage5.Name = "TabPage5"
+        Me.TabPage5.Size = New System.Drawing.Size(551, 295)
+        Me.TabPage5.TabIndex = 2
+        Me.TabPage5.Text = "Package Archives"
+        Me.TabPage5.UseVisualStyleBackColor = True
+        '
+        'PropertyGrid2
+        '
+        Me.PropertyGrid2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PropertyGrid2.Location = New System.Drawing.Point(0, 0)
+        Me.PropertyGrid2.Name = "PropertyGrid2"
+        Me.PropertyGrid2.Size = New System.Drawing.Size(551, 295)
+        Me.PropertyGrid2.TabIndex = 0
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(14, 211)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(65, 16)
+        Me.Label5.TabIndex = 5
+        Me.Label5.Text = "Maintainer"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(14, 178)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(47, 16)
+        Me.Label4.TabIndex = 4
+        Me.Label4.Text = "Version"
+        '
+        'Label3
+        '
+        Me.Label3.Font = New System.Drawing.Font("Microsoft YaHei", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(13, 89)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(577, 75)
+        Me.Label3.TabIndex = 3
+        Me.Label3.Text = "Title"
         '
         'LinkLabel2
         '
@@ -154,10 +266,12 @@ Partial Class InstallPackage
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.TextBox2)
+        Me.TabPage2.Controls.Add(Me.ListBox1)
         Me.TabPage2.Location = New System.Drawing.Point(4, 25)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(453, 607)
+        Me.TabPage2.Size = New System.Drawing.Size(596, 658)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Search Result"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -221,32 +335,25 @@ Partial Class InstallPackage
         Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.HomeToolStripMenuItem.Text = "Home"
         '
-        'Label3
+        'ListBox1
         '
-        Me.Label3.Font = New System.Drawing.Font("Microsoft YaHei", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(13, 89)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(577, 75)
-        Me.Label3.TabIndex = 3
-        Me.Label3.Text = "Title"
+        Me.ListBox1.FormattingEnabled = True
+        Me.ListBox1.ItemHeight = 16
+        Me.ListBox1.Location = New System.Drawing.Point(6, 6)
+        Me.ListBox1.Name = "ListBox1"
+        Me.ListBox1.Size = New System.Drawing.Size(584, 436)
+        Me.ListBox1.TabIndex = 0
         '
-        'Label4
+        'TextBox2
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(14, 178)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(47, 16)
-        Me.Label4.TabIndex = 4
-        Me.Label4.Text = "Version"
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(14, 211)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(65, 16)
-        Me.Label5.TabIndex = 5
-        Me.Label5.Text = "Maintainer"
+        Me.TextBox2.BackColor = System.Drawing.Color.White
+        Me.TextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBox2.Location = New System.Drawing.Point(6, 447)
+        Me.TextBox2.Multiline = True
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.ReadOnly = True
+        Me.TextBox2.Size = New System.Drawing.Size(584, 205)
+        Me.TextBox2.TabIndex = 1
         '
         'InstallPackage
         '
@@ -272,6 +379,12 @@ Partial Class InstallPackage
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
+        Me.TabControl2.ResumeLayout(False)
+        Me.TabPage3.ResumeLayout(False)
+        Me.TabPage4.ResumeLayout(False)
+        Me.TabPage5.ResumeLayout(False)
+        Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)
@@ -301,4 +414,13 @@ Partial Class InstallPackage
     Friend WithEvents Label3 As Windows.Forms.Label
     Friend WithEvents Label4 As Windows.Forms.Label
     Friend WithEvents Label5 As Windows.Forms.Label
+    Friend WithEvents TabControl2 As Windows.Forms.TabControl
+    Friend WithEvents TabPage3 As Windows.Forms.TabPage
+    Friend WithEvents TabPage4 As Windows.Forms.TabPage
+    Friend WithEvents TabPage5 As Windows.Forms.TabPage
+    Friend WithEvents WebBrowser1 As Windows.Forms.WebBrowser
+    Friend WithEvents PropertyGrid1 As Windows.Forms.PropertyGrid
+    Friend WithEvents PropertyGrid2 As Windows.Forms.PropertyGrid
+    Friend WithEvents TextBox2 As Windows.Forms.TextBox
+    Friend WithEvents ListBox1 As Windows.Forms.ListBox
 End Class
