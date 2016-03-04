@@ -13,6 +13,10 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "RDotNet.Extensions.VisualBa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{3DF7B60B-EA61-4C0E-8179-88D349618D7A}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Bioconductor", "Bioconductor\Bioconductor\Bioconductor.vbproj", "{62626D99-02D6-47E7-80EE-5739A73FC62F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "R.NET", "R.NET", "{F077EE10-0DFB-4597-948C-0EDE61179B23}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\Microsoft.VisualBasic_Framework\SharedProject.VB_FrameworkExtensions\SharedProject.VB_FrameworkExtensions.projitems*{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}*SharedItemsImports = 4
@@ -74,6 +78,18 @@ Global
 		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Release|x64.Build.0 = Release|x64
 		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Release|x86.ActiveCfg = Release|Any CPU
 		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Release|x86.Build.0 = Release|Any CPU
+		{62626D99-02D6-47E7-80EE-5739A73FC62F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62626D99-02D6-47E7-80EE-5739A73FC62F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62626D99-02D6-47E7-80EE-5739A73FC62F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{62626D99-02D6-47E7-80EE-5739A73FC62F}.Debug|x64.Build.0 = Debug|Any CPU
+		{62626D99-02D6-47E7-80EE-5739A73FC62F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{62626D99-02D6-47E7-80EE-5739A73FC62F}.Debug|x86.Build.0 = Debug|Any CPU
+		{62626D99-02D6-47E7-80EE-5739A73FC62F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62626D99-02D6-47E7-80EE-5739A73FC62F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62626D99-02D6-47E7-80EE-5739A73FC62F}.Release|x64.ActiveCfg = Release|Any CPU
+		{62626D99-02D6-47E7-80EE-5739A73FC62F}.Release|x64.Build.0 = Release|Any CPU
+		{62626D99-02D6-47E7-80EE-5739A73FC62F}.Release|x86.ActiveCfg = Release|Any CPU
+		{62626D99-02D6-47E7-80EE-5739A73FC62F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,5 +97,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99} = {3DF7B60B-EA61-4C0E-8179-88D349618D7A}
 		{1D8910C2-ADA2-4306-96DC-A61B494522ED} = {3DF7B60B-EA61-4C0E-8179-88D349618D7A}
+		{21C35138-455B-4833-9756-B2629F972A22} = {F077EE10-0DFB-4597-948C-0EDE61179B23}
+		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1} = {F077EE10-0DFB-4597-948C-0EDE61179B23}
 	EndGlobalSection
 EndGlobal
