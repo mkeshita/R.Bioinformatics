@@ -59,5 +59,109 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to 
+        '''jQuery(&apos;document&apos;).ready(function () {
+        '''    jQuery(&apos;.box1&apos;).corner(&quot;5px&quot;)
+        '''    jQuery(&apos;abbr.timeago&apos;).timeago()
+        '''    jQuery(&apos;ul#uses li&apos;).corner(&quot;5px&quot;)
+        '''})
+        '''.
+        '''</summary>
+        Friend ReadOnly Property bioc_style() As String
+            Get
+                Return ResourceManager.GetString("bioc_style", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to /* css global styles for bioconductor */
+        '''
+        '''/* looks like sass stylesheet is not used */
+        '''
+        '''/* global styles defined at the topmost level.
+        '''   these will be overridden by subsequent selectors. */
+        ''' 
+        '''/* reset the margins and padding of all elements so we can 
+        '''   specify them ourselves */
+        '''body,h1,h2,h3,h4,h5,h6,p,div,span { margin:0; padding:0; border:0;  } 
+        '''
+        '''/* some general treatments up top */
+        '''body {
+        '''  margin:0; padding:0;
+        '''  background-color: #333333;
+        '''  background-image: url(../images/site_bg.jpg);
+        '''  background-p [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property bioconductor() As String
+            Get
+                Return ResourceManager.GetString("bioconductor", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to 
+        '''// bioconductor.js
+        '''if (!/\.html$|\/$|#/.test(window.location.href))
+        '''    window.location.href = window.location.href + &quot;/&quot;;
+        '''
+        '''// global variables
+        '''var checkForEncryptInterval;
+        '''var gPayload;
+        '''var gMod;
+        '''var gExp;
+        '''
+        '''// logging functions:
+        '''var fb_lite = false;
+        '''try {
+        '''	if (firebug) {
+        '''		fb_lite = true;  
+        '''		firebug.d.console.cmd.log(&quot;initializing firebug logging&quot;);
+        '''	}
+        '''} catch(e) {
+        '''	// do nothing
+        '''}
+        '''
+        '''
+        '''
+        '''function log(message) {
+        '''	if (fb_lite) {  
+        '''		console.log(message);
+        '''	} else {
+        '''		if (window.console) {
+        '''			console.log(messag [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property bioconductor1() As String
+            Get
+                Return ResourceManager.GetString("bioconductor1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        '''</summary>
+        Friend ReadOnly Property favicon() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("favicon", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+        '''&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; dir=&quot;ltr&quot; lang=&quot;en-US&quot; prefix=&quot;og: http://ogp.me/ns#&quot;&gt;
+        '''  &lt;head&gt;
+        '''  &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+        '''  &lt;meta http-equiv=&quot;Content-Language&quot; content=&quot;en-us&quot; /&gt;
+        '''  &lt;meta name=&quot;robots&quot; content=&quot;all&quot; /&gt;
+        '''  &lt;meta property=&quot;og:image&quot; content=&quot;http://bioconductor.org/images/logo/jpg/bioconductor_logo_rgb.jpg&quot; /&gt;
+        '''  &lt;title [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Templates() As String
+            Get
+                Return ResourceManager.GetString("Templates", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

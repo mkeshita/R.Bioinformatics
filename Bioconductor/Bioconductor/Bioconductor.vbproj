@@ -176,6 +176,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Project1.ico" />
+    <None Include="Resources\assets\js\bioc-style.js" />
+    <None Include="Resources\assets\js\bioconductor.js" />
+    <None Include="Resources\assets\favicon.ico" />
+    <None Include="Resources\assets\bioconductor.css" />
+    <None Include="Resources\Templates.html" />
   </ItemGroup>
   <Import Project="..\..\..\Microsoft.VisualBasic_Framework\UXFramework\ChromeUI\ChromeUI\UI\UI.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
