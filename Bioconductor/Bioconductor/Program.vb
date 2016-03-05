@@ -13,7 +13,7 @@ Module Program
     Public Sub Main()
 
         Dim tb As New utils.read.table.readTable
-        Dim sss = tb.RScript
+        Dim d As String = tb.RScript
 
         '  Call Test.Main()
         Call RSystem.InitDefault()

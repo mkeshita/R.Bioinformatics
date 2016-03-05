@@ -13,13 +13,23 @@ Namespace Services.ScriptBuilder
         ''' <summary>
         ''' R.func(param="",...)
         ''' </summary>
-        ''' <typeparam name="T"></typeparam>
         ''' <param name="token"></param>
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function GetScript(Of T)(token As T) As String
-            Dim type As Type = GetType(T)
+        Public Function GetScript(token As Object, Optional type As Type = Nothing) As String
+            If token Is Nothing Then
+                Throw New NullReferenceException("Script tokens is nothing!")
+            End If
+
+            If type Is Nothing Then
+                type = token.GetType
+            End If
+
+            Return __getScript(token, type)
+        End Function
+
+        Private Function __getScript(token As Object, type As Type) As String
             Dim name As RFunc = type.GetAttribute(Of RFunc)
 
             If name Is Nothing Then
@@ -40,6 +50,19 @@ Namespace Services.ScriptBuilder
                 props.ToArray(Function(x) __getExpr(token, x.prop, x.func, x.param))
             Dim script As String = $"{name}({String.Join(", " & vbCrLf, parameters)})"
             Return script
+        End Function
+
+        ''' <summary>
+        ''' R.func(param="",...)
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="token"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function GetScript(Of T)(token As T) As String
+            Dim type As Type = GetType(T)
+            Return __getScript(token, type)
         End Function
 
         ''' <summary>

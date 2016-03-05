@@ -24,7 +24,7 @@ Public Class IRToken : Inherits IRProvider
     Implements IScriptProvider
 
     Public Overrides Function RScript() As String
-        Return Me.GetScript
+        Return Me.GetScript([GetType])
     End Function
 End Class
 
