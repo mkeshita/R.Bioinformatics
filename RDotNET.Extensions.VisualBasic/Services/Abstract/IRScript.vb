@@ -9,12 +9,21 @@ Public MustInherit Class IRScript : Inherits IRProvider
     Implements IDisposable
     Implements IScriptProvider
 
+    Dim __requires As String()
+
     ''' <summary>
     ''' The package names that required of this script file.
     ''' (需要加载的R的包的列表)
     ''' </summary>
     ''' <returns></returns>
-    Public Overridable ReadOnly Property Requires As String()
+    Public Overridable Property Requires As String()
+        Get
+            Return __requires
+        End Get
+        Protected Set(value As String())
+            __requires = value
+        End Set
+    End Property
 
     ''' <summary>
     ''' 保存脚本文件到文件系统之上

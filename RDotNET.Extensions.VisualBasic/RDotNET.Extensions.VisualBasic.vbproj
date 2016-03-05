@@ -88,10 +88,11 @@
   <ItemGroup>
     <Content Include="Services\ScriptBuilder\Helpers\README.txt" />
     <Content Include="R.Extension\RSyntax\README.txt" />
+    <Compile Include="Services\RPackage\stats\kmeans.vb" />
     <Compile Include="Services\ScriptBuilder\Helpers\RTypes.vb" />
     <Compile Include="Services\ScriptBuilder\Helpers\Decorates.vb" />
     <Compile Include="Services\Abstract\IScriptProvider.vb" />
-    <Compile Include="Services\RPackage\readTable.vb" />
+    <Compile Include="Services\RPackage\utils\readTable.vb" />
     <Compile Include="Packages\Graphics\GraphicsDevice.vb" />
     <Compile Include="Packages\Graphics\PieChart.vb" />
     <Compile Include="Services\RPackage\Extensions.vb" />

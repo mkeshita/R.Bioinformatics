@@ -34,6 +34,18 @@ Public Class IRToken : Inherits IRProvider
     Public Shared Narrowing Operator CType(token As IRToken) As RExpression
         Return New RExpression(token.RScript)
     End Operator
+
+    Public Shared Narrowing Operator CType(token As IRToken) As String
+        Return token.RScript
+    End Operator
+
+    Public Shared Operator &(token As IRToken, script As String) As String
+        Return token.RScript & script
+    End Operator
+
+    Public Shared Operator &(script As String, token As IRToken) As String
+        Return token.RScript & script
+    End Operator
 End Class
 
 Public Interface IScriptProvider

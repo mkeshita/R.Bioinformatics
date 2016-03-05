@@ -1,6 +1,9 @@
 ﻿Imports System.Text
+Imports System.IO
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Tokenizer
 Imports RDotNet.Extensions.VisualBasic
 Imports RDotNet.Extensions.VisualBasic.utils.read.table
+Imports RDotNet.Extensions.VisualBasic.stats
 
 Public Class Heatmap : Inherits IRScript
 
@@ -17,14 +20,44 @@ Public Class Heatmap : Inherits IRScript
     ''' <returns></returns>
     Public Property dataset As readcsv
 
-    Private Function __getRowNames() As String
-        If String.IsNullOrEmpty(rowNameMaps) Then
+    Public Property kmeans As kmeans
 
+    Private Function __getRowNames() As String
+        Dim col As String = rowNameMaps
+
+        If String.IsNullOrEmpty(rowNameMaps) Then
+            ' 默认使用第一列，作为rows的名称
+            Using file As FileStream = dataset.file.Open()
+                col = New StreamReader(file).ReadLine
+            End Using
+            col = CharsParser(col).FirstOrDefault
         End If
+
+        Return col
     End Function
 
+    Sub New()
+        Requires = {"RColorBrewer"}
+    End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' http://joseph.yy.blog.163.com/blog/static/50973959201285102114376/
+    ''' </remarks>
     Public Overrides Function RScript() As String
         Dim script As StringBuilder = New StringBuilder()
+        Call script.AppendLine($"{df} <- " & dataset)
+        Call script.AppendLine($"row.names({df}) <- {df}${__getRowNames()}")
+        Call script.AppendLine($"{df}<-{df}[,-1]")
+        Call script.AppendLine($"k <- {kmeans}")
+        Call script.AppendLine($"dfc <- cbind ({df}, Cluster= k$cluster)")
+        Call script.AppendLine("dfc <- dfc[order(dfc$Cluster),]")
+        Call script.AppendLine("dfc.m <- data.matrix(dfc)")
 
+
+        Return script.ToString
     End Function
 End Class

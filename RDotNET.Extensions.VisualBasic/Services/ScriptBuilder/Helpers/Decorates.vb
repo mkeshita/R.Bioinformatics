@@ -54,6 +54,10 @@ Namespace Services.ScriptBuilder
     <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Struct, AllowMultiple:=False, Inherited:=True)>
     Public Class RFunc : Inherits RAttribute
 
+        ''' <summary>
+        ''' Declaring a R function entry point.
+        ''' </summary>
+        ''' <param name="name"></param>
         Sub New(name As String)
             Call MyBase.New(name)
         End Sub
