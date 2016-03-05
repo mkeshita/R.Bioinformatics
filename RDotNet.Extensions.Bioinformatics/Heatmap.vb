@@ -21,6 +21,7 @@ Public Class Heatmap : Inherits IRScript
     Public Property dataset As readcsv
 
     Public Property kmeans As kmeans
+    Public Property heatmap As stats.heatmap
 
     Private Function __getRowNames() As String
         Dim col As String = rowNameMaps
