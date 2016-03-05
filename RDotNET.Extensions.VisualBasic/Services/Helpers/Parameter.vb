@@ -39,4 +39,8 @@ Public Class RFunc : Inherits Attribute
     Public Overrides Function ToString() As String
         Return Name
     End Function
+
+    Public Shared Narrowing Operator CType(rfunc As RFunc) As String
+        Return rfunc.Name
+    End Operator
 End Class
