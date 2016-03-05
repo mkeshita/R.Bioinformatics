@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
+Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
 Public Module Extensions
 
@@ -7,7 +8,7 @@ Public Module Extensions
     ''' <summary>
     ''' "NA" 字符串，而不是NA空值常量
     ''' </summary>
-    Public Const NA As String = "NA"
+    Public ReadOnly Property NA As RExpression = New RExpression("NA")
     Public Const [TRUE] As String = "TRUE"
     Public Const [FALSE] As String = "FALSE"
 
@@ -38,11 +39,34 @@ Public Module Extensions
         Return $"c({cx})"
     End Function
 
+    ''' <summary>
+    ''' c(....)
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    Public Function c(ParamArray x As Object()) As String
+        Dim cx As String = String.Join(",", x.ToArray(Function(o) Scripting.ToString(o)))
+        Return $"c({cx})"
+    End Function
+
     Public Function getOption(verbose As String) As String
         Return $"getOption(""{verbose}"")"
     End Function
 
     Public Function Rstring(s As String) As String
         Return $"""{s}"""
+    End Function
+
+    Public Function par(x As String) As String
+        Return $"par(""{x}"")"
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="x">是一个对象，不是字符串</param>
+    ''' <returns></returns>
+    Public Function median(x As String) As String
+        Return $"media({x})"
     End Function
 End Module

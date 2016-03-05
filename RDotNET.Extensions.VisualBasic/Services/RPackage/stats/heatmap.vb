@@ -129,5 +129,16 @@ Namespace stats
         ''' </summary>
         ''' <returns></returns>
         Public Property verbose As RExpression = getOption("verbose")
+
+        Public Shared Function Puriney(x As String) As heatmap
+            Dim heatmap As New heatmap With {
+                .x = x,
+                .Rowv = NA,
+                .Colv = NA,
+                .revC = [TRUE],
+                .scale = "'column'"
+                }
+            Return heatmap
+        End Function
     End Class
 End Namespace

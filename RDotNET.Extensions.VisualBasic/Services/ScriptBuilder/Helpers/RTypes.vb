@@ -42,5 +42,9 @@ Namespace Services.ScriptBuilder.RTypes
         Public Shared Widening Operator CType(R As String) As RExpression
             Return New RExpression(R)
         End Operator
+
+        Public Overloads Shared Narrowing Operator CType(R As RExpression) As String
+            Return R.__value
+        End Operator
     End Class
 End Namespace
