@@ -1,5 +1,6 @@
-﻿
-Imports RDotNET.Extensions.VisualBasic
+﻿Imports RDotNET.Extensions.VisualBasic
+Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
+
 ''' <summary>
 ''' 一个提供脚本语句的最基本的抽象对象
 ''' </summary>
@@ -16,6 +17,14 @@ Public MustInherit Class IRProvider
 
     Public Overrides Function ToString() As String
         Return RScript()
+    End Function
+End Class
+
+Public Class IRToken : Inherits IRProvider
+    Implements IScriptProvider
+
+    Public Overrides Function RScript() As String
+        Return Me.GetScript
     End Function
 End Class
 

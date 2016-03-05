@@ -10,14 +10,14 @@ Namespace utils.read.table
     ''' </summary>
     ''' 
     <RFunc("read.table")>
-    Public Class readTable : Inherits IRProvider
+    Public Class readTable : Inherits IRToken
 
         <Parameter("file", ValueTypes.Path)> Public Property file As String
         Public Property header As Boolean = False
         Public Property sep As String = ""
         Public Property quote As String = "\""'"
         Public Property dec As String = "."
-        Public Property numerals As String = c("allow.loss", "warn.loss", "no.loss")
+        Public Property numerals As RExpression = c("allow.loss", "warn.loss", "no.loss")
         <Parameter("row.names")> Public Property rowNames As String
         <Parameter("col.names")> Public Property colNames As String
         <Parameter("as.is")> Public Property asIs As RExpression = "!stringsAsFactors"
@@ -37,31 +37,24 @@ Namespace utils.read.table
         Public Property encoding As String = "unknown"
         Public Property text As String
         Public Property skipNul As Boolean = False
-
-        Public Overrides Function RScript() As String
-            Return Me.GetScript
-        End Function
     End Class
 
     <RFunc("read.csv")>
-    Public Class readcsv : Inherits IRProvider
+    Public Class readcsv : Inherits IRToken
 
-        Public Property file As String
+        <Parameter("file", ValueTypes.Path)> Public Property file As String
         Public Property header As Boolean = True
         Public Property sep As String = ","
         Public Property quote As String = "\"""
         Public Property dec As String = "."
         Public Property fill As Boolean = True
         <Parameter("comment.char")> Public Property commentChar As String = ""
-
-        Public Overrides Function RScript() As String
-            Return Me.GetScript
-        End Function
     End Class
 
     <RFunc("read.csv2")>
-    Public Class readcsv2
-        Public Property file As String
+    Public Class readcsv2 : Inherits IRToken
+
+        <Parameter("file", ValueTypes.Path)> Public Property file As String
         Public Property header As Boolean = True
         Public Property sep As String = ";"
         Public Property quote As String = "\"""
@@ -71,8 +64,9 @@ Namespace utils.read.table
     End Class
 
     <RFunc("read.delim")>
-    Public Class readdelim
-        Public Property file As String
+    Public Class readdelim : Inherits IRToken
+
+        <Parameter("file", ValueTypes.Path)> Public Property file As String
         Public Property header As Boolean = True
         Public Property sep As String = "\t"
         Public Property quote As String = "\"""
@@ -82,8 +76,9 @@ Namespace utils.read.table
     End Class
 
     <RFunc("read.delim2")>
-    Public Class readdelim2
-        Public Property file As String
+    Public Class readdelim2 : Inherits IRToken
+
+        <Parameter("file", ValueTypes.Path)> Public Property file As String
         Public Property header As Boolean = True
         Public Property sep As String = "\t"
         Public Property quote As String = "\"""
