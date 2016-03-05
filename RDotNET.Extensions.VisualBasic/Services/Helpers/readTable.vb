@@ -38,34 +38,49 @@ Namespace utils.read.table
 
         End Function
     End Class
-    Public Class readcsv: Inherits IRProvider 
+
+    Public Class readcsv : Inherits IRProvider
 
         Public Property file
         Public Property header = True
-        Public Property sep = Rstring ( ",")
-        Public Property quote = Rstring ( "\""")
-     Public Property            dec =Rstring ( ".")
-         Public Property    fill As bool  =bool . TRUE
- < Parameter ("comment.char")>    Public Property   commentChar As  String  = rstring ( "")
+        Public Property sep = Rstring(",")
+        Public Property quote = Rstring("\""")
+        Public Property dec = Rstring(".")
+        Public Property fill As bool = bool.TRUE
+        <Parameter("comment.char")> Public Property commentChar As String = Rstring("")
 
         Public Overrides Function RScript() As String
-           
-        End Function
-    end class 
 
-public Class readcsv2
-      Public Property   file
-         Public Property    header = TRUE
-          Public Property   sep = ";"
+        End Function
+    End Class
+
+    Public Class readcsv2
+        Public Property file
+        Public Property header = True
+        Public Property sep = ";"
         Public Property quote = "\"""
         Public Property dec = Rstring(",")
-        Public Property   fill = True
+        Public Property fill = True
         <Parameter("comment.char")> Public Property commentChar = Rstring("")
-    End class 
+    End Class
 
-read.delim(file, header = TRUE, sep = "\t", quote = "\"",
-           dec = ".", fill = TRUE, comment.char = "", ...)
+    Public Class readdelim
+        Public Property file
+        Public Property header = True
+        Public Property sep = "\t"
+        Public Property quote = "\"""
+        Public Property dec = "."
+        Public Property fill = True
+        <Parameter("comment.char")> Public Property commentChar = ""
+    End Class
 
-read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
-            dec = ",", fill = TRUE, comment.char = "", ...)
+    Public Class readdelim2
+        Public Property file
+        Public Property header = True
+        Public Property sep = "\t"
+        Public Property quote = "\"""
+        Public Property dec = ","
+        Public Property fill = True
+        <Parameter("comment.char")> Public Property commentChar = ""
+    End Class
 End Namespace
