@@ -1,5 +1,6 @@
 ﻿Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
+Imports RDotNET.Extensions.VisualBasic.stats
 
 Namespace gplots
 
@@ -7,13 +8,11 @@ Namespace gplots
     ''' A heat map is a false color image (basically image(t(x))) with a dendrogram added to the left side and/or to the top. Typically, reordering of the rows and columns according to some set of values (row or column means) within the restrictions imposed by the dendrogram is carried out.
     ''' This heatmap provides a number Of extensions To the standard R heatmap Function.
     ''' </summary>
-    <RFunc("heatmap.2")> Public Class heatmap2 : Inherits IRToken
+    <RFunc("heatmap.2")> Public Class heatmap2 : Inherits heatmap_plot
 
-        ''' <summary>
-        ''' numeric matrix of the values to be plotted.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property x As RExpression
+        Sub New()
+            Requires = {"gplots"}
+        End Sub
 
         ' # dendrogram control
 
@@ -27,57 +26,16 @@ Namespace gplots
         ''' </summary>
         ''' <returns></returns>
         Public Property Colv As RExpression = "if(symm)""Rowv"" else TRUE"
-        ''' <summary>
-        ''' function used to compute the distance (dissimilarity) between both rows and columns. Defaults to dist.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property distfun As RExpression = "dist"
-        ''' <summary>
-        ''' function used to compute the hierarchical clustering When Rowv Or Colv are Not dendrograms. Defaults To hclust.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property hclustfun As RExpression = "hclust"
+
         ''' <summary>
         ''' character string indicating whether to draw 'none', 'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv (or Colv) arguments are honoured.
         ''' </summary>
         ''' <returns></returns>
-        Public Property dendrogram As String = c("both", "row", "column", "none")
-        ''' <summary>
-        ''' function(d, w) of dendrogram and weights for reordering the row and column dendrograms. The default uses stats{reorder.dendrogram}
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property reorderfun As RExpression = "function(d, w) reorder(d, w)"
-        ''' <summary>
-        ''' logical indicating if x should be treated symmetrically; can only be true when x is a square matrix.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property symm As Boolean = False
+        Public Property dendrogram As String = "both"
 
         ' # data scaling
 
-        ''' <summary>
-        ''' character indicating if the values should be centered and scaled in either the row direction or the column direction, or none. The default is "none".
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property scale As RExpression = c("none", "row", "column")
-        ''' <summary>
-        ''' logical indicating whether NA's should be removed.
-        ''' </summary>
-        ''' <returns></returns>
-        <Parameter("na.rm")> Public Property naRM As Boolean = True
-
         ' # image plot
-
-        ''' <summary>
-        ''' logical indicating if the column order should be reversed for plotting, such that e.g., for the symmetric case, the symmetry axis is as usual.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property revC As RExpression = "identical(Colv, ""Rowv"")"
-        ''' <summary>
-        ''' expression that will be evaluated after the call to image. Can be used to add components to the plot.
-        ''' </summary>
-        ''' <returns></returns>
-        <Parameter("add.expr")> Public Property addExpr As RExpression
 
         ' # mapping data to colors
         ''' <summary>
@@ -89,14 +47,14 @@ Namespace gplots
         ''' Boolean indicating whether breaks should be made symmetric about 0. Defaults to TRUE if the data includes negative values, and to FALSE otherwise.
         ''' </summary>
         ''' <returns></returns>
-        Public Property symbreaks As RExpression = "any(x < 0, na.rm = TRUE) || scale!=""none"""
+        Public Property symbreaks As RExpression = [TRUE] ' "any(x < 0, na.rm = TRUE) || scale!=""none"""
 
         ' # colors
         ''' <summary>
         ''' colors used for the image. Defaults to heat colors (heat.colors).
         ''' </summary>
         ''' <returns></returns>
-        Public Property col As String = "heat.colors"
+        Public Property col As RExpression = "heat.colors"
 
         ' # block sepration
         ''' <summary>
@@ -170,41 +128,7 @@ Namespace gplots
         Public Property linecol As RExpression = "tracecol"
 
         ' # Row/Column Labeling
-        ''' <summary>
-        ''' numeric vector of length 2 containing the margins (see par(mar= *)) for column and row names, respectively.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property margins As RExpression = c(5, 5)
-        ''' <summary>
-        ''' (optional) character vector of length ncol(x) containing the color names for a horizontal side bar that may be used to annotate the columns of x.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property ColSideColors As RExpression
-        ''' <summary>
-        ''' (optional) character vector of length nrow(x) containing the color names for a vertical side bar that may be used to annotate the rows of x.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property RowSideColors As RExpression
-        ''' <summary>
-        ''' positive numbers, used as cex.axis in for the row or column axis labeling. The defaults currently only use number of rows or columns, respectively.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property cexRow As RExpression = "0.2 + 1 / log10(nr)"
-        ''' <summary>
-        ''' positive numbers, used as cex.axis in for the row or column axis labeling. The defaults currently only use number of rows or columns, respectively.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property cexCol As RExpression = "0.2 + 1 / log10(nc)"
-        ''' <summary>
-        ''' character vectors with row and column labels to use; these default to rownames(x) or colnames(x), respectively.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property labRow As RExpression = NULL
-        ''' <summary>
-        ''' character vectors with row and column labels to use; these default to rownames(x) or colnames(x), respectively.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property labCol As RExpression = NULL
+
         ''' <summary>
         '''	angle of row/column labels, in degrees from horizontal
         ''' </summary>
@@ -271,7 +195,7 @@ Namespace gplots
         ''' Boolean indicating whether the color key should be made symmetric about 0. Defaults to TRUE if the data includes negative values, and to FALSE otherwise.
         ''' </summary>
         ''' <returns></returns>
-        Public Property symkey As RExpression = "any(x < 0, na.rm = TRUE) || symbreaks"
+        Public Property symkey As RExpression = [TRUE]
         ''' <summary>
         ''' Numeric scaling value for tuning the kernel width when a density plot is drawn on the color key. (See the adjust parameter for the density function for details.) Defaults to 0.25.
         ''' </summary>
@@ -309,21 +233,6 @@ Namespace gplots
         <Parameter("key.par")> Public Property keyPar As RExpression = "list()"
 
         ' # plot labels
-        ''' <summary>
-        ''' main, x- and y-axis titles; defaults to none.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property main As RExpression = NULL
-        ''' <summary>
-        ''' main, x- and y-axis titles; defaults to none.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property xlab As RExpression = NULL
-        ''' <summary>
-        ''' main, x- and y-axis titles; defaults to none.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property ylab As RExpression = NULL
 
         ' # plot layout
         ''' <summary>
@@ -349,5 +258,74 @@ Namespace gplots
         ''' <returns></returns>
         Public Property extrafun As RExpression = NULL
 
+        Public Shared Function Puriney() As heatmap2
+            Return New heatmap2 With {
+                .Rowv = True,
+                .Colv = NA,
+                .col = "rev(brewer.pal(10,""RdYlBu""))",
+                .revC = [TRUE],
+                .scale = "column",
+ _
+ _
+                .addExpr = Nothing,
+                .adjCol = Nothing,
+                .adjRow = Nothing,
+                .breaks = Nothing,
+                .cellnote = Nothing,
+                .cexCol = Nothing,
+                .cexRow = Nothing,
+                .colCol = Nothing,
+                .colRow = Nothing,
+                .colsep = Nothing,
+                .ColSideColors = Nothing,
+                .dendrogram = Nothing,
+                .densadj = Nothing,
+                .denscol = Nothing,
+                .densityInfo = Nothing,
+                .distfun = Nothing,
+                .extrafun = Nothing,
+                .hclustfun = Nothing,
+                .hline = Nothing,
+                .keepDendro = Nothing,
+                .key = Nothing,
+                .keyPar = Nothing,
+                .keysize = Nothing,
+                .keyTitle = Nothing,
+                .keyxlab = Nothing,
+                .keyxtickfun = Nothing,
+                .keyylab = Nothing,
+                .keyytickfun = Nothing,
+                .labCol = Nothing,
+                .labRow = Nothing,
+                .lhei = Nothing,
+                .linecol = Nothing,
+                .lmat = Nothing,
+                .lwid = Nothing,
+                .main = Nothing,
+                .naColor = Nothing,
+                .naRM = Nothing,
+                .notecex = Nothing,
+                .notecol = Nothing,
+                .offsetCol = Nothing,
+                .offsetRow = Nothing,
+                .reorderfun = Nothing,
+                .rowsep = Nothing,
+                .RowSideColors = Nothing,
+                .sepcolor = Nothing,
+                .sepwidth = Nothing,
+                .srtCol = Nothing,
+                .srtRow = Nothing,
+                .symbreaks = Nothing,
+                .symkey = Nothing,
+                .symm = Nothing,
+                .trace = Nothing,
+                .tracecol = Nothing,
+                .verbose = Nothing,
+                .vline = Nothing,
+                .x = Nothing,
+                .xlab = Nothing,
+                .ylab = Nothing
+            }
+        End Function
     End Class
 End Namespace

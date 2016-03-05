@@ -85,6 +85,8 @@ Namespace grDevices
         ''' <returns></returns>
         Public Function Plot(plots As String) As String
             Dim script As New StringBuilder(RScript)
+            Call script.AppendLine()
+            Call script.AppendLine()
             Call script.AppendLine(plots)
             Call script.AppendLine("dev.off()")
 
@@ -140,7 +142,7 @@ Namespace grDevices
         End Sub
     End Class
 
-    Public Class tiff : Inherits grDevice
+    <RFunc("tiff")> Public Class tiff : Inherits grDevice
 
         ''' <summary>
         ''' the type Of compression To be used.

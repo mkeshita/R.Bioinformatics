@@ -23,7 +23,7 @@ Public Class Heatmap : Inherits IRScript
     Public Property dataset As readcsv
 
     Public Property kmeans As kmeans
-    Public Property heatmap As stats.heatmap
+    Public Property heatmap As stats.heatmap_plot
     ''' <summary>
     ''' tiff文件的输出路径
     ''' </summary>
@@ -62,7 +62,6 @@ Public Class Heatmap : Inherits IRScript
         Call script.AppendLine($"{df}<-{df}[,-1]")
 
         kmeans.x = df
-        kmeans.centers = 5
 
         Call script.AppendLine($"k <- {kmeans}")
         Call script.AppendLine($"dfc <- cbind ({df}, Cluster= k$cluster)")
@@ -70,11 +69,12 @@ Public Class Heatmap : Inherits IRScript
         Call script.AppendLine("dfc.m <- data.matrix(dfc)")
 
         heatmap.x = "dfc.m"
-        heatmap.Rowv = NA
-        heatmap.Colv = NA
-        heatmap.Colv = "rev(brewer.pal(10,""RdYlBu""))"
-        heatmap.revC = [TRUE]
-        heatmap.scale = "column"
+
+        If Not heatmap.Requires Is Nothing Then
+            For Each ns As String In heatmap.Requires
+                Call script.AppendLine(RScripts.library(ns))
+            Next
+        End If
 
         Call script.AppendLine(image.Plot(heatmap))
 

@@ -4,8 +4,8 @@ Namespace Services.ScriptBuilder.RTypes
 
     Public Structure RBoolean : Implements IScriptProvider
 
-        Public Shared ReadOnly Property [TRUE] As New RBoolean(Extensions.TRUE)
-        Public Shared ReadOnly Property [FALSE] As New RBoolean(Extensions.FALSE)
+        Public Shared ReadOnly Property [TRUE] As New RBoolean(RScripts.TRUE)
+        Public Shared ReadOnly Property [FALSE] As New RBoolean(RScripts.FALSE)
 
         ReadOnly __value As String
 

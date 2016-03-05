@@ -2,7 +2,7 @@
 Imports Microsoft.VisualBasic.Linq
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
-Public Module Extensions
+Public Module RScripts
 
     Public Const NULL As String = "NULL"
     ''' <summary>
@@ -68,5 +68,9 @@ Public Module Extensions
     ''' <returns></returns>
     Public Function median(x As String) As String
         Return $"media({x})"
+    End Function
+
+    Public Function library([lib] As String) As String
+        Return $"library({[lib]})"
     End Function
 End Module

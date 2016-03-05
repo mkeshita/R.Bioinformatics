@@ -1,6 +1,7 @@
 ﻿Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
@@ -39,7 +40,8 @@ Namespace Services.ScriptBuilder
             End If
 
             Dim props = (From prop As PropertyInfo In type.GetProperties
-                         Where prop.CanRead
+                         Where prop.GetAttribute(Of Ignored) Is Nothing AndAlso
+                             prop.CanRead
                          Let param As Parameter = prop.GetAttribute(Of Parameter)
                          Select prop,
                              func = prop.__getName(param),
