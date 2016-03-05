@@ -108,6 +108,7 @@
     <Compile Include="R.Extension\RSyntax\Vectors\GenericVector%28Of T%29.vb" />
     <Compile Include="R.Extension\RSyntax\Vectors\VECTOR.vb" />
     <Compile Include="R.Extension\REngine.vb" />
+    <Compile Include="Services\ScriptBuilder\BuilderAPI.vb" />
     <Compile Include="Services\Serialization.vb" />
     <Compile Include="R.Extension\System.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
