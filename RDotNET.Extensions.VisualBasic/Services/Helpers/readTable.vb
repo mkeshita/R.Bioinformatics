@@ -38,11 +38,30 @@ Namespace utils.read.table
 
         End Function
     End Class
-read.csv(file, header = TRUE, sep = ",", quote = "\"",
-         dec = ".", fill = TRUE, comment.char = "", ...)
+    Public Class readcsv: Inherits IRProvider 
 
-read.csv2(file, header = TRUE, sep = ";", quote = "\"",
-          dec = ",", fill = TRUE, comment.char = "", ...)
+        Public Property file
+        Public Property header = True
+        Public Property sep = Rstring ( ",")
+        Public Property quote = Rstring ( "\""")
+     Public Property            dec =Rstring ( ".")
+         Public Property    fill As bool  =bool . TRUE
+ < Parameter ("comment.char")>    Public Property   commentChar As  String  = rstring ( "")
+
+        Public Overrides Function RScript() As String
+           
+        End Function
+    end class 
+
+public Class readcsv2
+      Public Property   file
+         Public Property    header = TRUE
+          Public Property   sep = ";"
+        Public Property quote = "\"""
+        Public Property dec = Rstring(",")
+        Public Property   fill = True
+        <Parameter("comment.char")> Public Property commentChar = Rstring("")
+    End class 
 
 read.delim(file, header = TRUE, sep = "\t", quote = "\"",
            dec = ".", fill = TRUE, comment.char = "", ...)
