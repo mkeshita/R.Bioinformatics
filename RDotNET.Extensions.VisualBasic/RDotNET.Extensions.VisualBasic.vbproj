@@ -94,13 +94,10 @@
     <Compile Include="Services\ScriptBuilder\Helpers\Decorates.vb" />
     <Compile Include="Services\Abstract\IScriptProvider.vb" />
     <Compile Include="Services\RPackage\utils\readTable.vb" />
-    <Compile Include="Packages\Graphics\GraphicsDevice.vb" />
-    <Compile Include="Packages\Graphics\PieChart.vb" />
+    <Compile Include="Services\RPackage\Graphics\GraphicsDevice.vb" />
+    <Compile Include="Services\RPackage\Graphics\PieChart.vb" />
     <Compile Include="Services\RPackage\Extensions.vb" />
     <Compile Include="Services\Abstract\IRScript.vb" />
-    <Compile Include="Packages\BnLearn\BnlearnInference.vb" />
-    <Compile Include="Packages\BnLearn\BnlearnModelling.vb" />
-    <Compile Include="Packages\BnLearn\NetworkParameters.vb" />
     <Compile Include="R.Extension\RSyntax\Math\Math.vb" />
     <Compile Include="R.Extension\RSyntax\Math\Poisson.vb" />
     <Compile Include="R.Extension\RSyntax\Math\Skellam.vb" />
