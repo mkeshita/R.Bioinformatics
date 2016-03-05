@@ -1,4 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
+Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
+Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
 Namespace utils.read.table
 
@@ -9,33 +11,33 @@ Namespace utils.read.table
     Public Class readTable : Inherits IRProvider
 
         Public Property file As String
-        Public Property header As bool = bool.[FALSE]
-        Public Property sep = Rstring("")
-        Public Property quote = Rstring("\""'")
-        Public Property dec = Rstring(".")
-        Public Property numerals = c("allow.loss", "warn.loss", "no.loss")
-        <Parameter("row.names")> Public Property rowNames
-        <Parameter("col.names")> Public Property colNames
-        <Parameter("as.is")> Public Property asIs = "!stringsAsFactors"
-        <Parameter("na.strings")> Public Property naStrings = Rstring("NA")
-        Public Property colClasses = NA
-        Public Property nrows = -1
-        Public Property skip = 0
-        <Parameter("check.names")> Public Property checkNames As bool = bool.TRUE
-        Public Property fill = "!blank.lines.skip"
-        <Parameter("strip.white")> Public Property stripWhite As bool = bool.FALSE
-        <Parameter("blank.lines.skip")> Public Property blankLinesSkip As bool = bool.TRUE
-        <Parameter("comment.char")> Public Property commentChar = Rstring("#")
-        Public Property allowEscapes As bool = bool.FALSE
-        Public Property flush As bool = bool.FALSE
-        Public Property stringsAsFactors = "default.stringsAsFactors()"
-        Public Property fileEncoding = Rstring("")
-        Public Property encoding = Rstring("unknown")
-        Public Property text
-        Public Property skipNul As bool = bool.FALSE
+        Public Property header As Boolean = False
+        Public Property sep As String = ""
+        Public Property quote As String = "\""'"
+        Public Property dec As String = "."
+        Public Property numerals As String = c("allow.loss", "warn.loss", "no.loss")
+        <Parameter("row.names")> Public Property rowNames As String
+        <Parameter("col.names")> Public Property colNames As String
+        <Parameter("as.is")> Public Property asIs As RExpression = "!stringsAsFactors"
+        <Parameter("na.strings")> Public Property naStrings As String = NA
+        Public Property colClasses As RExpression = NA
+        Public Property nrows As Integer = -1
+        Public Property skip As Integer = 0
+        <Parameter("check.names")> Public Property checkNames As Boolean = True
+        Public Property fill As RExpression = "!blank.lines.skip"
+        <Parameter("strip.white")> Public Property stripWhite As Boolean = False
+        <Parameter("blank.lines.skip")> Public Property blankLinesSkip As Boolean = True
+        <Parameter("comment.char")> Public Property commentChar As String = "#"
+        Public Property allowEscapes As Boolean = False
+        Public Property flush As Boolean = False
+        Public Property stringsAsFactors As RExpression = "default.stringsAsFactors()"
+        Public Property fileEncoding As String = ""
+        Public Property encoding As String = "unknown"
+        Public Property text As String
+        Public Property skipNul As Boolean = False
 
         Public Overrides Function RScript() As String
-
+            Return Me.GetScript
         End Function
     End Class
 

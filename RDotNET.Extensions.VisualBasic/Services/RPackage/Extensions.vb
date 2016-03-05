@@ -3,12 +3,10 @@ Imports Microsoft.VisualBasic.Linq
 
 Public Module Extensions
 
-    Public Const NA = Nothing
-
     ''' <summary>
     ''' "NA" 字符串，而不是NA空值常量
     ''' </summary>
-    Public Const NAstrings As String = """NA"""
+    Public Const NA As String = "NA"
     Public Const [TRUE] As String = "TRUE"
     Public Const [FALSE] As String = "FALSE"
 

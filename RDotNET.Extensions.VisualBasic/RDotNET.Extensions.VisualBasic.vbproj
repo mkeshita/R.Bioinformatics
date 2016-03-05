@@ -86,16 +86,16 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Services\Helpers\README.txt" />
+    <Content Include="Services\ScriptBuilder\Helpers\README.txt" />
     <Content Include="R.Extension\RSyntax\README.txt" />
-    <Compile Include="Services\Helpers\bool.vb" />
-    <Compile Include="Services\Helpers\Parameter.vb" />
-    <Compile Include="Services\IScriptProvider.vb" />
-    <Compile Include="Services\Helpers\readTable.vb" />
+    <Compile Include="Services\ScriptBuilder\Helpers\RTypes.vb" />
+    <Compile Include="Services\ScriptBuilder\Helpers\Decorates.vb" />
+    <Compile Include="Services\Abstract\IScriptProvider.vb" />
+    <Compile Include="Services\RPackage\readTable.vb" />
     <Compile Include="Packages\Graphics\GraphicsDevice.vb" />
     <Compile Include="Packages\Graphics\PieChart.vb" />
-    <Compile Include="Services\Helpers\Extensions.vb" />
-    <Compile Include="Services\IRScript.vb" />
+    <Compile Include="Services\RPackage\Extensions.vb" />
+    <Compile Include="Services\Abstract\IRScript.vb" />
     <Compile Include="Packages\BnLearn\BnlearnInference.vb" />
     <Compile Include="Packages\BnLearn\BnlearnModelling.vb" />
     <Compile Include="Packages\BnLearn\NetworkParameters.vb" />
