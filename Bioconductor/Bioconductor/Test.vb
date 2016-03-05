@@ -1,5 +1,6 @@
 ﻿Imports RDotNET.Extensions.Bioinformatics
 Imports RDotNET.Extensions.VisualBasic
+Imports RDotNET.Extensions.VisualBasic.grDevices
 Imports RDotNET.Extensions.VisualBasic.utils.read.table
 Imports SMRUCC.R.CRAN.Bioconductor.Web
 Imports SMRUCC.R.CRAN.Bioconductor.Web.Packages
@@ -12,7 +13,7 @@ Module Test
             .dataset = New readcsv("E:\R.Bioinformatics\datasets\ppg2008.csv"),
             .heatmap = New stats.heatmap,
             .kmeans = New stats.kmeans,
-            .tiff = "x:/ffff.tiff"
+            .image = New tiff("x:/ffff.tiff")
         }
 
         Dim r As String = hm.RScript

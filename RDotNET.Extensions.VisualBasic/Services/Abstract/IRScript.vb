@@ -26,6 +26,17 @@ Public MustInherit Class IRScript : Inherits IRProvider
     End Property
 
     ''' <summary>
+    ''' 这个函数会自动添加library包，继承类只需要复写<see cref="__r_script"/>方法即可
+    ''' </summary>
+    ''' <returns></returns>
+    Public NotOverridable Overrides Function RScript() As String
+        Dim libraries As String() = Requires.ToArray(Function(name) $"library({name})")
+        Return libraries.JoinBy(vbCrLf) & vbCrLf & vbCrLf & __R_script()
+    End Function
+
+    Protected MustOverride Function __R_script() As String
+
+    ''' <summary>
     ''' 保存脚本文件到文件系统之上
     ''' </summary>
     ''' <param name="FilePath"></param>
@@ -39,9 +50,7 @@ Public MustInherit Class IRScript : Inherits IRProvider
     End Function
 
     Private Function __save(path As String) As Boolean
-        Dim libraries As String() = Requires.ToArray(Function(name) $"library({name})")
-        Dim Rscript As String = libraries.JoinBy(vbCrLf) & vbCrLf & vbCrLf & Me.RScript
-        Return Rscript.SaveTo(path, Encoding.ASCII)  ' 好像R只能够识别ASCII的脚本文件
+        Return RScript.SaveTo(path, Encoding.ASCII)  ' 好像R只能够识别ASCII的脚本文件
     End Function
 
 #Region "IDisposable Support"

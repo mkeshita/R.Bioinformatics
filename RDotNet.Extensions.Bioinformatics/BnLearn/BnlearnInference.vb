@@ -21,7 +21,7 @@ Namespace bnlearn
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overrides Function RScript() As String
+        Protected Overrides Function __R_script() As String
             Dim scriptBuilder As StringBuilder = New StringBuilder(4096)
 
             'cpquery(fitted, (B == "b"), (A == "a"))

@@ -38,7 +38,7 @@ Namespace bnlearn
             Return TempData
         End Function
 
-        Public Overrides Function RScript() As String
+        Protected Overrides Function __R_script() As String
             Dim scriptBuilder As StringBuilder = New StringBuilder(4096)
             Call scriptBuilder.AppendLine("library(bnlearn)")
             Call scriptBuilder.AppendLine(createNetwork(NetworkData))

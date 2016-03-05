@@ -34,7 +34,7 @@ Namespace bnlearn
             Return LQuery
         End Function
 
-        Public Overrides Function RScript() As String
+        Protected Overrides Function __R_script() As String
             Return BayesianNetworkObject
         End Function
     End Class

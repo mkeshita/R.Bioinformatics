@@ -5,6 +5,7 @@ Imports RDotNet.Extensions.VisualBasic
 Imports RDotNet.Extensions.VisualBasic.utils.read.table
 Imports RDotNet.Extensions.VisualBasic.stats
 Imports RDotNet.Extensions.VisualBasic.Graphics
+Imports RDotNet.Extensions.VisualBasic.grDevices
 
 Public Class Heatmap : Inherits IRScript
 
@@ -27,7 +28,7 @@ Public Class Heatmap : Inherits IRScript
     ''' tiff文件的输出路径
     ''' </summary>
     ''' <returns></returns>
-    Public Property tiff As String
+    Public Property image As grDevice
 
     Private Function __getRowNames() As String
         Dim col As String = rowNameMaps
@@ -54,7 +55,7 @@ Public Class Heatmap : Inherits IRScript
     ''' <remarks>
     ''' http://joseph.yy.blog.163.com/blog/static/50973959201285102114376/
     ''' </remarks>
-    Public Overrides Function RScript() As String
+    Protected Overrides Function __R_script() As String
         Dim script As StringBuilder = New StringBuilder()
         Call script.AppendLine($"{df} <- " & dataset)
         Call script.AppendLine($"row.names({df}) <- {df}${__getRowNames()}")
@@ -75,7 +76,7 @@ Public Class Heatmap : Inherits IRScript
         heatmap.revC = [TRUE]
         heatmap.scale = "column"
 
-        Call script.AppendLine(GraphicsDevice.tiff(heatmap, tiff))
+        Call script.AppendLine(image.Plot(heatmap))
 
         Return script.ToString
     End Function
