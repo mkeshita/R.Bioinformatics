@@ -51,6 +51,9 @@ Namespace Services.ScriptBuilder
         [Path]
     End Enum
 
+    ''' <summary>
+    ''' Declaring a R function entry point.
+    ''' </summary>
     <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Struct, AllowMultiple:=False, Inherited:=True)>
     Public Class RFunc : Inherits RAttribute
 

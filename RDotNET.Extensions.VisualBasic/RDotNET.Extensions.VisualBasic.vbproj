@@ -88,6 +88,7 @@
   <ItemGroup>
     <Content Include="Services\ScriptBuilder\Helpers\README.txt" />
     <Content Include="R.Extension\RSyntax\README.txt" />
+    <Compile Include="Services\RPackage\stats\heatmap.vb" />
     <Compile Include="Services\RPackage\stats\kmeans.vb" />
     <Compile Include="Services\ScriptBuilder\Helpers\RTypes.vb" />
     <Compile Include="Services\ScriptBuilder\Helpers\Decorates.vb" />

@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Public Module Extensions
 
+    Public Const NULL As String = "NULL"
     ''' <summary>
     ''' "NA" 字符串，而不是NA空值常量
     ''' </summary>
@@ -35,6 +36,10 @@ Public Module Extensions
     Public Function c(ParamArray x As String()) As String
         Dim cx As String = String.Join(", ", x.ToArray(Function(s) $"""{s}"""))
         Return $"c({cx})"
+    End Function
+
+    Public Function getOption(verbose As String) As String
+        Return $"getOption(""{verbose}"")"
     End Function
 
     Public Function Rstring(s As String) As String
