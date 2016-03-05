@@ -5,14 +5,10 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 ''' R脚本的数据模型对象的接口
 ''' </summary>
 ''' <remarks></remarks>
-Public MustInherit Class IRScript : Implements IDisposable
+Public MustInherit Class IRScript : Inherits IRProvider
+    Implements IDisposable
+    Implements IScriptProvider
 
-    ''' <summary>
-    ''' Get R Script text from this R script object build model.
-    ''' </summary>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public MustOverride Function RScript() As String
     ''' <summary>
     ''' The package names that required of this script file.
     ''' (需要加载的R的包的列表)

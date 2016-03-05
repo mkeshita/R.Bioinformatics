@@ -1,4 +1,5 @@
-﻿Imports RDotNet.Extensions.VisualBasic
+﻿Imports System.Text
+Imports RDotNet.Extensions.VisualBasic
 
 Public Class Heatmap : Inherits IRScript
 
@@ -15,6 +16,12 @@ Public Class Heatmap : Inherits IRScript
     ''' <returns></returns>
     Public Property dataset As String
 
+    ''' <summary>
+    ''' Csv文件的分隔符，默认为逗号
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property delimiter As String = ","
+
     Private Function __getRowNames() As String
         If String.IsNullOrEmpty(rowNameMaps) Then
 
@@ -22,6 +29,7 @@ Public Class Heatmap : Inherits IRScript
     End Function
 
     Public Overrides Function RScript() As String
+        Dim script As StringBuilder = New StringBuilder()
 
     End Function
 End Class

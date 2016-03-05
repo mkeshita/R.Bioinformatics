@@ -85,21 +85,26 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Services\Helpers\README.txt" />
+    <Content Include="R.Extension\RSyntax\README.txt" />
+    <Compile Include="Services\Helpers\bool.vb" />
+    <Compile Include="Services\IScriptProvider.vb" />
+    <Compile Include="Services\Helpers\readTable.vb" />
     <Compile Include="Packages\Graphics\GraphicsDevice.vb" />
     <Compile Include="Packages\Graphics\PieChart.vb" />
-    <Compile Include="R.Extension\Extensions.vb" />
+    <Compile Include="Services\Helpers\Extensions.vb" />
     <Compile Include="Services\IRScript.vb" />
     <Compile Include="Packages\BnLearn\BnlearnInference.vb" />
     <Compile Include="Packages\BnLearn\BnlearnModelling.vb" />
     <Compile Include="Packages\BnLearn\NetworkParameters.vb" />
-    <Compile Include="R.Extension\RBase\Math\Math.vb" />
-    <Compile Include="R.Extension\RBase\Math\Poisson.vb" />
-    <Compile Include="R.Extension\RBase\Math\Skellam.vb" />
-    <Compile Include="R.Extension\RBase\PrimitiveAPI\Etc.vb" />
-    <Compile Include="R.Extension\RBase\PrimitiveAPI\PrimitiveAPI.vb" />
-    <Compile Include="R.Extension\RBase\Vectors\BooleanVector.vb" />
-    <Compile Include="R.Extension\RBase\Vectors\GenericVector%28Of T%29.vb" />
-    <Compile Include="R.Extension\RBase\Vectors\VECTOR.vb" />
+    <Compile Include="R.Extension\RSyntax\Math\Math.vb" />
+    <Compile Include="R.Extension\RSyntax\Math\Poisson.vb" />
+    <Compile Include="R.Extension\RSyntax\Math\Skellam.vb" />
+    <Compile Include="R.Extension\RSyntax\PrimitiveAPI\Etc.vb" />
+    <Compile Include="R.Extension\RSyntax\PrimitiveAPI\PrimitiveAPI.vb" />
+    <Compile Include="R.Extension\RSyntax\Vectors\BooleanVector.vb" />
+    <Compile Include="R.Extension\RSyntax\Vectors\GenericVector%28Of T%29.vb" />
+    <Compile Include="R.Extension\RSyntax\Vectors\VECTOR.vb" />
     <Compile Include="R.Extension\REngine.vb" />
     <Compile Include="Services\Serialization.vb" />
     <Compile Include="R.Extension\System.vb" />
@@ -128,6 +133,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Wrapper.Designer.cd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
