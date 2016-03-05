@@ -1,7 +1,6 @@
 ﻿Imports RDotNET.Extensions.VisualBasic
 
-Public Structure bool
-    Implements IScriptProvider
+Public Structure bool : Implements IScriptProvider
 
     Public Shared ReadOnly Property [TRUE] As New bool(Extensions.TRUE)
     Public Shared ReadOnly Property [FALSE] As New bool(Extensions.FALSE)

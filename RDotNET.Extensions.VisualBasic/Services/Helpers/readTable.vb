@@ -2,35 +2,41 @@
 
 Namespace utils.read.table
 
-    ' Reads a file in table format and creates a data frame from it, with cases corresponding to lines and variables to fields in the file.
-
-    Public Class readTable
+    ''' <summary>
+    ''' [read.table]
+    ''' Reads a file in table format and creates a data frame from it, with cases corresponding to lines and variables to fields in the file.
+    ''' </summary>
+    Public Class readTable : Inherits IRProvider
 
         Public Property file As String
         Public Property header As bool = bool.[FALSE]
-        Public Property sep = ""
+        Public Property sep = Rstring("")
         Public Property quote = Rstring("\""'")
         Public Property dec = Rstring(".")
         Public Property numerals = c("allow.loss", "warn.loss", "no.loss")
         <Parameter("row.names")> Public Property rowNames
         <Parameter("col.names")> Public Property colNames
         <Parameter("as.is")> Public Property asIs = "!stringsAsFactors"
-        <Parameter("na.strings")> Public Property naStrings = "NA"
-        Public Property colClasses = na
+        <Parameter("na.strings")> Public Property naStrings = Rstring("NA")
+        Public Property colClasses = NA
         Public Property nrows = -1
         Public Property skip = 0
-        Public Property check.names = True
-                Public Property fill = !blank.lines.skip
-        Public Property strip.white = False
-                Public Property blank.lines.skip = True
-                Public Property comment.Char = "#"
-                Public Property allowEscapes = False
-        Public Property flush = False
-        Public Property stringsAsFactors = default.stringsAsFactors()
-                Public Property fileEncoding = ""
-        Public Property encoding = "unknown"
+        <Parameter("check.names")> Public Property checkNames As bool = bool.TRUE
+        Public Property fill = "!blank.lines.skip"
+        <Parameter("strip.white")> Public Property stripWhite As bool = bool.FALSE
+        <Parameter("blank.lines.skip")> Public Property blankLinesSkip As bool = bool.TRUE
+        <Parameter("comment.char")> Public Property commentChar = Rstring("#")
+        Public Property allowEscapes As bool = bool.FALSE
+        Public Property flush As bool = bool.FALSE
+        Public Property stringsAsFactors = "default.stringsAsFactors()"
+        Public Property fileEncoding = Rstring("")
+        Public Property encoding = Rstring("unknown")
         Public Property text
-        Public Property skipNul = False
+        Public Property skipNul As bool = bool.FALSE
+
+        Public Overrides Function RScript() As String
+
+        End Function
     End Class
 read.csv(file, header = TRUE, sep = ",", quote = "\"",
          dec = ".", fill = TRUE, comment.char = "", ...)
