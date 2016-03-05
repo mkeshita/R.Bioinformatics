@@ -67,6 +67,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -88,6 +89,7 @@
     <Content Include="Services\Helpers\README.txt" />
     <Content Include="R.Extension\RSyntax\README.txt" />
     <Compile Include="Services\Helpers\bool.vb" />
+    <Compile Include="Services\Helpers\Parameter.vb" />
     <Compile Include="Services\IScriptProvider.vb" />
     <Compile Include="Services\Helpers\readTable.vb" />
     <Compile Include="Packages\Graphics\GraphicsDevice.vb" />

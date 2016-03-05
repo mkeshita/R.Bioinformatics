@@ -12,11 +12,11 @@ Namespace utils.read.table
         Public Property quote = Rstring("\""'")
         Public Property dec = Rstring(".")
         Public Property numerals = c("allow.loss", "warn.loss", "no.loss")
-        <column("")> Public Property row.names
-             Public Property col.names
-              Public Property as.Is = !stringsAsFactors
-        Public Property na.strings = "NA"
-               Public Property colClasses = na
+        <Parameter("row.names")> Public Property rowNames
+        <Parameter("col.names")> Public Property colNames
+        <Parameter("as.is")> Public Property asIs = "!stringsAsFactors"
+        <Parameter("na.strings")> Public Property naStrings = "NA"
+        Public Property colClasses = na
         Public Property nrows = -1
         Public Property skip = 0
         Public Property check.names = True

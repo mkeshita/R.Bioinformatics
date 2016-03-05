@@ -89,10 +89,10 @@ Namespace RBase
         ''' 
         <ExportAPI("Warning")>
         Public Function warning(args As Generic.IEnumerable(Of Object),
-                            <Parameter("call.", "logical, indicating if the call should become part of the warning message.")> Optional [Call] As Boolean = True,
-                            <Parameter("immediate.", "logical, indicating if the call should be output immediately, even if getOption(""warn"") <= 0.")> Optional immediate As Boolean = False,
-                            <Parameter("noBreaks.", "logical, indicating as far as possible the message should be output as a single line when options(warn = 1).")> Optional noBreaks As Boolean = False,
-                            <Parameter("domain", "see gettext. If NA, messages will not be translated, see also the note in stop.")> Optional domain As Object = NULL) As String
+                            <Scripting.MetaData.Parameter("call.", "logical, indicating if the call should become part of the warning message.")> Optional [Call] As Boolean = True,
+                            <Scripting.MetaData.Parameter("immediate.", "logical, indicating if the call should be output immediately, even if getOption(""warn"") <= 0.")> Optional immediate As Boolean = False,
+                            <Scripting.MetaData.Parameter("noBreaks.", "logical, indicating as far as possible the message should be output as a single line when options(warn = 1).")> Optional noBreaks As Boolean = False,
+                            <Scripting.MetaData.Parameter("domain", "see gettext. If NA, messages will not be translated, see also the note in stop.")> Optional domain As Object = NULL) As String
             Throw New NotImplementedException
         End Function
 
@@ -135,7 +135,7 @@ Namespace RBase
         ''' 
         <ExportAPI("Any")>
         Public Function Any(x As BooleanVector,
-                            <Parameter("na.rm", "logical. If true NA values are removed before the result is computed.")>
+                            <Scripting.MetaData.Parameter("na.rm", "logical. If true NA values are removed before the result is computed.")>
                             Optional NaRM As Boolean = False) As BooleanVector
 
             If NaRM Then
@@ -160,7 +160,7 @@ Namespace RBase
         ''' 
         <ExportAPI("All")>
         Public Function All(x As BooleanVector,
-                            <Parameter("na.rm", "logical. If true NA values are removed before the result is computed.")>
+                            <Scripting.MetaData.Parameter("na.rm", "logical. If true NA values are removed before the result is computed.")>
                             Optional NaRM As Boolean = False) As BooleanVector
             If NaRM Then
 
@@ -211,7 +211,7 @@ Namespace RBase
         ''' 
         <ExportAPI("Rep")>
         Public Function Rep(x As Vector,
-                        <Parameter("length.out", "non-negative integer: the desired length of the output vector.")> Optional LengthOut As Integer = 0) As Vector
+                        <Scripting.MetaData.Parameter("length.out", "non-negative integer: the desired length of the output vector.")> Optional LengthOut As Integer = 0) As Vector
 
             Dim data As Double() = DirectCast(x.Elements.Clone, Double())
 
@@ -232,7 +232,7 @@ Namespace RBase
         ''' 
         <ExportAPI("Rep")>
         Public Function Rep(x As BooleanVector,
-                        <Parameter("length.out", "non-negative integer: the desired length of the output vector.")> Optional LengthOut As Integer = 0) As BooleanVector
+                        <Scripting.MetaData.Parameter("length.out", "non-negative integer: the desired length of the output vector.")> Optional LengthOut As Integer = 0) As BooleanVector
 
             Dim data As Boolean() = DirectCast(x.Elements.Clone, Boolean())
 

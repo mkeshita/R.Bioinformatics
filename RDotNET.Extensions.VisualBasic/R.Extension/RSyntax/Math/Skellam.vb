@@ -31,10 +31,10 @@ Wikipedia: Skellam distribution: http://en.wikipedia.org/wiki/Skellam_distributi
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("dskellam.sp", Info:="Density, distribution function, quantile function and random number generation for the Skellam distribution with parameters lambda1 and lambda2. ")>
-        Public Function DskellamSp(<Parameter("X", "Vector of quantiles")> x As Vector,
-                               <Parameter("lambda1", "vectors of (non-negative) means.")> lambda1 As Vector,
-                               <Parameter("lambda2", "vectors of (non-negative) means.")> Optional lambda2 As Vector = Nothing,
-                               <Parameter("log", "logical; if TRUE, probabilities p are given as log(p).")> Optional log As Boolean = False) As Vector
+        Public Function DskellamSp(<Scripting.MetaData.Parameter("X", "Vector of quantiles")> x As Vector,
+                               <Scripting.MetaData.Parameter("lambda1", "vectors of (non-negative) means.")> lambda1 As Vector,
+                               <Scripting.MetaData.Parameter("lambda2", "vectors of (non-negative) means.")> Optional lambda2 As Vector = Nothing,
+                               <Scripting.MetaData.Parameter("log", "logical; if TRUE, probabilities p are given as log(p).")> Optional log As Boolean = False) As Vector
 
             If lambda2.IsNullOrEmpty Then
                 lambda2 = lambda1
@@ -135,7 +135,7 @@ Wikipedia: Skellam distribution: http://en.wikipedia.org/wiki/Skellam_distributi
         End Function
 
         <ExportAPI("pskellamSp")>
-        Public Function pskellamSp(q As Vector, lambda1 As Vector, Optional lambda2 As Vector = NULL, <Parameter("Lower.Tail")> Optional LowerTail As Boolean = True, <Parameter("log.p")> Optional logp As Boolean = False) As Vector
+        Public Function pskellamSp(q As Vector, lambda1 As Vector, Optional lambda2 As Vector = NULL, <Scripting.MetaData.Parameter("Lower.Tail")> Optional LowerTail As Boolean = True, <Scripting.MetaData.Parameter("log.p")> Optional logp As Boolean = False) As Vector
 
             If Missing(lambda2) Then
                 lambda2 = lambda1

@@ -39,7 +39,7 @@ Public Module Serialization
     ''' <remarks></remarks>
     ''' 
     <ExportAPI("RStream.Load")>
-    Public Function LoadRStream(<Parameter("R.S4Object")> RData As RDotNET.SymbolicExpression, Type As Type) As Object
+    Public Function LoadRStream(<Scripting.MetaData.Parameter("R.S4Object")> RData As RDotNET.SymbolicExpression, Type As Type) As Object
         Dim value As Object = __loadFromStream(RData, Type, 1)
         Return value
     End Function

@@ -88,7 +88,7 @@ Namespace RBase.MathExtension
         ''' 
         <ExportAPI("Besseli")>
         Public Function BesselI(x As Vector, nu As Vector,
-                            <Parameter("expon.scaled", "logical; if TRUE, the results are exponentially scaled in order to avoid overflow (I(nu)) or underflow (K(nu)), respectively.")>
+                            <Scripting.MetaData.Parameter("expon.scaled", "logical; if TRUE, the results are exponentially scaled in order to avoid overflow (I(nu)) or underflow (K(nu)), respectively.")>
                             Optional ExponScaled As Boolean = False) As Vector
             Throw New NotImplementedException
         End Function
