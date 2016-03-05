@@ -1,5 +1,6 @@
 ﻿Imports System.Text
 Imports RDotNet.Extensions.VisualBasic
+Imports RDotNet.Extensions.VisualBasic.utils.read.table
 
 Public Class Heatmap : Inherits IRScript
 
@@ -14,13 +15,7 @@ Public Class Heatmap : Inherits IRScript
     ''' Csv文件的文件路径
     ''' </summary>
     ''' <returns></returns>
-    Public Property dataset As String
-
-    ''' <summary>
-    ''' Csv文件的分隔符，默认为逗号
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property delimiter As String = ","
+    Public Property dataset As readcsv
 
     Private Function __getRowNames() As String
         If String.IsNullOrEmpty(rowNameMaps) Then

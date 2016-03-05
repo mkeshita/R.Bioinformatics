@@ -26,6 +26,10 @@ Namespace Services.ScriptBuilder.RTypes
             __value = R
         End Sub
 
+        Sub New(R As IRToken)
+            __value = R.RScript
+        End Sub
+
         Public Function RScript() As String Implements IScriptProvider.RScript
             Return __value
         End Function

@@ -1,5 +1,6 @@
 ﻿Imports RDotNET.Extensions.VisualBasic
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
+Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
 ''' <summary>
 ''' 一个提供脚本语句的最基本的抽象对象
@@ -20,12 +21,19 @@ Public MustInherit Class IRProvider
     End Function
 End Class
 
+''' <summary>
+''' R之中的单步函数调用
+''' </summary>
 Public Class IRToken : Inherits IRProvider
     Implements IScriptProvider
 
     Public Overrides Function RScript() As String
         Return Me.GetScript([GetType])
     End Function
+
+    Public Shared Narrowing Operator CType(token As IRToken) As RExpression
+        Return New RExpression(token.RScript)
+    End Operator
 End Class
 
 Public Interface IScriptProvider
