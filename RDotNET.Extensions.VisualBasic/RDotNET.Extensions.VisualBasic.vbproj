@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="Packages\Graphics\GraphicsDevice.vb" />
     <Compile Include="Packages\Graphics\PieChart.vb" />
+    <Compile Include="R.Extension\Extensions.vb" />
     <Compile Include="Services\IRScript.vb" />
     <Compile Include="Packages\BnLearn\BnlearnInference.vb" />
     <Compile Include="Packages\BnLearn\BnlearnModelling.vb" />

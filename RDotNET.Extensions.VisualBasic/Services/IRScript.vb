@@ -1,10 +1,11 @@
-﻿Imports Microsoft.VisualBasic.Linq.Extensions
+﻿Imports System.Text
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 ''' <summary>
 ''' R脚本的数据模型对象的接口
 ''' </summary>
 ''' <remarks></remarks>
-Public MustInherit Class IRScript : Implements Global.System.IDisposable
+Public MustInherit Class IRScript : Implements IDisposable
 
     ''' <summary>
     ''' Get R Script text from this R script object build model.
@@ -13,11 +14,17 @@ Public MustInherit Class IRScript : Implements Global.System.IDisposable
     ''' <remarks></remarks>
     Public MustOverride Function RScript() As String
     ''' <summary>
-    ''' 需要加载的R的包的列表
+    ''' The package names that required of this script file.
+    ''' (需要加载的R的包的列表)
     ''' </summary>
     ''' <returns></returns>
     Public Overridable ReadOnly Property Requires As String()
 
+    ''' <summary>
+    ''' 保存脚本文件到文件系统之上
+    ''' </summary>
+    ''' <param name="FilePath"></param>
+    ''' <returns></returns>
     Public Overridable Function SaveTo(FilePath As String) As Boolean
         If String.IsNullOrEmpty(FilePath) Then
             Return False
@@ -29,9 +36,7 @@ Public MustInherit Class IRScript : Implements Global.System.IDisposable
     Private Function __save(path As String) As Boolean
         Dim libraries As String() = Requires.ToArray(Function(name) $"library({name})")
         Dim Rscript As String = libraries.JoinBy(vbCrLf) & vbCrLf & vbCrLf & Me.RScript
-        Call FileIO.FileSystem.CreateDirectory(FileIO.FileSystem.GetParentPath(path))
-        Call FileIO.FileSystem.WriteAllText(path, Rscript, append:=False, encoding:=Global.System.Text.Encoding.ASCII)
-        Return True
+        Return Rscript.SaveTo(path, Encoding.ASCII)  ' 好像R只能够识别ASCII的脚本文件
     End Function
 
 #Region "IDisposable Support"
