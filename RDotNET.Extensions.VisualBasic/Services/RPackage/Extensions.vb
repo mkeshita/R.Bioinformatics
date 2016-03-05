@@ -18,6 +18,9 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Function UnixPath(file As String, Optional extendsFull As Boolean = False) As String
+        If String.IsNullOrEmpty(file) Then
+            Return ""
+        End If
         If extendsFull Then
             file = FileIO.FileSystem.GetFileInfo(file).FullName
         End If

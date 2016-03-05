@@ -32,11 +32,12 @@ Namespace Services.ScriptBuilder
                          Where prop.CanRead
                          Let param As Parameter = prop.GetAttribute(Of Parameter)
                          Select prop,
-                         func = prop.__getName(param),
-                         param.__isOptional
+                             func = prop.__getName(param),
+                             param.__isOptional,
+                             param
                          Order By __isOptional Ascending)
             Dim parameters As String() =
-            props.ToArray(Function(x) __getExpr(token, x.prop, x.func))
+                props.ToArray(Function(x) __getExpr(token, x.prop, x.func, x.param))
             Dim script As String = $"{name}({String.Join(", " & vbCrLf, parameters)})"
             Return script
         End Function
@@ -48,16 +49,21 @@ Namespace Services.ScriptBuilder
         ''' <param name="prop"></param>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Private Function __getExpr(x As Object, prop As PropertyInfo, name As String) As String
+        Private Function __getExpr(x As Object, prop As PropertyInfo, name As String, param As Parameter) As String
             Dim value As Object = prop.GetValue(x)
-            Return $"{name}={prop.PropertyType.__getValue(value)}"
+            Dim type = If(param Is Nothing, ValueTypes.String, param.Type)
+            Return $"{name}={prop.PropertyType.__getValue(value, type)}"
         End Function
 
         <Extension>
-        Private Function __getValue(type As Type, value As Object) As String
+        Private Function __getValue(type As Type, value As Object, valueType As ValueTypes) As String
             Select Case type
                 Case GetType(String)
-                    Return Rstring(Scripting.ToString(value))
+                    If valueType = ValueTypes.Path Then
+                        Return Rstring(Scripting.ToString(value).UnixPath)
+                    Else
+                        Return Rstring(Scripting.ToString(value))
+                    End If
                 Case GetType(Boolean)
                     If True = DirectCast(value, Boolean) Then
                         Return RBoolean.TRUE.__value

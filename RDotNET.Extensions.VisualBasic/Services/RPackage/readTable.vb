@@ -8,9 +8,11 @@ Namespace utils.read.table
     ''' [read.table]
     ''' Reads a file in table format and creates a data frame from it, with cases corresponding to lines and variables to fields in the file.
     ''' </summary>
+    ''' 
+    <RFunc("read.table")>
     Public Class readTable : Inherits IRProvider
 
-        Public Property file As String
+        <Parameter("file", ValueTypes.Path)> Public Property file As String
         Public Property header As Boolean = False
         Public Property sep As String = ""
         Public Property quote As String = "\""'"
@@ -41,48 +43,52 @@ Namespace utils.read.table
         End Function
     End Class
 
+    <RFunc("read.csv")>
     Public Class readcsv : Inherits IRProvider
 
-        Public Property file
-        Public Property header = True
-        Public Property sep = Rstring(",")
-        Public Property quote = Rstring("\""")
-        Public Property dec = Rstring(".")
-        Public Property fill As bool = bool.TRUE
-        <Parameter("comment.char")> Public Property commentChar As String = Rstring("")
+        Public Property file As String
+        Public Property header As Boolean = True
+        Public Property sep As String = ","
+        Public Property quote As String = "\"""
+        Public Property dec As String = "."
+        Public Property fill As Boolean = True
+        <Parameter("comment.char")> Public Property commentChar As String = ""
 
         Public Overrides Function RScript() As String
-
+            Return Me.GetScript
         End Function
     End Class
 
+    <RFunc("read.csv2")>
     Public Class readcsv2
-        Public Property file
-        Public Property header = True
-        Public Property sep = ";"
-        Public Property quote = "\"""
-        Public Property dec = Rstring(",")
-        Public Property fill = True
-        <Parameter("comment.char")> Public Property commentChar = Rstring("")
+        Public Property file As String
+        Public Property header As Boolean = True
+        Public Property sep As String = ";"
+        Public Property quote As String = "\"""
+        Public Property dec As String = ","
+        Public Property fill As Boolean = True
+        <Parameter("comment.char")> Public Property commentChar As String = ""
     End Class
 
+    <RFunc("read.delim")>
     Public Class readdelim
-        Public Property file
-        Public Property header = True
-        Public Property sep = "\t"
-        Public Property quote = "\"""
-        Public Property dec = "."
-        Public Property fill = True
-        <Parameter("comment.char")> Public Property commentChar = ""
+        Public Property file As String
+        Public Property header As Boolean = True
+        Public Property sep As String = "\t"
+        Public Property quote As String = "\"""
+        Public Property dec As String = "."
+        Public Property fill As Boolean = True
+        <Parameter("comment.char")> Public Property commentChar As String = ""
     End Class
 
+    <RFunc("read.delim2")>
     Public Class readdelim2
-        Public Property file
-        Public Property header = True
-        Public Property sep = "\t"
-        Public Property quote = "\"""
-        Public Property dec = ","
-        Public Property fill = True
-        <Parameter("comment.char")> Public Property commentChar = ""
+        Public Property file As String
+        Public Property header As Boolean = True
+        Public Property sep As String = "\t"
+        Public Property quote As String = "\"""
+        Public Property dec As String = ","
+        Public Property fill As Boolean = True
+        <Parameter("comment.char")> Public Property commentChar As String = ""
     End Class
 End Namespace
