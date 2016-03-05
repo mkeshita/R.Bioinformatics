@@ -48,7 +48,10 @@ Namespace Services.ScriptBuilder
                          Order By __isOptional Ascending)
             Dim parameters As String() =
                 props.ToArray(Function(x) __getExpr(token, x.prop, x.func, x.param))
-            Dim script As String = $"{name}({String.Join(", " & vbCrLf, parameters)})"
+            Dim script As String =
+                $"{name}({String.Join(", " & vbCrLf, (From p As String
+                                                      In parameters
+                                                      Where Not String.IsNullOrEmpty(p) Select p).ToArray)})"
             Return script
         End Function
 
@@ -75,11 +78,20 @@ Namespace Services.ScriptBuilder
         Private Function __getExpr(x As Object, prop As PropertyInfo, name As String, param As Parameter) As String
             Dim value As Object = prop.GetValue(x)
             Dim type = If(param Is Nothing, ValueTypes.String, param.Type)
-            Return $"{name}={prop.PropertyType.__getValue(value, type)}"
+            Dim s As String = prop.PropertyType.__getValue(value, type)
+            If String.IsNullOrEmpty(s) Then
+                Return ""
+            Else
+                Return $"{name}={s}"
+            End If
         End Function
 
         <Extension>
         Private Function __getValue(type As Type, value As Object, valueType As ValueTypes) As String
+            If value Is Nothing Then
+                Return Nothing
+            End If
+
             Select Case type
                 Case GetType(String)
                     If valueType = ValueTypes.Path Then
@@ -94,7 +106,7 @@ Namespace Services.ScriptBuilder
                         Return RBoolean.FALSE.__value
                     End If
                 Case GetType(RExpression)
-                    Return DirectCast(value, RExpression).__value
+                    Return DirectCast(value, RExpression).RScript
                 Case Else
                     Return Scripting.ToString(value)
             End Select

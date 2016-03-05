@@ -18,7 +18,8 @@ Namespace Services.ScriptBuilder.RTypes
         End Function
     End Structure
 
-    Public Structure RExpression : Implements IScriptProvider
+    Public Class RExpression : Inherits IRToken
+        Implements IScriptProvider
 
         ReadOnly __value As String
 
@@ -30,7 +31,7 @@ Namespace Services.ScriptBuilder.RTypes
             __value = R.RScript
         End Sub
 
-        Public Function RScript() As String Implements IScriptProvider.RScript
+        Public Overrides Function RScript() As String Implements IScriptProvider.RScript
             Return __value
         End Function
 
@@ -41,5 +42,5 @@ Namespace Services.ScriptBuilder.RTypes
         Public Shared Widening Operator CType(R As String) As RExpression
             Return New RExpression(R)
         End Operator
-    End Structure
+    End Class
 End Namespace

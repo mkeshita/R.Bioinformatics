@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Tokenizer
 Imports RDotNet.Extensions.VisualBasic
 Imports RDotNet.Extensions.VisualBasic.utils.read.table
 Imports RDotNet.Extensions.VisualBasic.stats
+Imports RDotNet.Extensions.VisualBasic.Graphics
 
 Public Class Heatmap : Inherits IRScript
 
@@ -22,6 +23,11 @@ Public Class Heatmap : Inherits IRScript
 
     Public Property kmeans As kmeans
     Public Property heatmap As stats.heatmap
+    ''' <summary>
+    ''' tiff文件的输出路径
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property tiff As String
 
     Private Function __getRowNames() As String
         Dim col As String = rowNameMaps
@@ -57,7 +63,7 @@ Public Class Heatmap : Inherits IRScript
         Call script.AppendLine($"dfc <- cbind ({df}, Cluster= k$cluster)")
         Call script.AppendLine("dfc <- dfc[order(dfc$Cluster),]")
         Call script.AppendLine("dfc.m <- data.matrix(dfc)")
-
+        Call script.AppendLine(GraphicsDevice.tiff(heatmap, tiff))
 
         Return script.ToString
     End Function
