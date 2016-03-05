@@ -40,7 +40,7 @@ Public Class IRToken : Inherits IRProvider
     End Operator
 
     Public Shared Operator &(script As String, token As IRToken) As String
-        Return token.RScript & script
+        Return script & token.RScript
     End Operator
 End Class
 

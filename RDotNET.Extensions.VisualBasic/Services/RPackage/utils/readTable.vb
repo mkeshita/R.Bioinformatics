@@ -49,6 +49,13 @@ Namespace utils.read.table
         Public Property dec As String = "."
         Public Property fill As Boolean = True
         <Parameter("comment.char")> Public Property commentChar As String = ""
+
+        Sub New()
+        End Sub
+
+        Sub New(file As String)
+            Me.file = file
+        End Sub
     End Class
 
     <RFunc("read.csv2")>

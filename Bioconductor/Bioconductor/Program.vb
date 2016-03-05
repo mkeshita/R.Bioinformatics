@@ -11,12 +11,8 @@ Imports System.Threading
 Module Program
 
     Public Sub Main()
-
-        Dim tb As New utils.read.table.readTable
-        Dim d As String = tb.RScript
-
-        '  Call Test.Main()
         Call RSystem.InitDefault()
+        Call Test.Main()
 
         Dim splash As New bioc
         Call RunTask(AddressOf splash.ShowDialog)
