@@ -59,10 +59,22 @@ Public Class Heatmap : Inherits IRScript
         Call script.AppendLine($"{df} <- " & dataset)
         Call script.AppendLine($"row.names({df}) <- {df}${__getRowNames()}")
         Call script.AppendLine($"{df}<-{df}[,-1]")
+
+        kmeans.x = df
+        kmeans.centers = 5
+
         Call script.AppendLine($"k <- {kmeans}")
         Call script.AppendLine($"dfc <- cbind ({df}, Cluster= k$cluster)")
         Call script.AppendLine("dfc <- dfc[order(dfc$Cluster),]")
         Call script.AppendLine("dfc.m <- data.matrix(dfc)")
+
+        heatmap.x = "dfc.m"
+        heatmap.Rowv = NA
+        heatmap.Colv = NA
+        heatmap.Colv = "rev(brewer.pal(10,""RdYlBu""))"
+        heatmap.revC = [TRUE]
+        heatmap.scale = "column"
+
         Call script.AppendLine(GraphicsDevice.tiff(heatmap, tiff))
 
         Return script.ToString
