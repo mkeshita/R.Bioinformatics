@@ -36,6 +36,10 @@ Public MustInherit Class IRProvider
     Public Overrides Function ToString() As String
         Return RScript()
     End Function
+
+    Public Shared Narrowing Operator CType(R As IRProvider) As String
+        Return R.RScript
+    End Operator
 End Class
 
 ''' <summary>
