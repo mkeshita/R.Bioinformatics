@@ -89,49 +89,16 @@ dev.off()
 
         Public Shared Function TreeBuilder(result As String) As TreeNode(Of Integer)
             result = result.Replace("list", "")
-
-
-
+            Call result.__DEBUG_ECHO
             Dim node As TreeNode(Of Integer) = New TreeNode(Of Integer)
-
             Call newickParser(result, New Dictionary(Of String, String), node)
-
-            Call parser(result.ToArray, New Pointer(Of Char), node, New List(Of Char))
             Return node
         End Function
-
-        Private Shared Sub parser(expr As Char(), p As Pointer(Of Char), ByRef parent As TreeNode(Of Integer), cache As List(Of Char))
-            Dim curr As Char = expr + p
-
-            If curr = "("c Then
-                Dim child As New TreeNode(Of Integer)("Path", -100)
-                parent += child
-                Call parser(expr, p, child, New List(Of Char))
-            ElseIf curr = ")"c Then
-                Dim s As String = New String(cache.ToArray)
-                Dim child As New TreeNode(Of Integer)("Node", Scripting.CastInteger(s))
-                parent += child
-                Return
-            ElseIf curr = " "c Then
-                Call parser(expr, p, parent, cache)
-            ElseIf curr = ","c Then
-                Dim s As String = New String(cache.ToArray)
-                Dim child As New TreeNode(Of Integer)("Node", Scripting.CastInteger(s))
-                parent += child
-                Call parser(expr, p, parent, New List(Of Char))
-            Else
-                Call cache.Add(curr)
-                Call parser(expr, p, parent, cache)
-            End If
-        End Sub
     End Class
 
     ' oct 20, 2013: some regular expression stuff
-    Friend RegExpFloat As New System.Text.RegularExpressions.Regex("(\d+\.?\d*)")
-    Friend MatchLeftBracket As New System.Text.RegularExpressions.Regex("\[")
-
-    Dim serial_internal_node As Integer
-    Dim serial_leaf_node As Integer
+    Friend RegExpFloat As New Regex("(\d+\.?\d*)")
+    Friend MatchLeftBracket As New Regex("\[")
 
     ''' <summary>
     ''' created: Oct 20, 2013 : a better and easier to maintain parser for newick and nexus trees
@@ -284,12 +251,9 @@ dev.off()
                     ' make daugher nodes
                     Dim daughter = sb.ToString()
                     If leftParenthesis > 0 AndAlso commas > 0 Then
-                        serial_internal_node += 1
-                        'System.out.println( serial_internal_node + "  " + daughter );
-                        newickParser(daughter, hashTranslate, MakeNewInternalNode("", "INT" & serial_internal_node, False, iNode))
+                        newickParser(daughter, hashTranslate, MakeNewInternalNode("", False, iNode))
                     Else
                         ' a leaf daughter 
-                        serial_leaf_node += 1
                         ' parse information for current daughter node
                         parseInforAndMakeNewLeafNode(daughter, hashTranslate, iNode)
                     End If
@@ -328,13 +292,10 @@ dev.off()
             ' deal with the last daughter 
             Dim LastDaughter As String = sb.ToString()
             If leftParenthesis > 0 AndAlso commas > 0 Then
-                serial_internal_node += 1
-
-                'System.out.println( serial_internal_node + "  " + daughter );
-                newickParser(LastDaughter, hashTranslate, MakeNewInternalNode("", "INT" & serial_internal_node, False, iNode))
+                newickParser(LastDaughter, hashTranslate, MakeNewInternalNode("", False, iNode))
             Else
                 ' a leaf daughter 
-                serial_leaf_node += 1
+
                 ' parse information for current daughter node
                 parseInforAndMakeNewLeafNode(LastDaughter, hashTranslate, iNode)
 
@@ -347,17 +308,12 @@ dev.off()
     ''' Dec 5, 2011; can be used to make rootnode
     ''' </summary>
     ''' <param name="id"></param>
-    ''' <param name="internal_id"></param>
     ''' <param name="isroot"></param>
     ''' <param name="parentnode"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Private Function MakeNewInternalNode(id As String, internal_id As String, isroot As Boolean, ByRef parentnode As PhyloNode) As PhyloNode
+    Private Function MakeNewInternalNode(id As String, isroot As Boolean, ByRef parentnode As PhyloNode) As PhyloNode
         Dim NewNodeObject As New PhyloNode(id, -1)
-        '    NewNodeObject.Value = CInt(internal_id)
-        '   NewNodeObject.Value = CInt(id)
-
-        'System.out.println(id + " = " + internal_id);
 
         ' dec 5, 2011
         If Not isroot AndAlso parentnode IsNot Nothing Then
@@ -384,38 +340,25 @@ dev.off()
         ' 4. A:0.1 - named leaf node with branch length
         If leafstr.Length = 0 Then
             ' case 1
-            makeNewLeafNode("", 0, iNode, serial_leaf_node)
+            makeNewLeafNode("", iNode)
         Else
             ' split it into two parts
             Dim parts As String() = leafstr.StringSplit(":", True)
-            Dim branchlength As Single = 0
-            ' first do part2, check if it has branch length
-            If parts.Length >= 2 Then
-                Dim part2 As String = parts(1)
-                If Not part2.Length = 0 Then
-                    Try
-                        branchlength = Convert.ToSingle(part2)
-
-                        ' do nothing
-                    Catch
-                    End Try
-                End If
-            End If
 
             ' now deal with part 1, two possibilities: named / unamed leaf node
             Dim part1 As String = parts(0)
             If part1.Length = 0 Then
-                makeNewLeafNode("", branchlength, iNode, serial_leaf_node)
+                makeNewLeafNode("", iNode)
             Else
                 Dim leafNodeName As String = part1.Replace("'", "").Replace("""", "")
                 leafNodeName = If((hashTranslate IsNot Nothing AndAlso hashTranslate.ContainsKey(leafNodeName)), hashTranslate(leafNodeName), leafNodeName)
-                makeNewLeafNode(leafNodeName, branchlength, iNode, serial_leaf_node)
+                makeNewLeafNode(leafNodeName, iNode)
             End If
         End If
     End Sub
 
 
-    Private Function makeNewLeafNode(id As String, branch_length As Single, parentnode As PhyloNode, level_vertical As Integer) As PhyloNode
+    Private Function makeNewLeafNode(id As String, parentnode As PhyloNode) As PhyloNode
         Dim leafnode As New PhyloNode(id, -1)
 
         parentnode += leafnode
