@@ -69,7 +69,7 @@ dev.off()
         Dim hm As New Heatmap With {
             .dataset = New readcsv("E:\R.Bioinformatics\datasets\ppg2008.csv"),
             .heatmap = heatmap2.Puriney,
-            .image = New tiff("x:/ffff.tiff")
+            .image = New tiff("x:/ffff.tiff", 8000, 6500)
         }
 
         Dim r As String = hm.RScript
