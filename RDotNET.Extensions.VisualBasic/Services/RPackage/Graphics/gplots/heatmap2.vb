@@ -180,7 +180,7 @@ Namespace gplots
         ''' numeric value indicating the size of the key
         ''' </summary>
         ''' <returns></returns>
-        Public Property keysize As Double = 1.5
+        Public Property keysize As RExpression = 1.5
         ''' <summary>
         ''' character string indicating whether to superimpose a 'histogram', a 'density' plot, or no plot ('none') on the color-key.
         ''' </summary>
@@ -293,7 +293,6 @@ Namespace gplots
                 .hline = Nothing,
                 .keepDendro = Nothing,
                 .keyPar = Nothing,
-                .keysize = Nothing,
                 .keyTitle = Nothing,
                 .keyxlab = Nothing,
                 .keyxtickfun = Nothing,
