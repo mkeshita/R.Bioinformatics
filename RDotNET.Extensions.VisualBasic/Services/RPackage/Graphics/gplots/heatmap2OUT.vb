@@ -107,7 +107,7 @@ Namespace gplots
         ''' </summary>
         ''' <param name="out">heatmap.2输出结果</param>
         ''' <returns></returns>
-        Public Shared Function RParser(out As String()) As heatmap2OUT
+        Public Shared Function RParser(out As String(), Optional locus As String() = Nothing, Optional samples As String() = Nothing) As heatmap2OUT
             Dim i As Pointer(Of String) = New Pointer(Of String)
             Dim mapResult As New heatmap2OUT With {
                 .rowInd = heatmap2OUT.IndParser(out + i),   ' i++
@@ -120,7 +120,9 @@ Namespace gplots
                 .colDendrogram = out + i,
                 .breaks = heatmap2OUT.MeansParser(out + i),
                 .col = heatmap2OUT.ColorParser(out + i),
-                .colorTable = colorTableParser(out + i)
+                .colorTable = colorTableParser(out + i),
+                .locus = locus,
+                .samples = samples
             }
             Return mapResult
         End Function
