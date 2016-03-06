@@ -12,7 +12,10 @@ Module Program
 
     Public Sub Main()
         Call RSystem.InitDefault()
+
+#If DEBUG Then
         Call Test.Main()
+#End If
 
         Dim splash As New bioc
         Call RunTask(AddressOf splash.ShowDialog)
