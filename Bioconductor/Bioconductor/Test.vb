@@ -7,7 +7,7 @@ Imports SMRUCC.R.CRAN.Bioconductor.Web
 
 Imports Microsoft.VisualBasic.Serialization
 Imports SMRUCC.R.CRAN.Bioconductor.Web.Packages
-
+Imports System.Text.RegularExpressions
 
 Module Test
 
@@ -48,11 +48,46 @@ dev.off()
 
                             </R>
 
+    Public Class heatmap2OUT
+
+        Public Property rowInd As Integer()
+        Public Property colInd As Integer()
+
+        Public Property [call] As String
+
+        Public Property rowMeans
+        Public Property rowSDs
+        Public Property carpet
+        Public Property rowDendrogram
+        Public Property colDendrogram
+        Public Property breaks As Double()
+        Public Property col As String()
+        Public Property colorTable
+
+        Public Shared Function IndParser(result As String) As Integer()
+            Return Regex.Matches(result, "\d+").ToArray(Function(s) Scripting.CastInteger(s))
+        End Function
+
+
+    End Class
+
+
     Sub Main()
+
+        Dim xx As New ff
+
+        Dim ndd As Integer = +xx
+
+        Dim xxsss = +ndd
+
 
         Dim ddd As String() = LoadJsonFile(Of String())("E:\R.Bioinformatics\datasets\heatmap_testOUT.json")
 
-
+        Dim i As Integer
+        Dim dddrt As New heatmap2OUT With {
+            .rowInd = heatmap2OUT.IndParser(ddd(i.MoveNext)),
+            .colInd = heatmap2OUT.IndParser(ddd(i.MoveNext))
+        }
 
 
 
@@ -62,7 +97,7 @@ dev.off()
 
         Dim result = RSystem.REngine.WriteLine("result")
 
-        Call result.getjson.saveto("E:\R.Bioinformatics\datasets\heatmap_testOUT.json")
+        Call result.GetJson.SaveTo("E:\R.Bioinformatics\datasets\heatmap_testOUT.json")
 
         Pause()
 
