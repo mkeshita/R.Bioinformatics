@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.Serialization
 Imports SMRUCC.R.CRAN.Bioconductor.Web.Packages
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures.BinaryTree
 
 Module Test
 
@@ -56,11 +57,11 @@ dev.off()
 
         Public Property [call] As String
 
-        Public Property rowMeans
-        Public Property rowSDs
-        Public Property carpet
-        Public Property rowDendrogram
-        Public Property colDendrogram
+        Public Property rowMeans As Double()
+        Public Property rowSDs As Double()
+        Public Property carpet As Double()
+        Public Property rowDendrogram As BinaryTree(Of Integer)
+        Public Property colDendrogram As BinaryTree(Of Integer)
         Public Property breaks As Double()
         Public Property col As String()
         Public Property colorTable
@@ -69,6 +70,16 @@ dev.off()
             Return Regex.Matches(result, "\d+").ToArray(Function(s) Scripting.CastInteger(s))
         End Function
 
+        Public Shared Function MeansParser(result As String) As Double()
+            Return Regex.Matches(result, "(-?\d+(\.\d+)?)|(NaN)").ToArray(Function(s) Scripting.CastDouble(s))
+        End Function
+
+        Public Shared Function TreeBuilder(result As String) As BinaryTree(Of Integer)
+            result = result.Replace("list", "")
+
+
+
+        End Function
 
     End Class
 
@@ -84,10 +95,18 @@ dev.off()
 
         Dim ddd As String() = LoadJsonFile(Of String())("E:\R.Bioinformatics\datasets\heatmap_testOUT.json")
 
-        Dim i As New Pointer
+        Dim i As New Pointer(Of String)
+
+
         Dim dddrt As New heatmap2OUT With {
-            .rowInd = heatmap2OUT.IndParser(ddd(+i)),
-            .colInd = heatmap2OUT.IndParser(ddd(+i))
+            .rowInd = heatmap2OUT.IndParser(ddd + i),   ' i++
+            .colInd = heatmap2OUT.IndParser(ddd + i),
+            .call = ddd + i,
+            .rowMeans = heatmap2OUT.MeansParser(ddd + i),
+            .rowSDs = heatmap2OUT.MeansParser(ddd + i),
+            .carpet = heatmap2OUT.MeansParser(ddd + i),
+            .rowDendrogram = heatmap2OUT.TreeBuilder(ddd + i),
+            .colDendrogram = heatmap2OUT.TreeBuilder(ddd + i)
         }
 
 
