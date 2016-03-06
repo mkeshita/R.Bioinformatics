@@ -8,6 +8,9 @@ Namespace gplots
 
     Public Class heatmap2OUT
 
+        Public Property locus As String()
+        Public Property samples As String()
+
         ''' <summary>
         ''' 基因的排列顺序
         ''' </summary>

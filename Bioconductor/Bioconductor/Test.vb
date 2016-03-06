@@ -66,6 +66,26 @@ dev.off()
 
     Sub Main()
 
+        Dim hm As New Heatmap With {
+            .dataset = New readcsv("E:\R.Bioinformatics\datasets\ppg2008.csv"),
+            .heatmap = heatmap2.Puriney,
+            .image = New tiff("x:/ffff.tiff")
+        }
+
+        Dim r As String = hm.RScript
+
+        Call r.SaveTo("x:\dddd.r")
+        Call RSystem.REngine.WriteLine(r)
+
+        Dim resultooo = heatmap2OUT.RParser(hm.output)
+        resultooo.locus = hm.locusId
+        resultooo.samples = hm.samples
+
+
+        Call resultooo.GetJson.SaveTo("x:\heatmap.2.sample.json")
+
+
+
         Dim xx As Pointer = 5
 
         Dim ndd As Integer = +xx
@@ -86,19 +106,9 @@ dev.off()
 
         Call result.GetJson.SaveTo("E:\R.Bioinformatics\datasets\heatmap_testOUT.json")
 
-        Pause()
 
 
 
-        Dim hm As New Heatmap With {
-            .dataset = New readcsv("E:\R.Bioinformatics\datasets\ppg2008.csv"),
-            .heatmap = heatmap2.Puriney,
-            .image = New tiff("x:/ffff.tiff")
-        }
-
-        Dim r As String = hm.RScript
-
-        Call r.SaveTo("x:\dddd.r")
 
 
 

@@ -2,6 +2,7 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Tokenizer
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic
 Imports RDotNet.Extensions.VisualBasic
 Imports RDotNet.Extensions.VisualBasic.utils.read.table
 Imports RDotNet.Extensions.VisualBasic.stats
@@ -31,17 +32,15 @@ Public Class Heatmap : Inherits IRScript
 
     Private Function __getRowNames() As String
         Dim col As String = rowNameMaps
+        Dim lines As String() = dataset.file.ReadAllLines
+        Dim firstLine As List(Of String) = CharsParser(lines(0))
 
-        If String.IsNullOrEmpty(rowNameMaps) Then
-            ' 默认使用第一列，作为rows的名称
-            Using file As FileStream = dataset.file.Open()
-                col = New StreamReader(file).ReadLine
-            End Using
-            col = CharsParser(col).FirstOrDefault
+        If String.IsNullOrEmpty(rowNameMaps) Then   ' 默认使用第一列，作为rows的名称
+            col = firstLine.FirstOrDefault
         End If
 
-        _locusId = IO.File.ReadAllLines(dataset.file) _
-            .Skip(1).ToArray(Function(x) x.Split(","c).First)
+        _locusId = lines.Skip(1).ToArray(Function(x) x.Split(","c).First)
+        _samples = firstLine.Skip(1).ToArray
 
         Return col
     End Function
@@ -64,7 +63,17 @@ Public Class Heatmap : Inherits IRScript
             Return __output
         End Get
     End Property
+
+    ''' <summary>
+    ''' 第一列所表示的基因号
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property locusId As String()
+    ''' <summary>
+    ''' 第一行所表示的样本编号
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property samples As String()
 
     Sub New()
         Requires = {"RColorBrewer"}
