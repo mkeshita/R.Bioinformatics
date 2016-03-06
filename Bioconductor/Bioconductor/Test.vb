@@ -8,6 +8,7 @@ Imports SMRUCC.R.CRAN.Bioconductor.Web
 Imports Microsoft.VisualBasic.Serialization
 Imports SMRUCC.R.CRAN.Bioconductor.Web.Packages
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 
 Module Test
 
@@ -74,7 +75,7 @@ dev.off()
 
     Sub Main()
 
-        Dim xx As New ff
+        Dim xx As Pointer = 5
 
         Dim ndd As Integer = +xx
 
@@ -83,10 +84,10 @@ dev.off()
 
         Dim ddd As String() = LoadJsonFile(Of String())("E:\R.Bioinformatics\datasets\heatmap_testOUT.json")
 
-        Dim i As Integer
+        Dim i As New Pointer
         Dim dddrt As New heatmap2OUT With {
-            .rowInd = heatmap2OUT.IndParser(ddd(i.MoveNext)),
-            .colInd = heatmap2OUT.IndParser(ddd(i.MoveNext))
+            .rowInd = heatmap2OUT.IndParser(ddd(+i)),
+            .colInd = heatmap2OUT.IndParser(ddd(+i))
         }
 
 
