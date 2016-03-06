@@ -69,11 +69,37 @@ Namespace gplots
         End Function
 
         Public Function GetRowDendrogram(Optional names As Dictionary(Of String, String) = Nothing) As TreeNode(Of String)
-            Return heatmap2OUT.TreeBuilder(rowDendrogram)
+            Dim maps As Dictionary(Of String, String) = names
+            If names Is Nothing Then
+                maps = GetRowMaps()
+            End If
+            Return heatmap2OUT.TreeBuilder(rowDendrogram, maps)
         End Function
 
         Public Function GetColDendrogram(Optional names As Dictionary(Of String, String) = Nothing) As TreeNode(Of String)
-            Return heatmap2OUT.TreeBuilder(colDendrogram)
+            Dim maps As Dictionary(Of String, String) = names
+            If names Is Nothing Then
+                maps = GetColMaps()
+            End If
+            Return heatmap2OUT.TreeBuilder(colDendrogram, maps)
+        End Function
+
+        Public Function GetColMaps() As Dictionary(Of String, String)
+            Return __getMaps(colInd, samples)
+        End Function
+
+        Private Shared Function __getMaps(inds As Integer(), locus As String()) As Dictionary(Of String, String)
+            Return (From ind As Integer
+                    In inds
+                    Let sId As String = locus(ind)
+                    Select ind,
+                        sId) _
+                        .ToDictionary(Function(x) x.ind.ToString,
+                                      Function(x) x.sId)
+        End Function
+
+        Public Function GetRowMaps() As Dictionary(Of String, String)
+            Return __getMaps(rowInd, locus)
         End Function
 
         ''' <summary>
