@@ -10,6 +10,7 @@ Imports SMRUCC.R.CRAN.Bioconductor.Web.Packages
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.BinaryTree
+Imports Microsoft.VisualBasic
 
 Module Test
 
@@ -60,8 +61,8 @@ dev.off()
         Public Property rowMeans As Double()
         Public Property rowSDs As Double()
         Public Property carpet As Double()
-        Public Property rowDendrogram As BinaryTree(Of Integer)
-        Public Property colDendrogram As BinaryTree(Of Integer)
+        Public Property rowDendrogram As TreeNode(Of Integer)
+        Public Property colDendrogram As TreeNode(Of Integer)
         Public Property breaks As Double()
         Public Property col As String()
         Public Property colorTable
@@ -74,13 +75,35 @@ dev.off()
             Return Regex.Matches(result, "(-?\d+(\.\d+)?)|(NaN)").ToArray(Function(s) Scripting.CastDouble(s))
         End Function
 
-        Public Shared Function TreeBuilder(result As String) As BinaryTree(Of Integer)
+        Public Shared Function TreeBuilder(result As String) As TreeNode(Of Integer)
             result = result.Replace("list", "")
 
-
-
+            Dim node As TreeNode(Of Integer) = New TreeNode(Of Integer)
+            Call parser(result.ToArray, New Pointer(Of Char), node, New List(Of Char))
+            Return node
         End Function
 
+        Private Shared Sub parser(expr As Char(), p As Pointer(Of Char), ByRef parent As TreeNode(Of Integer), cache As List(Of Char))
+            Dim curr As Char = expr + p
+
+            If curr = "("c Then
+                Dim child As New TreeNode(Of Integer)("Path", -100)
+                parent += child
+                Call parser(expr, p, child, New List(Of Char))
+            ElseIf curr = ")"c Then
+                Return
+            ElseIf curr = " "c Then
+                Call parser(expr, p, parent, cache)
+            ElseIf curr = ","c Then
+                Dim s As String = New String(cache.ToArray)
+                Dim child As New TreeNode(Of Integer)("Node", Scripting.CastInteger(s))
+                parent += child
+                Call parser(expr, p, parent, New List(Of Char))
+            Else
+                Call cache.Add(curr)
+                Call parser(expr, p, parent, cache)
+            End If
+        End Sub
     End Class
 
 
