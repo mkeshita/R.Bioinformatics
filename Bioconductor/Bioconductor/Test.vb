@@ -4,7 +4,10 @@ Imports RDotNET.Extensions.VisualBasic.gplots
 Imports RDotNET.Extensions.VisualBasic.grDevices
 Imports RDotNET.Extensions.VisualBasic.utils.read.table
 Imports SMRUCC.R.CRAN.Bioconductor.Web
+
+Imports Microsoft.VisualBasic.Serialization
 Imports SMRUCC.R.CRAN.Bioconductor.Web.Packages
+
 
 Module Test
 
@@ -47,10 +50,19 @@ dev.off()
 
     Sub Main()
 
+        Dim ddd As String() = LoadJsonFile(Of String())("E:\R.Bioinformatics\datasets\heatmap_testOUT.json")
+
+
+
+
+
+
+
         Call RSystem.REngine.WriteLine(Test.heatmap)
 
         Dim result = RSystem.REngine.WriteLine("result")
 
+        Call result.getjson.saveto("E:\R.Bioinformatics\datasets\heatmap_testOUT.json")
 
         Pause()
 
