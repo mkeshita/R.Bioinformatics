@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports System.IO
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Tokenizer
+Imports Microsoft.VisualBasic.Linq
 Imports RDotNet.Extensions.VisualBasic
 Imports RDotNet.Extensions.VisualBasic.utils.read.table
 Imports RDotNet.Extensions.VisualBasic.stats
@@ -21,9 +22,7 @@ Public Class Heatmap : Inherits IRScript
     ''' </summary>
     ''' <returns></returns>
     Public Property dataset As readcsv
-
-    Public Property kmeans As kmeans
-    Public Property heatmap As stats.heatmap_plot
+    Public Property heatmap As heatmap_plot
     ''' <summary>
     ''' tiff文件的输出路径
     ''' </summary>
@@ -41,8 +40,31 @@ Public Class Heatmap : Inherits IRScript
             col = CharsParser(col).FirstOrDefault
         End If
 
+        _locusId = IO.File.ReadAllLines(dataset.file) _
+            .Skip(1).ToArray(Function(x) x.Split(","c).First)
+
         Return col
     End Function
+
+    Dim __output As String()
+
+    ''' <summary>
+    ''' 在执行完了脚本之后调用本方法才能够得到结果，否则返回空值
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property output As String()
+        Get
+            If __output.IsNullOrEmpty Then
+                Try
+                    __output = RSystem.REngine.WriteLine("result")
+                Catch ex As Exception
+                    Return Nothing
+                End Try
+            End If
+            Return __output
+        End Get
+    End Property
+    Public ReadOnly Property locusId As String()
 
     Sub New()
         Requires = {"RColorBrewer"}
@@ -60,15 +82,9 @@ Public Class Heatmap : Inherits IRScript
         Call script.AppendLine($"{df} <- " & dataset)
         Call script.AppendLine($"row.names({df}) <- {df}${__getRowNames()}")
         Call script.AppendLine($"{df}<-{df}[,-1]")
+        Call script.AppendLine("df <- data.matrix(df)")
 
-        kmeans.x = df
-
-        Call script.AppendLine($"k <- {kmeans}")
-        Call script.AppendLine($"dfc <- cbind ({df}, Cluster= k$cluster)")
-        Call script.AppendLine("dfc <- dfc[order(dfc$Cluster),]")
-        Call script.AppendLine("dfc.m <- data.matrix(dfc)")
-
-        heatmap.x = "dfc.m"
+        heatmap.x = df
 
         If Not heatmap.Requires Is Nothing Then
             For Each ns As String In heatmap.Requires
@@ -76,7 +92,7 @@ Public Class Heatmap : Inherits IRScript
             Next
         End If
 
-        Call script.AppendLine(image.Plot(heatmap))
+        Call script.AppendLine(image.Plot("result <- " & heatmap))
 
         Return script.ToString
     End Function

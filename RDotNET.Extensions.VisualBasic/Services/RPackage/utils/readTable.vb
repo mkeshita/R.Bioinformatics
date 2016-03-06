@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
+﻿Imports Microsoft.VisualBasic.DocumentFormat.Csv
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
@@ -56,6 +58,10 @@ Namespace utils.read.table
         Sub New(file As String)
             Me.file = file
         End Sub
+
+        Public Function ReadCsv() As File
+            Return [Imports](file, sep)
+        End Function
     End Class
 
     <RFunc("read.csv2")>
@@ -68,6 +74,10 @@ Namespace utils.read.table
         Public Property dec As String = ","
         Public Property fill As Boolean = True
         <Parameter("comment.char")> Public Property commentChar As String = ""
+
+        Public Function ReadCsv() As File
+            Return [Imports](file, sep)
+        End Function
     End Class
 
     <RFunc("read.delim")>

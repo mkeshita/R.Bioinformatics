@@ -93,11 +93,8 @@ dev.off()
         Dim hm As New Heatmap With {
             .dataset = New readcsv("E:\R.Bioinformatics\datasets\ppg2008.csv"),
             .heatmap = heatmap2.Puriney,
-            .kmeans = New stats.kmeans,
             .image = New tiff("x:/ffff.tiff")
         }
-
-        hm.kmeans.centers = 5
 
         Dim r As String = hm.RScript
 
