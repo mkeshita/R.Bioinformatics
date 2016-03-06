@@ -78,7 +78,7 @@ dev.off()
 
         Dim hhhhh = heatmap2OUT.RParser(ddd)
 
-        Call hhhhh.SaveAsXml("x:\ddd.xml")
+        Call hhhhh.GetJson.SaveTo("x:\ddd.json")
 
         Call RSystem.REngine.WriteLine(Test.heatmap)
 
