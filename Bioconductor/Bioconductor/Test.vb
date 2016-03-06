@@ -353,9 +353,9 @@ dev.off()
     ''' <returns></returns>
     ''' <remarks></remarks>
     Private Function MakeNewInternalNode(id As String, internal_id As String, isroot As Boolean, ByRef parentnode As PhyloNode) As PhyloNode
-        Dim NewNodeObject As New PhyloNode()
-        NewNodeObject.Value = CInt(internal_id)
-        NewNodeObject.Value = CInt(id)
+        Dim NewNodeObject As New PhyloNode(id, -1)
+        '    NewNodeObject.Value = CInt(internal_id)
+        '   NewNodeObject.Value = CInt(id)
 
         'System.out.println(id + " = " + internal_id);
 
@@ -416,7 +416,7 @@ dev.off()
 
 
     Private Function makeNewLeafNode(id As String, branch_length As Single, parentnode As PhyloNode, level_vertical As Integer) As PhyloNode
-        Dim leafnode As New PhyloNode()
+        Dim leafnode As New PhyloNode(id, -1)
 
         parentnode += leafnode
 
