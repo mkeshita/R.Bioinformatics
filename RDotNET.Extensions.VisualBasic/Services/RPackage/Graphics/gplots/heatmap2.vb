@@ -271,6 +271,8 @@ Namespace gplots
                 .trace = Rstring("none"),
                 .cexCol = "2",
                 .cexRow = "2",
+                .symkey = [FALSE],
+                .srtCol = 45,
  _
  _
                 .addExpr = Nothing,
@@ -315,10 +317,8 @@ Namespace gplots
                 .RowSideColors = Nothing,
                 .sepcolor = Nothing,
                 .sepwidth = Nothing,
-                .srtCol = Nothing,
                 .srtRow = Nothing,
                 .symbreaks = Nothing,
-                .symkey = Nothing,
                 .symm = Nothing,
                 .tracecol = Nothing,
                 .verbose = Nothing,

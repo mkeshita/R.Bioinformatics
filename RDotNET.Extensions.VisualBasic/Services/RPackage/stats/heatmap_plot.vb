@@ -105,7 +105,7 @@ Namespace stats
         ''' logical indicating if the dendrogram(s) should be kept as part of the result (when Rowv and/or Colv are not NA).
         ''' </summary>
         ''' <returns></returns>
-        <Parameter("keep.dendro")> Public Property keepDendro As Boolean = False
+        <Parameter("keep.dendro")> Public Property keepDendro As RExpression = [FALSE]
         ''' <summary>
         ''' logical indicating if information should be printed.
         ''' </summary>
