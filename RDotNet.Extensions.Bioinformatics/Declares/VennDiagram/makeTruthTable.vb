@@ -9,7 +9,7 @@ Namespace VennDiagram
     ''' 
     ''' A data frame with length(x) logical vector columns and 2 ^ length(x) rows.
     ''' </summary>
-    <RFunc("make.truth.table")> Public Class makeTruthTable : Inherits IRToken
+    <RFunc("make.truth.table")> Public Class makeTruthTable : Inherits vennBase
 
         ''' <summary>
         ''' A short vector.

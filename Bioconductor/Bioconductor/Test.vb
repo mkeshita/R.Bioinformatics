@@ -67,7 +67,7 @@ dev.off()
     Sub Main()
 
 
-
+        Dim vv As New VennDiagram.vennDiagram
 
 
 

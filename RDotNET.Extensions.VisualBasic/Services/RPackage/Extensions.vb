@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
+Imports RDotNET.Extensions.VisualBasic.base
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
 Public Module RScripts
@@ -76,5 +77,22 @@ Public Module RScripts
 
     Public Function names(x As String) As String
         Return $"names({x})"
+    End Function
+
+    ''' <summary>
+    ''' ifelse returns a value with the same shape as test which is filled with elements selected from either yes or no depending on whether the element of test is TRUE or FALSE.
+    ''' 
+    ''' If yes or no are too short, their elements are recycled. yes will be evaluated if and only if any element of test is true, and analogously for no.
+    ''' Missing values In test give missing values In the result.
+    ''' </summary>
+    ''' <param name="test">an object which can be coerced to logical mode.</param>
+    ''' <param name="yes">Return values For True elements Of test.</param>
+    ''' <param name="no">return values for false elements of test.</param>
+    ''' <returns>
+    ''' A vector of the same length and attributes (including dimensions and "class") as test and data values from the values of yes or no. 
+    ''' The mode of the answer will be coerced from logical to accommodate first any values taken from yes and then any values taken from no.
+    ''' </returns>
+    Public Function ifelse(test As String, yes As String, no As String) As String
+        Return New ifelse(test, yes, no)
     End Function
 End Module

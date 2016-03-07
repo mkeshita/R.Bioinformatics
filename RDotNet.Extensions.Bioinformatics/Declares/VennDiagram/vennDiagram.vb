@@ -7,7 +7,7 @@ Namespace VennDiagram
     ''' <summary>
     ''' This function takes a list and creates a publication-quality TIFF Venn Diagram
     ''' </summary>
-    <RFunc("venn.diagram")> Public Class vennDiagram : Inherits IRToken
+    <RFunc("venn.diagram")> Public Class vennDiagram : Inherits vennBase
 
         ''' <summary>
         ''' A list of vectors (e.g., integers, chars), with each component corresponding to a separate circle in the Venn diagram

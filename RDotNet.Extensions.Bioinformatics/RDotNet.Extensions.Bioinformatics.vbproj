@@ -85,12 +85,16 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BnLearn\BnlearnInference.vb" />
-    <Compile Include="BnLearn\BnlearnModelling.vb" />
-    <Compile Include="BnLearn\NodeAbstract.vb" />
-    <Compile Include="BnLearn\ConditionalProbability.vb" />
-    <Compile Include="BnLearn\NetworkParameters.vb" />
-    <Compile Include="Heatmap.vb" />
+    <Compile Include="Declares\bnlearn\bnlearnBase.vb" />
+    <Compile Include="Declares\bnlearn\ArcOperations.vb" />
+    <Compile Include="Declares\bnlearn\bnFit.vb" />
+    <Compile Include="Declares\bnlearn\bnFitPlots.vb" />
+    <Compile Include="Wrappers\BnLearn\BnlearnInference.vb" />
+    <Compile Include="Wrappers\BnLearn\BnlearnModelling.vb" />
+    <Compile Include="Wrappers\BnLearn\NodeAbstract.vb" />
+    <Compile Include="Wrappers\BnLearn\ConditionalProbability.vb" />
+    <Compile Include="Wrappers\BnLearn\NetworkParameters.vb" />
+    <Compile Include="Wrappers\Heatmap.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -106,9 +110,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="VennDiagram\makeTruthTable.vb" />
-    <Compile Include="VennDiagram\getVennPartitions.vb" />
-    <Compile Include="VennDiagram\vennDiagram.vb" />
+    <Compile Include="Declares\bnlearn\alarm.vb" />
+    <Compile Include="Declares\VennDiagram\makeTruthTable.vb" />
+    <Compile Include="Declares\VennDiagram\getVennPartitions.vb" />
+    <Compile Include="Declares\VennDiagram\vennBase.vb" />
+    <Compile Include="Declares\VennDiagram\vennDiagram.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -119,6 +125,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packageViewser.cd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -128,6 +135,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="Declares\bnlearn\bnlearn.pdf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic_Framework\DocumentFormats\DocumentFormat.Csv\DocumentFormat.Csv.vbproj">

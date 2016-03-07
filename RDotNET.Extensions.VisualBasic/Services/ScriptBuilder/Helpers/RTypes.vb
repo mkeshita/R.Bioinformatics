@@ -44,6 +44,9 @@ Namespace Services.ScriptBuilder.RTypes
         End Operator
 
         Public Overloads Shared Narrowing Operator CType(R As RExpression) As String
+            If R Is Nothing Then
+                Return Nothing
+            End If
             Return R.__value
         End Operator
     End Class
