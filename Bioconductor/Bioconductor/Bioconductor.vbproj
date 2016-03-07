@@ -99,6 +99,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="biocPkgs\WGCNAScript.vb" />
+    <Compile Include="biocPkgs\ScriptAPI.vb" />
+    <Compile Include="biocPkgs\TOMplot.vb" />
+    <Compile Include="biocPkgs\GTOMdist.vb" />
     <Compile Include="Test.vb" />
     <Compile Include="Web\Installer\bioc.Designer.vb">
       <DependentUpon>bioc.vb</DependentUpon>

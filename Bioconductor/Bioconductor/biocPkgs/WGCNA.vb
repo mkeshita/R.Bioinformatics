@@ -1,12 +1,16 @@
-﻿Public Class WGCNA
+﻿Imports RDotNET.Extensions.VisualBasic
+
+Namespace WGCNA
 
     ''' <summary>
-    ''' If necessary, change the path below to the directory where the data files are stored. "." means current directory. 
-    ''' On Windows use a forward slash / instead of the usual \.
+    ''' Functions necessary to perform Weighted Correlation Network Analysis. 
+    ''' WGCNA is also known as weighted gene co-expression network analysis when dealing with gene expression data. 
+    ''' Many functions of WGCNA can also be used for general association networks specified by a symmetric adjacency matrix.
     ''' </summary>
-    ''' <param name="workingDir"></param>
-    ''' <remarks></remarks>
-    Sub New(Optional workingDir As String = ".")
+    Public Class WGCNA : Inherits IRToken
 
-    End Sub
-End Class
+        Sub New()
+            Requires = {"WGCNA"}
+        End Sub
+    End Class
+End Namespace
