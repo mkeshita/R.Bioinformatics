@@ -73,4 +73,8 @@ Public Module RScripts
     Public Function library([lib] As String) As String
         Return $"library({[lib]})"
     End Function
+
+    Public Function names(x As String) As String
+        Return $"names({x})"
+    End Function
 End Module
