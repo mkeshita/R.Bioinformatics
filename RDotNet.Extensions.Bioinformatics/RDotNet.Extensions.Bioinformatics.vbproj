@@ -106,6 +106,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="VennDiagram\makeTruthTable.vb" />
     <Compile Include="VennDiagram\getVennPartitions.vb" />
     <Compile Include="VennDiagram\vennDiagram.vb" />
   </ItemGroup>

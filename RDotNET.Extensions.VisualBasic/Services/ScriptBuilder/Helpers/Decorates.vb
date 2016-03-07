@@ -49,6 +49,10 @@ Namespace Services.ScriptBuilder
         ''' 这个是一个字符串类型的文件路径
         ''' </summary>
         [Path]
+        ''' <summary>
+        ''' vectors, factors or a list containing these.
+        ''' </summary>
+        List
     End Enum
 
     ''' <summary>
