@@ -95,6 +95,7 @@
     <Compile Include="Services\RPackage\stats\heatmap_plot.vb" />
     <Compile Include="Services\RPackage\stats\heatmap.vb" />
     <Compile Include="Services\RPackage\stats\kmeans.vb" />
+    <Compile Include="Services\RPackage\utils\combn.vb" />
     <Compile Include="Services\ScriptBuilder\Helpers\RTypes.vb" />
     <Compile Include="Services\ScriptBuilder\Helpers\Decorates.vb" />
     <Compile Include="Services\Abstract\IScriptProvider.vb" />

@@ -26,16 +26,19 @@ Namespace Services.ScriptBuilder
 
         Public ReadOnly Property [Optional] As Boolean
         Public ReadOnly Property Type As ValueTypes
+        Public ReadOnly Property ForceFirst As Boolean
 
         ''' <summary>
         ''' API会自动根据类型来修正路径之中的分隔符的
         ''' </summary>
         ''' <param name="name"></param>
         ''' <param name="opt">Is this parameter optional?</param>
-        Sub New(name As String, Optional type As ValueTypes = ValueTypes.String, Optional opt As Boolean = False)
+        ''' <param name="forceFirst">是否强制当前的这个参数处于第一个序列化的位置</param>
+        Sub New(name As String, Optional type As ValueTypes = ValueTypes.String, Optional opt As Boolean = False, Optional forceFirst As Boolean = False)
             MyBase.New(name)
             Me.[Optional] = opt
             Me.Type = type
+            Me.ForceFirst = forceFirst
         End Sub
 
         Public Overrides Function ToString() As String
@@ -50,7 +53,7 @@ Namespace Services.ScriptBuilder
         ''' </summary>
         [Path]
         ''' <summary>
-        ''' vectors, factors or a list containing these.
+        ''' vectors, factors or a list containing these.(list类型的参数的参数名将不会被序列化)
         ''' </summary>
         List
     End Enum
