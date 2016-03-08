@@ -30,8 +30,14 @@ Namespace Services.ScriptBuilder
             Return __getScript(token, type)
         End Function
 
+        ''' <summary>
+        ''' Create script token from the class
+        ''' </summary>
+        ''' <param name="token"></param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         Private Function __getScript(token As Object, type As Type) As String
-            Dim name As RFunc = type.GetAttribute(Of RFunc)
+            Dim name As RFunc = type.GetAttribute(Of RFunc) ' Get function name
 
             If name Is Nothing Then
                 Dim ex As New Exception(IsNotAFunc)
