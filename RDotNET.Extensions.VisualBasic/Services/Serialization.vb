@@ -1,5 +1,8 @@
-﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
+﻿Imports System.Reflection
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFrameColumnAttribute
 Imports RDotNET.SymbolicExpressionExtension
 
 ''' <summary>
@@ -52,7 +55,7 @@ Public Module Serialization
     ''' <returns></returns>
     ''' <remarks></remarks>
     Private Function InternalLoadS4Object(RData As RDotNET.SymbolicExpression, TypeInfo As System.Type, DebugLevel As Integer) As Object
-        Dim Mappings = Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFrameColumnAttribute.LoadMapping(TypeInfo)
+        Dim mappings = LoadMapping(TypeInfo)
         Dim obj As Object = Activator.CreateInstance(TypeInfo)
 
         Call Console.WriteLine("[DEBUG] {0}  ---> R.S4Object (""{1}"")", TypeInfo.FullName, String.Join("; ", RData.GetAttributeNames))
@@ -79,9 +82,9 @@ Public Module Serialization
         Dim pTypeInfo As System.Type = pInfo.PropertyType
 
         If pTypeInfo.HasElementType Then
-            Call InternalMappingCollectionType(value, pInfo, obj, pTypeInfo)
+            Call __mappingCollectionType(value, pInfo, obj, pTypeInfo)
         Else
-            Call InternalRVectorToNETProperty(pTypeInfo:=value.GetType, value:=value, obj:=obj, pInfo:=pInfo)
+            Call __rVectorToNETProperty(pTypeInfo:=value.GetType, value:=value, obj:=obj, pInfo:=pInfo)
         End If
 
         Return True
@@ -95,18 +98,18 @@ Public Module Serialization
     ''' <param name="pInfo"></param>
     ''' <param name="obj"></param>
     ''' <remarks></remarks>
-    Private Sub InternalRVectorToNETProperty(pTypeInfo As System.Type, value As Object, pInfo As System.Reflection.PropertyInfo, ByRef obj As Object)
+    Private Sub __rVectorToNETProperty(pTypeInfo As Type, value As Object, pInfo As PropertyInfo, ByRef obj As Object)
         If Not pTypeInfo.HasElementType Then '目标映射的属性不是数组，但是R之中的几乎所有的对象都是使用数组表示的，故而在这里可能需要取第一个元素
             Call pInfo.SetValue(obj, value)
             Return
         End If
 
-        Dim SourceList As Object() = (From val As Object In DirectCast(value, System.Collections.IEnumerable) Select val).ToArray
+        Dim source As Object() = (From val As Object In DirectCast(value, IEnumerable) Select val).ToArray
 
-        If SourceList.IsNullOrEmpty Then
+        If source.IsNullOrEmpty Then
             Call pInfo.SetValue(obj, Nothing)
         Else
-            value = SourceList.First
+            value = source.First
             Call pInfo.SetValue(obj, value)
         End If
     End Sub
@@ -119,16 +122,16 @@ Public Module Serialization
     ''' <param name="obj"></param>
     ''' <param name="pTypeInfo"></param>
     ''' <remarks></remarks>
-    Private Sub InternalMappingCollectionType(value As Object, pInfo As System.Reflection.PropertyInfo, ByRef obj As Object, pTypeInfo As System.Type)
-        Dim EleTypeInfo As Type = pTypeInfo.GetElementType
-        Dim SourceList = (From val As Object In DirectCast(value, System.Collections.IEnumerable) Select val).ToArray
-        Dim List = Array.CreateInstance(EleTypeInfo, SourceList.Count)
+    Private Sub __mappingCollectionType(value As Object, pInfo As PropertyInfo, ByRef obj As Object, pTypeInfo As System.Type)
+        Dim type As Type = pTypeInfo.GetElementType
+        Dim source As Object() = (From val As Object In DirectCast(value, IEnumerable) Select val).ToArray
+        Dim list As Array = Array.CreateInstance(type, source.Count)
 
-        For i As Integer = 0 To SourceList.Count - 1
-            Call List.SetValue(SourceList(i), i)
+        For i As Integer = 0 To source.Length - 1
+            Call list.SetValue(source(i), i)
         Next
 
-        Call pInfo.SetValue(obj, List)
+        Call pInfo.SetValue(obj, list)
     End Sub
 
     ''' <summary>
@@ -138,10 +141,13 @@ Public Module Serialization
     ''' <param name="TypeInfo"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
+    ''' 
+    <Extension>
     Private Function __loadFromStream(RData As RDotNET.SymbolicExpression, TypeInfo As System.Type, DebugLevel As Integer) As Object
 
-        Call Console.WriteLine(New String("."c, DebugLevel) & ">   " & RData.Type.ToString)
-
+#If DEBUG Then
+            Call Console.WriteLine(New String("."c, DebugLevel) & ">   " & RData.Type.ToString)
+#End If
         Select Case RData.Type
 
             Case Internals.SymbolicExpressionType.S4
@@ -160,16 +166,24 @@ Public Module Serialization
             Case Internals.SymbolicExpressionType.List
                 Return __createMatrix(RData, TypeInfo, DebugLevel + 1)
 
-
             Case Else
                 'Throw New NotImplementedException(RData.Type.ToString)
                 Return Nothing
         End Select
     End Function
 
-    Private Function __createMatrix(RData As RDotNET.SymbolicExpression, TypeInfo As System.Type, DebugLevel As Integer) As Object
-        Dim List = RData.AsList.ToArray
-        Dim Matrix = (From vec In List Select __loadFromStream(vec, TypeInfo, DebugLevel)).ToArray
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="RData"></param>
+    ''' <param name="typeInfo"></param>
+    ''' <param name="debugLv">Debugger output levels</param>
+    ''' <returns></returns>
+    Private Function __createMatrix(RData As RDotNET.SymbolicExpression, typeInfo As Type, debugLv As Integer) As Object
+        Dim list As SymbolicExpression() = RData.AsList.ToArray
+        Dim Matrix = (From vec As SymbolicExpression
+                      In list
+                      Select __loadFromStream(vec, typeInfo, debugLv)).ToArray
         Return Matrix
     End Function
 End Module
