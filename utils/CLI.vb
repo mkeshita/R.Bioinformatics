@@ -31,6 +31,8 @@ Module CLI
             hmapAPI.col = colors
         End If
 
+        hmapAPI.scale = "column"
+
         Dim hmap As New Heatmap With {
             .dataset = New readcsv(inSet),
             .heatmap = hmapAPI,
