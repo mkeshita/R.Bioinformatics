@@ -53,7 +53,7 @@ Public Class IRToken : Inherits IRProvider
     ''' </summary>
     ''' <returns>由于这个对象只是对一个表达式的抽象，最常用的是对一个函数调用的抽象，所以library在这里不可以自动添加，需要自己在后面手工添加</returns>
     Public Overrides Function RScript() As String
-        Return Me.GetScript([GetType])
+        Return Me.GetScript(Me.GetType)
     End Function
 
     Public Overloads Shared Narrowing Operator CType(token As IRToken) As String

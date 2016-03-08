@@ -27,17 +27,26 @@ Public Module Install
     End Function
 End Module
 
+''' <summary>
+''' R Engine extensions.
+''' </summary>
 Public Module RSystem
 
     Private Const SPLIT_REGX_EXPRESSION As String = "[,] (?=(?:[^""]|""[^""]*"")*$)"
 
-    Public Const Scan0 As Integer = 0
+    ''' <summary>
+    ''' The default R Engine
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property REngine As REngine
 
     Public Sub Initialize(ByRef REngine As REngine)
         RSystem._REngine = REngine
     End Sub
 
+    ''' <summary>
+    ''' Initialize the default R Engine.
+    ''' </summary>
     Public Sub InitDefault()
         Call Initialize(RDotNET.Extensions.VisualBasic.REngine.StartEngineServices)
     End Sub
