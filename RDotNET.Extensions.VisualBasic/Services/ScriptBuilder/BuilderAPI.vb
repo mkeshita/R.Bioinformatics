@@ -7,6 +7,9 @@ Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
 Namespace Services.ScriptBuilder
 
+    ''' <summary>
+    ''' Build script token
+    ''' </summary>
     Public Module BuilderAPI
 
         Const IsNotAFunc = "Target object is not a R function abstract!"
@@ -37,14 +40,7 @@ Namespace Services.ScriptBuilder
         ''' <param name="type"></param>
         ''' <returns></returns>
         Private Function __getScript(token As Object, type As Type) As String
-            Dim name As RFunc = type.GetAttribute(Of RFunc) ' Get function name
-
-            If name Is Nothing Then
-                Dim ex As New Exception(IsNotAFunc)
-                ex = New Exception(type.FullName, ex)
-                Throw ex
-            End If
-
+            Dim name As String = type.GetAPIName
             Dim props = (From prop As PropertyInfo In type.GetProperties
                          Where prop.GetAttribute(Of Ignored) Is Nothing AndAlso
                              prop.CanRead
@@ -61,6 +57,23 @@ Namespace Services.ScriptBuilder
                                                       In parameters
                                                       Where Not String.IsNullOrEmpty(p) Select p).ToArray)})"
             Return script
+        End Function
+
+        ''' <summary>
+        ''' GET API name
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        <Extension> Public Function GetAPIName(type As Type) As String
+            Dim name As RFunc = type.GetAttribute(Of RFunc) ' Get function name
+
+            If name Is Nothing Then
+                Dim ex As New Exception(IsNotAFunc)
+                ex = New Exception(type.FullName, ex)
+                Throw ex
+            Else
+                Return name.Name
+            End If
         End Function
 
         ''' <summary>
@@ -101,6 +114,7 @@ Namespace Services.ScriptBuilder
             End If
 
             Select Case type
+
                 Case GetType(String)
                     If valueType = ValueTypes.Path Then
                         Return Rstring(Scripting.ToString(value).UnixPath)

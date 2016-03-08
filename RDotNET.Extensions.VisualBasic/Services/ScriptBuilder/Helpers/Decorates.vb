@@ -6,6 +6,10 @@ Namespace Services.ScriptBuilder
 
     Public MustInherit Class RAttribute : Inherits Attribute
 
+        ''' <summary>
+        ''' API token name
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Name As String
 
         ''' <summary>
