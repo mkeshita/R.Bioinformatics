@@ -89,8 +89,11 @@
     <Compile Include="Declares\bnlearn\ArcOperations.vb" />
     <Compile Include="Declares\bnlearn\bnFit.vb" />
     <Compile Include="Declares\bnlearn\bnFitPlots.vb" />
+    <Compile Include="Declares\igraph\igraph.vb" />
+    <Compile Include="Declares\igraph\make_empty_graph.vb" />
     <Compile Include="Wrappers\BnLearn\BnlearnInference.vb" />
     <Compile Include="Wrappers\BnLearn\BnlearnModelling.vb" />
+    <Compile Include="Wrappers\BnLearn\bnlearn.vb" />
     <Compile Include="Wrappers\BnLearn\NodeAbstract.vb" />
     <Compile Include="Wrappers\BnLearn\ConditionalProbability.vb" />
     <Compile Include="Wrappers\BnLearn\NetworkParameters.vb" />

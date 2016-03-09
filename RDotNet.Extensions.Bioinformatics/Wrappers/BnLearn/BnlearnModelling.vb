@@ -3,7 +3,7 @@ Imports RDotNet.Extensions.VisualBasic
 
 Namespace bnlearn
 
-    Public Class BnlearnModelling(Of TNodeType As INetworkNodeValue) : Inherits IRScript
+    Public Class BnlearnModelling(Of TNodeType As INetworkNodeValue) : Inherits bnlearn
 
         Protected TempData As String, NetworkData As TNodeType()
 

@@ -5,7 +5,7 @@ Imports RDotNet.Extensions.VisualBasic
 
 Namespace bnlearn
 
-    Public Class NetworkParameters : Inherits IRScript
+    Public Class NetworkParameters : Inherits bnlearn
 
         Dim BayesianNetworkObject As String
         Dim R As RDotNet.Extensions.VisualBasic.REngine

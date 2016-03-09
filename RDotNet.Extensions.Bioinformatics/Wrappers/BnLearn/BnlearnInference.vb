@@ -7,7 +7,7 @@ Namespace bnlearn
     ''' 使用已经建立好的计算模型，利用bnlearn包进行推测
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class BnlearnInference : Inherits IRScript
+    Public Class BnlearnInference : Inherits bnlearn
 
         Dim Evidence, TargetPartner As String
 
