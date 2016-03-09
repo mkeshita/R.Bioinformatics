@@ -19,7 +19,7 @@ Namespace igraph
         Public Property directed As Boolean = True
     End Class
 
-    <RFunc("empty_graph")> Public Class empty_graph : Inherits igraph
+    <RFunc("empty_graph")> Public Class empty_graph : Inherits make_empty_graph
 
     End Class
 End Namespace
