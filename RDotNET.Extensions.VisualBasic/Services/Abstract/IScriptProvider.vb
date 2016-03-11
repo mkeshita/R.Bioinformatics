@@ -70,6 +70,16 @@ Public Class IRToken : Inherits IRProvider
     End Operator
 
     ''' <summary>
+    ''' A part of previous token
+    ''' </summary>
+    ''' <param name="token"></param>
+    ''' <param name="t"></param>
+    ''' <returns></returns>
+    Public Shared Operator Like(token As String, t As IRToken) As RExpression
+        Return $""
+    End Operator
+
+    ''' <summary>
     ''' AppendLine
     ''' </summary>
     ''' <param name="sb"></param>
@@ -101,6 +111,20 @@ Public Class IRToken : Inherits IRProvider
     End Operator
 
     Public Shared Operator >=(sb As String, token As IRToken) As RExpression
+        Throw New InvalidOperationException("NOT_SUPPORT_THIS_OPERATOR")
+    End Operator
+
+    ''' <summary>
+    ''' variable value assignment
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <param name="token"></param>
+    ''' <returns></returns>
+    Public Shared Operator <=(token As IRToken, s As String) As RExpression
+        Return New RExpression(token.RScript & $" <- {s}")
+    End Operator
+
+    Public Shared Operator >=(token As IRToken, sb As String) As RExpression
         Throw New InvalidOperationException("NOT_SUPPORT_THIS_OPERATOR")
     End Operator
 End Class

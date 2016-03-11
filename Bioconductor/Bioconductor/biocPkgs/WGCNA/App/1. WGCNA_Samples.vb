@@ -24,9 +24,9 @@ Namespace WGCNA.App
             sbr += myData <= readData
             sbr += [dim](myData)
             sbr += names(myData)
-            sbr += datExpr <= [as].data.frame(t(myData[, -c(1)]))
-            names(datExpr) = myData$inputID  
-rownames(datExpr) = names(myData)[-c(1)]  
+            sbr += datExpr <= [as].data.frame(t($"{myData}[, -c(1)]"))
+            sbr += names(datExpr) <= $"{myData}${LocusMap}"
+            rownames(datExpr) = names(myData)[-c(1)]  
 gsg = goodSamplesGenes(datExpr, verbose = 3)
             If (!gsg$allOK)  
 {  
