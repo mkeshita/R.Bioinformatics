@@ -35,6 +35,19 @@ Public Module RScripts
     End Function
 
     ''' <summary>
+    ''' Given a matrix or data.frame x, t returns the transpose of x.
+    ''' </summary>
+    ''' <param name="x">a matrix or data frame, typically.</param>
+    ''' <returns>A matrix, with dim and dimnames constructed appropriately from those of x, and other attributes except names copied across.</returns>
+    ''' <remarks>
+    ''' This is a generic function for which methods can be written. The description here applies to the default and "data.frame" methods.
+    ''' A data frame Is first coerced To a matrix: see as.matrix. When x Is a vector, it Is treated as a column, i.e., the result Is a 1-row matrix.
+    ''' </remarks>
+    Public Function t(x As String) As String
+        Return $"t({x})"
+    End Function
+
+    ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="file"></param>

@@ -10,6 +10,8 @@ Namespace WGCNA.App
 
         Public Property readData As readTableAPI
 
+        Public Property LocusMap As String
+
         Const myData As String = "myData"
         Const datExpr As String = "datExpr"
 
@@ -22,8 +24,8 @@ Namespace WGCNA.App
             sbr += myData <= readData
             sbr += [dim](myData)
             sbr += names(myData)
-            sbr += datExpr <= as.data.frame(t(myData[, -c(1)]))  
-names(datExpr) = myData$inputID  
+            sbr += datExpr <= [as].data.frame(t(myData[, -c(1)]))
+            names(datExpr) = myData$inputID  
 rownames(datExpr) = names(myData)[-c(1)]  
 gsg = goodSamplesGenes(datExpr, verbose = 3)
             If (!gsg$allOK)  
