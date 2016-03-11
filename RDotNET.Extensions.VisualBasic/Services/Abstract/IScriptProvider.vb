@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
+﻿Imports System.Text
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports RDotNET.Extensions.VisualBasic
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
@@ -66,6 +67,41 @@ Public Class IRToken : Inherits IRProvider
 
     Public Shared Operator &(script As String, token As IRToken) As String
         Return script & token.RScript
+    End Operator
+
+    ''' <summary>
+    ''' AppendLine
+    ''' </summary>
+    ''' <param name="sb"></param>
+    ''' <param name="token"></param>
+    ''' <returns></returns>
+    Public Shared Operator +(sb As StringBuilder, token As IRToken) As StringBuilder
+        Call sb.AppendLine(token.RScript)
+        Return sb
+    End Operator
+
+    Public Shared Operator <=(sb As StringBuilder, token As IRToken) As StringBuilder
+        Call sb.Append(" <- ")
+        Call sb.Append(token.RScript)
+        Return sb
+    End Operator
+
+    Public Shared Operator >=(sb As StringBuilder, token As IRToken) As StringBuilder
+        Throw New InvalidOperationException("NOT_SUPPORT_THIS_OPERATOR")
+    End Operator
+
+    ''' <summary>
+    ''' variable value assignment
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <param name="token"></param>
+    ''' <returns></returns>
+    Public Shared Operator <=(s As String, token As IRToken) As RExpression
+        Return New RExpression(s & $" <- {token.RScript}")
+    End Operator
+
+    Public Shared Operator >=(sb As String, token As IRToken) As RExpression
+        Throw New InvalidOperationException("NOT_SUPPORT_THIS_OPERATOR")
     End Operator
 End Class
 

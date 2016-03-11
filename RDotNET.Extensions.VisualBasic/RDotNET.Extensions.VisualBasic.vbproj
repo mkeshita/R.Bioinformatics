@@ -100,6 +100,7 @@
     <Compile Include="Services\RPackage\stats\kmeans.vb" />
     <Compile Include="Services\RPackage\utils\writeTable.vb" />
     <Compile Include="Services\RPackage\utils\combn.vb" />
+    <Compile Include="Services\ScriptBuilder\ScriptBuilder.vb" />
     <Compile Include="Services\ScriptBuilder\Helpers\RTypes.vb" />
     <Compile Include="Services\ScriptBuilder\Helpers\Decorates.vb" />
     <Compile Include="Services\Abstract\IScriptProvider.vb" />

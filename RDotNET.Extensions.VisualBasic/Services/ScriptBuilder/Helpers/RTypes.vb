@@ -22,6 +22,9 @@ Namespace Services.ScriptBuilder.RTypes
         End Function
     End Structure
 
+    ''' <summary>
+    ''' R表达式，是脚本单词元<see cref="IRToken"/>的一部分
+    ''' </summary>
     Public Class RExpression : Inherits IRToken
         Implements IScriptProvider
 

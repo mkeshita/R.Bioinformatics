@@ -14,6 +14,27 @@ Public Module RScripts
     Public Const [FALSE] As String = "FALSE"
 
     ''' <summary>
+    ''' Retrieve or set the dimension of an object.
+    ''' </summary>
+    ''' <param name="x">
+    ''' an R object, for example a matrix, array or data frame.
+    ''' For the default method, either NULL or a numeric vector, which is coerced to integer (by truncation).
+    ''' </param>
+    ''' <returns>
+    ''' For an array (And hence in particular, for a matrix) dim retrieves the dim attribute of the object. It Is NULL Or a vector of mode integer.
+    ''' The replacement method changes the "dim" attribute (provided the New value Is compatible) And removes any "dimnames" And "names" attributes.
+    ''' </returns>
+    ''' <remarks>
+    ''' Details
+    '''
+    ''' The functions Dim And Dim&lt;- are internal generic primitive functions.
+    ''' Dim has a method For data.frames, which returns the lengths Of the row.names attribute Of x And Of x (As the numbers Of rows And columns respectively).
+    ''' </remarks>
+    Public Function [dim](x As String) As String
+        Return $"dim({x})"
+    End Function
+
+    ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="file"></param>
