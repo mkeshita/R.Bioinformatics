@@ -99,8 +99,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="biocPkgs\WGCNA\App\WGCNA_template.r" />
     <Compile Include="biocPkgs\WGCNA\blockwiseModules.vb" />
-    <Compile Include="biocPkgs\WGCNA\WGCNAScript.vb" />
+    <Compile Include="biocPkgs\WGCNA\App\WGCNAScript.vb" />
     <Compile Include="biocPkgs\WGCNA\ScriptAPI.vb" />
     <Compile Include="biocPkgs\WGCNA\TOMplot.vb" />
     <Compile Include="biocPkgs\WGCNA\GTOMdist.vb" />
