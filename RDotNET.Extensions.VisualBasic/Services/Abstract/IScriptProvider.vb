@@ -1,5 +1,6 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic
 Imports RDotNET.Extensions.VisualBasic
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
@@ -11,7 +12,7 @@ Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 Public MustInherit Class IRProvider
     Implements IScriptProvider
 
-    Dim __requires As String()
+    Protected __requires As List(Of String)
 
     ''' <summary>
     ''' The package names that required of this script file.
@@ -20,10 +21,10 @@ Public MustInherit Class IRProvider
     ''' <returns></returns>
     <Ignored> Public Overridable Property Requires As String()
         Get
-            Return __requires
+            Return __requires.ToArray
         End Get
         Protected Set(value As String())
-            __requires = value
+            __requires = value.ToList
         End Set
     End Property
 

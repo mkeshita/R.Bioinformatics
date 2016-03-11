@@ -1,8 +1,11 @@
 ﻿Imports System.Text
 Imports RDotNET.Extensions.VisualBasic
 Imports RDotNET.Extensions.VisualBasic.base
+Imports RDotNET.Extensions.VisualBasic.flashClust
+Imports RDotNET.Extensions.VisualBasic.Graphics
 Imports RDotNET.Extensions.VisualBasic.grDevices
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
+Imports RDotNET.Extensions.VisualBasic.stats
 Imports RDotNET.Extensions.VisualBasic.utils.read.table
 
 Namespace WGCNA.App
@@ -14,14 +17,26 @@ Namespace WGCNA.App
         Public Property goodSamplesGenes As goodSamplesGenes
         Public Property save As save
         Public Property imageOut As grDevice
+        Public Property plot As plot
 
         Public Property saveGoodGenes As writeTableAPI
         Public Property saveGoodSamples As writeTableAPI
+        ''' <summary>
+        ''' 建议使用average方法
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property hclust As flashClust
+        Public Property dist As dist
 
         Const myData As String = "myData"
         Const datExpr As String = "datExpr"
         Const gsg As String = "gsg"
         Const sampleTree As String = "sampleTree"
+
+        Sub New()
+            Call MyBase.New
+            Requires = MyBase.__requires + "flashClust"
+        End Sub
 
         Protected Overrides Function __R_script() As String
             Dim sbr As ScriptBuilder =
@@ -36,26 +51,26 @@ Namespace WGCNA.App
             sbr += names(datExpr) <= $"{myData}${LocusMap}"
             sbr += rownames(datExpr) <= names(myData)(-c(1))
             sbr += gsg <= goodSamplesGenes(datExpr, verbose:=3)
-            If (!gsg$allOK)  
-{  
-If (Sum(!gsg$goodGenes) > 0) Then
-                    printFlush(paste("Removing genes:", paste(names(datExpr)[!gsg$goodGenes], collapse = ", ")))
-                    If (Sum(!gsg$goodSamples) > 0) Then
-                        printFlush(paste("Removing samples:", paste(rownames(datExpr)[!gsg$goodSamples], collapse = ", ")))
-                        datExpr = datExpr[gsg$goodSamples, gsg$goodGenes]  
-}  
-Write.table(names(datExpr)[!gsg$goodGenes], file = "Out/removeGene.xls", row.names = False, col.names = False, quote = False)
-                        Write.table(names(datExpr)[!gsg$goodSamples], file = "Out/removeSample.xls", row.names = False, col.names = False, quote = False)
-                        sampleTree = flashClust(dist(datExpr), method = "average") #根据样本表达量使用平均距离法建树  
-  sbr += imageOut.Plot(Function() As String
-                           Dim sb As New ScriptBuilder
+            sbr += [if]("!gsg$allOK", Function() As String
+                                          If (Sum(!gsg$goodGenes) > 0) Then
+                                              printFlush(paste("Removing genes:", paste(names(datExpr)[!gsg$goodGenes], collapse = ", ")))
+                                              If (Sum(!gsg$goodSamples) > 0) Then
+                                                  printFlush(paste("Removing samples:", paste(rownames(datExpr)[!gsg$goodSamples], collapse = ", ")))
+                                                  datExpr = datExpr[gsg$goodSamples, gsg$goodGenes] 
+                                      End Function)
 
-                           sb += "par(cex = 0.6)"
-                           sb += "par(mar = c(0, 4, 2, 0))"
-                           sb += plot(sampleTree, Main() = "Sample clustering", Sub() = "", xlab = "", cex.lab = 1.5, cex.axis = 1.5, cex.main = 2)
+            sbr += saveGoodGenes(names(datExpr)("!gsg$goodGenes"))
+                        sbr += saveGoodSamples(names(datExpr)("!gsg$goodSamples"))
+                        sbr += sampleTree <= hclust(dist(datExpr)) ' 根据样本表达量使用平均距离法建树  
+                        sbr += imageOut.Plot(Function() As String
+                                                 Dim sb As New ScriptBuilder
 
-                           Return sb.ToString
-                       End Function
+                                                 sb += "par(cex = 0.6)"
+                                                 sb += "par(mar = c(0, 4, 2, 0))"
+                                                 sb += plot(sampleTree)
+
+                                                 Return sb.ToString
+                                             End Function)
 
                         sbr += save
 

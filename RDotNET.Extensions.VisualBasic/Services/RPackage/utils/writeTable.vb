@@ -1,4 +1,5 @@
-﻿Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
+﻿Imports Microsoft.VisualBasic.Serialization
+Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
 Namespace utils.read.table
@@ -21,6 +22,14 @@ Namespace utils.read.table
     ''' To write a Unix-style file on Windows, use a binary connection e.g. file = file("filename", "wb").
     ''' </remarks>
     Public MustInherit Class writeTableAPI : Inherits IRToken
+
+        Default Public ReadOnly Property Func(x As String) As String
+            Get
+                Dim api As writeTableAPI = Me.ShadowsCopy
+                api.x = x
+                Return api.RScript
+            End Get
+        End Property
 
         ''' <summary>
         ''' the object to be written, preferably a matrix or data frame. If not, it is attempted to coerce x to a data frame.
