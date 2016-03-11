@@ -79,7 +79,7 @@ Public Module RScripts
     ''' </summary>
     ''' <param name="x"></param>
     ''' <returns></returns>
-    Public Function c(ParamArray x As Object()) As String
+    Public Function c(ParamArray x As Object()) As RExpression
         Dim cx As String = String.Join(",", x.ToArray(Function(o) Scripting.ToString(o)))
         Return $"c({cx})"
     End Function

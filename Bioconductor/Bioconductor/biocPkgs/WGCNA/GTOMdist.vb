@@ -6,7 +6,7 @@ Namespace WGCNA
     ''' <summary>
     ''' Generalized Topological Overlap Measure, taking into account interactions of higher degree.
     ''' </summary>
-    <RFunc("GTOMdist")> Public Class GTOMdist : Inherits WGCNA
+    <RFunc("GTOMdist")> Public Class GTOMdist : Inherits WGCNAFunction
 
         ''' <summary>
         ''' adjacency matrix. See details below.

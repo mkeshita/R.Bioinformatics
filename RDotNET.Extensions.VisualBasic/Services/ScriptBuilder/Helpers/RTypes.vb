@@ -28,6 +28,12 @@ Namespace Services.ScriptBuilder.RTypes
     Public Class RExpression : Inherits IRToken
         Implements IScriptProvider
 
+        Default Public ReadOnly Property AccInd(expression As String) As RExpression
+            Get
+                Return $"{RScript()}[{expression}]"
+            End Get
+        End Property
+
         ReadOnly __value As String
 
         Sub New(R As String)
@@ -55,6 +61,24 @@ Namespace Services.ScriptBuilder.RTypes
                 Return Nothing
             End If
             Return R.__value
+        End Operator
+
+        Public Shared Operator -(R As RExpression) As RExpression
+            Return New RExpression("-" & R.RScript)
+        End Operator
+
+        ''' <summary>
+        ''' variable value assignment
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <param name="token"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator <=(s As String, token As RExpression) As RExpression
+            Return New RExpression(s & $" <- {token.RScript}")
+        End Operator
+
+        Public Overloads Shared Operator >=(sb As String, token As RExpression) As RExpression
+            Throw New InvalidOperationException("NOT_SUPPORT_THIS_OPERATOR")
         End Operator
     End Class
 End Namespace

@@ -7,7 +7,7 @@ Namespace WGCNA
     ''' WGCNA is also known as weighted gene co-expression network analysis when dealing with gene expression data. 
     ''' Many functions of WGCNA can also be used for general association networks specified by a symmetric adjacency matrix.
     ''' </summary>
-    Public Class WGCNA : Inherits IRToken
+    Public Class WGCNAFunction : Inherits IRToken
 
         Sub New()
             Requires = {"WGCNA"}

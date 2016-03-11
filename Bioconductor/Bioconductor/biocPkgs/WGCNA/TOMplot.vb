@@ -7,7 +7,7 @@ Namespace WGCNA
     ''' <summary>
     ''' Graphical representation of the Topological Overlap Matrix using a heatmap plot combined with the corresponding hierarchical clustering dendrogram and module colors.
     ''' </summary>
-    <RFunc("TOMplot")> Public Class TOMplot : Inherits WGCNA
+    <RFunc("TOMplot")> Public Class TOMplot : Inherits WGCNAFunction
 
         ''' <summary>
         ''' a matrix containing the topological overlap-based dissimilarity

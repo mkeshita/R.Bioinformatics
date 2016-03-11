@@ -14,6 +14,7 @@ Namespace WGCNA.App
 
         Const myData As String = "myData"
         Const datExpr As String = "datExpr"
+        Const gsg As String = "gsg"
 
         Protected Overrides Function __R_script() As String
             Dim sbr As ScriptBuilder =
@@ -26,8 +27,8 @@ Namespace WGCNA.App
             sbr += names(myData)
             sbr += datExpr <= [as].data.frame(t($"{myData}[, -c(1)]"))
             sbr += names(datExpr) <= $"{myData}${LocusMap}"
-            rownames(datExpr) = names(myData)[-c(1)]  
-gsg = goodSamplesGenes(datExpr, verbose = 3)
+            sbr += rownames(datExpr) <= names(myData)(-c(1))
+            sbr += gsg <= goodSamplesGenes(datExpr, verbose = 3)
             If (!gsg$allOK)  
 {  
 If (Sum(!gsg$goodGenes) > 0) Then
