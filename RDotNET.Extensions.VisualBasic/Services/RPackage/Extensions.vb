@@ -10,6 +10,7 @@ Public Module RScripts
     ''' "NA" 字符串，而不是NA空值常量
     ''' </summary>
     Public ReadOnly Property NA As RExpression = New RExpression("NA")
+
     Public Const [TRUE] As String = "TRUE"
     Public Const [FALSE] As String = "FALSE"
 
