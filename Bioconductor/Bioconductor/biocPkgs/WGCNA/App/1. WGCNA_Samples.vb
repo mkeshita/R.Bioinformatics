@@ -15,9 +15,13 @@ Namespace WGCNA.App
         Public Property save As save
         Public Property imageOut As grDevice
 
+        Public Property saveGoodGenes As writeTableAPI
+        Public Property saveGoodSamples As writeTableAPI
+
         Const myData As String = "myData"
         Const datExpr As String = "datExpr"
         Const gsg As String = "gsg"
+        Const sampleTree As String = "sampleTree"
 
         Protected Overrides Function __R_script() As String
             Dim sbr As ScriptBuilder =
@@ -43,15 +47,15 @@ If (Sum(!gsg$goodGenes) > 0) Then
 Write.table(names(datExpr)[!gsg$goodGenes], file = "Out/removeGene.xls", row.names = False, col.names = False, quote = False)
                         Write.table(names(datExpr)[!gsg$goodSamples], file = "Out/removeSample.xls", row.names = False, col.names = False, quote = False)
                         sampleTree = flashClust(dist(datExpr), method = "average") #根据样本表达量使用平均距离法建树  
-  imageOut.Plot(Function()
-                    Dim sb As New ScriptBuilder
+  sbr += imageOut.Plot(Function() As String
+                           Dim sb As New ScriptBuilder
 
-                    sb += "par(cex = 0.6)"
-                    sb += "par(mar = c(0, 4, 2, 0))"
-                    plot(sampleTree, Main() = "Sample clustering", Sub() = "", xlab = "", cex.lab = 1.5, cex.axis = 1.5, cex.main = 2)
+                           sb += "par(cex = 0.6)"
+                           sb += "par(mar = c(0, 4, 2, 0))"
+                           sb += plot(sampleTree, Main() = "Sample clustering", Sub() = "", xlab = "", cex.lab = 1.5, cex.axis = 1.5, cex.main = 2)
 
-                    Return sb.ToString
-                End Function
+                           Return sb.ToString
+                       End Function
 
                         sbr += save
 
