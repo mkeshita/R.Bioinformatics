@@ -99,10 +99,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="biocPkgs\WGCNAScript.vb" />
-    <Compile Include="biocPkgs\ScriptAPI.vb" />
-    <Compile Include="biocPkgs\TOMplot.vb" />
-    <Compile Include="biocPkgs\GTOMdist.vb" />
+    <Compile Include="biocPkgs\WGCNA\blockwiseModules.vb" />
+    <Compile Include="biocPkgs\WGCNA\WGCNAScript.vb" />
+    <Compile Include="biocPkgs\WGCNA\ScriptAPI.vb" />
+    <Compile Include="biocPkgs\WGCNA\TOMplot.vb" />
+    <Compile Include="biocPkgs\WGCNA\GTOMdist.vb" />
     <Compile Include="Test.vb" />
     <Compile Include="Web\Installer\bioc.Designer.vb">
       <DependentUpon>bioc.vb</DependentUpon>
@@ -118,7 +119,7 @@
     <Compile Include="Web\Version.vb" />
     <Compile Include="Web\Installer\biocLite.vb" />
     <Compile Include="Web\pkgInfo\Package.vb" />
-    <Compile Include="biocPkgs\WGCNA.vb" />
+    <Compile Include="biocPkgs\WGCNA\WGCNA.vb" />
     <Compile Include="Web\Installer\InstallPackage.Designer.vb">
       <DependentUpon>InstallPackage.vb</DependentUpon>
     </Compile>
