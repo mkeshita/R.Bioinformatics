@@ -19,3 +19,8 @@ Currently there is a bioconductor GUI installer was included in this project for
 
 ![](https://github.com/SMRUCC/R.Bioinformatics/blob/master/Bioconductor/screenshot.png?raw=true)
 
+
+![](https://raw.githubusercontent.com/SMRUCC/R.Bioinformatics/master/20160312032449.png)
+
+
+
