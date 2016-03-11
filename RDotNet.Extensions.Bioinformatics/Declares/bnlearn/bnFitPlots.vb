@@ -1,6 +1,7 @@
 ﻿Imports RDotNet.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 Imports RDotNet.Extensions.VisualBasic.RScripts
 Imports RDotNet.Extensions.VisualBasic.Services.ScriptBuilder
+Imports RDotNet.Extensions.VisualBasic.base.Control
 
 Namespace declares.bnlearn
 

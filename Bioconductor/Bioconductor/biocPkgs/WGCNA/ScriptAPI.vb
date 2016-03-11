@@ -9,7 +9,7 @@ Namespace WGCNA
     Public Module ScriptAPI
 
         <ExportAPI("WGCNA")>
-        Public Function BuildScript() As WGCNAScript
+        Public Function BuildScript() As WGCNA.App.WGCNA
 
         End Function
 

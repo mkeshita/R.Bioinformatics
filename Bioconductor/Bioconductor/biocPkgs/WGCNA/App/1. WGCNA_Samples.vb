@@ -7,6 +7,7 @@ Imports RDotNET.Extensions.VisualBasic.grDevices
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.stats
 Imports RDotNET.Extensions.VisualBasic.utils.read.table
+Imports RDotNET.Extensions.VisualBasic.dynamicTreeCut
 
 Namespace WGCNA.App
 
@@ -43,6 +44,9 @@ Namespace WGCNA.App
                 New ScriptBuilder(4096) + New options With {
                     .stringsAsFactors = False
             }
+            Dim paste As New paste With {
+                .collapse = ", "
+            }
 
             sbr += myData <= readData
             sbr += [dim](myData)
@@ -52,29 +56,32 @@ Namespace WGCNA.App
             sbr += rownames(datExpr) <= names(myData)(-c(1))
             sbr += gsg <= goodSamplesGenes(datExpr, verbose:=3)
             sbr += [if]("!gsg$allOK", Function() As String
-                                          If (Sum(!gsg$goodGenes) > 0) Then
-                                              printFlush(paste("Removing genes:", paste(names(datExpr)[!gsg$goodGenes], collapse = ", ")))
-                                              If (Sum(!gsg$goodSamples) > 0) Then
-                                                  printFlush(paste("Removing samples:", paste(rownames(datExpr)[!gsg$goodSamples], collapse = ", ")))
-                                                  datExpr = datExpr[gsg$goodSamples, gsg$goodGenes] 
+                                          Dim sb As New ScriptBuilder
+
+                                          sb += [if]("Sum(!gsg$goodGenes) > 0",
+                                                     Function() printFlush(paste.Func("Removing genes:", paste.Func(names(datExpr)("!gsg$goodGenes")))))
+                                          sb += [if]("Sum(!gsg$goodSamples) > 0",
+                                                     Function() printFlush(paste.Func("Removing samples:", paste.Func(rownames(datExpr)("!gsg$goodSamples")))))
+                                          sb += "datExpr = datExpr[gsg$goodSamples, gsg$goodGenes]"
+
+                                          Return sb.ToString
                                       End Function)
 
             sbr += saveGoodGenes(names(datExpr)("!gsg$goodGenes"))
-                        sbr += saveGoodSamples(names(datExpr)("!gsg$goodSamples"))
-                        sbr += sampleTree <= hclust(dist(datExpr)) ' 根据样本表达量使用平均距离法建树  
-                        sbr += imageOut.Plot(Function() As String
-                                                 Dim sb As New ScriptBuilder
+            sbr += saveGoodSamples(names(datExpr)("!gsg$goodSamples"))
+            sbr += sampleTree <= hclust(dist(datExpr)) ' 根据样本表达量使用平均距离法建树  
+            sbr += imageOut.Plot(Function() As String
+                                     Dim sb As New ScriptBuilder
+                                     sb += "par(cex = 0.6)"
+                                     sb += "par(mar = c(0, 4, 2, 0))"
+                                     sb += plot(sampleTree)
 
-                                                 sb += "par(cex = 0.6)"
-                                                 sb += "par(mar = c(0, 4, 2, 0))"
-                                                 sb += plot(sampleTree)
+                                     Return sb.ToString
+                                 End Function)
 
-                                                 Return sb.ToString
-                                             End Function)
+            sbr += save
 
-                        sbr += save
-
-                        Return sbr.ToString
+            Return sbr.ToString
         End Function
     End Class
 End Namespace

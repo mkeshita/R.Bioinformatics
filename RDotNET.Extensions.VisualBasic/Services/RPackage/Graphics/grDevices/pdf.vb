@@ -1,4 +1,5 @@
 ﻿Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
+Imports RDotNET.Extensions.VisualBasic.base.Control
 
 Namespace grDevices
 

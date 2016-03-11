@@ -90,12 +90,14 @@
     <Content Include="RSyntax\README.txt" />
     <Compile Include="Services\Abstract\IRToken.vb" />
     <Compile Include="Services\RPackage\base\as.dataFrame.vb" />
+    <Compile Include="Services\RPackage\base\paste.vb" />
     <Compile Include="Services\RPackage\base\save.vb" />
     <Compile Include="Services\RPackage\base\row+colnames.vb" />
     <Compile Include="Services\RPackage\base\Extremes.vb" />
     <Compile Include="Services\RPackage\base\ifelse.vb" />
     <Compile Include="Services\RPackage\base\expandGrid.vb" />
     <Compile Include="Services\RPackage\base\options.vb" />
+    <Compile Include="Services\RPackage\dynamicTreeCut\dynamicTreeCut.vb" />
     <Compile Include="Services\RPackage\flashClust.vb" />
     <Compile Include="Services\RPackage\Graphics\gplots\heatmap2OUT.vb" />
     <Compile Include="Services\RPackage\Graphics\graphics\plot.vb" />
