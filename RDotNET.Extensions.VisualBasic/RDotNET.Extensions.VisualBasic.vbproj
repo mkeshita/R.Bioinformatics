@@ -91,6 +91,7 @@
     <Compile Include="Services\RPackage\base\Extremes.vb" />
     <Compile Include="Services\RPackage\base\ifelse.vb" />
     <Compile Include="Services\RPackage\base\expandGrid.vb" />
+    <Compile Include="Services\RPackage\base\options.vb" />
     <Compile Include="Services\RPackage\Graphics\gplots\heatmap2OUT.vb" />
     <Compile Include="Services\RPackage\Graphics\grDevices.vb" />
     <Compile Include="Services\RPackage\Graphics\gplots\heatmap2.vb" />
