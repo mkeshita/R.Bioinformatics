@@ -9,8 +9,12 @@ Namespace Services.ScriptBuilder.RTypes
 
         ReadOnly __value As String
 
-        Sub New(value As String)
+        Private Sub New(value As String)
             __value = value
+        End Sub
+
+        Sub New(value As Boolean)
+            Call Me.New(If(value, RScripts.TRUE, RScripts.FALSE))
         End Sub
 
         Public Function RScript() As String Implements IScriptProvider.RScript

@@ -95,4 +95,22 @@ Public Module RScripts
     Public Function ifelse(test As String, yes As String, no As String) As String
         Return New ifelse(test, yes, no)
     End Function
+
+    ''' <summary>
+    ''' Provides access to a copy of the command line arguments supplied when this R session was invoked.
+    ''' </summary>
+    ''' <param name="trailingOnly">logical. Should only arguments after --args be returned?</param>
+    ''' <returns>
+    ''' A character vector containing the name of the executable and the user-supplied command line arguments. 
+    ''' The first element is the name of the executable by which R was invoked. 
+    ''' The exact form of this element is platform dependent: it may be the fully qualified name, or simply the last component (or basename) of the application, or for an embedded R it can be anything the programmer supplied.
+    ''' If trailingOnly = True, a character vector Of those arguments (If any) supplied after --args.
+    ''' </returns>
+    ''' <remarks>
+    ''' These arguments are captured before the standard R command line processing takes place. This means that they are the unmodified values. 
+    ''' This is especially useful with the --args command-line flag to R, as all of the command line after that flag is skipped.
+    ''' </remarks>
+    Public Function commandArgs(Optional trailingOnly As Boolean = False) As String
+        Return $"commandArgs(trailingOnly = {New RBoolean(trailingOnly)})"
+    End Function
 End Module
