@@ -9,8 +9,9 @@ Namespace WGCNA.App
     Public Class WGCNA_samples : Inherits WGCNA
 
         Public Property readData As readTableAPI
-
         Public Property LocusMap As String
+        Public Property goodSamplesGenes As goodSamplesGenes
+        Public Property save As save
 
         Const myData As String = "myData"
         Const datExpr As String = "datExpr"
@@ -28,7 +29,7 @@ Namespace WGCNA.App
             sbr += datExpr <= [as].data.frame(t($"{myData}[, -c(1)]"))
             sbr += names(datExpr) <= $"{myData}${LocusMap}"
             sbr += rownames(datExpr) <= names(myData)(-c(1))
-            sbr += gsg <= goodSamplesGenes(datExpr, verbose = 3)
+            sbr += gsg <= goodSamplesGenes(datExpr, verbose:=3)
             If (!gsg$allOK)  
 {  
 If (Sum(!gsg$goodGenes) > 0) Then
@@ -45,7 +46,9 @@ pdf(file = "Out/sampleClustering.pdf", width = 12, height = 9)
                         par(mar = c(0, 4, 2, 0))
                         plot(sampleTree, Main() = "Sample clustering", Sub() = "", xlab = "", cex.lab = 1.5, cex.axis = 1.5, cex.main = 2)
                         dev.off()
-                        save(datExpr, file = "dataInput.RData")
+                        sbr += save
+
+                        Return sbr.ToString
         End Function
     End Class
 End Namespace

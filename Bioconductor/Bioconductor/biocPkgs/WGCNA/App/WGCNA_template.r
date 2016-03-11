@@ -9,12 +9,12 @@ datExpr = as.data.frame(t(myData[, -c(1)]))
 names(datExpr) = myData$inputID  
 rownames(datExpr) = names(myData)[-c(1)]  
 gsg = goodSamplesGenes(datExpr, verbose = 3)  
-if (!gsg$allOK)  
+if(!gsg$allOK)  
 {  
-if (sum(!gsg$goodGenes)>0)  
-    printFlush(paste("Removing genes:", paste(names(datExpr)[!gsg$goodGenes], collapse = ", ")))  
-if (sum(!gsg$goodSamples)>0)  
-    printFlush(paste("Removing samples:", paste(rownames(datExpr)[!gsg$goodSamples], collapse = ", ")))  
+	if (sum(!gsg$goodGenes)>0)  
+		printFlush(paste("Removing genes:", paste(names(datExpr)[!gsg$goodGenes], collapse = ", ")))  
+	if (sum(!gsg$goodSamples)>0)  
+		printFlush(paste("Removing samples:", paste(rownames(datExpr)[!gsg$goodSamples], collapse = ", ")))  
     datExpr = datExpr[gsg$goodSamples, gsg$goodGenes]  
 }  
 write.table(names(datExpr)[!gsg$goodGenes], file="Out/removeGene.xls", row.names=FALSE, col.names=FALSE, quote=FALSE)  

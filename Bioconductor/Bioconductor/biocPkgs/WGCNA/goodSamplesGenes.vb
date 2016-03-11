@@ -19,11 +19,23 @@ Namespace WGCNA
         ''' <param name="datExpr"></param>
         ''' <param name="verbose"></param>
         ''' <returns></returns>
-        <Ignored> Default Public ReadOnly Property Func(datExpr As String, Optional verbose As Integer = 0) As RExpression
+        <Ignored> Default Public ReadOnly Property Func(datExpr As String,
+                                                        Optional minFraction As Double = 1 / 2,
+                                                        Optional minNSamples As String = "..minNSamples",
+                                                        Optional minNGenes As String = "..minNGenes",
+                                                        Optional tol As String = NULL,
+                                                        Optional verbose As Integer = 1,
+                                                        Optional indent As Integer = 0) As RExpression
             Get
                 Dim x As goodSamplesGenes = Me.ShadowsCopy
 
-
+                x.datExpr = datExpr
+                x.minFraction = __assertion(minFraction, 1 / 2, Me.minFraction)
+                x.minNSamples = __assertion(minNSamples, "..minNSamples", Me.minNSamples.RScript)
+                x.minNGenes = __assertion(minNGenes, "..minNGenes", Me.minNGenes.RScript)
+                x.tol = __assertion(tol, NULL, Me.tol.RScript)
+                x.verbose = __assertion(verbose, 1, Me.verbose)
+                x.indent = __assertion(indent, 0, Me.indent)
 
                 Return x.RScript
             End Get
