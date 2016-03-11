@@ -18,23 +18,14 @@ Namespace grDevices
     ''' tiff compression types "lzw+p" And "zip+p" use horizontal differencing ('differencing predictor’, section 14 of the TIFF specification) in combination with the compression method, which is effective for continuous-tone images, especially colour ones.
     ''' Prior to R 3.0.3 unknown resolutions in BMP files were sometimes recorded incorrectly: they are now recorded As 72 ppi.
     ''' </remarks>
-    Public MustInherit Class grDevice : Inherits IRToken
+    Public MustInherit Class grImage : Inherits grDevice
 
         ''' <summary>
         ''' the name of the output file, up to 511 characters. The page number is substituted if a C integer format is included in the character string, as in the default, and tilde-expansion is performed (see path.expand). (The result must be less than 600 characters long. See postscript for further details.)
         ''' </summary>
         ''' <returns></returns>
         <Parameter("filename", ValueTypes.Path)> Public Property filename As String = "Rplot%03d.bmp"
-        ''' <summary>
-        ''' the width of the device.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property width As Integer = 480
-        ''' <summary>
-        ''' the height of the device.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property height As Integer = 480
+
         ''' <summary>
         ''' The units in which height and width are given. Can be px (pixels, the default), in (inches), cm or mm.
         ''' </summary>
@@ -46,20 +37,11 @@ Namespace grDevices
         ''' <returns></returns>
         Public Property pointsize As Integer = 12
         ''' <summary>
-        ''' the initial background colour: can be overridden by setting par("bg").
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property bg As String = "white"
-        ''' <summary>
         ''' The nominal resolution in ppi which will be recorded in the bitmap file, if a positive integer. Also used for units other than the default. If not specified, taken as 72 ppi to set the size of text and line widths.
         ''' </summary>
         ''' <returns></returns>
         Public Property res As RExpression = NA
-        ''' <summary>
-        ''' A length-one character vector specifying the default font family. The default means to use the font numbers on the Windows GDI versions and "sans" on the cairographics versions.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property family As String = ""
+
         ''' <summary>
         ''' See the ‘Details’ section of windows. For type == "windows" only.
         ''' </summary>
@@ -77,24 +59,9 @@ Namespace grDevices
         ''' </summary>
         ''' <returns></returns>
         Public Property antialias As RExpression
-
-        ''' <summary>
-        ''' 生成创建图像文件的脚本代码
-        ''' </summary>
-        ''' <param name="plots">绘图的脚本表达式</param>
-        ''' <returns></returns>
-        Public Function Plot(plots As String) As String
-            Dim script As New StringBuilder(RScript)
-            Call script.AppendLine()
-            Call script.AppendLine()
-            Call script.AppendLine(plots)
-            Call script.AppendLine("dev.off()")
-
-            Return script.ToString
-        End Function
     End Class
 
-    <RFunc("bmp")> Public Class bmp : Inherits grDevice
+    <RFunc("bmp")> Public Class bmp : Inherits grImage
 
         Sub New(file As String, Optional width As Integer = 1024, Optional height As Integer = 800)
             Me.filename = file
@@ -106,7 +73,7 @@ Namespace grDevices
         End Sub
     End Class
 
-    <RFunc("jpeg")> Public Class jpeg : Inherits grDevice
+    <RFunc("jpeg")> Public Class jpeg : Inherits grImage
 
         ''' <summary>
         ''' the ‘quality’ of the JPEG image, as a percentage. Smaller values will give more compression but also more degradation of the image.
@@ -124,7 +91,7 @@ Namespace grDevices
         End Sub
     End Class
 
-    <RFunc("png")> Public Class png : Inherits grDevice
+    <RFunc("png")> Public Class png : Inherits grImage
 
         ''' <summary>
         ''' Should be plotting be done using Windows GDI or cairographics?
@@ -142,7 +109,7 @@ Namespace grDevices
         End Sub
     End Class
 
-    <RFunc("tiff")> Public Class tiff : Inherits grDevice
+    <RFunc("tiff")> Public Class tiff : Inherits grImage
 
         ''' <summary>
         ''' the type Of compression To be used.

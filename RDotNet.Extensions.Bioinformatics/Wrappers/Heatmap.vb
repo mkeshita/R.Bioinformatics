@@ -28,7 +28,7 @@ Public Class Heatmap : Inherits IRScript
     ''' tiff文件的输出路径
     ''' </summary>
     ''' <returns></returns>
-    Public Property image As grDevice
+    Public Property image As grDevices.grImage
 
     Private Function __getRowNames() As String
         Dim col As String = rowNameMaps
