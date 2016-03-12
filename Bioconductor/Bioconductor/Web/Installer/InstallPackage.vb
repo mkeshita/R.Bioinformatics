@@ -160,7 +160,7 @@ Public Class InstallPackage
 
             Try
                 Call host.Invoke(Sub() host.Text = $"""biocLite.R"" installing {package}...")
-                Call RSystem.REngine.Evaluate(script)
+                Call RServer.Evaluate(script)
                 Return True
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.Critical, "biocLite.R")
@@ -256,7 +256,7 @@ Public Class InstallPackage
         End If
 
         Try
-            Call RSystem.REngine.WriteLine(LinkLabel3.Text)
+            Call RServer.Evaluate(LinkLabel3.Text)
         Catch ex As Exception
 
         End Try
@@ -269,7 +269,7 @@ Public Class InstallPackage
 
         Dim R As String = "??" & Current.Package
         Try
-            Call RSystem.REngine.WriteLine(R)
+            Call RServer.Evaluate(R)
         Catch ex As Exception
 
         End Try

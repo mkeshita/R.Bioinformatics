@@ -26,7 +26,7 @@ Once you have done the function from this namespace, then you can using the Shoa
         ''' 
         <ExportAPI("Write")>
         Public Function WriteImage(plot As String) As String()
-            Dim STD As String() = RSystem.REngine <= plot
+            Dim STD As String() = RServer.WriteLine(plot)
             Return STD
         End Function
 

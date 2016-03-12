@@ -5,7 +5,7 @@ Imports System.Text.RegularExpressions
 Public Module Installed
 
     Public Function Packages(packageName As String) As Boolean
-        Return RSystem.REngine.Library(packageName)
+        Return RServer.Library(packageName)
     End Function
 End Module
 
@@ -18,7 +18,7 @@ Public Module Install
     ''' <returns></returns>
     Public Function Packages(packageName As String) As Boolean
         Try
-            Call RSystem.REngine.Evaluate($"install.packages('{packageName}')")
+            Call RServer.Evaluate($"install.packages('{packageName}')")
         Catch ex As Exception
             Call App.LogException(ex)
             Return False
@@ -39,18 +39,28 @@ Public Module RSystem
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property RServer As RDotNET.REngine
-        Get
-            Return REngine
-        End Get
-    End Property
-
-    Friend ReadOnly REngine As RDotNET.Extensions.VisualBasic.REngine
 
     ''' <summary>
     ''' Initialize the default R Engine.
     ''' </summary>
     Sub New()
-        REngine = RDotNET.Extensions.VisualBasic.REngine.StartEngineServices
+        Try
+            RSystem.RServer = RInit.StartEngineServices
+        Catch ex As Exception
+            ' 无法自动初始化，需要手动启动R的计算引擎
+            ex = New Exception("R server can not be initialized automatically, please manual set up init later.", ex)
+            Call App.LogException(ex)
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Manual set up R init environment.
+    ''' </summary>
+    ''' <param name="R_HOME"></param>
+    Public Sub TryInit(R_HOME As String)
+        If RServer Is Nothing OrElse Not RServer.IsRunning Then
+            _RServer = RInit.StartEngineServices(R_HOME)
+        End If
     End Sub
 
     ''' <summary>
@@ -62,7 +72,7 @@ Public Module RSystem
         Dim R As String = $"packageVersion(""{pkg}"")"
         Dim result As String()
         Try
-            result = REngine.WriteLine(R)
+            result = RServer.WriteLine(R)
         Catch ex As Exception
             ex = New Exception(R, ex)
             Call App.LogException(ex)
@@ -81,7 +91,7 @@ Public Module RSystem
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Function Library() As String
-        Dim Result As String = RSystem.REngine.WriteLine("library()").JoinBy(vbCrLf)
+        Dim Result As String = RServer.WriteLine("library()").JoinBy(vbCrLf)
         Dim sBuilder As StringBuilder = New StringBuilder(Result, 5 * 1024)
 
         sBuilder.Remove(0, 2)
@@ -109,7 +119,7 @@ Public Module RSystem
     ''' <remarks></remarks>
     Public Function Source(path As String) As String()
         Dim cmdl As String = String.Format("source(""{0}"");", path)
-        Return REngine.WriteLine(cmdl)
+        Return RServer.WriteLine(cmdl)
     End Function
 
     ''' <summary>
@@ -118,7 +128,7 @@ Public Module RSystem
     ''' <param name="packageName"></param>
     ''' <remarks></remarks>
     Public Sub Library(packageName As String)
-        Dim result = RSystem.REngine.Evaluate($"library({packageName})")
+        Dim result As SymbolicExpression = RServer.Evaluate($"library({packageName})")
     End Sub
 
     ''' <summary>
@@ -127,22 +137,11 @@ Public Module RSystem
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Function getwd() As String
-        Return REngine.WriteLine("getwd()").JoinBy(vbCrLf)
+        Return RServer.WriteLine("getwd()").JoinBy(vbCrLf)
     End Function
 
     Public Function setwd(workingDir As String) As String()
-        Return REngine <= $"setwd(""{workingDir}"")"
-    End Function
-
-    ''' <summary>
-    ''' 将当前的脚本行送入R引擎之中并与之前使用Cache命令缓存下来的脚本行一同执行计算
-    ''' </summary>
-    ''' <param name="CommandLine"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Function Push(CommandLine As String) As Integer
-        RSystem.REngine.WriteLine(CommandLine)
-        Return 2
+        Return RServer.WriteLine($"setwd(""{workingDir}"")")
     End Function
 
     ''' <summary>

@@ -55,7 +55,7 @@ Public Class Heatmap : Inherits IRScript
         Get
             If __output.IsNullOrEmpty Then
                 Try
-                    __output = RSystem.REngine.WriteLine("result")
+                    __output = RServer.WriteLine("result")
                 Catch ex As Exception
                     Return Nothing
                 End Try

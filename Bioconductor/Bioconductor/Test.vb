@@ -84,7 +84,7 @@ dev.off()
         Dim r As String = hm.RScript
 
         Call r.SaveTo("x:\dddd.r")
-        Call RSystem.REngine.WriteLine(r)
+        '     Call RSystem.REngine.WriteLine(r)
 
         Dim resultooo = heatmap2OUT.RParser(hm.output)
         resultooo.locus = hm.locusId
@@ -109,11 +109,11 @@ dev.off()
 
         Call hhhhh.GetJson.SaveTo("x:\ddd.json")
 
-        Call RSystem.REngine.WriteLine(Test.heatmap)
+        '    Call RSystem.REngine.WriteLine(Test.heatmap)
 
-        Dim result = RSystem.REngine.WriteLine("result")
+        '    Dim result = RSystem.REngine.WriteLine("result")
 
-        Call result.GetJson.SaveTo("E:\R.Bioinformatics\datasets\heatmap_testOUT.json")
+        '   Call result.GetJson.SaveTo("E:\R.Bioinformatics\datasets\heatmap_testOUT.json")
 
 
 

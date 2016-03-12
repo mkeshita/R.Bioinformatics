@@ -22,7 +22,7 @@ $"# Simple Pie Chart
  slices <- c({String.Join(", ", (From n In slices Select CStr(n.Value)).ToArray)})
  lbls <- c({String.Join(", ", (From n In slices Select $"""{n.Key}""").ToArray)})
 {GraphicsDevice.tiff(plot:=$"pie(slices, labels = lbls, main=""{Title}"")", filename:=SaveTo, width:=3000, height:=2500)}"
-            Dim STD = RSystem.REngine <= Script
+            Dim STD As String() = RServer.WriteLine(Script)
             Return True
         End Function
 

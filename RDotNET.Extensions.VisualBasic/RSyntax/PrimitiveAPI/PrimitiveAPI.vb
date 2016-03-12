@@ -60,7 +60,7 @@ Namespace RBase
         ''' </summary>
         ''' <returns></returns>
         Public Function Warnings() As String()
-            Dim out = RSystem.REngine.WriteLine("warnings()")
+            Dim out As String() = RServer.WriteLine("warnings()")
             Return out
         End Function
 

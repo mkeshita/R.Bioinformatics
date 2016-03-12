@@ -208,7 +208,7 @@ Public Class REngine
     ''' <param name="id">ID.</param>
     ''' <param name="dll">The file name of the library to load, e.g. "R.dll" for Windows. You should usually not provide this optional parameter</param>
     ''' <returns>The engine.</returns>
-    Protected Shared Function CreateInstance(id As String, Optional dll As String = Nothing) As REngine
+    Public Shared Function CreateInstance(id As String, Optional dll As String = Nothing) As REngine
         If id Is Nothing Then
             Throw New ArgumentNullException("id", "Empty ID is not allowed.")
         End If
