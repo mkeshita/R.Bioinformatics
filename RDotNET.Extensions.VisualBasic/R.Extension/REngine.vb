@@ -6,7 +6,7 @@ Imports System.Text
 Imports RDotNET.REngineExtension
 Imports RDotNET.SymbolicExpressionExtension
 
-Public Class REngine : Inherits RDotNET.REngine
+Friend Class REngine : Inherits RDotNET.REngine
     Implements Global.System.IDisposable
 
     Public ReadOnly Property StandardOutput As String()
@@ -88,7 +88,6 @@ Public Class REngine : Inherits RDotNET.REngine
         Dim REngine As REngine = CreateInstance(Of REngine)("RDotNet")
         Call REngine._R_HOME.InvokeSet(R_HOME)
         Call REngine.Initialize()
-        Call RSystem.Initialize(REngine)
 
         Return REngine
     End Function

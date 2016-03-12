@@ -28,27 +28,29 @@ Public Module Install
 End Module
 
 ''' <summary>
-''' R Engine extensions.
+''' R Engine extensions.(似乎对于RDotNet而言，在一个应用程序的实例进程之中仅允许一个REngine的实例存在，所以在这里就统一的使用一个公共的REngine的实例对象)
 ''' </summary>
 Public Module RSystem
 
     Private Const SPLIT_REGX_EXPRESSION As String = "[,] (?=(?:[^""]|""[^""]*"")*$)"
 
     ''' <summary>
-    ''' The default R Engine
+    ''' The default R Engine server.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property REngine As REngine
+    Public ReadOnly Property RServer As RDotNET.REngine
+        Get
+            Return REngine
+        End Get
+    End Property
 
-    Public Sub Initialize(ByRef REngine As REngine)
-        RSystem._REngine = REngine
-    End Sub
+    Friend ReadOnly REngine As RDotNET.Extensions.VisualBasic.REngine
 
     ''' <summary>
     ''' Initialize the default R Engine.
     ''' </summary>
-    Public Sub InitDefault()
-        Call Initialize(RDotNET.Extensions.VisualBasic.REngine.StartEngineServices)
+    Sub New()
+        REngine = RDotNET.Extensions.VisualBasic.REngine.StartEngineServices
     End Sub
 
     ''' <summary>
@@ -71,16 +73,6 @@ Public Module RSystem
             ver = String.Join(".", Regex.Matches(ver, "\d+").ToArray)
         End If
         Return ver
-    End Function
-
-    ''' <summary>
-    ''' Is the R engine server is running?
-    ''' </summary>
-    ''' <param name="REngine"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function ServicesRunning(REngine As REngine) As Boolean
-        Return Not REngine Is Nothing AndAlso REngine.IsRunning
     End Function
 
     ''' <summary>
@@ -116,9 +108,8 @@ Public Module RSystem
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Function Source(path As String) As String()
-        Dim Cmd As String = String.Format("source(""{0}"");", path)
-        _REngine = REngine << Push(Cmd)
-        Return REngine.StandardOutput
+        Dim cmdl As String = String.Format("source(""{0}"");", path)
+        Return REngine.WriteLine(cmdl)
     End Function
 
     ''' <summary>

@@ -11,8 +11,6 @@ Imports System.Threading
 Module Program
 
     Public Sub Main()
-        Call RSystem.InitDefault()
-
 #If DEBUG Then
         Call Test.Main()
 #End If
