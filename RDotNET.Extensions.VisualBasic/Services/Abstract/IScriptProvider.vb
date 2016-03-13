@@ -21,10 +21,17 @@ Public MustInherit Class IRProvider
     ''' <returns></returns>
     <Ignored> Public Overridable Property Requires As String()
         Get
+            If __requires Is Nothing Then
+                __requires = New List(Of String)
+            End If
             Return __requires.ToArray
         End Get
         Protected Set(value As String())
-            __requires = value.ToList
+            If value Is Nothing Then
+                __requires = Nothing
+            Else
+                __requires = value.ToList
+            End If
         End Set
     End Property
 
