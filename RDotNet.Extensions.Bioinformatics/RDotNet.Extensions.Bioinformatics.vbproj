@@ -89,6 +89,8 @@
     <Compile Include="Declares\bnlearn\ArcOperations.vb" />
     <Compile Include="Declares\bnlearn\bnFit.vb" />
     <Compile Include="Declares\bnlearn\bnFitPlots.vb" />
+    <Compile Include="Declares\plot3D\plots.vb" />
+    <Compile Include="Declares\plot3D\plot3D.vb" />
     <Compile Include="Declares\igraph\make_lattice.vb" />
     <Compile Include="Declares\igraph\graph_from_edgelist.vb" />
     <Compile Include="Declares\igraph\igraph.vb" />

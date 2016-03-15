@@ -62,6 +62,9 @@ Partial Class InstallPackage
         Me.AboutToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EMailAuthorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox3 = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabControl2.SuspendLayout()
@@ -88,7 +91,7 @@ Partial Class InstallPackage
         '
         Me.TextBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TextBox1.Location = New System.Drawing.Point(434, 51)
+        Me.TextBox1.Location = New System.Drawing.Point(435, 43)
         Me.TextBox1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(422, 22)
@@ -99,7 +102,7 @@ Partial Class InstallPackage
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(357, 54)
+        Me.Label1.Location = New System.Drawing.Point(358, 46)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(54, 16)
         Me.Label1.TabIndex = 2
@@ -108,7 +111,7 @@ Partial Class InstallPackage
         'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(866, 51)
+        Me.Button1.Location = New System.Drawing.Point(867, 43)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 3
@@ -139,10 +142,10 @@ Partial Class InstallPackage
         Me.TabPage1.Controls.Add(Me.LinkLabel2)
         Me.TabPage1.Controls.Add(Me.Label2)
         Me.TabPage1.Controls.Add(Me.LinkLabel1)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(596, 658)
+        Me.TabPage1.Size = New System.Drawing.Size(596, 661)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "bioc Info"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -181,10 +184,10 @@ Partial Class InstallPackage
         'TabPage3
         '
         Me.TabPage3.Controls.Add(Me.WebBrowser1)
-        Me.TabPage3.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(576, 399)
+        Me.TabPage3.Size = New System.Drawing.Size(576, 402)
         Me.TabPage3.TabIndex = 0
         Me.TabPage3.Text = "Information"
         Me.TabPage3.UseVisualStyleBackColor = True
@@ -197,16 +200,16 @@ Partial Class InstallPackage
         Me.WebBrowser1.MinimumSize = New System.Drawing.Size(20, 20)
         Me.WebBrowser1.Name = "WebBrowser1"
         Me.WebBrowser1.ScriptErrorsSuppressed = True
-        Me.WebBrowser1.Size = New System.Drawing.Size(570, 393)
+        Me.WebBrowser1.Size = New System.Drawing.Size(570, 396)
         Me.WebBrowser1.TabIndex = 0
         '
         'TabPage4
         '
         Me.TabPage4.Controls.Add(Me.PropertyGrid1)
-        Me.TabPage4.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(576, 399)
+        Me.TabPage4.Size = New System.Drawing.Size(576, 402)
         Me.TabPage4.TabIndex = 1
         Me.TabPage4.Text = "Details"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -216,15 +219,15 @@ Partial Class InstallPackage
         Me.PropertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PropertyGrid1.Location = New System.Drawing.Point(3, 3)
         Me.PropertyGrid1.Name = "PropertyGrid1"
-        Me.PropertyGrid1.Size = New System.Drawing.Size(570, 393)
+        Me.PropertyGrid1.Size = New System.Drawing.Size(570, 396)
         Me.PropertyGrid1.TabIndex = 0
         '
         'TabPage5
         '
         Me.TabPage5.Controls.Add(Me.PropertyGrid2)
-        Me.TabPage5.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage5.Location = New System.Drawing.Point(4, 22)
         Me.TabPage5.Name = "TabPage5"
-        Me.TabPage5.Size = New System.Drawing.Size(576, 399)
+        Me.TabPage5.Size = New System.Drawing.Size(576, 402)
         Me.TabPage5.TabIndex = 2
         Me.TabPage5.Text = "Package Archives"
         Me.TabPage5.UseVisualStyleBackColor = True
@@ -234,7 +237,7 @@ Partial Class InstallPackage
         Me.PropertyGrid2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PropertyGrid2.Location = New System.Drawing.Point(0, 0)
         Me.PropertyGrid2.Name = "PropertyGrid2"
-        Me.PropertyGrid2.Size = New System.Drawing.Size(576, 399)
+        Me.PropertyGrid2.Size = New System.Drawing.Size(576, 402)
         Me.PropertyGrid2.TabIndex = 0
         '
         'Label5
@@ -299,10 +302,10 @@ Partial Class InstallPackage
         '
         Me.TabPage2.Controls.Add(Me.TextBox2)
         Me.TabPage2.Controls.Add(Me.ListBox1)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(596, 658)
+        Me.TabPage2.Size = New System.Drawing.Size(596, 661)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Search Result"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -333,24 +336,24 @@ Partial Class InstallPackage
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewToolStripMenuItem, Me.ViewOnBioconductorToolStripMenuItem, Me.InstallUpdateToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(192, 70)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(177, 70)
         '
         'ViewToolStripMenuItem
         '
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
-        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
         Me.ViewToolStripMenuItem.Text = "View"
         '
         'ViewOnBioconductorToolStripMenuItem
         '
         Me.ViewOnBioconductorToolStripMenuItem.Name = "ViewOnBioconductorToolStripMenuItem"
-        Me.ViewOnBioconductorToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+        Me.ViewOnBioconductorToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
         Me.ViewOnBioconductorToolStripMenuItem.Text = "View on Bioconductor"
         '
         'InstallUpdateToolStripMenuItem
         '
         Me.InstallUpdateToolStripMenuItem.Name = "InstallUpdateToolStripMenuItem"
-        Me.InstallUpdateToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+        Me.InstallUpdateToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
         Me.InstallUpdateToolStripMenuItem.Text = "Install or Update"
         '
         'MenuStrip1
@@ -367,56 +370,89 @@ Partial Class InstallPackage
         '
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UpdateToolStripMenuItem, Me.SaveToolStripMenuItem, Me.ToolStripMenuItem1, Me.CloseToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(36, 20)
         Me.FileToolStripMenuItem.Text = "File"
         '
         'UpdateToolStripMenuItem
         '
         Me.UpdateToolStripMenuItem.Name = "UpdateToolStripMenuItem"
-        Me.UpdateToolStripMenuItem.Size = New System.Drawing.Size(112, 22)
+        Me.UpdateToolStripMenuItem.Size = New System.Drawing.Size(109, 22)
         Me.UpdateToolStripMenuItem.Text = "Update"
         '
         'SaveToolStripMenuItem
         '
         Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(112, 22)
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(109, 22)
         Me.SaveToolStripMenuItem.Text = "Save"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(109, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(106, 6)
         '
         'CloseToolStripMenuItem
         '
         Me.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem"
-        Me.CloseToolStripMenuItem.Size = New System.Drawing.Size(112, 22)
+        Me.CloseToolStripMenuItem.Size = New System.Drawing.Size(109, 22)
         Me.CloseToolStripMenuItem.Text = "Close"
         '
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem1, Me.HomeToolStripMenuItem, Me.EMailAuthorToolStripMenuItem})
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(41, 20)
         Me.AboutToolStripMenuItem.Text = "Help"
         '
         'AboutToolStripMenuItem1
         '
         Me.AboutToolStripMenuItem1.Name = "AboutToolStripMenuItem1"
-        Me.AboutToolStripMenuItem1.Size = New System.Drawing.Size(143, 22)
+        Me.AboutToolStripMenuItem1.Size = New System.Drawing.Size(134, 22)
         Me.AboutToolStripMenuItem1.Text = "About"
         '
         'HomeToolStripMenuItem
         '
         Me.HomeToolStripMenuItem.Name = "HomeToolStripMenuItem"
-        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
+        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
         Me.HomeToolStripMenuItem.Text = "Home"
         '
         'EMailAuthorToolStripMenuItem
         '
         Me.EMailAuthorToolStripMenuItem.Name = "EMailAuthorToolStripMenuItem"
-        Me.EMailAuthorToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
+        Me.EMailAuthorToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
         Me.EMailAuthorToolStripMenuItem.Text = "EMail Author"
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.ForeColor = System.Drawing.Color.White
+        Me.CheckBox1.Location = New System.Drawing.Point(435, 72)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(78, 20)
+        Me.CheckBox1.TabIndex = 6
+        Me.CheckBox1.Text = "Softwares"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
+        'CheckBox2
+        '
+        Me.CheckBox2.AutoSize = True
+        Me.CheckBox2.ForeColor = System.Drawing.Color.White
+        Me.CheckBox2.Location = New System.Drawing.Point(570, 72)
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.Size = New System.Drawing.Size(113, 20)
+        Me.CheckBox2.TabIndex = 7
+        Me.CheckBox2.Text = "Experiment Data"
+        Me.CheckBox2.UseVisualStyleBackColor = True
+        '
+        'CheckBox3
+        '
+        Me.CheckBox3.AutoSize = True
+        Me.CheckBox3.ForeColor = System.Drawing.Color.White
+        Me.CheckBox3.Location = New System.Drawing.Point(743, 72)
+        Me.CheckBox3.Name = "CheckBox3"
+        Me.CheckBox3.Size = New System.Drawing.Size(114, 20)
+        Me.CheckBox3.TabIndex = 8
+        Me.CheckBox3.Text = "Annotation Data"
+        Me.CheckBox3.UseVisualStyleBackColor = True
         '
         'InstallPackage
         '
@@ -424,6 +460,9 @@ Partial Class InstallPackage
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(963, 800)
+        Me.Controls.Add(Me.CheckBox3)
+        Me.Controls.Add(Me.CheckBox2)
+        Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label1)
@@ -494,4 +533,7 @@ Partial Class InstallPackage
     Friend WithEvents EMailAuthorToolStripMenuItem As Windows.Forms.ToolStripMenuItem
     Friend WithEvents LinkLabel4 As Windows.Forms.LinkLabel
     Friend WithEvents LinkLabel3 As Windows.Forms.LinkLabel
+    Friend WithEvents CheckBox1 As Windows.Forms.CheckBox
+    Friend WithEvents CheckBox2 As Windows.Forms.CheckBox
+    Friend WithEvents CheckBox3 As Windows.Forms.CheckBox
 End Class

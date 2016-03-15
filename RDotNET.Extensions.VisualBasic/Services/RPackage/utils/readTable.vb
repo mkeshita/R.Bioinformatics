@@ -192,6 +192,7 @@ Namespace utils.read.table
         <Parameter("comment.char")> Public Property commentChar As String = ""
 
         Sub New()
+            header = True  ' 为False的时候，画heatmap的时候标签会消失，所以在这里默认为True
         End Sub
 
         Sub New(file As String)
