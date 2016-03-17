@@ -178,7 +178,7 @@ Public Class InstallPackage
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If Not String.IsNullOrEmpty(TextBox1.Text) Then
             Dim term As String = TextBox1.Text
-            Dim result = Repository.Search(term)
+            Dim result = Repository.Search(term, CheckBox1.Checked, CheckBox2.Checked, CheckBox3.Checked)
 
             Call ListBox1.Items.Clear()
 

@@ -16,6 +16,10 @@ Namespace gplots
         ''' </summary>
         ''' <returns></returns>
         Public Property rowInd As Integer()
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns>下标是从1开始的？？</returns>
         Public Property colInd As Integer()
 
         Public Property [call] As String
@@ -68,6 +72,11 @@ Namespace gplots
             Return Regex.Matches(result, "#[0-9A-Za-z]+").ToArray
         End Function
 
+        ''' <summary>
+        ''' 如果字典参数为空，则使用heatmap结果之中的默认字典
+        ''' </summary>
+        ''' <param name="names"></param>
+        ''' <returns></returns>
         Public Function GetRowDendrogram(Optional names As Dictionary(Of String, String) = Nothing) As TreeNode(Of String)
             Dim maps As Dictionary(Of String, String) = names
             If names Is Nothing Then
@@ -76,6 +85,11 @@ Namespace gplots
             Return heatmap2OUT.TreeBuilder(rowDendrogram, maps)
         End Function
 
+        ''' <summary>
+        ''' 如果字典参数为空，则使用heatmap结果之中的默认字典
+        ''' </summary>
+        ''' <param name="names"></param>
+        ''' <returns></returns>
         Public Function GetColDendrogram(Optional names As Dictionary(Of String, String) = Nothing) As TreeNode(Of String)
             Dim maps As Dictionary(Of String, String) = names
             If names Is Nothing Then
@@ -88,10 +102,16 @@ Namespace gplots
             Return __getMaps(colInd, samples)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="inds">索引的下标是从1开始的</param>
+        ''' <param name="locus"></param>
+        ''' <returns></returns>
         Private Shared Function __getMaps(inds As Integer(), locus As String()) As Dictionary(Of String, String)
             Return (From ind As Integer
                     In inds
-                    Let sId As String = locus(ind)
+                    Let sId As String = locus(ind - 1)
                     Select ind,
                         sId) _
                         .ToDictionary(Function(x) x.ind.ToString,

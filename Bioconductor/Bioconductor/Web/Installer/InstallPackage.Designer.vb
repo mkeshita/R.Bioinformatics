@@ -424,6 +424,8 @@ Partial Class InstallPackage
         'CheckBox1
         '
         Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Checked = True
+        Me.CheckBox1.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBox1.ForeColor = System.Drawing.Color.White
         Me.CheckBox1.Location = New System.Drawing.Point(435, 72)
         Me.CheckBox1.Name = "CheckBox1"
@@ -435,6 +437,8 @@ Partial Class InstallPackage
         'CheckBox2
         '
         Me.CheckBox2.AutoSize = True
+        Me.CheckBox2.Checked = True
+        Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBox2.ForeColor = System.Drawing.Color.White
         Me.CheckBox2.Location = New System.Drawing.Point(570, 72)
         Me.CheckBox2.Name = "CheckBox2"
@@ -446,6 +450,8 @@ Partial Class InstallPackage
         'CheckBox3
         '
         Me.CheckBox3.AutoSize = True
+        Me.CheckBox3.Checked = True
+        Me.CheckBox3.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBox3.ForeColor = System.Drawing.Color.White
         Me.CheckBox3.Location = New System.Drawing.Point(743, 72)
         Me.CheckBox3.Name = "CheckBox3"

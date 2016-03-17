@@ -41,12 +41,23 @@ Module CLI
 
         Dim script As String = hmap.RScript
 
-        Call RSystem.InitDefault()
-        Call RSystem.REngine.WriteLine(script)
-
+        Call RServer.WriteLine(script)
         Call script.SaveTo(outDIR & "/heatmap.r")
         Call heatmap2OUT.RParser(hmap.output, hmap.locusId, hmap.samples).GetJson.SaveTo(outDIR & "/heatmap.output.json")
 
         Return 0
+    End Function
+
+    <ExportAPI("/heatmap.partitions",
+               Usage:="/heatmap.partitions /in <heatmap_out.json> [/out <outDIR>]")>
+    Public Function heatmapPartitions(args As CommandLine.CommandLine) As Integer
+        Dim injs As String = args("/in")
+        Dim out As String = args.GetValue("/out", injs.TrimFileExt & ".Meta/")
+        Dim heatmap = JsonContract.LoadJsonFile(Of heatmap2OUT)(injs)
+        Dim locusTree = heatmap.GetRowDendrogram()
+        Dim phenosTree = heatmap.GetColDendrogram()
+
+
+
     End Function
 End Module

@@ -86,14 +86,20 @@ Namespace Web
             Return Nothing
         End Function
 
-        Public Function Search(term As String) As Package()
-            Dim result As List(Of Package) =
-                New List(Of Package) +
-                (From x As Package In __annotation.Values.AsParallel Where x.Match(term) Select x).ToArray +
-                (From x As Package In __experiment.Values.AsParallel Where x.Match(term) Select x).ToArray +
-                (From x As Package In __softwares.Values.AsParallel Where x.Match(term) Select x).ToArray
+        Public Function Search(term As String, software As Boolean, experiments As Boolean, annotations As Boolean) As Package()
+            Dim result As New List(Of Package)
 
-            Return result.toarray
+            If software Then
+                result += (From x As Package In __softwares.Values.AsParallel Where x.Match(term) Select x).ToArray
+            End If
+            If experiments Then
+                result += (From x As Package In __experiment.Values.AsParallel Where x.Match(term) Select x).ToArray
+            End If
+            If annotations Then
+                result += (From x As Package In __annotation.Values.AsParallel Where x.Match(term) Select x).ToArray
+            End If
+
+            Return result.ToArray
         End Function
 
         Public Shared Function LoadDefault() As Repository
