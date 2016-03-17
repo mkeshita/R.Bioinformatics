@@ -58,6 +58,5 @@ Module CLI
         Dim phenosTree = heatmap.GetColDendrogram()
 
 
-
     End Function
 End Module
