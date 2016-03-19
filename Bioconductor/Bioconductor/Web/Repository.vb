@@ -16,7 +16,7 @@ Namespace Web
             Set(value As Package())
                 _softwares = value
                 If _softwares Is Nothing Then
-                    __softwares = New Dictionary(Of String, Package)
+                    __softwares = New Dictionary(Of Package)
                 Else
                     __softwares = value.ToDictionary
                 End If
@@ -29,7 +29,7 @@ Namespace Web
             Set(value As Package())
                 _annotation = value
                 If _annotation Is Nothing Then
-                    __annotation = New Dictionary(Of String, Package)
+                    __annotation = New Dictionary(Of Package)
                 Else
                     __annotation = value.ToDictionary
                 End If
@@ -42,7 +42,7 @@ Namespace Web
             Set(value As Package())
                 _experiment = value
                 If _experiment Is Nothing Then
-                    __experiment = New Dictionary(Of String, Package)
+                    __experiment = New Dictionary(Of Package)
                 Else
                     __experiment = value.ToDictionary
                 End If
@@ -50,9 +50,9 @@ Namespace Web
         End Property
 
         Dim _softwares, _annotation, _experiment As Package()
-        Dim __softwares As Dictionary(Of String, Package)
-        Dim __annotation As Dictionary(Of String, Package)
-        Dim __experiment As Dictionary(Of String, Package)
+        Dim __softwares As Dictionary(Of Package)
+        Dim __annotation As Dictionary(Of Package)
+        Dim __experiment As Dictionary(Of Package)
 
         Public Shared ReadOnly Property DefaultFile As String =
             App.ProductSharedDIR & "/biocLite.json"
