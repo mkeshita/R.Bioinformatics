@@ -122,7 +122,7 @@ dev.off()
 
 
 
-        Dim rp = Repository.LoadDefault
+        Dim rp = Web.Repository.LoadDefault
         Dim pp = rp.softwares.First
         pp.GetDetails("E:\R.Bioinformatics\Bioconductor\ParserTest.html".ReadAllText)
     End Sub

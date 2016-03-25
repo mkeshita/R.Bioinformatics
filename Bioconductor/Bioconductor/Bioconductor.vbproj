@@ -100,6 +100,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="biocPkgs\WGCNA\App\WGCNA_template.R" />
+    <Compile Include="biocPkgs\DESeq2\DESeq.vb" />
+    <Compile Include="biocPkgs\DESeq2\plotCounts.vb" />
+    <Compile Include="biocPkgs\DESeq2\DESeq2.vb" />
     <Compile Include="biocPkgs\WGCNA\App\WGCNA.vb" />
     <Compile Include="biocPkgs\WGCNA\blockwiseModules.vb" />
     <Compile Include="biocPkgs\WGCNA\App\1. WGCNA_Samples.vb" />
