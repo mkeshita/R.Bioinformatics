@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="biocPkgs\WGCNA\App\WGCNA_template.R" />
+    <Compile Include="biocPkgs\DESeq2\estimateSizeFactors.vb" />
     <Compile Include="biocPkgs\DESeq2\DESeq.vb" />
     <Compile Include="biocPkgs\DESeq2\plotCounts.vb" />
     <Compile Include="biocPkgs\DESeq2\DESeq2.vb" />
