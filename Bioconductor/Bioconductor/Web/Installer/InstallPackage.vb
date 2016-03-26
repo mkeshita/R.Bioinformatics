@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Forms
+Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports RDotNET.Extensions.VisualBasic
 Imports SMRUCC.R.CRAN.Bioconductor.Web
 Imports SMRUCC.R.CRAN.Bioconductor.Web.Packages
@@ -139,7 +140,7 @@ Public Class InstallPackage
         End If
     End Sub
 
-    Dim tasks As New Microsoft.VisualBasic.Parallel.TaskQueue(Of Boolean)
+    Dim tasks As New TaskQueue(Of Boolean)
 
     Private Sub __runR(script As String, pkg As String)
         Call tasks.Enqueue(AddressOf New __runRScript(pkg, Me) With {.script = script}.run)
