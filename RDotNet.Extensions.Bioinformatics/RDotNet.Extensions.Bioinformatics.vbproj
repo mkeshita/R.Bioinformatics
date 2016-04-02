@@ -95,6 +95,7 @@
     <Compile Include="Declares\igraph\graph_from_edgelist.vb" />
     <Compile Include="Declares\igraph\igraph.vb" />
     <Compile Include="Declares\igraph\make_empty_graph.vb" />
+    <Compile Include="Declares\VennDiagram\drawQuadVenn.vb" />
     <Compile Include="Wrappers\BnLearn\BnlearnInference.vb" />
     <Compile Include="Wrappers\BnLearn\BnlearnModelling.vb" />
     <Compile Include="Wrappers\BnLearn\bnlearn.vb" />
