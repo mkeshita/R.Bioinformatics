@@ -63,6 +63,12 @@ Public Module RSystem
         End If
     End Sub
 
+    Public Sub TryInit()
+        If RServer Is Nothing OrElse Not RServer.IsRunning Then
+            _RServer = RInit.StartEngineServices
+        End If
+    End Sub
+
     ''' <summary>
     ''' Parses and returns the ‘DESCRIPTION’ file of a package.
     ''' </summary>

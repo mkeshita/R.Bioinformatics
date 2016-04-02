@@ -21,13 +21,13 @@ Namespace VennDiagram.ModelAPI
         ''' <remarks></remarks>
         Public Function Generate(source As DocumentStream.File) As VennDiagram
             Dim LQuery = From vec As String
-                     In __vector(source:=source)
+                         In __vector(source:=source)
                          Select New Serial With {
-                         .Vector = vec
-                     } '
+                             .Vector = vec
+                         } '
             Return New VennDiagram With {
-            .Serials = LQuery.ToArray
-        }
+                .Serials = LQuery.ToArray
+            }
         End Function
 
         Private Function __vector(source As DocumentStream.File) As String()

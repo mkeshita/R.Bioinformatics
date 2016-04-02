@@ -44,10 +44,10 @@ Public Module CLI
                      "system, you can ignore this switch value, but you should install the R program in your linux/MAC first if you wish to\n " &
                      "get the venn diagram directly from this program.",
         Example:="C:\\R\\bin\\")>
-    Public Function VennDiagramA(CommandLine As CommandLine.CommandLine) As Integer
-        Dim CsvFilePath As String = CommandLine("-i"), SaveFile As String = CommandLine("-o")
-        Dim Title As String = CommandLine("-t")
-        Dim SerialsOption As String = CommandLine("-s")
+    Public Function VennDiagramA(args As CommandLine.CommandLine) As Integer
+        Dim CsvFilePath As String = args("-i"), SaveFile As String = args("-o")
+        Dim Title As String = args("-t")
+        Dim SerialsOption As String = args("-s")
 
         If String.IsNullOrEmpty(CsvFilePath) OrElse Not FileIO.FileSystem.FileExists(CsvFilePath) Then '-i开关参数无效
             Printf("Could not found the source file!")
@@ -80,25 +80,27 @@ Public Module CLI
         VennDiagram.Title = Title
         VennDiagram.SaveFile = SaveFile
 
-        Dim RBin As String = CommandLine("-rbin"), RScript As String = VennDiagram.RScript
+        Dim RBin As String = args("-rbin"), RScript As String = VennDiagram.RScript
         Dim SavedDir As String = FileIO.FileSystem.GetParentPath(SaveFile)
 
         Call FileIO.FileSystem.CreateDirectory(SavedDir)
         Call FileIO.FileSystem.WriteAllText(file:=SavedDir & "/" & Title & "_venn.r", text:=RScript, encoding:=System.Text.Encoding.ASCII, append:=False)
 
         If String.IsNullOrEmpty(RBin) OrElse Not FileIO.FileSystem.DirectoryExists(RBin) Then
+            Call TryInit()
         Else
             Call TryInit(RBin)
-            Dim out As String() = RServer.WriteLine(VennDiagram.RScript)
-            Printf("The venn diagram r script were saved at location:\n '%s'", SavedDir)
-            Call Process.Start(SaveFile)
         End If
+
+        Dim out As String() = RServer.WriteLine(VennDiagram.RScript)
+        Printf("The venn diagram r script were saved at location:\n '%s'", SavedDir)
+        Call Process.Start(SaveFile)
 
         Return 0
     End Function
 
     Private Function GetRandomColor() As String
         Call VBMath.Randomize()
-        Return RDotNET.Extensions.VisualBasic.RSystem.RColors(Rnd() * (RDotNET.Extensions.VisualBasic.RSystem.RColors.Length - 1))
+        Return RSystem.RColors(Rnd() * (RSystem.RColors.Length - 1))
     End Function
 End Module
