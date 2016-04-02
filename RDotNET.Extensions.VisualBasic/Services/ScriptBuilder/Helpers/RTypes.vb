@@ -23,7 +23,8 @@ Namespace Services.ScriptBuilder.RTypes
     End Structure
 
     ''' <summary>
-    ''' R表达式，是脚本单词元<see cref="IRToken"/>的一部分
+    ''' The R Expression object, is a basic parts of the R statement.
+    ''' (R表达式，是脚本单词元<see cref="IRToken"/>的一部分)
     ''' </summary>
     Public Class RExpression : Inherits IRToken
         Implements IScriptProvider
@@ -34,22 +35,22 @@ Namespace Services.ScriptBuilder.RTypes
             End Get
         End Property
 
-        ReadOnly __value As String
+        <Xml.Serialization.XmlText> Public Property value As String
 
         Sub New(R As String)
-            __value = R
+            _value = R
         End Sub
 
         Sub New(R As IRToken)
-            __value = R.RScript
+            _value = R.RScript
         End Sub
 
         Public Overrides Function RScript() As String Implements IScriptProvider.RScript
-            Return __value
+            Return _value
         End Function
 
         Public Overrides Function ToString() As String
-            Return __value
+            Return _value
         End Function
 
         Public Shared Widening Operator CType(R As String) As RExpression
@@ -60,7 +61,7 @@ Namespace Services.ScriptBuilder.RTypes
             If R Is Nothing Then
                 Return Nothing
             End If
-            Return R.__value
+            Return R._value
         End Operator
 
         Public Shared Operator -(R As RExpression) As RExpression

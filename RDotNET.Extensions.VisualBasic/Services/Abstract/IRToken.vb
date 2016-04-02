@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports RDotNET.Extensions.VisualBasic
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
@@ -11,7 +12,13 @@ Public Class IRToken : Inherits IRProvider
     Implements IScriptProvider
 
     ''' <summary>
-    ''' 
+    ''' ... the additional parameters
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property additional As [Property](Of RExpression)
+
+    ''' <summary>
+    '''
     ''' </summary>
     ''' <returns>由于这个对象只是对一个表达式的抽象，最常用的是对一个函数调用的抽象，所以library在这里不可以自动添加，需要自己在后面手工添加</returns>
     Public Overrides Function RScript() As String
@@ -90,7 +97,7 @@ Public Class IRToken : Inherits IRProvider
     End Operator
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="test">输入</param>
