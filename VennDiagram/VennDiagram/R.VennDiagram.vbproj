@@ -1,35 +1,55 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{485965CD-DA31-4517-86F6-94DFD28379C1}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>RDotNet.Extensions.Bioinformatics</RootNamespace>
-    <AssemblyName>RDotNet.Extensions.Bioinformatics</AssemblyName>
+    <ProjectGuid>{ED690FD0-6A42-4D81-BF13-CE053EB1CA37}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <StartupObject>LANS.SystemsBiology.AnalysisTools.DataVisualization.VennDiagram.Program</StartupObject>
+    <RootNamespace>LANS.SystemsBiology.AnalysisTools.DataVisualization.VennDiagram</RootNamespace>
+    <AssemblyName>venn</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>Windows</MyType>
+    <MyType>Console</MyType>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>RDotNet.Extensions.Bioinformatics.xml</DocumentationFile>
+    <DocumentationFile>venn.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>RDotNet.Extensions.Bioinformatics.xml</DocumentationFile>
+    <OutputPath>..\..\..\..\GCModeller\</OutputPath>
+    <DocumentationFile>venn.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -43,35 +63,44 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>venn.ico</ApplicationIcon>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>RDotNet.Extensions.Bioinformatics.xml</DocumentationFile>
+    <DocumentationFile>venn.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>RDotNet.Extensions.Bioinformatics.xml</DocumentationFile>
+    <OutputPath>..\..\..\..\GCModeller-x64\</OutputPath>
+    <DocumentationFile>venn.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -85,28 +114,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Declares\bnlearn\bnlearnBase.vb" />
-    <Compile Include="Declares\bnlearn\ArcOperations.vb" />
-    <Compile Include="Declares\bnlearn\bnFit.vb" />
-    <Compile Include="Declares\bnlearn\bnFitPlots.vb" />
-    <Compile Include="Declares\plot3D\plots.vb" />
-    <Compile Include="Declares\plot3D\plot3D.vb" />
-    <Compile Include="Declares\igraph\make_lattice.vb" />
-    <Compile Include="Declares\igraph\graph_from_edgelist.vb" />
-    <Compile Include="Declares\igraph\igraph.vb" />
-    <Compile Include="Declares\igraph\make_empty_graph.vb" />
-    <Compile Include="Declares\VennDiagram\drawQuadVenn.vb" />
-    <Compile Include="Declares\VennDiagram\VennDiagram\Extensions.vb" />
-    <Compile Include="Declares\VennDiagram\VennDiagram\RModelAPI.vb" />
-    <Compile Include="Declares\VennDiagram\VennDiagram\Serial.vb" />
-    <Compile Include="Declares\VennDiagram\VennDiagram\VennDiagram.vb" />
-    <Compile Include="Wrappers\BnLearn\BnlearnInference.vb" />
-    <Compile Include="Wrappers\BnLearn\BnlearnModelling.vb" />
-    <Compile Include="Wrappers\BnLearn\bnlearn.vb" />
-    <Compile Include="Wrappers\BnLearn\NodeAbstract.vb" />
-    <Compile Include="Wrappers\BnLearn\ConditionalProbability.vb" />
-    <Compile Include="Wrappers\BnLearn\NetworkParameters.vb" />
-    <Compile Include="Wrappers\Heatmap.vb" />
+    <Compile Include="CLI\VennDiagram.vb" />
+    <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -122,11 +131,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Declares\bnlearn\alarm.vb" />
-    <Compile Include="Declares\VennDiagram\makeTruthTable.vb" />
-    <Compile Include="Declares\VennDiagram\getVennPartitions.vb" />
-    <Compile Include="Declares\VennDiagram\vennBase.vb" />
-    <Compile Include="Declares\VennDiagram\vennDiagram.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -137,7 +141,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packageViewser.cd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -147,25 +150,45 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="Declares\bnlearn\bnlearn.pdf" />
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\VisualBasic_AppFramework\DocumentFormats\DocumentFormat.Csv\DocumentFormat.Csv.vbproj">
-      <Project>{1d8910c2-ada2-4306-96dc-a61b494522ed}</Project>
-      <Name>DocumentFormat.Csv</Name>
+    <Content Include="Terminal.ico" />
+    <Content Include="venn.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\R.Bioinformatics\RDotNet.Extensions.Bioinformatics\RDotNet.Extensions.Bioinformatics.vbproj">
+      <Project>{485965cd-da31-4517-86f6-94dfd28379c1}</Project>
+      <Name>RDotNet.Extensions.Bioinformatics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RDotNET.Extensions.VisualBasic\RDotNet.Extensions.VisualBasic.vbproj">
+    <ProjectReference Include="..\..\..\..\..\R.Bioinformatics\RDotNET.Extensions.VisualBasic\RDotNet.Extensions.VisualBasic.vbproj">
       <Project>{ab6e71b0-1be2-4418-ab4b-91d5554cf5a1}</Project>
       <Name>RDotNet.Extensions.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RDotNET\RDotNet.vbproj">
+    <ProjectReference Include="..\..\..\..\..\R.Bioinformatics\RDotNET\RDotNet.vbproj">
       <Project>{21c35138-455b-4833-9756-b2629f972a22}</Project>
       <Name>RDotNet</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\VisualBasic_AppFramework\DocumentFormats\DocumentFormat.Csv\DocumentFormat.Csv.vbproj">
+      <Project>{1d8910c2-ada2-4306-96dc-a61b494522ed}</Project>
+      <Name>DocumentFormat.Csv</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
+      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
+      <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
