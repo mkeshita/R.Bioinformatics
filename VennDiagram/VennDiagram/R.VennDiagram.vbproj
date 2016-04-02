@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{ED690FD0-6A42-4D81-BF13-CE053EB1CA37}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>LANS.SystemsBiology.AnalysisTools.DataVisualization.VennDiagram.Program</StartupObject>
-    <RootNamespace>LANS.SystemsBiology.AnalysisTools.DataVisualization.VennDiagram</RootNamespace>
+    <StartupObject>LANS.SystemsBiology.AnalysisTools.DataVisualization.VennDiagramTools.Program</StartupObject>
+    <RootNamespace>LANS.SystemsBiology.AnalysisTools.DataVisualization.VennDiagramTools</RootNamespace>
     <AssemblyName>venn</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>

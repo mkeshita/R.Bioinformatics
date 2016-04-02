@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports RDotNET.Extensions.VisualBasic
+Imports RDotNET.Extensions.Bioinformatics.VennDiagram.ModelAPI
 
 <PackageNamespace("VennTools.CLI", Category:=APICategories.CLI_MAN,
                   Description:="Tools for creating venn diagram model for the R program and venn diagram visualize drawing.",
