@@ -49,7 +49,7 @@ Public Module RScripts
     End Function
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="extendsFull">是否转换为全路径？默认不转换</param>
@@ -98,7 +98,7 @@ Public Module RScripts
     End Function
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="x">是一个对象，不是字符串</param>
     ''' <returns></returns>
@@ -116,9 +116,9 @@ Public Module RScripts
     ''' <param name="x">an R object.</param>
     ''' <returns>
     ''' a character vector of up to the same length as x, or NULL.
-    ''' 
+    '''
     ''' Value
-    ''' For names, NULL Or a character vector of the same length as x. (NULL Is given if the object has no names, including for objects of types which cannot have names.) 
+    ''' For names, NULL Or a character vector of the same length as x. (NULL Is given if the object has no names, including for objects of types which cannot have names.)
     ''' For an environment, the length Is the number of objects in the environment but the order of the names Is arbitrary.
     ''' For names&lt;-, the updated object. (Note that the value of names(x) &lt;- value Is that of the assignment, value, Not the return value from the left-hand side.)
     '''
@@ -145,16 +145,34 @@ Public Module RScripts
     ''' </summary>
     ''' <param name="trailingOnly">logical. Should only arguments after --args be returned?</param>
     ''' <returns>
-    ''' A character vector containing the name of the executable and the user-supplied command line arguments. 
-    ''' The first element is the name of the executable by which R was invoked. 
+    ''' A character vector containing the name of the executable and the user-supplied command line arguments.
+    ''' The first element is the name of the executable by which R was invoked.
     ''' The exact form of this element is platform dependent: it may be the fully qualified name, or simply the last component (or basename) of the application, or for an embedded R it can be anything the programmer supplied.
     ''' If trailingOnly = True, a character vector Of those arguments (If any) supplied after --args.
     ''' </returns>
     ''' <remarks>
-    ''' These arguments are captured before the standard R command line processing takes place. This means that they are the unmodified values. 
+    ''' These arguments are captured before the standard R command line processing takes place. This means that they are the unmodified values.
     ''' This is especially useful with the --args command-line flag to R, as all of the command line after that flag is skipped.
     ''' </remarks>
     Public Function commandArgs(Optional trailingOnly As Boolean = False) As String
         Return $"commandArgs(trailingOnly = {New RBoolean(trailingOnly)})"
+    End Function
+
+    ''' <summary>
+    ''' rep replicates the values in x. It is a generic function, and the (internal) default method is described here.
+    ''' </summary>
+    ''' <param name="x">a vector (of any mode including a list) or a factor or (for rep only) a POSIXct or POSIXlt or Date object; or an S4 object containing such an object.</param>
+    ''' <returns></returns>
+    Public Function rep(ParamArray x As String()) As String
+        Return $"rep({String.Join(", ", x)})"
+    End Function
+
+    ''' <summary>
+    ''' Functions to construct, coerce and check for both kinds of R lists.
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    Public Function list(ParamArray x As String()) As String
+        Return $"list({String.Join(", ", x)})"
     End Function
 End Module
