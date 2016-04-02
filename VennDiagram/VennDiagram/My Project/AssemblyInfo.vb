@@ -10,8 +10,8 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("Venn Diagram Data Visualization")> 
 <Assembly: AssemblyDescription("Venn Diagram Data Visualization")> 
-<Assembly: AssemblyCompany("LANS Engineering Workstation")> 
-<Assembly: AssemblyProduct("VennDiagram")> 
+<Assembly: AssemblyCompany("LANS Engineering Workstation")>
+<Assembly: AssemblyProduct("GCModeller")>
 <Assembly: AssemblyCopyright("Copyright © LANS Engineering Workstation 2013")> 
 <Assembly: AssemblyTrademark("LANS")> 
 
