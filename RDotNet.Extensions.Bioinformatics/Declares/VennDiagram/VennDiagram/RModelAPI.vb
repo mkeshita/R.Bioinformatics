@@ -38,7 +38,7 @@ Namespace VennDiagram.ModelAPI
                           Select k = name,
                               lst = New List(Of String)).ToArray
 
-            For row As Integer = 0 To source.RowNumbers - 1
+            For row As Integer = 1 To source.RowNumbers - 1
                 Dim Line As RowObject = source(row)
                 For colums As Integer = 0 To Width - 1
                     If Not String.IsNullOrEmpty(Line.Column(colums).Trim) Then
