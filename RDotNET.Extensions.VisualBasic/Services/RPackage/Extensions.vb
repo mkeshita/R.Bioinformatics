@@ -49,9 +49,9 @@ Public Module RScripts
     End Function
 
     ''' <summary>
-    '''
+    ''' Normalize the file path as the URL format in Unix system.
     ''' </summary>
-    ''' <param name="file"></param>
+    ''' <param name="file">The file path string</param>
     ''' <param name="extendsFull">是否转换为全路径？默认不转换</param>
     ''' <returns></returns>
     <Extension>

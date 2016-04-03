@@ -11,7 +11,7 @@ Imports RDotNET.Extensions.VisualBasic
 Namespace VennDiagram.ModelAPI
 
     ''' <summary>
-    ''' 文氏图的数据模型
+    ''' The data model of the venn diagram.(文氏图的数据模型)
     ''' </summary>
     ''' <remarks></remarks>
     Public Class VennDiagram : Inherits IRScript
@@ -43,11 +43,13 @@ Namespace VennDiagram.ModelAPI
 
         Public Property Resolution As Size = New Size(5000, 3000)
 
-        Public Sub ApplySerialsoptions(Options As String()())
-            Dim Query = (From Handle As SeqValue(Of Serial)
-                     In _Serials.SeqIterator
-                         Select Handle.obj.ApplyOptions([Option]:=Options(Handle.Pos))).ToArray
-        End Sub
+        Public Shared Operator +(venn As VennDiagram, opt As IEnumerable(Of String())) As VennDiagram
+            Dim options As String()() = opt.ToArray
+            Call (From hwnd As SeqValue(Of Serial)
+                  In venn._Serials.SeqIterator
+                  Select hwnd.obj.ApplyOptions([Option]:=options(hwnd.Pos))).ToArray
+            Return venn
+        End Operator
 
         ''' <summary>
         ''' 将本数据模型对象转换为R脚本

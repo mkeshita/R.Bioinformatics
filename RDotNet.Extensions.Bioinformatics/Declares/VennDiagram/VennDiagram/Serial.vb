@@ -3,8 +3,20 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace VennDiagram.ModelAPI
 
+    ''' <summary>
+    ''' A partition in the venn diagram.
+    ''' </summary>
     Public Class Serial : Inherits ClassObject
+
+        ''' <summary>
+        ''' The name of this partition
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property Name As String
+        ''' <summary>
+        ''' The color string of the partition
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property Color As String
 
         ''' <summary>
@@ -25,7 +37,7 @@ Namespace VennDiagram.ModelAPI
         Public Function ApplyOptions([Option] As String()) As Serial
             Name = [Option].First
             Color = [Option].Last
-            Console.WriteLine("{0}(color: {1}) {2} counts.", Me.Name, Me.Color, Me.Vector.Split(CChar(",")).Count)
+            Console.WriteLine("{0}(color: {1}) {2} counts.", Me.Name, Me.Color, Me.Vector.Split(CChar(",")).Length)
             Return Me
         End Function
     End Class

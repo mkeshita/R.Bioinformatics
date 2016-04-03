@@ -15,10 +15,11 @@ Imports RDotNET.Extensions.Bioinformatics.VennDiagram.ModelAPI
                   Url:="http://gcmodeller.org")>
 Public Module CLI
 
-    <ExportAPI("venn_diagram", Info:="Draw the venn diagram from a csv data file, you can specific the diagram drawing options from this command switch value. " &
-                                 "The generated venn dragram will be saved as tiff file format.",
-        Usage:="venn_diagram -i <csv_file> [-t <diagram_title> -o <_diagram_saved_path> -s <serials_option_pairs> -rbin <r_bin_directory>]",
-        Example:="venn_diagram -i /home/xieguigang/Desktop/genomes.csv -t genome-compared -o ~/Desktop/xcc8004.tiff -s ""xcc8004,blue;ecoli,green;pa14,yellow;ftn,black;aciad,red""")>
+    <ExportAPI(".Draw",
+               Info:="Draw the venn diagram from a csv data file, you can specific the diagram drawing options from this command switch value. " &
+                     "The generated venn dragram will be saved as tiff file format.",
+        Usage:=".Draw -i <csv_file> [-t <diagram_title> -o <_diagram_saved_path> -s <serials_option_pairs> -rbin <r_bin_directory>]",
+        Example:=".Draw -i /home/xieguigang/Desktop/genomes.csv -t genome-compared -o ~/Desktop/xcc8004.tiff -s ""xcc8004,blue;ecoli,green;pa14,yellow;ftn,black;aciad,red""")>
     <ParameterInfo("-i",
         Description:="The csv data source file for drawing the venn diagram graph.",
         Example:="/home/xieguigang/Desktop/genomes.csv")>
@@ -45,46 +46,37 @@ Public Module CLI
                      "get the venn diagram directly from this program.",
         Example:="C:\\R\\bin\\")>
     Public Function VennDiagramA(args As CommandLine.CommandLine) As Integer
-        Dim CsvFilePath As String = args("-i"), SaveFile As String = args("-o")
-        Dim Title As String = args("-t")
+        Dim inds As String = args("-i")
+        Dim title As String = args.GetValue("-t", inds.BaseName)
         Dim SerialsOption As String = args("-s")
+        Dim out As String = args.GetValue("-o", App.Desktop & $"/{title}_venn.tiff")
 
-        If String.IsNullOrEmpty(CsvFilePath) OrElse Not FileIO.FileSystem.FileExists(CsvFilePath) Then '-i开关参数无效
+        If Not inds.FileExists Then '-i开关参数无效
             Printf("Could not found the source file!")
             Return -1
+        Else
+            out = UnixPath(out, True)
         End If
-        If String.IsNullOrEmpty(Title) Then
-            Title = CsvFilePath.Replace("\", "/").Split(CChar("/")).Last.Split(CChar(".")).First
-        End If
-        If String.IsNullOrEmpty(SaveFile) Then
-            SaveFile = My.Computer.FileSystem.SpecialDirectories.Desktop & "/" & Title & "_venn.tiff"
-        End If
-        SaveFile = SaveFile.Replace("\", "/")
 
-        Dim CsvSource As DocumentStream.File = CsvFilePath
-        Dim VennDiagram As VennDiagram = Generate(source:=CsvSource)
-        Dim OptionsQuery As IEnumerable(Of String())
+        Dim dataset As DocumentStream.File = New DocumentStream.File(inds)
+        Dim VennDiagram As VennDiagram = RModelAPI.Generate(source:=dataset)
 
         If String.IsNullOrEmpty(SerialsOption) Then '从原始数据中进行推测
-            OptionsQuery = From idx As Integer In CsvSource.Width.Sequence
-                           Let column = (From s As String In CsvSource.Column(Index:=idx).AsParallel
+            VennDiagram += From idx As Integer In dataset.Width.Sequence
+                           Let column = (From s As String In dataset.Column(Index:=idx).AsParallel
                                          Where Not String.IsNullOrEmpty(s)
                                          Select s).ToArray
                            Select {column.ParseName(Serial:=idx), GetRandomColor()} '
         Else '从用户输入之中进行解析
-            OptionsQuery = From s As String In SerialsOption.Split(CChar(";")) Select s.Split(CChar(",")) '
+            VennDiagram += From s As String In SerialsOption.Split(CChar(";")) Select s.Split(CChar(",")) '
         End If
 
-        Call VennDiagram.ApplySerialsoptions(Options:=OptionsQuery.ToArray)
-
-        VennDiagram.Title = Title
-        VennDiagram.SaveFile = SaveFile
+        VennDiagram.Title = title
+        VennDiagram.SaveFile = out
 
         Dim RBin As String = args("-rbin"), RScript As String = VennDiagram.RScript
-        Dim SavedDir As String = FileIO.FileSystem.GetParentPath(SaveFile)
-
-        Call FileIO.FileSystem.CreateDirectory(SavedDir)
-        Call FileIO.FileSystem.WriteAllText(file:=SavedDir & "/" & Title & "_venn.r", text:=RScript, encoding:=System.Text.Encoding.ASCII, append:=False)
+        Dim EXPORT As String = FileIO.FileSystem.GetParentPath(out)
+        EXPORT = $"{EXPORT}/{title.NormalizePathString}_venn.r"
 
         If String.IsNullOrEmpty(RBin) OrElse Not FileIO.FileSystem.DirectoryExists(RBin) Then
             Call TryInit()
@@ -92,9 +84,10 @@ Public Module CLI
             Call TryInit(RBin)
         End If
 
-        Dim out As String() = RServer.WriteLine(VennDiagram.RScript)
-        Printf("The venn diagram r script were saved at location:\n '%s'", SavedDir)
-        Call Process.Start(SaveFile)
+        Call RScript.SaveTo(EXPORT, Encodings.ASCII)
+        Call RServer.source(EXPORT)
+        Printf("The venn diagram r script were saved at location:\n '%s'", EXPORT)
+        Call Process.Start(out)
 
         Return 0
     End Function
