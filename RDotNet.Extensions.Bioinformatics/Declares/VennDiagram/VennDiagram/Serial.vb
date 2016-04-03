@@ -27,7 +27,7 @@ Namespace VennDiagram.ModelAPI
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <XmlElement> Public Property Vector As String
+        <XmlText> Public Property Vector As String
 
         Sub New()
         End Sub

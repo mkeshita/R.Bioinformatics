@@ -99,7 +99,26 @@ Public Module CLI
         Return RSystem.RColors(Rnd() * (RSystem.RColors.Length - 1))
     End Function
 
+    ''' <summary>
+    ''' Supports directly run Venn Xml model or csv dataset raw data
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="args">null</param>
+    ''' <returns></returns>
     Public Function DrawFile(path As String, args As CommandLine.CommandLine) As Integer
-        Return __run(path, path.BaseName, Nothing, $"{App.Desktop}/{path.BaseName}_venn.tiff", Nothing)
+        Dim ext As String = path.Split("."c).Last
+        If String.Equals(ext, "csv", StringComparison.OrdinalIgnoreCase) Then
+            Return __run(path, path.BaseName, Nothing, $"{App.Desktop}/{path.BaseName}_venn.tiff", Nothing)
+        Else
+            Dim venn As VennDiagram = path.LoadXml(Of VennDiagram)
+            Dim EXPORT As String = venn.saveTiff.TrimFileExt & ".r"
+
+            Call TryInit()
+            Call venn.RScript.SaveTo(EXPORT, Encodings.ASCII.GetEncodings)
+            Call RSystem.Source(EXPORT)
+            Call Process.Start(venn.saveTiff)
+
+            Return 0
+        End If
     End Function
 End Module
