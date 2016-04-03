@@ -19,6 +19,6 @@ Module Program
     End Sub
 
     Public Function Main() As Integer
-        Return GetType(CLI).RunCLI(App.CommandLine)
+        Return GetType(CLI).RunCLI(App.CommandLine, AddressOf CLI.DrawFile)
     End Function
 End Module

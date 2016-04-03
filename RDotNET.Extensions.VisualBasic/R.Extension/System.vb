@@ -177,7 +177,7 @@ Public Module RSystem
     ''' Is just used To mark character strings In the parsed input In Latin-1 And UTF-8 locales: see parse.
     ''' </remarks>
     Public Function Source(file As String,
-                           Optional local As Boolean = False,
+                           Optional local As Boolean = True,
                            Optional echo As Boolean = False,
                            Optional printEval As Boolean = False,
                            Optional verbose As Boolean = False,
@@ -188,7 +188,7 @@ Public Module RSystem
                            Optional continueEcho As Boolean = False,
                            Optional skipEcho As Integer = 0,
                            Optional keepSource As Boolean = False) As String()
-        Dim cmdl As String = $"source(""{file}"", local = {Rbool(local)}, echo = {Rbool(echo)}, print.eval = {Rbool(printEval)},
+        Dim cmdl As String = $"source(""{If(local, UnixPath(file), file)}"", local = {Rbool(local)}, echo = {Rbool(echo)}, print.eval = {Rbool(printEval)},
                                verbose = {Rbool(verbose)},
                                prompt.echo = {Rbool(promptEcho)},
                                max.deparse.length = {maxDeparseLength}, chdir = {Rbool(chdir)},

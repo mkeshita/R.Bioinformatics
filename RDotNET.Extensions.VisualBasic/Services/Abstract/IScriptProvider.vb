@@ -4,9 +4,10 @@ Imports Microsoft.VisualBasic
 Imports RDotNET.Extensions.VisualBasic
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
+Imports System.Xml.Serialization
 
 ''' <summary>
-''' 一个提供脚本语句的最基本的抽象对象
+''' A basic object model as a token in the R script.(一个提供脚本语句的最基本的抽象对象)
 ''' </summary>
 ''' <remarks>就只通过一个函数来提供脚本执行语句</remarks>
 Public MustInherit Class IRProvider
@@ -19,7 +20,7 @@ Public MustInherit Class IRProvider
     ''' (需要加载的R的包的列表)
     ''' </summary>
     ''' <returns></returns>
-    <Ignored> Public Overridable Property Requires As String()
+    <XmlIgnore> <Ignored> Public Overridable Property Requires As String()
         Get
             If __requires Is Nothing Then
                 __requires = New List(Of String)
@@ -51,6 +52,9 @@ Public MustInherit Class IRProvider
     End Operator
 End Class
 
+''' <summary>
+''' This abstract object provides a interface for generates the R script.
+''' </summary>
 Public Interface IScriptProvider
     Function RScript() As String
 End Interface

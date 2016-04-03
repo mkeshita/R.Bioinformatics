@@ -50,6 +50,7 @@ Public Module CLI
         Dim title As String = args.GetValue("-t", inds.BaseName)
         Dim SerialsOption As String = args("-s")
         Dim out As String = args.GetValue("-o", App.Desktop & $"/{title}_venn.tiff")
+        Dim RBin As String = args("-rbin")
 
         If Not inds.FileExists Then '-i开关参数无效
             Printf("Could not found the source file!")
@@ -58,33 +59,37 @@ Public Module CLI
             out = UnixPath(out, True)
         End If
 
-        Dim dataset As DocumentStream.File = New DocumentStream.File(inds)
+        Return __run(inds, title, SerialsOption, out, RBin)
+    End Function
+
+    Private Function __run(inData As String, title As String, options As String, out As String, R_HOME As String) As Integer
+        Dim dataset As DocumentStream.File = New DocumentStream.File(inData)
         Dim VennDiagram As VennDiagram = RModelAPI.Generate(source:=dataset)
 
-        If String.IsNullOrEmpty(SerialsOption) Then '从原始数据中进行推测
+        If String.IsNullOrEmpty(options) Then '从原始数据中进行推测
             VennDiagram += From idx As Integer In dataset.Width.Sequence
                            Let column = (From s As String In dataset.Column(Index:=idx).AsParallel
                                          Where Not String.IsNullOrEmpty(s)
                                          Select s).ToArray
                            Select {column.ParseName(Serial:=idx), GetRandomColor()} '
         Else '从用户输入之中进行解析
-            VennDiagram += From s As String In SerialsOption.Split(CChar(";")) Select s.Split(CChar(",")) '
+            VennDiagram += From s As String In options.Split(CChar(";")) Select s.Split(CChar(",")) '
         End If
 
         VennDiagram.Title = title
-        VennDiagram.SaveFile = out
+        VennDiagram.saveTiff = out
 
-        Dim RBin As String = args("-rbin"), RScript As String = VennDiagram.RScript
+        Dim RScript As String = VennDiagram.RScript
         Dim EXPORT As String = FileIO.FileSystem.GetParentPath(out)
         EXPORT = $"{EXPORT}/{title.NormalizePathString}_venn.r"
 
-        If String.IsNullOrEmpty(RBin) OrElse Not FileIO.FileSystem.DirectoryExists(RBin) Then
+        If Not R_HOME.DirectoryExists Then
             Call TryInit()
         Else
-            Call TryInit(RBin)
+            Call TryInit(R_HOME)
         End If
 
-        Call RScript.SaveTo(EXPORT, Encodings.ASCII)
+        Call RScript.SaveTo(EXPORT, Encodings.ASCII.GetEncodings)
         Call RSystem.Source(EXPORT)
         Call VennDiagram.SaveAsXml(EXPORT.TrimFileExt & ".Xml")
         Printf("The venn diagram r script were saved at location:\n '%s'", EXPORT)
@@ -96,5 +101,9 @@ Public Module CLI
     Private Function GetRandomColor() As String
         Call VBMath.Randomize()
         Return RSystem.RColors(Rnd() * (RSystem.RColors.Length - 1))
+    End Function
+
+    Public Function DrawFile(path As String, args As CommandLine.CommandLine) As Integer
+        Return __run(path, path.BaseName, Nothing, $"{App.Desktop}/{path.BaseName}_venn.tiff", Nothing)
     End Function
 End Module

@@ -16,6 +16,10 @@ Namespace VennDiagram.ModelAPI
     ''' <remarks></remarks>
     Public Class VennDiagram : Inherits IRScript
 
+        ''' <summary>
+        ''' The title of the diagram.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Title As String
         ''' <summary>
         ''' vennDiagram tiff file saved path.(所生成的文氏图的保存文件名)
@@ -23,7 +27,7 @@ Namespace VennDiagram.ModelAPI
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property SaveFile As String
+        Public Property saveTiff As String
         Public Property Serials As Serial()
 
         Sub New()
@@ -35,7 +39,8 @@ Namespace VennDiagram.ModelAPI
         End Function
 
         Public Sub RandomColors()
-            Dim colors = RSystem.RColors.Randomize
+            Dim colors As String() = RSystem.RColors.Randomize
+
             For i As Integer = 0 To Serials.Length - 1
                 Serials(i).Color = colors(i)
             Next
@@ -78,7 +83,7 @@ Namespace VennDiagram.ModelAPI
             Call dataList.Remove(dataList.Length - 1, 1)
 
             Call R.AppendLine(String.Format("input_data <- list({0});", dataList.ToString))
-            Call R.AppendLine(String.Format("output_image_file <- ""{0}"";", SaveFile.Replace("\", "/")))
+            Call R.AppendLine(String.Format("output_image_file <- ""{0}"";", saveTiff.Replace("\", "/")))
             Call R.AppendLine(String.Format("title <- ""{0}"";", Title))
             Call R.AppendLine(String.Format("fill_color <- c({0});", color.ToString))
             Call R.AppendLine($"venn.diagram(input_data,fill=fill_color,filename=output_image_file,width={Resolution.Width},height={Resolution.Height},main=title);")

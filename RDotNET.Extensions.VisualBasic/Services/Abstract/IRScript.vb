@@ -2,7 +2,7 @@
 Imports Microsoft.VisualBasic.Linq.Extensions
 
 ''' <summary>
-''' R脚本的数据模型对象的接口
+''' The interface of the R script model.(R脚本的数据模型对象的接口)
 ''' </summary>
 ''' <remarks></remarks>
 Public MustInherit Class IRScript : Inherits IRProvider
