@@ -20,37 +20,34 @@ Namespace VennDiagram.ModelAPI
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Generate(source As DocumentStream.File) As VennDiagram
-            Dim LQuery = From vec As String
+            Dim LQuery = From vec
                          In __vector(source:=source)
                          Select New Serial With {
-                             .Vector = vec
+                             .Vector = String.Join(", ", vec.Value),
+                             .Name = vec.Key
                          } '
             Return New VennDiagram With {
                 .Serials = LQuery.ToArray
             }
         End Function
 
-        Private Function __vector(source As DocumentStream.File) As String()
+        Private Function __vector(source As File) As Dictionary(Of String, String())
             Dim Width As Integer = source.First.Count
-            Dim Vector = (From n As Integer In source.First.Count.Sequence Select New StringBuilder(1024)).ToArray
+            Dim Vector = (From name As String
+                          In source.First
+                          Select k = name,
+                              lst = New List(Of String)).ToArray
 
             For row As Integer = 0 To source.RowNumbers - 1
                 Dim Line As RowObject = source(row)
                 For colums As Integer = 0 To Width - 1
                     If Not String.IsNullOrEmpty(Line.Column(colums).Trim) Then
-                        Call Vector(colums).AppendFormat("{0},", row)
+                        Call Vector(colums).lst.Add(CStr(row))
                     End If
                 Next
             Next
 
-            For i As Integer = 0 To Vector.Length - 1
-                Call Vector(i).Remove(Vector(i).Length - 1, 1)
-            Next
-
-            Dim LQuery = From sBuilder As StringBuilder In Vector
-                         Let s = sBuilder.ToString
-                         Select s  '
-            Return LQuery.ToArray
+            Return Vector.ToDictionary(Function(x) x.k, Function(x) x.lst.ToArray)
         End Function
 
         ''' <summary>

@@ -67,11 +67,7 @@ Public Module CLI
         Dim VennDiagram As VennDiagram = RModelAPI.Generate(source:=dataset)
 
         If String.IsNullOrEmpty(options) Then '从原始数据中进行推测
-            VennDiagram += From idx As Integer In dataset.Width.Sequence
-                           Let column = (From s As String In dataset.Column(Index:=idx).AsParallel
-                                         Where Not String.IsNullOrEmpty(s)
-                                         Select s).ToArray
-                           Select {column.ParseName(Serial:=idx), GetRandomColor()} '
+            VennDiagram += From col As String In dataset.First Select {col, GetRandomColor()} '
         Else '从用户输入之中进行解析
             VennDiagram += From s As String In options.Split(CChar(";")) Select s.Split(CChar(",")) '
         End If

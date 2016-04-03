@@ -29,6 +29,19 @@ Namespace VennDiagram.ModelAPI
         ''' <remarks></remarks>
         Public Property saveTiff As String
         Public Property Serials As Serial()
+            Get
+                Return __partitions.Values.ToArray
+            End Get
+            Set(value As Serial())
+                If value Is Nothing Then
+                    __partitions = New Dictionary(Of Serial)
+                Else
+                    __partitions = value.ToDictionary
+                End If
+            End Set
+        End Property
+
+        Dim __partitions As Dictionary(Of Serial)
 
         Sub New()
             Requires = {"VennDiagram"}
@@ -48,11 +61,12 @@ Namespace VennDiagram.ModelAPI
 
         Public Property Resolution As Size = New Size(5000, 3000)
 
-        Public Shared Operator +(venn As VennDiagram, opt As IEnumerable(Of String())) As VennDiagram
-            Dim options As String()() = opt.ToArray
-            Call (From hwnd As SeqValue(Of Serial)
-                  In venn._Serials.SeqIterator
-                  Select hwnd.obj.ApplyOptions([Option]:=options(hwnd.Pos))).ToArray
+        Public Shared Operator +(venn As VennDiagram, opts As IEnumerable(Of String())) As VennDiagram
+            For Each opt As String() In opts
+                Dim name As String = opt.First
+                Call venn.__partitions.Find(name).ApplyOptions(opt)
+            Next
+
             Return venn
         End Operator
 

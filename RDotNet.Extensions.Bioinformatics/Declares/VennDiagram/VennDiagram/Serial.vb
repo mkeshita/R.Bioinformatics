@@ -1,4 +1,5 @@
 ﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 
 Namespace VennDiagram.ModelAPI
@@ -7,12 +8,13 @@ Namespace VennDiagram.ModelAPI
     ''' A partition in the venn diagram.
     ''' </summary>
     Public Class Serial : Inherits ClassObject
+        Implements sIdEnumerable
 
         ''' <summary>
         ''' The name of this partition
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property Name As String
+        <XmlAttribute> Public Property Name As String Implements sIdEnumerable.Identifier
         ''' <summary>
         ''' The color string of the partition
         ''' </summary>
