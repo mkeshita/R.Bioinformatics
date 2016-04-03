@@ -93,6 +93,10 @@ Public Module RScripts
         Return $"""{s}"""
     End Function
 
+    Public Function Rbool(b As Boolean) As String
+        Return New RBoolean(b).RScript
+    End Function
+
     Public Function par(x As String) As String
         Return $"par(""{x}"")"
     End Function

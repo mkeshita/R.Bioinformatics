@@ -4,7 +4,15 @@ Namespace Services.ScriptBuilder.RTypes
 
     Public Structure RBoolean : Implements IScriptProvider
 
+        ''' <summary>
+        ''' T
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared ReadOnly Property [TRUE] As New RBoolean(RScripts.TRUE)
+        ''' <summary>
+        ''' F
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared ReadOnly Property [FALSE] As New RBoolean(RScripts.FALSE)
 
         ReadOnly __value As String
@@ -17,6 +25,10 @@ Namespace Services.ScriptBuilder.RTypes
             Call Me.New(If(value, RScripts.TRUE, RScripts.FALSE))
         End Sub
 
+        ''' <summary>
+        ''' <see cref="[TRUE]"/> or <see cref="[FALSE]"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Function RScript() As String Implements IScriptProvider.RScript
             Return __value
         End Function
