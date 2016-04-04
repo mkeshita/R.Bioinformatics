@@ -84,8 +84,9 @@ Public Module CLI
         End If
 
         Call RScript.SaveTo(EXPORT, Encodings.ASCII.GetEncodings)
-        Call RSystem.Source(EXPORT)
         Call VennDiagram.SaveAsXml(EXPORT.TrimFileExt & ".Xml")
+        Call RSystem.Source(EXPORT)
+
         Printf("The venn diagram r script were saved at location:\n '%s'", EXPORT)
         Call Process.Start(out)
 

@@ -57,6 +57,9 @@ Namespace Services.ScriptBuilder.RTypes
             _value = R.RScript
         End Sub
 
+        Sub New()
+        End Sub
+
         Public Overrides Function RScript() As String Implements IScriptProvider.RScript
             Return _value
         End Function
