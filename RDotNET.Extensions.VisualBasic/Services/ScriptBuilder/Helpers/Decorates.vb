@@ -80,4 +80,27 @@ Namespace Services.ScriptBuilder
             Return rfunc.Name
         End Operator
     End Class
+
+    ''' <summary>
+    ''' Declaring a R function entry point.
+    ''' </summary>
+    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
+    Public Class RImport : Inherits RAttribute
+
+        Public ReadOnly Property Required As String
+
+        ''' <summary>
+        ''' Declaring a R function entry point.
+        ''' </summary>
+        ''' <param name="name">The R function name</param>
+        ''' <param name="require">The required package name of this function.</param>
+        Sub New(name As String, Optional require As String = "base")
+            Call MyBase.New(name)
+            Me.Required = require
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
 End Namespace
