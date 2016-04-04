@@ -19,6 +19,10 @@ Namespace VennDiagram.ModelAPI
 
         Dim __plot As vennDiagramPlot
 
+        ''' <summary>
+        ''' The venn.diagram plot API in R language
+        ''' </summary>
+        ''' <returns></returns>
         Public Property plot As vennDiagramPlot
             Get
                 If __plot Is Nothing Then
@@ -59,6 +63,10 @@ Namespace VennDiagram.ModelAPI
             End Set
         End Property
 
+        ''' <summary>
+        ''' Partitions on the venn diagram
+        ''' </summary>
+        ''' <returns></returns>
         <XmlElement> Public Property partitions As Partition()
             Get
                 Return __partitions.Values.ToArray
@@ -74,6 +82,10 @@ Namespace VennDiagram.ModelAPI
 
         Dim __partitions As Dictionary(Of Partition)
 
+        ''' <summary>
+        ''' The partition names
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property categoryNames As String()
             Get
                 Return partitions.ToArray(Function(x) x.DisplName)
@@ -88,6 +100,9 @@ Namespace VennDiagram.ModelAPI
             Return Title
         End Function
 
+        ''' <summary>
+        ''' Assign random colors to the venn diagram partitions
+        ''' </summary>
         Public Sub RandomColors()
             Dim colors As String() = RSystem.RColors.Randomize
 
@@ -120,14 +135,14 @@ Namespace VennDiagram.ModelAPI
         Const venn__plots_out As String = NameOf(venn__plots_out)
 
         ''' <summary>
-        ''' 将本数据模型对象转换为R脚本
+        ''' Convert the data model as the R script for venn diagram drawing.(将本数据模型对象转换为R脚本)
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Protected Overrides Function __R_script() As String
             Dim R As ScriptBuilder = New ScriptBuilder(capacity:=5 * 1024)
-            Dim dataList As New List(Of String)
-            Dim color As New List(Of String)
+            Dim dataList As New List(Of String) ' The list elements for the venn diagram partitions
+            Dim color As New List(Of String) ' The partitions color name vector
 
             For i As Integer = 0 To partitions.Length - 1
                 Dim x As Partition = partitions(i)
@@ -146,6 +161,8 @@ Namespace VennDiagram.ModelAPI
 
             R += $"input_data <- list({dataList.JoinBy(",")})"
             R += $"fill_color <- {c(color.ToArray)}"
+
+            ' Calling the venn.diagram R API
             R += venn__plots_out <= plot.Copy("input_data", "fill_color", plot.categoryNames)
 
             Return R.ToString
