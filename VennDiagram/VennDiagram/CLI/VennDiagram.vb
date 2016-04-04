@@ -17,7 +17,7 @@ Public Module CLI
                Info:="Draw the venn diagram from a csv data file, you can specific the diagram drawing options from this command switch value. " &
                      "The generated venn dragram will be saved as tiff file format.",
         Usage:=".Draw -i <csv_file> [-t <diagram_title> -o <_diagram_saved_path> -s <serials_option_pairs> -rbin <r_bin_directory>]",
-        Example:=".Draw -i /home/xieguigang/Desktop/genomes.csv -t genome-compared -o ~/Desktop/xcc8004.tiff -s ""xcc8004,blue;ecoli,green;pa14,yellow;ftn,black;aciad,red""")>
+        Example:=".Draw -i /home/xieguigang/Desktop/genomes.csv -t genome-compared -o ~/Desktop/xcc8004.tiff -s ""Xcc8004,blue;ecoli,green;pa14,yellow;ftn,black;aciad,red""")>
     <ParameterInfo("-i",
         Description:="The csv data source file for drawing the venn diagram graph.",
         Example:="/home/xieguigang/Desktop/genomes.csv")>

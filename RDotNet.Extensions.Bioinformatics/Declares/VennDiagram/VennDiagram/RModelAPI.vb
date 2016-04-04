@@ -22,12 +22,12 @@ Namespace VennDiagram.ModelAPI
         Public Function Generate(source As DocumentStream.File) As VennDiagram
             Dim LQuery = From vec
                          In __vector(source:=source)
-                         Select New Serial With {
+                         Select New Partition With {
                              .Vector = String.Join(", ", vec.Value),
                              .Name = vec.Key
                          } '
             Return New VennDiagram With {
-                .Serials = LQuery.ToArray
+                .partitions = LQuery.ToArray
             }
         End Function
 

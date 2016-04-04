@@ -59,20 +59,26 @@ Namespace VennDiagram.ModelAPI
             End Set
         End Property
 
-        <XmlElement> Public Property Serials As Serial()
+        <XmlElement> Public Property partitions As Partition()
             Get
                 Return __partitions.Values.ToArray
             End Get
-            Set(value As Serial())
+            Set(value As Partition())
                 If value Is Nothing Then
-                    __partitions = New Dictionary(Of Serial)
+                    __partitions = New Dictionary(Of Partition)
                 Else
                     __partitions = value.ToDictionary
                 End If
             End Set
         End Property
 
-        Dim __partitions As Dictionary(Of Serial)
+        Dim __partitions As Dictionary(Of Partition)
+
+        Public ReadOnly Property categoryNames As String()
+            Get
+                Return partitions.ToArray(Function(x) x.DisplName)
+            End Get
+        End Property
 
         Sub New()
             Requires = {"VennDiagram"}
@@ -85,8 +91,8 @@ Namespace VennDiagram.ModelAPI
         Public Sub RandomColors()
             Dim colors As String() = RSystem.RColors.Randomize
 
-            For i As Integer = 0 To Serials.Length - 1
-                Serials(i).Color = colors(i)
+            For i As Integer = 0 To partitions.Length - 1
+                partitions(i).Color = colors(i)
             Next
         End Sub
 
@@ -112,28 +118,26 @@ Namespace VennDiagram.ModelAPI
         ''' <remarks></remarks>
         Protected Overrides Function __R_script() As String
             Dim R As ScriptBuilder = New ScriptBuilder(capacity:=5 * 1024)
-            Dim dataList As StringBuilder = New StringBuilder(capacity:=128)
-            Dim color As StringBuilder = New StringBuilder(capacity:=128)
+            Dim dataList As New List(Of String)
+            Dim color As New List(Of String)
 
-            For i As Integer = 0 To Serials.Length - 1
-                Dim x As Serial = Serials(i)
-                Dim objName As String = x.Name.NormalizePathString
+            For i As Integer = 0 To partitions.Length - 1
+                Dim x As Partition = partitions(i)
+                Dim objName As String = x.Name.NormalizePathString.Replace(" ", "_")
 
                 R += $"d{i} <- c({x.Vector})"
-                objName = objName.Replace(" ", "_")
-
-                Call color.AppendFormat("""{0}"",", x.Color)
-                Call dataList.AppendFormat("{0}=d{1},", objName, i)
+                color += x.Color
+                dataList += $"{objName}=d{i}"
 
                 If Not String.Equals(x.Name, objName) Then
                     Call $"{x.Name} => '{objName}'".__DEBUG_ECHO
                 End If
             Next
-            Call color.RemoveLast
-            Call dataList.RemoveLast
 
-            R += $"input_data <- list({dataList.ToString})"
-            R += $"fill_color <- c({color.ToString})"
+            plot.categoryNames = c(partitions.ToArray(Function(x) Rstring(x.DisplName)))
+
+            R += $"input_data <- list({dataList.JoinBy(",")})"
+            R += $"fill_color <- {c(color.ToArray)}"
             R += plot.Copy("input_data", "fill_color")
 
             Return R.ToString
