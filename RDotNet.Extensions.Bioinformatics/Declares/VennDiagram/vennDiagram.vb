@@ -23,17 +23,17 @@ Namespace VennDiagram
         ''' Integer giving the height Of the output figure In units
         ''' </summary>
         ''' <returns></returns>
-        Public Property height As Integer = 3000
+        Public Property height As Integer = 4000
         ''' <summary>
         ''' Integer giving the width of the output figure in units
         ''' </summary>
         ''' <returns></returns>
-        Public Property width As Integer = 3000
+        Public Property width As Integer = 7000
         ''' <summary>
         ''' Resolution of the final figure in DPI
         ''' </summary>
         ''' <returns></returns>
-        Public Property resolution As Integer = 500
+        Public Property resolution As Integer = 600
         ''' <summary>
         ''' Specification of the image format (e.g. tiff, png or svg)
         ''' </summary>
@@ -128,7 +128,7 @@ Namespace VennDiagram
         ''' Allow specification of category names using plotmath syntax
         ''' </summary>
         ''' <returns></returns>
-        <Parameter("category.names")> Public Property categoryNames As RExpression = names(x)
+        <Parameter("category.names")> Public Property categoryNames As RExpression = names("x")
         ''' <summary>
         ''' Logical specifying whether to use only unique elements in each item of the input list or use all elements. Defaults to FALSE
         ''' </summary>
@@ -177,8 +177,9 @@ Namespace VennDiagram
         Sub New(x As String, colors As String, title As String, tiff As String)
             Me.x = x
             Me.fill = colors
-            Me.main = title
+            Me.main = Rstring(title)
             Me.filename = tiff
+            Me.categoryNames = names(x)
         End Sub
 
         Public Function Copy(x As String, colors As String) As vennDiagramPlot
@@ -186,6 +187,7 @@ Namespace VennDiagram
 
             clone.x = x
             clone.fill = colors
+            clone.categoryNames = names(x)
 
             Return clone
         End Function

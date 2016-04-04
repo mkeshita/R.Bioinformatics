@@ -40,7 +40,7 @@ Namespace VennDiagram.ModelAPI
                 Return plot.main
             End Get
             Set(value As String)
-                plot.main = value
+                plot.main = Rstring(value)
             End Set
         End Property
 
