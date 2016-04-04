@@ -103,9 +103,15 @@ Namespace VennDiagram.ModelAPI
         ''' <param name="opts"></param>
         ''' <returns></returns>
         Public Shared Operator +(venn As VennDiagram, opts As IEnumerable(Of String())) As VennDiagram
-            For Each opt As String() In opts
-                Dim name As String = opt.First
-                Call venn.__partitions.Find(name).ApplyOptions(opt)
+            For Each opt As SeqValue(Of String()) In opts.SeqIterator
+                Dim name As String = opt.obj.First
+                Dim part As Partition = venn.__partitions.Find(name)
+
+                If part Is Nothing Then
+                    part = venn.partitions(opt.Pos)
+                End If
+
+                Call part.ApplyOptions(opt.obj)
             Next
 
             Return venn
@@ -134,11 +140,11 @@ Namespace VennDiagram.ModelAPI
                 End If
             Next
 
-            plot.categoryNames = c(partitions.ToArray(Function(x) Rstring(x.DisplName)))
+            plot.categoryNames = c(partitions.ToArray(Function(x) x.DisplName))
 
             R += $"input_data <- list({dataList.JoinBy(",")})"
             R += $"fill_color <- {c(color.ToArray)}"
-            R += plot.Copy("input_data", "fill_color")
+            R += plot.Copy("input_data", "fill_color", plot.categoryNames)
 
             Return R.ToString
         End Function

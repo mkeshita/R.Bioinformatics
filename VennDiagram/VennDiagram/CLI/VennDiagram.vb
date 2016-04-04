@@ -16,8 +16,8 @@ Public Module CLI
     <ExportAPI(".Draw",
                Info:="Draw the venn diagram from a csv data file, you can specific the diagram drawing options from this command switch value. " &
                      "The generated venn dragram will be saved as tiff file format.",
-        Usage:=".Draw -i <csv_file> [-t <diagram_title> -o <_diagram_saved_path> -s <serials_option_pairs> -rbin <r_bin_directory>]",
-        Example:=".Draw -i /home/xieguigang/Desktop/genomes.csv -t genome-compared -o ~/Desktop/xcc8004.tiff -s ""Xcc8004,blue;ecoli,green;pa14,yellow;ftn,black;aciad,red""")>
+        Usage:=".Draw -i <csv_file> [-t <diagram_title> -o <_diagram_saved_path> -s <partitions_option_pairs> -rbin <r_bin_directory>]",
+        Example:=".Draw -i /home/xieguigang/Desktop/genomes.csv -t genome-compared -o ~/Desktop/xcc8004.tiff -s ""Xcc8004,blue,Xcc 8004;ecoli,green,Ecoli. K12;pa14,yellow,PA14;ftn,black,FTN;aciad,red,ACIAD""")>
     <ParameterInfo("-i",
         Description:="The csv data source file for drawing the venn diagram graph.",
         Example:="/home/xieguigang/Desktop/genomes.csv")>
@@ -29,11 +29,11 @@ Public Module CLI
                      "the program will save the generated venn diagram to user desktop folder and using the file name of the input csv file as default.",
         Example:="~/Desktop/xcc8004.tiff")>
     <ParameterInfo("-s", True,
-        Description:="Optional, the profile settings for the serials in the venn diagram, each serial profile data is\n " &
-                     "in a key value paired like: name,color, and each serial profile pair is seperated by a ';' character.\n" &
-                     "If this switch value is not specific by the user then the program will trying to parse the serial name\n" &
-                     "from the column values and apply for each serial a randomize color.",
-        Example:="xcc8004,blue;ecoli,green;pa14,yellow;ftn,black;aciad,red")>
+        Description:="Optional, the profile settings for the partitions in the venn diagram, each partition profile data is\n " &
+                     "in a key value paired like: name,color, and each partition profile pair is seperated by a ';' character.\n" &
+                     "If this switch value is not specific by the user then the program will trying to parse the partition name\n" &
+                     "from the column values and apply for each partition a randomize color.",
+        Example:="Xcc8004,blue,Xcc 8004;ecoli,green,Ecoli. K12;pa14,yellow,PA14;ftn,black,FTN;aciad,red,ACIAD")>
     <ParameterInfo("-rbin", True,
         Description:="Optional, Set up the r bin path for drawing the venn diagram, if this switch value is not specific by the user then \n" &
                      "the program just output the venn diagram drawing R script file in a specific location, or if this switch \n" &
@@ -46,8 +46,8 @@ Public Module CLI
     Public Function VennDiagramA(args As CommandLine.CommandLine) As Integer
         Dim inds As String = args("-i")
         Dim title As String = args.GetValue("-t", inds.BaseName)
-        Dim SerialsOption As String = args("-s")
-        Dim out As String = args.GetValue("-o", App.Desktop & $"/{title}_venn.tiff")
+        Dim partitionsOption As String = args("-s")
+        Dim out As String = args.GetValue("-o", App.Desktop & $"/{title.NormalizePathString(True)}_venn.tiff")
         Dim RBin As String = args("-rbin")
 
         If Not inds.FileExists Then '-i开关参数无效
@@ -57,7 +57,7 @@ Public Module CLI
             out = UnixPath(out, True)
         End If
 
-        Return __run(inds, title, SerialsOption, out, RBin)
+        Return __run(inds, title, partitionsOption, out, RBin)
     End Function
 
     Private Function __run(inData As String, title As String, options As String, out As String, R_HOME As String) As Integer

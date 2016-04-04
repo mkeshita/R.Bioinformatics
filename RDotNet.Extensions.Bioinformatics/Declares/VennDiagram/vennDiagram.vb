@@ -182,12 +182,16 @@ Namespace VennDiagram
             Me.categoryNames = names(x)
         End Sub
 
-        Public Function Copy(x As String, colors As String) As vennDiagramPlot
+        Public Function Copy(x As String, colors As String, Optional cat As RExpression = Nothing) As vennDiagramPlot
             Dim clone As vennDiagramPlot = DirectCast(Me.MemberwiseClone, vennDiagramPlot)
 
             clone.x = x
             clone.fill = colors
-            clone.categoryNames = names(x)
+            clone.categoryNames = cat
+
+            If clone.categoryNames Is Nothing Then
+                clone.categoryNames = names(x)
+            End If
 
             Return clone
         End Function
