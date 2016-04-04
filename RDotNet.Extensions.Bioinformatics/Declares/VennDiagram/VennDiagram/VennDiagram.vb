@@ -117,6 +117,8 @@ Namespace VennDiagram.ModelAPI
             Return venn
         End Operator
 
+        Const venn__plots_out As String = NameOf(venn__plots_out)
+
         ''' <summary>
         ''' 将本数据模型对象转换为R脚本
         ''' </summary>
@@ -144,7 +146,7 @@ Namespace VennDiagram.ModelAPI
 
             R += $"input_data <- list({dataList.JoinBy(",")})"
             R += $"fill_color <- {c(color.ToArray)}"
-            R += plot.Copy("input_data", "fill_color", plot.categoryNames)
+            R += venn__plots_out <= plot.Copy("input_data", "fill_color", plot.categoryNames)
 
             Return R.ToString
         End Function
