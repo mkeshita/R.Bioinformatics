@@ -10,7 +10,7 @@ Namespace WGCNA
 
         <ExportAPI("WGCNA")>
         Public Function BuildScript() As WGCNA.App.WGCNA
-
+            Throw New NotImplementedException
         End Function
 
         ''' <summary>

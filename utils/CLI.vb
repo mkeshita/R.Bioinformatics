@@ -13,7 +13,7 @@ Module CLI
                Example:="",
                Usage:="/heatmap /in <dataset.csv> [/out <out.tiff> /width 4000 /height 3000 /colors <RExpression>]")>
     <ParameterInfo("/in", False,
-                   Description:="A matrix dataset, and first row in this csv file needs to be the property of the object and rows are the object entity. 
+                   Description:="A matrix dataset, and first row in this csv file needs to be the property of the object and rows are the object entity.
                    Example can be found at datasets: .../datasets/ppg2008.csv")>
     <ParameterInfo("/colors", True,
                    Description:="The color schema of your heatmap, default this parameter is null and using brewer.pal(10,""RdYlBu"") from RColorBrewer.
@@ -57,6 +57,6 @@ Module CLI
         Dim locusTree = heatmap.GetRowDendrogram()
         Dim phenosTree = heatmap.GetColDendrogram()
 
-
+        Throw New NotImplementedException
     End Function
 End Module

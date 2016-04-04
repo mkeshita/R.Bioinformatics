@@ -1,11 +1,9 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ConsoleDevice.STDIO
-
-Imports RDotNET.Extensions.VisualBasic.RSystem
-Imports RDotNET
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
+Imports RDotNET.Extensions.VisualBasic.RSystem
 Imports RDotNET.Extensions.VisualBasic
 Imports RDotNET.Extensions.Bioinformatics.VennDiagram.ModelAPI
 

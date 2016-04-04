@@ -6,7 +6,8 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports RDotNET.Extensions.VisualBasic
+Imports RDotNet.Extensions.VisualBasic
+Imports RDotNet.Extensions.VisualBasic.Services.ScriptBuilder
 
 Namespace VennDiagram.ModelAPI
 
@@ -16,19 +17,49 @@ Namespace VennDiagram.ModelAPI
     ''' <remarks></remarks>
     Public Class VennDiagram : Inherits IRScript
 
+        Dim __plot As vennDiagramPlot
+
+        Public Property plot As vennDiagramPlot
+            Get
+                If __plot Is Nothing Then
+                    __plot = New vennDiagramPlot("input_data", "fill_color", "title", "output_image_file")
+                End If
+                Return __plot
+            End Get
+            Set(value As vennDiagramPlot)
+                __plot = value
+            End Set
+        End Property
+
         ''' <summary>
         ''' The title of the diagram.
         ''' </summary>
         ''' <returns></returns>
-        Public Property Title As String
+        <XmlIgnore> Public Property Title As String
+            Get
+                Return plot.main
+            End Get
+            Set(value As String)
+                plot.main = value
+            End Set
+        End Property
+
         ''' <summary>
         ''' vennDiagram tiff file saved path.(所生成的文氏图的保存文件名)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property saveTiff As String
-        Public Property Serials As Serial()
+        <XmlIgnore> Public Property saveTiff As String
+            Get
+                Return plot.filename
+            End Get
+            Set(value As String)
+                plot.filename = value
+            End Set
+        End Property
+
+        <XmlElement> Public Property Serials As Serial()
             Get
                 Return __partitions.Values.ToArray
             End Get
@@ -59,8 +90,12 @@ Namespace VennDiagram.ModelAPI
             Next
         End Sub
 
-        Public Property Resolution As Size = New Size(5000, 3000)
-
+        ''' <summary>
+        ''' Applying the diagram options
+        ''' </summary>
+        ''' <param name="venn"></param>
+        ''' <param name="opts"></param>
+        ''' <returns></returns>
         Public Shared Operator +(venn As VennDiagram, opts As IEnumerable(Of String())) As VennDiagram
             For Each opt As String() In opts
                 Dim name As String = opt.First
@@ -76,16 +111,17 @@ Namespace VennDiagram.ModelAPI
         ''' <returns></returns>
         ''' <remarks></remarks>
         Protected Overrides Function __R_script() As String
-            Dim R As StringBuilder = New StringBuilder(capacity:=5 * 1024)
+            Dim R As ScriptBuilder = New ScriptBuilder(capacity:=5 * 1024)
             Dim dataList As StringBuilder = New StringBuilder(capacity:=128)
             Dim color As StringBuilder = New StringBuilder(capacity:=128)
 
             For i As Integer = 0 To Serials.Length - 1
                 Dim x As Serial = Serials(i)
                 Dim objName As String = x.Name.NormalizePathString
+
+                R += $"d{i} <- c({x.Vector})"
                 objName = objName.Replace(" ", "_")
 
-                Call R.AppendLine(String.Format("d{0} <- c({1});", i, x.Vector))
                 Call color.AppendFormat("""{0}"",", x.Color)
                 Call dataList.AppendFormat("{0}=d{1},", objName, i)
 
@@ -93,14 +129,12 @@ Namespace VennDiagram.ModelAPI
                     Call $"{x.Name} => '{objName}'".__DEBUG_ECHO
                 End If
             Next
-            Call color.Remove(color.Length - 1, 1)
-            Call dataList.Remove(dataList.Length - 1, 1)
+            Call color.RemoveLast
+            Call dataList.RemoveLast
 
-            Call R.AppendLine(String.Format("input_data <- list({0});", dataList.ToString))
-            Call R.AppendLine(String.Format("output_image_file <- ""{0}"";", saveTiff.Replace("\", "/")))
-            Call R.AppendLine(String.Format("title <- ""{0}"";", Title))
-            Call R.AppendLine(String.Format("fill_color <- c({0});", color.ToString))
-            Call R.AppendLine($"venn.diagram(input_data,fill=fill_color,filename=output_image_file,width={Resolution.Width},height={Resolution.Height},main=title);")
+            R += $"input_data <- list({dataList.ToString})"
+            R += $"fill_color <- c({color.ToString})"
+            R += plot.Copy("input_data", "fill_color")
 
             Return R.ToString
         End Function

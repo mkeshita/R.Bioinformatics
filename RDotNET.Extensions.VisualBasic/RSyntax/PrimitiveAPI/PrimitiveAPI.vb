@@ -9,7 +9,7 @@ Namespace RBase
     ''' R function bridge to VisualBasic
     ''' </summary>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <PackageNamespace("RBase.PrimitiveAPI")>
     Public Module PrimitiveAPI
 
@@ -76,9 +76,9 @@ Namespace RBase
         ''' <remarks>
         ''' The result depends on the value of options("warn") and on handlers established in the executing code.
         ''' If a condition object is supplied it should be the only argument, and further arguments will be ignored, with a message.
-        ''' warning signals a warning condition by (effectively) calling signalCondition. If there are no handlers or if all handlers return, 
-        ''' then the value of warn = getOption("warn") is used to determine the appropriate action. If warn is negative warnings are ignored; 
-        ''' if it is zero they are stored and printed after the top–level function has completed; if it is one they are printed as they occur 
+        ''' warning signals a warning condition by (effectively) calling signalCondition. If there are no handlers or if all handlers return,
+        ''' then the value of warn = getOption("warn") is used to determine the appropriate action. If warn is negative warnings are ignored;
+        ''' if it is zero they are stored and printed after the top–level function has completed; if it is one they are printed as they occur
         ''' and if it is 2 (or larger) warnings are turned into errors. Calling warning(immediate. = TRUE) turns warn &lt;= 0 into warn = 1 for this call only.
         ''' If warn is zero (the default), a read-only variable last.warning is created. It contains the warnings which can be printed via a call to warnings.
         ''' Warnings will be truncated to getOption("warning.length") characters, default 1000, indicated by [... truncated].
@@ -86,7 +86,7 @@ Namespace RBase
         ''' An attempt is made to coerce other types of inputs to warning to character vectors.
         ''' suppressWarnings evaluates its expression in a context that ignores all warnings.
         ''' </remarks>
-        ''' 
+        '''
         <ExportAPI("Warning")>
         Public Function warning(args As Generic.IEnumerable(Of Object),
                             <Scripting.MetaData.Parameter("call.", "logical, indicating if the call should become part of the warning message.")> Optional [Call] As Boolean = True,
@@ -132,7 +132,7 @@ Namespace RBase
         ''' <param name="NaRM"></param>
         ''' <returns>The value is a logical vector of length one.</returns>
         ''' <remarks></remarks>
-        ''' 
+        '''
         <ExportAPI("Any")>
         Public Function Any(x As BooleanVector,
                             <Scripting.MetaData.Parameter("na.rm", "logical. If true NA values are removed before the result is computed.")>
@@ -157,7 +157,7 @@ Namespace RBase
         ''' <param name="x"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ''' 
+        '''
         <ExportAPI("All")>
         Public Function All(x As BooleanVector,
                             <Scripting.MetaData.Parameter("na.rm", "logical. If true NA values are removed before the result is computed.")>
@@ -208,7 +208,7 @@ Namespace RBase
         ''' <param name="LengthOut">non-negative integer: the desired length of the output vector.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ''' 
+        '''
         <ExportAPI("Rep")>
         Public Function Rep(x As Vector,
                         <Scripting.MetaData.Parameter("length.out", "non-negative integer: the desired length of the output vector.")> Optional LengthOut As Integer = 0) As Vector
@@ -229,7 +229,7 @@ Namespace RBase
         ''' <param name="LengthOut">non-negative integer: the desired length of the output vector.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ''' 
+        '''
         <ExportAPI("Rep")>
         Public Function Rep(x As BooleanVector,
                         <Scripting.MetaData.Parameter("length.out", "non-negative integer: the desired length of the output vector.")> Optional LengthOut As Integer = 0) As BooleanVector
@@ -250,14 +250,14 @@ Namespace RBase
         ''' <param name="sep">a character string to separate the terms. Not NA_character_.</param>
         ''' <returns>
         ''' A character vector of the concatenated values. This will be of length zero if all the objects are, unless collapse is non-NULL in which case it is a single empty string.
-        ''' If any input into an element of the result is in UTF-8 (and none are declared with encoding "bytes", (see Encoding), that element will be in UTF-8, otherwise in the 
-        ''' current encoding in which case the encoding of the element is declared if the current locale is either Latin-1 or UTF-8, at least one of the corresponding inputs 
+        ''' If any input into an element of the result is in UTF-8 (and none are declared with encoding "bytes", (see Encoding), that element will be in UTF-8, otherwise in the
+        ''' current encoding in which case the encoding of the element is declared if the current locale is either Latin-1 or UTF-8, at least one of the corresponding inputs
         ''' (including separators) had a declared encoding and all inputs were either ASCII or declared.
-        ''' If an input into an element is declared with encoding "bytes", no translation will be done of any of the elements and the resulting element will have encoding "bytes". 
+        ''' If an input into an element is declared with encoding "bytes", no translation will be done of any of the elements and the resulting element will have encoding "bytes".
         ''' If collapse is non-NULL, this applies also to the second, collapsing, phase, but some translation may have been done in pasting object together in the first phase.
         ''' </returns>
         ''' <remarks></remarks>
-        ''' 
+        '''
         <ExportAPI("Paste")>
         Public Function Paste(args As Generic.IEnumerable(Of String), Optional sep As String = " ") As String
             Return String.Join(sep, args)
@@ -284,7 +284,7 @@ Namespace RBase
         ''' <param name="test">an object which can be coerced to logical mode.</param>
         ''' <param name="yes">return values for true elements of test.</param>
         ''' <param name="no">return values for false elements of test.</param>
-        ''' <returns>A vector of the same length and attributes (including dimensions and "class") as test and data values from the values of yes or no. The mode of the answer 
+        ''' <returns>A vector of the same length and attributes (including dimensions and "class") as test and data values from the values of yes or no. The mode of the answer
         ''' will be coerced from logical to accommodate first any values taken from yes and then any values taken from no.</returns>
         ''' <remarks>If yes or no are too short, their elements are recycled. yes will be evaluated if and only if any element of test is true, and analogously for no.
         ''' Missing values in test give missing values in the result.</remarks>
@@ -302,7 +302,7 @@ Namespace RBase
         Public Const F As Boolean = False
 
         <ExportAPI("Vector")>
-        Public Function Vector() As Vector
+        Public Function ZeroVector() As Vector
             Return New Vector(0)
         End Function
 

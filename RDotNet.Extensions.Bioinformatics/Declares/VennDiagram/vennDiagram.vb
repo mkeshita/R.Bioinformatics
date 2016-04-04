@@ -7,7 +7,7 @@ Namespace VennDiagram
     ''' <summary>
     ''' This function takes a list and creates a publication-quality TIFF Venn Diagram
     ''' </summary>
-    <RFunc("venn.diagram")> Public Class vennDiagram : Inherits vennBase
+    <RFunc("venn.diagram")> Public Class vennDiagramPlot : Inherits vennBase
 
         ''' <summary>
         ''' A list of vectors (e.g., integers, chars), with each component corresponding to a separate circle in the Venn diagram
@@ -164,5 +164,30 @@ Namespace VennDiagram
         ''' </summary>
         ''' <returns></returns>
         <Parameter("total.population")> Public Property totalPopulation As RExpression = NULL
+
+        ''' <summary>
+        ''' The partition fill color
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property fill As RExpression
+
+        Sub New()
+        End Sub
+
+        Sub New(x As String, colors As String, title As String, tiff As String)
+            Me.x = x
+            Me.fill = colors
+            Me.main = title
+            Me.filename = tiff
+        End Sub
+
+        Public Function Copy(x As String, colors As String) As vennDiagramPlot
+            Dim clone As vennDiagramPlot = DirectCast(Me.MemberwiseClone, vennDiagramPlot)
+
+            clone.x = x
+            clone.fill = colors
+
+            Return clone
+        End Function
     End Class
 End Namespace
