@@ -5,26 +5,26 @@ quote="\"",
 dec=".", 
 fill=TRUE, 
 comment.char="", 
-file="E:/R.Bioinformatics/datasets/ppg2008.csv", 
-header=FALSE)
+file="F:/R.Bioinformatics/datasets/ppg2008.csv", 
+header=TRUE)
 row.names(df) <- df$Name  
 df<-df[,-1]
 df <- data.matrix(df)
 library(gplots)
 png(type=c("windows", "cairo", "cairo-png"), 
-filename="E:/R.Bioinformatics/datasets/ppg2008.heatmap.tiff", 
-width=4000, 
-height=3000, 
+filename="F:/R.Bioinformatics/datasets/ppg2008.heatmap.tiff", 
 units="px", 
 pointsize=12, 
-bg="white", 
 res=NA, 
+restoreConsole=TRUE, 
+width=4000, 
+height=3000, 
 family="", 
-restoreConsole=TRUE)
+bg="white")
 
 result <- heatmap.2(Rowv=TRUE, 
 Colv=TRUE, 
-col=rev(brewer.pal(10,"RdYlBu")), 
+col=get.jetColors(), 
 notecex=0, 
 trace="none", 
 srtCol=45, 
