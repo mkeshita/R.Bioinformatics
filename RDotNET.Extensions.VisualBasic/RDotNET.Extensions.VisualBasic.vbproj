@@ -101,6 +101,7 @@
     <Compile Include="Services\RPackage\base\options.vb" />
     <Compile Include="Services\RPackage\dynamicTreeCut\dynamicTreeCut.vb" />
     <Compile Include="Services\RPackage\flashClust.vb" />
+    <Compile Include="Services\RPackage\Graphics\gplots\jetColors.vb" />
     <Compile Include="Services\RPackage\Graphics\gplots\venn.vb" />
     <Compile Include="Services\RPackage\Graphics\gplots\DendrogramAPI.vb" />
     <Compile Include="Services\RPackage\Graphics\gplots\heatmap2OUT.vb" />

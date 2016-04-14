@@ -21,6 +21,10 @@ Namespace Services.ScriptBuilder
             Return Script.ToString
         End Function
 
+        Public Shared Narrowing Operator CType(sb As ScriptBuilder) As String
+            Return sb.Script.ToString
+        End Operator
+
         ''' <summary>
         ''' Append
         ''' </summary>
