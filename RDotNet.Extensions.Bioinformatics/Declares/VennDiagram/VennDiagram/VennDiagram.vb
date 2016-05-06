@@ -123,7 +123,7 @@ Namespace VennDiagram.ModelAPI
                 Dim part As Partition = venn.__partitions.Find(name)
 
                 If part Is Nothing Then
-                    part = venn.partitions(opt.Pos)
+                    part = venn.partitions(opt.i)
                 End If
 
                 Call part.ApplyOptions(opt.obj)

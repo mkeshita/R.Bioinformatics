@@ -166,8 +166,8 @@ Namespace gplots
                     In colors.SeqIterator
                     Select New colorTable With {
                         .color = lp.obj,
-                        .low = lows(lp.Pos),
-                        .high = highs(lp.Pos)}).ToArray
+                        .low = lows(lp.i),
+                        .high = highs(lp.i)}).ToArray
         End Function
     End Class
 

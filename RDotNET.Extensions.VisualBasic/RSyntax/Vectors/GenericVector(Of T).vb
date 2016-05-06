@@ -22,7 +22,7 @@ Namespace RBase.Vectors
                 Dim LQuery = (From i As SeqValue(Of Boolean)
                           In Conditions.SeqIterator
                               Where i.obj = True
-                              Select _Elements(i.Pos)).ToArray
+                              Select _Elements(i.i)).ToArray
                 Return LQuery
             End Get
             Set(value As T())
