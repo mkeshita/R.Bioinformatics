@@ -1,6 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.ConsoleDevice.STDIO
+Imports Microsoft.VisualBasic.Terminal.STDIO
 Imports SMRUCC.R.CRAN.Bioconductor.Web.Packages
 
 Namespace Web

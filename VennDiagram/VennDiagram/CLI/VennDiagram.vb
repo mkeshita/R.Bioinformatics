@@ -1,5 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ConsoleDevice.STDIO
+Imports Microsoft.VisualBasic.Terminal.STDIO
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
