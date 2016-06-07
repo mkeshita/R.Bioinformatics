@@ -5,6 +5,7 @@ Namespace Graphics
 
     Public Class GraphicsContext
         Inherits SafeHandle
+
         Friend Sub New(pointer As IntPtr)
             MyBase.New(IntPtr.Zero, True)
             SetHandle(pointer)
