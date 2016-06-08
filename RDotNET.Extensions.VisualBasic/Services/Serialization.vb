@@ -4,6 +4,8 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps.DataFrameColumnAttribute
 Imports RDotNET.SymbolicExpressionExtension
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 ''' <summary>
 ''' Convert the R object into a .NET object from the specific type schema information.
@@ -54,17 +56,18 @@ Public Module Serialization
     ''' <param name="RData"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Private Function InternalLoadS4Object(RData As RDotNET.SymbolicExpression, TypeInfo As System.Type, DebugLevel As Integer) As Object
-        Dim mappings = LoadMapping(TypeInfo)
-        Dim obj As Object = Activator.CreateInstance(TypeInfo)
+    Private Function InternalLoadS4Object(RData As RDotNET.SymbolicExpression, type As System.Type, DebugLevel As Integer) As Object
+        Dim mappings As Dictionary(Of BindProperty(Of SchemaMaps.DataFrameColumnAttribute)) =
+            LoadMapping(type)
+        Dim obj As Object = Activator.CreateInstance(type)
 
-        Call Console.WriteLine("[DEBUG] {0}  ---> R.S4Object (""{1}"")", TypeInfo.FullName, String.Join("; ", RData.GetAttributeNames))
+        Call $"{type.FullName}  ---> R.S4Object (""{String.Join("; ", RData.GetAttributeNames)}"")".__DEBUG_ECHO
 
-        For Each Slot In Mappings
-            Dim RSlot As RDotNET.SymbolicExpression = RData.GetAttribute(Slot.Key.Name)
-            Dim value As Object = __loadFromStream(RSlot, Slot.Value.PropertyType, DebugLevel)
+        For Each Slot In mappings.Values
+            Dim RSlot As RDotNET.SymbolicExpression = RData.GetAttribute(Slot.Identity)
+            Dim value As Object = __loadFromStream(RSlot, Slot.Type, DebugLevel)
 
-            Call __valueMapping(value, Slot.Value, obj:=obj)
+            Call __valueMapping(value, Slot.Property, obj:=obj)
         Next
 
         Return obj
@@ -78,7 +81,7 @@ Public Module Serialization
     ''' <param name="obj">对象实例</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Private Function __valueMapping(value As Object, pInfo As System.Reflection.PropertyInfo, ByRef obj As Object) As Boolean
+    Private Function __valueMapping(value As Object, pInfo As PropertyInfo, ByRef obj As Object) As Boolean
         Dim pTypeInfo As System.Type = pInfo.PropertyType
 
         If pTypeInfo.HasElementType Then
