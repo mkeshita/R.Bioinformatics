@@ -1,28 +1,23 @@
-﻿Imports RDotNET.Extensions.Bioinformatics
+﻿Imports System.Text
+Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures.BinaryTree
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports RDotNET.Extensions.Bioinformatics
 Imports RDotNET.Extensions.VisualBasic
 Imports RDotNET.Extensions.VisualBasic.gplots
 Imports RDotNET.Extensions.VisualBasic.grDevices
 Imports RDotNET.Extensions.VisualBasic.utils.read.table
 Imports SMRUCC.R.CRAN.Bioconductor.Web
-
-Imports Microsoft.VisualBasic.Serialization
 Imports SMRUCC.R.CRAN.Bioconductor.Web.Packages
-Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures.BinaryTree
-Imports Microsoft.VisualBasic
-Imports System.Text
-
-Imports PhyloNode = Microsoft.VisualBasic.ComponentModel.DataStructures.BinaryTree.TreeNode(Of Integer)
-
-Imports RegExp = System.Text.RegularExpressions.Regex
-Imports MatchResult = System.Text.RegularExpressions.MatchCollection
-
-Imports Node = System.Xml.XmlNode
 Imports Element = System.Xml.XmlElement
+Imports MatchResult = System.Text.RegularExpressions.MatchCollection
+Imports Node = System.Xml.XmlNode
 Imports NodeList = System.Xml.XmlNodeList
-
-Imports Microsoft.VisualBasic.Linq
+Imports PhyloNode = Microsoft.VisualBasic.ComponentModel.DataStructures.BinaryTree.TreeNode(Of Integer)
+Imports RegExp = System.Text.RegularExpressions.Regex
 
 
 Module Test

@@ -1,6 +1,6 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic
 Imports SMRUCC.R.CRAN.Bioconductor.Web.Packages
 

@@ -1,8 +1,10 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.BinaryTree
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace gplots
 
@@ -162,12 +164,14 @@ Namespace gplots
             Dim highs As Double() = high.Split(","c).ToArray(Function(s) Scripting.CastDouble(s.Trim))
             Dim colors As String() = color.Split(","c).ToArray(Function(s) s.Trim)
 
-            Return (From lp As SeqValue(Of String)
-                    In colors.SeqIterator
-                    Select New colorTable With {
-                        .color = lp.obj,
-                        .low = lows(lp.i),
-                        .high = highs(lp.i)}).ToArray
+            Return LinqAPI.Exec(Of colorTable) <=
+                From lp As SeqValue(Of String)
+                In colors.SeqIterator
+                Select New colorTable With {
+                    .color = lp.obj,
+                    .low = lows(lp.i),
+                    .high = highs(lp.i)
+                }
         End Function
     End Class
 
