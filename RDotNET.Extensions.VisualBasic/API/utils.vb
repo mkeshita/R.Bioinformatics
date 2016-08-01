@@ -46,11 +46,21 @@ Namespace API
                              Optional package As String = NULL,
                              Optional libloc As String = NULL,
                              Optional verbose As String = "getOption(""verbose"")",
-                             Optional envir As String = ".GlobalEnv") As String
+                             Optional envir As String = ".GlobalEnv") As String()
             Dim objs As String = x.JoinBy(", ")
             Dim Rscript As String = $"data({objs},list={list},package={package},lib.loc={libloc},verbos={verbose},envir={envir})"
             Dim out As String() = RServer.WriteLine(Rscript)
-            Return out.GetJson
+            Return out
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        ''' <remarks>Simplify version of <see cref="data"/></remarks>
+        Public Function data(x As String) As String
+            Return data({x}).FirstOrDefault
         End Function
     End Module
 End Namespace
