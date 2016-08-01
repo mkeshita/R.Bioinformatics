@@ -2,6 +2,8 @@
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic
 Imports System.Text
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Linq
 
 Public Module TableExtensions
 
@@ -37,5 +39,41 @@ Public Module TableExtensions
         R.AppendLine($"colnames({tableName}) <- {colNames}")
 
         Call RServer.Evaluate(R.ToString)
+    End Sub
+
+    ''' <summary>
+    ''' A data frame is used for storing data tables. It is a list of vectors of equal length. For example, the following variable df is a data frame containing three vectors n, s, b.
+    '''
+    ''' ```R
+    ''' n = c(2, 3, 5) 
+    ''' s = c("aa", "bb", "cc") 
+    ''' b = c(TRUE, FALSE, TRUE) 
+    ''' df = data.frame(n, s, b)       # df Is a data frame
+    ''' 
+    ''' # df
+    ''' #   n  s     b
+    ''' # 1 2 aa  TRUE
+    ''' # 2 3 bb FALSE
+    ''' # 3 5 cc  TRUE
+    ''' ```
+    ''' </summary>
+    ''' <param name="df"></param>
+    ''' <param name="var"></param>
+    <Extension>
+    Public Sub PushAsDataFrame(df As DocumentStream.File, var As String, Optional types As Dictionary(Of String, Type) = Nothing)
+        Dim names As String() = df.First.ToArray
+        df = New DocumentStream.File(df.Skip(1))
+
+        For Each col As SeqValue(Of String()) In df.Columns.SeqIterator
+            Dim name As String = names(col.i)
+            Dim R As String = $"{name} <- "
+        Next
+    End Sub
+
+    Public Sub PushAsDataFrame(Of T)(source As IEnumerable(Of T), var As String)
+        Dim schema As Dictionary(Of String, Type) = Nothing
+        Reflector _
+            .Save(source, schemaOut:=schema) _
+            .PushAsDataFrame(var, types:=schema)
     End Sub
 End Module
