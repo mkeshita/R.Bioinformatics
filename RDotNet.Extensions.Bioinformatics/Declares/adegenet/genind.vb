@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.Language
 Imports RDotNet.Extensions.VisualBasic
 Imports RDotNet.Extensions.VisualBasic.API.base
+Imports RDotNet.Extensions.VisualBasic.API.utils
 
 Namespace adegenet
 
@@ -94,10 +95,11 @@ Namespace adegenet
         ''' nancycats is a genind object with spatial coordinates of the colonies as a supplementary components (@xy).
         ''' 
         ''' Dominique Pontier (UMR CNRS 5558, University Lyon1, France)
-        ''' Devillard, S.; Jombart, T. & Pontier, D. Disentangling spatial and genetic structure of stray cat (Felis catus L.) colonies in urban habitat using: not all colonies are equal. submitted to Molecular Ecology
+        ''' 
+        ''' > Devillard, S.; Jombart, T. &amp; Pontier, D. Disentangling spatial and genetic structure of stray cat (Felis catus L.) colonies in urban habitat using: not all colonies are equal. submitted to Molecular Ecology
         ''' </remarks>
         Public Shared Function nancycats() As genind
-            If require("adegenet") AndAlso API.utils.data("nancycats") IsNot Nothing Then
+            If require("adegenet") AndAlso data("nancycats") IsNot Nothing Then
                 Dim out As SymbolicExpression = RServer.Evaluate("nancycats")
                 Dim obj As genind = out.LoadFromStream(Of genind)
                 Return obj
