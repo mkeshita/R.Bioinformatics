@@ -42,7 +42,8 @@ Public Module TableExtensions
     End Sub
 
     ''' <summary>
-    ''' A data frame is used for storing data tables. It is a list of vectors of equal length. For example, the following variable df is a data frame containing three vectors n, s, b.
+    ''' A data frame is used for storing data tables. It is a list of vectors of equal length. 
+    ''' For example, the following variable df is a data frame containing three vectors n, s, b.
     '''
     ''' ```R
     ''' n = c(2, 3, 5) 
@@ -62,12 +63,32 @@ Public Module TableExtensions
     <Extension>
     Public Sub PushAsDataFrame(df As DocumentStream.File, var As String, Optional types As Dictionary(Of String, Type) = Nothing)
         Dim names As String() = df.First.ToArray
+
         df = New DocumentStream.File(df.Skip(1))
+        If types Is Nothing Then
+            types = names.ToDictionary(
+                Function(x) x,
+                Function() GetType(String))
+        End If
 
         For Each col As SeqValue(Of String()) In df.Columns.SeqIterator
             Dim name As String = names(col.i)
-            Dim R As String = $"{name} <- "
+            Dim type As Type = types(name)
+            Dim cc As String
+
+            Select Case type
+                Case GetType(String)
+                    cc = c(col.obj)
+                Case GetType(Boolean)
+                    cc = c(col.obj.ToArray(AddressOf getBoolean))
+                Case Else
+                    cc = c(col.obj.ToArray(Function(x) DirectCast(x, Object)))
+            End Select
+
+            Call $"{name} <- {cc}".ζ   ' x <- c(....)
         Next
+
+        Call $"{var} <- data.frame({names.JoinBy(", ")})".ζ
     End Sub
 
     Public Sub PushAsDataFrame(Of T)(source As IEnumerable(Of T), var As String)
