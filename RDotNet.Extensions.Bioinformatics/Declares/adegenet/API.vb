@@ -64,16 +64,17 @@ Namespace adegenet
                                   Optional type As String = "c(""codom"", ""PA"")",
                                   Optional strata As String = NULL,
                                   Optional hierarchy As String = NULL) As String
+
             Dim tmp As String = FileIO.FileSystem.GetTempFileName.BaseName
 
-            Call X.PushAsTable(tmp, False)
+            Call X.PushAsDataFrame(tmp, typeParsing:=True)
 
             Dim rowNames As String = If(indNames Is Nothing, NULL, c(indNames))
             Dim colNames As String = If(locNames Is Nothing, NULL, c(locNames))
-            Dim Rscript As String =
-                $"{tmp} <- df2genind({tmp}, sep = {sep}, ncode = {ncode}, ind.names = {rowNames},
+
+            Call $"{tmp} <- df2genind({tmp}, sep = {sep}, ncode = {ncode}, ind.names = {rowNames},
   loc.names = {colNames}, pop = {pop}, NA.char = {Rstring(NAchar)}, ploidy = {ploidy},
-  type = {type}, strata = {strata}, hierarchy = {hierarchy})"
+  type = {type}, strata = {strata}, hierarchy = {hierarchy})".ζ
 
             Return tmp
         End Function

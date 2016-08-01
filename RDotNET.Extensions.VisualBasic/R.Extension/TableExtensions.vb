@@ -61,19 +61,26 @@ Public Module TableExtensions
     ''' <param name="df"></param>
     ''' <param name="var"></param>
     <Extension>
-    Public Sub PushAsDataFrame(df As DocumentStream.File, var As String, Optional types As Dictionary(Of String, Type) = Nothing)
+    Public Sub PushAsDataFrame(df As DocumentStream.File,
+                               var As String,
+                               Optional types As Dictionary(Of String, Type) = Nothing,
+                               Optional typeParsing As Boolean = True)
+
         Dim names As String() = df.First.ToArray
 
         df = New DocumentStream.File(df.Skip(1))
         If types Is Nothing Then
-            types = names.ToDictionary(
-                Function(x) x,
-                Function() GetType(String))
+            types = New Dictionary(Of String, Type)
         End If
 
         For Each col As SeqValue(Of String()) In df.Columns.SeqIterator
             Dim name As String = names(col.i)
-            Dim type As Type = types(name)
+            Dim type As Type = If(
+                types.ContainsKey(name),
+                types(name),
+                If(typeParsing,
+                   col.obj.SampleForType,
+                   GetType(String)))
             Dim cc As String
 
             Select Case type
@@ -95,6 +102,6 @@ Public Module TableExtensions
         Dim schema As Dictionary(Of String, Type) = Nothing
         Reflector _
             .Save(source, schemaOut:=schema) _
-            .PushAsDataFrame(var, types:=schema)
+            .PushAsDataFrame(var, types:=schema, typeParsing:=False)
     End Sub
 End Module
