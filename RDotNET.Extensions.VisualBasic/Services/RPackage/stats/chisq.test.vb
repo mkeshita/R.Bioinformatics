@@ -40,12 +40,12 @@ Namespace stats
     Public Class chisqTestResult
 
         ''' <summary>
-        ''' the value the chi-squared test statistic.
+        ''' [X-squared] the value the chi-squared test statistic.
         ''' </summary>
         ''' <returns></returns>
         Public Property statistic As Double
         ''' <summary>
-        ''' the degrees Of freedom Of the approximate chi-squared distribution Of the test statistic, NA If the p-value Is computed by Monte Carlo simulation.
+        ''' [df] the degrees Of freedom Of the approximate chi-squared distribution Of the test statistic, NA If the p-value Is computed by Monte Carlo simulation.
         ''' </summary>
         ''' <returns></returns>
         Public Property parameter As Integer
@@ -60,7 +60,7 @@ Namespace stats
         ''' <returns></returns>
         Public Property method As String
         ''' <summary>
-        ''' a character String giving the name(s) Of the data.
+        ''' [data] a character String giving the name(s) Of the data.
         ''' </summary>
         ''' <returns></returns>
         Public Property dataName As String
