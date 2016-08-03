@@ -12,6 +12,11 @@ Imports RDotNET
 ''' </summary>
 Public Module RExtensionInvoke
 
+    <Extension>
+    Public Function AsBoolean(sym As SymbolicExpression) As Boolean
+        Return sym.AsLogical.First
+    End Function
+
     ''' <summary>
     ''' This function equals to the function &lt;library> in R system.
     ''' </summary>
@@ -58,6 +63,16 @@ Public Module RExtensionInvoke
     ''' <remarks></remarks>
     <Extension> Public Function WriteLine(REngine As REngine, script As IRProvider) As String()
         Return REngine.WriteLine(script.RScript)
+    End Function
+
+    ''' <summary>
+    ''' Evaluates a R statement in the given string.
+    ''' </summary>
+    ''' <param name="R"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ζ(R As String) As SymbolicExpression
+        Return RServer.Evaluate(R)
     End Function
 
     ''' <summary>

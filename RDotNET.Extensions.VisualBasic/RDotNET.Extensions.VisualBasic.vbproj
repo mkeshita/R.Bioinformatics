@@ -47,7 +47,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Debug\</OutputPath>
+    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
     <DocumentationFile>RDotNET.Extensions.VisualBasic.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
@@ -56,7 +56,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Release\</OutputPath>
+    <OutputPath>..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>RDotNET.Extensions.VisualBasic.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -127,7 +127,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\docs\</OutputPath>
+    <OutputPath>..\..\..\manual\sdk_api\bin\</OutputPath>
     <DocumentationFile>RDotNET.Extensions.VisualBasic.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -169,6 +169,9 @@
   <ItemGroup>
     <Content Include="Services\ScriptBuilder\Helpers\README.txt" />
     <Content Include="RSyntax\README.txt" />
+    <Compile Include="API\base.vb" />
+    <Compile Include="API\utils.vb" />
+    <Compile Include="R.Extension\TableExtensions.vb" />
     <Compile Include="R.Extension\RInit.vb" />
     <Compile Include="R.Extension\RScriptInvoke.vb" />
     <Compile Include="Services\Abstract\IRToken.vb" />
@@ -192,6 +195,7 @@
     <Compile Include="Services\RPackage\Graphics\grDevices\images.vb" />
     <Compile Include="Services\RPackage\Graphics\gplots\heatmap2.vb" />
     <Compile Include="Services\RPackage\base\Control.vb" />
+    <Compile Include="Services\RPackage\stats\chisq.test.vb" />
     <Compile Include="Services\RPackage\stats\dist.vb" />
     <Compile Include="Services\RPackage\stats\heatmap_plot.vb" />
     <Compile Include="Services\RPackage\stats\heatmap.vb" />
@@ -255,11 +259,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\+VB_DataFrame.vbproj">
+    <ProjectReference Include="..\..\runtime\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\+VB_DataFrame.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>+VB_DataFrame</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
+    <ProjectReference Include="..\..\runtime\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>

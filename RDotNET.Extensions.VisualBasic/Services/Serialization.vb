@@ -1,11 +1,13 @@
 ﻿Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps.DataFrameColumnAttribute
-Imports RDotNET.SymbolicExpressionExtension
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps.DataFrameColumnAttribute
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Linq
+Imports RDotNET.SymbolicExpressionExtension
 
 ''' <summary>
 ''' Convert the R object into a .NET object from the specific type schema information.
@@ -20,17 +22,20 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Public Module Serialization
 
     ''' <summary>
-    ''' Deserialize the R object into a specific .NET object. <see cref="RDotNET.SymbolicExpression"></see>  =====> "T"
+    ''' Deserialize the R object into a specific .NET object. <see cref="RDotNET.SymbolicExpression"></see> --> "T"
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="RData"></param>
     ''' <returns></returns>
     ''' <remarks>
     ''' 反序列化的规则：
+    ''' 
     ''' 1. S4对象里面的Slot为对象类型之中的属性
     ''' 2. 任何对象属性都会被表示为数组
     ''' </remarks>
-    Public Function LoadFromStream(Of T As Class)(RData As RDotNET.SymbolicExpression) As T
+    ''' 
+    <Extension>
+    Public Function S4Object(Of T As Class)(RData As RDotNET.SymbolicExpression) As T
         Dim value As Object = __loadFromStream(RData, GetType(T), 1)
         Return DirectCast(value, T)
     End Function
@@ -44,7 +49,7 @@ Public Module Serialization
     ''' <remarks></remarks>
     ''' 
     <ExportAPI("RStream.Load")>
-    Public Function LoadRStream(<Scripting.MetaData.Parameter("R.S4Object")> RData As RDotNET.SymbolicExpression, Type As Type) As Object
+    Public Function LoadRStream(<Parameter("R.S4Object")> RData As RDotNET.SymbolicExpression, Type As Type) As Object
         Dim value As Object = __loadFromStream(RData, Type, 1)
         Return value
     End Function
@@ -58,16 +63,16 @@ Public Module Serialization
     ''' <remarks></remarks>
     Private Function InternalLoadS4Object(RData As RDotNET.SymbolicExpression, type As System.Type, DebugLevel As Integer) As Object
         Dim mappings As Dictionary(Of BindProperty(Of SchemaMaps.DataFrameColumnAttribute)) =
-            LoadMapping(type)
+            LoadMapping(type, mapsAll:=True)
         Dim obj As Object = Activator.CreateInstance(type)
 
         Call $"{type.FullName}  ---> R.S4Object (""{String.Join("; ", RData.GetAttributeNames)}"")".__DEBUG_ECHO
 
-        For Each Slot In mappings.Values
-            Dim RSlot As RDotNET.SymbolicExpression = RData.GetAttribute(Slot.Identity)
-            Dim value As Object = __loadFromStream(RSlot, Slot.Type, DebugLevel)
+        For Each slot As BindProperty(Of SchemaMaps.DataFrameColumnAttribute) In mappings.Values
+            Dim RSlot As RDotNET.SymbolicExpression = RData.GetAttribute(slot.Field.Name)
+            Dim value As Object = __loadFromStream(RSlot, slot.Type, DebugLevel)
 
-            Call __valueMapping(value, Slot.Property, obj:=obj)
+            Call __valueMapping(value, slot.Property, obj:=obj)
         Next
 
         Return obj
@@ -75,23 +80,26 @@ Public Module Serialization
 
     ''' <summary>
     ''' 
-    ''' </summary>
+    ''' </summary> 
     ''' <param name="value"></param>
     ''' <param name="pInfo"></param>
     ''' <param name="obj">对象实例</param>
-    ''' <returns></returns>
     ''' <remarks></remarks>
-    Private Function __valueMapping(value As Object, pInfo As PropertyInfo, ByRef obj As Object) As Boolean
-        Dim pTypeInfo As System.Type = pInfo.PropertyType
+    Private Sub __valueMapping(value As Object, pInfo As PropertyInfo, ByRef obj As Object)
+        If Not value Is Nothing Then
+            Dim type As Type = pInfo.PropertyType
 
-        If pTypeInfo.HasElementType Then
-            Call __mappingCollectionType(value, pInfo, obj, pTypeInfo)
-        Else
-            Call __rVectorToNETProperty(pTypeInfo:=value.GetType, value:=value, obj:=obj, pInfo:=pInfo)
+            If type.HasElementType Then
+                Call __mappingCollectionType(value, pInfo, obj, type)
+            Else
+                Call __rVectorToNETProperty(
+                    pTypeInfo:=value.GetType,
+                    value:=value,
+                    obj:=obj,
+                    pInfo:=pInfo)
+            End If
         End If
-
-        Return True
-    End Function
+    End Sub
 
     ''' <summary>
     ''' All of the object in R is a vector, so that we needs this function to convert the R vector to a property value.
@@ -128,7 +136,7 @@ Public Module Serialization
     Private Sub __mappingCollectionType(value As Object, pInfo As PropertyInfo, ByRef obj As Object, pTypeInfo As System.Type)
         Dim type As Type = pTypeInfo.GetElementType
         Dim source As Object() = (From val As Object In DirectCast(value, IEnumerable) Select val).ToArray
-        Dim list As Array = Array.CreateInstance(type, source.Count)
+        Dim list As Array = Array.CreateInstance(type, source.Length)
 
         For i As Integer = 0 To source.Length - 1
             Call list.SetValue(source(i), i)
@@ -147,10 +155,14 @@ Public Module Serialization
     ''' 
     <Extension>
     Private Function __loadFromStream(RData As RDotNET.SymbolicExpression, TypeInfo As System.Type, DebugLevel As Integer) As Object
-
+        If RData Is Nothing Then
+            Return Nothing
+        Else
 #If DEBUG Then
             Call Console.WriteLine(New String("."c, DebugLevel) & ">   " & RData.Type.ToString)
 #End If
+        End If
+
         Select Case RData.Type
 
             Case Internals.SymbolicExpressionType.S4
@@ -168,6 +180,11 @@ Public Module Serialization
                 Return RData.AsNumeric.ToArray
             Case Internals.SymbolicExpressionType.List
                 Return __createMatrix(RData, TypeInfo, DebugLevel + 1)
+            Case Internals.SymbolicExpressionType.LanguageObject
+                Dim lang As Language = RData.AsLanguage
+                Dim calls As Symbol() = lang.FunctionCall.ToArray
+                Dim result = calls.ToArray(Function(x) x.PrintName)
+                Return result
 
             Case Else
                 'Throw New NotImplementedException(RData.Type.ToString)
@@ -184,9 +201,11 @@ Public Module Serialization
     ''' <returns></returns>
     Private Function __createMatrix(RData As RDotNET.SymbolicExpression, typeInfo As Type, debugLv As Integer) As Object
         Dim list As SymbolicExpression() = RData.AsList.ToArray
-        Dim Matrix = (From vec As SymbolicExpression
-                      In list
-                      Select __loadFromStream(vec, typeInfo, debugLv)).ToArray
-        Return Matrix
+        Dim mat As Object = LinqAPI.Exec(Of Object) <=
+            From vec As SymbolicExpression
+            In list
+            Select __loadFromStream(vec, typeInfo, debugLv)
+
+        Return mat
     End Function
 End Module

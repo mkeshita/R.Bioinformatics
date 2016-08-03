@@ -15,6 +15,16 @@ Public Module RScripts
     Public Const [FALSE] As String = "FALSE"
 
     ''' <summary>
+    ''' 将VB.NET之中逻辑值<see cref="System.Boolean"/>转换为R语言之中的逻辑值
+    ''' </summary>
+    ''' <param name="bool"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function λ(bool As Boolean) As String
+        Return If(bool, [TRUE], [FALSE])
+    End Function
+
+    ''' <summary>
     ''' Retrieve or set the dimension of an object.
     ''' </summary>
     ''' <param name="x">
@@ -65,8 +75,13 @@ Public Module RScripts
         Return file.Replace("\"c, "/"c)
     End Function
 
+    Public Function c(ParamArray b As Boolean()) As String
+        Dim cx As String = String.Join(", ", b.ToArray(AddressOf λ))
+        Return $"c({cx})"
+    End Function
+
     ''' <summary>
-    ''' c(....)
+    ''' c(....).(请注意，这个会为每一个字符串元素添加双引号)
     ''' </summary>
     ''' <param name="x"></param>
     ''' <returns></returns>
@@ -76,7 +91,7 @@ Public Module RScripts
     End Function
 
     ''' <summary>
-    ''' c(....)
+    ''' c(....).(这个不会添加双引号)
     ''' </summary>
     ''' <param name="x"></param>
     ''' <returns></returns>

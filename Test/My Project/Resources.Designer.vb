@@ -39,7 +39,7 @@ Namespace My.Resources
         Friend ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(resourceMan, Nothing) Then
-                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("RDotNet.Extensions.Bioinformatics.Resources", GetType(Resources).Assembly)
+                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("Test.Resources", GetType(Resources).Assembly)
                     resourceMan = temp
                 End If
                 Return resourceMan
@@ -58,31 +58,6 @@ Namespace My.Resources
             Set
                 resourceCulture = value
             End Set
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to require(gtools)
-        '''
-        '''
-        '''## NB
-        '''##------------------------------
-        '''## count matrix x should be samples on the rows and OTUs on the colums,
-        '''## assuming dim(x) -&gt; samples by OTUs
-        '''
-        '''sparcc &lt;- function(x, max.iter=20, th=0.1, exiter=10){
-        '''  xdim &lt;- dim(x)
-        '''  Vlist &lt;- matrix(NA,nrow=xdim[2],ncol=max.iter)
-        '''  Corlist &lt;- array(,dim=c(max.iter, xdim[2], xdim[2]))
-        '''  Covlist &lt;- array(,dim=c(max.iter, xdim[2], xdim[2]))
-        '''
-        '''  ## Cycle max.iter times for variability in variance estimation
-        '''  for (i in 1:max.iter){
-        '''    cat(&quot;Iteration: %d [rest of string was truncated]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property sparcc() As String
-            Get
-                Return ResourceManager.GetString("sparcc", resourceCulture)
-            End Get
         End Property
     End Module
 End Namespace
