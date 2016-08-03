@@ -117,8 +117,14 @@
         ''' Is.matrix Is a primitive function.
         ''' The print method For a matrix gives a rectangular layout With dimnames Or indices. For a list matrix, the entries Of length Not one are printed In the form Integer,7 indicating the type And length.
         ''' </remarks>
-        Public Sub matrix(data As String, Optional nrow As String = NULL, Optional ncol As String = NULL, Optional byrow As Boolean = False, Optional dimnames As String = NULL)
-            Call $"matrix({data}, nrow={nrow}, ncol={ncol}, byrow={byrow.λ}, dimnames={dimnames})".ζ
+        Public Sub matrix(data As String, Optional nrow As Integer = -1, Optional ncol As Integer = -1, Optional byrow As Boolean = False, Optional dimnames As String = NULL)
+            If nrow = -1 Then
+                Call $"matrix({data}, ncol={ncol}, byrow={byrow.λ}, dimnames={dimnames})".ζ
+            ElseIf ncol = -1 Then
+                Call $"matrix({data}, nrow={nrow}, byrow={byrow.λ}, dimnames={dimnames})".ζ
+            Else
+                Call $"matrix({data}, nrow={nrow}, ncol={ncol}, byrow={byrow.λ}, dimnames={dimnames})".ζ
+            End If
         End Sub
     End Module
 End Namespace
