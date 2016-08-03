@@ -294,7 +294,7 @@ Public Module RSystem
 
     Public Function ColorMaps(Of T)(source As Generic.IEnumerable(Of T)) As Dictionary(Of T, String)
         Dim uniques As T() = source.Distinct.ToArray
-        Dim colors As String() = RColors.Randomize
+        Dim colors As String() = RColors.Shuffles
         Dim dict As Dictionary(Of T, String) = (From idx As Integer
                                                 In uniques.Sequence
                                                 Select id = uniques(idx), cl = colors(idx)) _
