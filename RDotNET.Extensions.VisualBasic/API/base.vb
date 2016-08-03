@@ -91,5 +91,34 @@
                                   Optional stringsAsFactors As String = "default.stringsAsFactors()") As String
 
         End Function
+
+        ''' <summary>
+        ''' **Matrices**
+        ''' 
+        ''' + ``matrix`` creates a matrix from the given set of values.
+        ''' + ``as.matrix`` attempts to turn its argument into a matrix.
+        ''' + ``is.matrix`` tests if its argument Is a (strict) matrix.
+        ''' </summary>
+        ''' <param name="data">an optional data vector (including a list Or expression vector). Non-atomic classed R objects are coerced by as.vector And all attributes discarded.</param>
+        ''' <param name="nrow">the desired number of rows.</param>
+        ''' <param name="ncol">the desired number of columns.</param>
+        ''' <param name="byrow">logical. If FALSE (the default) the matrix is filled by columns, otherwise the matrix is filled by rows.</param>
+        ''' <param name="dimnames">A dimnames attribute For the matrix: NULL Or a list of length 2 giving the row And column names respectively. 
+        ''' An empty list Is treated as NULL, And a list of length one as row names. The list can be named, 
+        ''' And the list names will be used as names for the dimensions.</param>
+        ''' <remarks>
+        ''' If one of nrow or ncol is not given, an attempt is made to infer it from the length of data and the other parameter. If neither is given, a one-column matrix is returned.
+        ''' If there are too few elements In data To fill the matrix, Then the elements In data are recycled. If data has length zero, NA Of an appropriate type Is used For atomic vectors (0 For raw vectors) And NULL For lists.
+        ''' Is.matrix returns TRUE if x Is a vector And has a "dim" attribute of length 2) And FALSE otherwise. Note that a data.frame Is Not a matrix by this test. The function Is generic: you can write methods To handle specific classes Of objects, see InternalMethods.
+        ''' as.matrix Is a generic function. The method for data frames will return a character matrix if there Is only atomic columns And any non-(numeric/logical/complex) column, applying as.vector to factors And format to other non-character columns. 
+        ''' Otherwise, the usual coercion hierarchy (``logical &lt; integer &lt; double &lt; complex``) will be used, e.g., all-logical data frames will be coerced to a logical matrix, mixed logical-integer will give a integer matrix, etc.
+        ''' The Default method For As.matrix calls As.vector(x), And hence e.g. coerces factors To character vectors.
+        ''' When coercing a vector, it produces a one-column matrix, And promotes the names (if any) of the vector to the rownames of the matrix.
+        ''' Is.matrix Is a primitive function.
+        ''' The print method For a matrix gives a rectangular layout With dimnames Or indices. For a list matrix, the entries Of length Not one are printed In the form Integer,7 indicating the type And length.
+        ''' </remarks>
+        Public Sub matrix(data As String, Optional nrow As String = NULL, Optional ncol As String = NULL, Optional byrow As Boolean = False, Optional dimnames As String = NULL)
+            Call $"matrix({data}, nrow={nrow}, ncol={ncol}, byrow={byrow.λ}, dimnames={dimnames})".ζ
+        End Sub
     End Module
 End Namespace
