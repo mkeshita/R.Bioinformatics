@@ -89,7 +89,7 @@
                                   Optional checkRows As Boolean = False,
                                   Optional checkNames As Boolean = True,
                                   Optional stringsAsFactors As String = "default.stringsAsFactors()") As String
-
+            Throw New NotImplementedException
         End Function
 
         ''' <summary>
@@ -117,14 +117,23 @@
         ''' Is.matrix Is a primitive function.
         ''' The print method For a matrix gives a rectangular layout With dimnames Or indices. For a list matrix, the entries Of length Not one are printed In the form Integer,7 indicating the type And length.
         ''' </remarks>
-        Public Sub matrix(data As String, Optional nrow As Integer = -1, Optional ncol As Integer = -1, Optional byrow As Boolean = False, Optional dimnames As String = NULL)
+        Public Function matrix(data As String,
+                               Optional nrow As Integer = -1,
+                               Optional ncol As Integer = -1,
+                               Optional byrow As Boolean = False,
+                               Optional dimnames As String = NULL) As String
+
+            Dim x As String = FileIO.FileSystem.GetTempFileName.BaseName
+
             If nrow = -1 Then
-                Call $"matrix({data}, ncol={ncol}, byrow={byrow.λ}, dimnames={dimnames})".ζ
+                Call $"{x} <- matrix({data}, ncol={ncol}, byrow={byrow.λ}, dimnames={dimnames})".ζ
             ElseIf ncol = -1 Then
-                Call $"matrix({data}, nrow={nrow}, byrow={byrow.λ}, dimnames={dimnames})".ζ
+                Call $"{x} <- matrix({data}, nrow={nrow}, byrow={byrow.λ}, dimnames={dimnames})".ζ
             Else
-                Call $"matrix({data}, nrow={nrow}, ncol={ncol}, byrow={byrow.λ}, dimnames={dimnames})".ζ
+                Call $"{x} <- matrix({data}, nrow={nrow}, ncol={ncol}, byrow={byrow.λ}, dimnames={dimnames})".ζ
             End If
-        End Sub
+
+            Return x
+        End Function
     End Module
 End Namespace

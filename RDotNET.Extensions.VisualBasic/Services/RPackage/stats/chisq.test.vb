@@ -17,9 +17,9 @@ Namespace stats
         ''' <returns></returns>
         ''' 
         <ExportAPI("chisq.test")>
-        Public Function chisqTest(x As String, Optional y As String = NULL, Optional correct As String = [TRUE]) As chisqTestResult
-            Dim R As String = $"chisq.test({x},y={y},correct={correct})"
-            Dim out = RServer.Evaluate(R).AsList.ToArray
+        Public Function chisqTest(x As String, Optional y As String = NULL, Optional correct As Boolean = True) As chisqTestResult
+            Dim out As SymbolicExpression() =
+                $"chisq.test({x},y={y},correct={correct.λ})".ζ.AsList.ToArray
             Dim i As New Pointer
             Dim result As New chisqTestResult With {
                 .statistic = out(++i).AsNumeric.ToArray.First,
