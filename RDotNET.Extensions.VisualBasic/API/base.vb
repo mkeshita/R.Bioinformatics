@@ -123,7 +123,7 @@
                                Optional byrow As Boolean = False,
                                Optional dimnames As String = NULL) As String
 
-            Dim x As String = FileIO.FileSystem.GetTempFileName.BaseName
+            Dim x As String = App.NextTempName
 
             If nrow = -1 Then
                 Call $"{x} <- matrix({data}, ncol={ncol}, byrow={byrow.λ}, dimnames={dimnames})".ζ
