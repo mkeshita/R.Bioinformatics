@@ -135,5 +135,29 @@
 
             Return x
         End Function
+
+        ''' <summary>
+        ''' **Matrices**
+        ''' 
+        ''' + ``matrix`` creates a matrix from the given set of values.
+        ''' + ``as.matrix`` attempts to turn its argument into a matrix.
+        ''' + ``is.matrix`` tests if its argument Is a (strict) matrix.
+        ''' </summary>
+        ''' <param name="data">an optional data vector (including a list Or expression vector). Non-atomic classed R objects are coerced by as.vector And all attributes discarded.</param>
+        ''' <param name="nrow">the desired number of rows.</param>
+        ''' <param name="ncol">the desired number of columns.</param>
+        ''' <param name="byrow">logical. If FALSE (the default) the matrix is filled by columns, otherwise the matrix is filled by rows.</param>
+        ''' <param name="dimnames">A dimnames attribute For the matrix: NULL Or a list of length 2 giving the row And column names respectively. 
+        ''' An empty list Is treated as NULL, And a list of length one as row names. The list can be named, 
+        ''' And the list names will be used as names for the dimensions.</param>
+        ''' <returns>函数返回在R之中的一个临时变量名字符串，可以通过这个变量名来引用R之中的这个matrix</returns>
+        Public Function matrix(Of T)(data As IEnumerable(Of T),
+                                     Optional nrow As Integer = -1,
+                                     Optional ncol As Integer = -1,
+                                     Optional byrow As Boolean = False,
+                                     Optional dimnames As String = NULL) As String
+            Dim vec As String = c(data.ToArray)
+            Return matrix(vec, nrow, ncol, byrow, dimnames)
+        End Function
     End Module
 End Namespace
