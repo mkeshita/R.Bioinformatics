@@ -170,7 +170,8 @@
     <Content Include="Services\ScriptBuilder\Helpers\README.txt" />
     <Content Include="RSyntax\README.txt" />
     <Compile Include="API\base.vb" />
-    <Compile Include="API\utils.vb" />
+    <Compile Include="API\utils\install.vb" />
+    <Compile Include="API\utils\utils.vb" />
     <Compile Include="R.Extension\TableExtensions.vb" />
     <Compile Include="R.Extension\RInit.vb" />
     <Compile Include="R.Extension\RScriptInvoke.vb" />
@@ -259,11 +260,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\+VB_DataFrame.vbproj">
+    <ProjectReference Include="..\..\runtime\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\+VB_DataFrame.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>+VB_DataFrame</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
+    <ProjectReference Include="..\..\runtime\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
