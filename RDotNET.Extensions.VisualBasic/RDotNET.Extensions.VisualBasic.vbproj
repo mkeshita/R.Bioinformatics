@@ -191,6 +191,7 @@
     <Compile Include="Services\RPackage\Graphics\gplots\DendrogramAPI.vb" />
     <Compile Include="Services\RPackage\Graphics\gplots\heatmap2OUT.vb" />
     <Compile Include="Services\RPackage\Graphics\graphics\plot.vb" />
+    <Compile Include="Services\RPackage\Graphics\grDevices\API.vb" />
     <Compile Include="Services\RPackage\Graphics\grDevices\grDevice.vb" />
     <Compile Include="Services\RPackage\Graphics\grDevices\pdf.vb" />
     <Compile Include="Services\RPackage\Graphics\grDevices\images.vb" />

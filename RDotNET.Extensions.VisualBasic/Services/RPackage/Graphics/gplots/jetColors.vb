@@ -20,10 +20,26 @@ Namespace gplots
         Shared Sub New()
             __call = New jetColors
             Call __call.RScript.ζ
+            Call BI.ζ
         End Sub
 
         Private Sub New()
         End Sub
+
+        ''' <summary>
+        ''' BI_colors: <see cref="BI"/> 
+        ''' </summary>
+        Public Shared ReadOnly Property BI_colors As String = NameOf(BI_colors)
+
+        Public Const BI As String = "
+l1 <- rgb(  1,  51, 0, maxColorValue = 255);
+l2 <- rgb(  0, 248, 1, maxColorValue = 255);
+l3 <- rgb(249, 249, 1, maxColorValue = 255);
+l4 <- rgb(250, 162, 0, maxColorValue = 255);
+l5 <- rgb(250,   0, 4, maxColorValue = 255);
+
+BI_colors <- c(l1, l2, l3, l4, l5);
+"
 
         ''' <summary>
         ''' R script for generates the color pattern profiles.
