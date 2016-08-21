@@ -1,5 +1,9 @@
-﻿Imports RDotNet.Extensions.VisualBasic
+﻿Imports Microsoft.VisualBasic.DocumentFormat.Csv
+Imports RDotNet.Extensions.VisualBasic
 Imports RDotNet.Extensions.VisualBasic.API.base
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace LDheatmap
 
@@ -57,13 +61,47 @@ Namespace LDheatmap
                Optional vpname As String = NULL,
                Optional pop As Boolean = False,
                Optional flip As String = NULL,
-               Optional text As Boolean = False)
+               Optional text As Boolean = False,
+               Optional ByRef LDmatrix As String = Nothing) As LDheatmapS4Object
 
-            Dim out = $"LDheatmap({gdat}, genetic.distances={geneticDistances}, distances={Rstring(distances)},
+            Dim tmp As String = App.NextTempName
+            Dim out = $"{tmp} <- LDheatmap({gdat}, genetic.distances={geneticDistances}, distances={Rstring(distances)},
 	LDmeasure={Rstring(LDmeasure)}, title={Rstring(title)}, add.map={addMap.λ}, add.key={addKey.λ},
 	geneMapLocation={geneMapLocation}, geneMapLabelX={geneMapLabelX}, geneMapLabelY={geneMapLabelY},
 	SNP.name={SNPname}, color={color}, newpage={newpage.λ},
 	name={Rstring(name)}, vp.name={vpname}, pop={pop.λ}, flip={flip}, text={text.λ})".ζ
+
+            Dim ld As New LDheatmapS4Object
+            Dim list = out.AsList.ToArray
+
+            ld.LDmatrix = list(0).AsNumeric.ToArray
+            ld.geneticsDistance = list(4).AsInteger.ToArray
+            ld.distance = list(5).AsCharacter.ToArray()(Scan0)
+            ld.color = list(6).AsCharacter.ToArray
+
+            If LDmatrix Is Nothing Then
+                LDmatrix = App.GetAppSysTempFile(".csv")
+            End If
+            LDmatrix = Rstring(LDmatrix.UnixPath)
+
+            Call $"success <- write.csv({tmp}$LDmatrix, {LDmatrix})".ζ
+            LDmatrix = LDmatrix.GetString
+
+            Return ld
         End Function
     End Module
+
+    Public Class LDheatmapS4Object
+
+        Public Property LDmatrix As Double()
+        Public Property geneticsDistance As Integer()
+        Public Property distance As String
+        Public Property color As String()
+        Public Property labels As String()
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+
+    End Class
 End Namespace
