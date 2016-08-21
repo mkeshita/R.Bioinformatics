@@ -1,8 +1,13 @@
 ﻿Imports RDotNet.Extensions.VisualBasic
+Imports RDotNet.Extensions.VisualBasic.API.base
 
 Namespace LDheatmap
 
     Public Module API
+
+        Sub New()
+            Call require("LDheatmap")
+        End Sub
 
         ''' <summary>
         ''' ``LDheatmap()`` is used to produce a graphical display, as a heat map, of pairwise linkage disequilibrium (LD) measurements for SNPs. 
@@ -54,11 +59,11 @@ Namespace LDheatmap
                Optional flip As String = NULL,
                Optional text As Boolean = False)
 
-            Dim out = $"LDheatmap({gdat}, genetic.distances={geneticDistances}, distances={distances},
-	LDmeasure={LDmeasure}, title={title}, add.map={addMap.λ}, add.key={addKey.λ},
+            Dim out = $"LDheatmap({gdat}, genetic.distances={geneticDistances}, distances={Rstring(distances)},
+	LDmeasure={Rstring(LDmeasure)}, title={Rstring(title)}, add.map={addMap.λ}, add.key={addKey.λ},
 	geneMapLocation={geneMapLocation}, geneMapLabelX={geneMapLabelX}, geneMapLabelY={geneMapLabelY},
 	SNP.name={SNPname}, color={color}, newpage={newpage.λ},
-	name={name}, vp.name={vpname}, pop={pop.λ}, flip={flip.ζ}, text={text.λ})".ζ
+	name={Rstring(name)}, vp.name={vpname}, pop={pop.λ}, flip={flip}, text={text.λ})".ζ
         End Function
     End Module
 End Namespace

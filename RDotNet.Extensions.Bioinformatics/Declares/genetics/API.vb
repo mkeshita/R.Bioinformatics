@@ -59,7 +59,7 @@ Namespace genetics
 
             Dim tmp As String = App.NextTempName
 
-            Call $"{tmp} <- genotype({a1}, a2={a2}, alleles={alleles}, sep={sep}, remove.spaces={removeSpaces.λ},
+            Call $"{tmp} <- genotype({a1}, a2={a2}, alleles={alleles}, sep={Rstring(sep)}, remove.spaces={removeSpaces.λ},
                                      reorder = {reorder},
                                      allow.partial.missing={allowPartialmissing.λ}, locus={locus},
                                      genotypeOrder={genotypeOrder})".ζ
@@ -84,7 +84,7 @@ Namespace genetics
                 Dim loci As String = col(Scan0)
                 Dim vec As String = c(col.Skip(1).ToArray)
 
-                Call $"{loci} <- {genotype(vec)}".ζ
+                Call $"{loci} <- {genotype(vec, removeSpaces:=False)}".ζ
                 locis += loci
             Next
 
