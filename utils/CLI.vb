@@ -30,7 +30,6 @@ Module CLI
         If Not String.IsNullOrEmpty(colors) Then
             hmapAPI.col = colors
         Else
-            RServer.WriteLine(New jetColors)
             hmapAPI.col = jetColors.Call
         End If
 
