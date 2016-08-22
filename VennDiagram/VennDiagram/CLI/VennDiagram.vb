@@ -1,12 +1,12 @@
-﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Terminal.STDIO
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Linq
+﻿Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
-Imports RDotNet.Extensions.VisualBasic.RSystem
-Imports RDotNet.Extensions.VisualBasic
-Imports RDotNet.Extensions.Bioinformatics.VennDiagram.ModelAPI
-Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Terminal.STDIO
+Imports RDotNET.Extensions.Bioinformatics.VennDiagram.ModelAPI
+Imports RDotNET.Extensions.VisualBasic
+Imports RDotNET.Extensions.VisualBasic.RSystem
 
 <PackageNamespace("VennTools.CLI", Category:=APICategories.CLI_MAN,
                   Description:="Tools for creating venn diagram model for the R program and venn diagram visualize drawing.",

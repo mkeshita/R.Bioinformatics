@@ -1,7 +1,8 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic
-Imports RDotNet.Extensions.VisualBasic
+Imports Microsoft.VisualBasic.Language
+Imports RDotNET.Extensions.VisualBasic
 
 Namespace bnlearn
 
@@ -25,9 +26,17 @@ Namespace bnlearn
         ''' <remarks>
         ''' </remarks>
         Public Function GetNetworkParameters(numberOfFactors As Integer) As ConditionalProbability()
-            Call RServer.WriteLine("library(bnlearn); pdag = iamb(learning.test) ; dag = set.arc(pdag, from = ""A"", to = ""B"") ; fit = bn.fit(dag, learning.test, method = ""bayes"") ;")
-            Dim DataChunk As String() = RServer.WriteLine("fit")
-            Dim LQuery = (From strData As String In DataChunk Select ConditionalProbability.TryParse(strData.Replace(vbCr, "").Replace(vbLf, ""), numberOfFactors)).ToArray
+
+            Call "library(bnlearn); 
+pdag = iamb(learning.test); 
+dag = set.arc(pdag, from = ""A"", to = ""B""); 
+fit = bn.fit(dag, learning.test, method = ""bayes"");".ζ
+
+            Dim LQuery = LinqAPI.Exec(Of ConditionalProbability) <=
+                From s As String
+                In "fit".ζ.AsCharacter.ToArray
+                Let Data As String = s.Replace(vbCr, "").Replace(vbLf, "")
+                Select ConditionalProbability.TryParse(Data, numberOfFactors)
             Return LQuery
         End Function
 
