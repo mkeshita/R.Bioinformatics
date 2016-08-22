@@ -173,7 +173,9 @@
     <Compile Include="Declares\bnlearn\ArcOperations.vb" />
     <Compile Include="Declares\bnlearn\bnFit.vb" />
     <Compile Include="Declares\bnlearn\bnFitPlots.vb" />
+    <Compile Include="Declares\genetics\API.vb" />
     <Compile Include="Declares\hierfstat\API.vb" />
+    <Compile Include="Declares\LDheatmap\LDheatmapAPI.vb" />
     <Compile Include="Declares\plot3D\plots.vb" />
     <Compile Include="Declares\plot3D\plot3D.vb" />
     <Compile Include="Declares\igraph\make_lattice.vb" />
@@ -238,11 +240,11 @@
     <Content Include="Resources\sparcc.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\runtime\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\+VB_DataFrame.vbproj">
+    <ProjectReference Include="..\..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\+VB_DataFrame.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>+VB_DataFrame</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\runtime\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
+    <ProjectReference Include="..\..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>

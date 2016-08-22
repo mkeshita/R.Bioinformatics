@@ -15,7 +15,20 @@ Namespace stats
         ''' <param name="y"></param>
         ''' <param name="correct"></param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' 卡方检验试用条件
+        ''' 1. 随机样本数据； 
+        ''' 2. 卡方检验的理论频数不能太小. 
+        ''' 两个独立样本比较可以分以下3种情况：
+        ''' 1. 所有的理论数T≥5并且总样本量n≥40,用Pearson卡方进行检验. 
+        ''' 2. 如果理论数``T&lt;5``但T≥1,并且n≥40,用连续性校正的卡方进行检验. 
+        ''' 3. 如果有理论数T&lt;1或n&lt;40,则用Fisher's检验. 
+        ''' 上述是适用于四格表.
+        ''' R×C表卡方检验应用条件 
+        ''' 1. R×C表中理论数小于5的格子不能超过1/5； 
+        ''' 2. 不能有小于1的理论数.我的实验中也不符合R×C表的卡方检验.可以通过增加样本数、列合并来实现.
+        ''' 统计专业研究生工作室为您服务，需要专业数据分析可以找我
+        ''' </remarks>
         <ExportAPI("chisq.test")>
         Public Function chisqTest(x As String, Optional y As String = NULL, Optional correct As Boolean = True) As chisqTestResult
             Dim out As SymbolicExpression() =

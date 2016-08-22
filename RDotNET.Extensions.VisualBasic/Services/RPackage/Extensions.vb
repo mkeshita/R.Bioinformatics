@@ -100,6 +100,15 @@ Public Module RScripts
         Return $"c({cx})"
     End Function
 
+    ''' <summary>
+    ''' c(....).(这个不会添加双引号)
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    Public Function c(Of T)(x As IEnumerable(Of T)) As String
+        Return c(x.ToArray)
+    End Function
+
     Public Function getOption(verbose As String) As String
         Return $"getOption(""{verbose}"")"
     End Function

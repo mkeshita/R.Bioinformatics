@@ -84,6 +84,20 @@ Public Module RExtensionInvoke
     End Function
 
     ''' <summary>
+    ''' Evaluates a R statement in the given string.
+    ''' </summary>
+    ''' <param name="R"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function __call(R As IScriptProvider) As SymbolicExpression
+#If DEBUG Then
+        Call __logs.WriteLine(R.RScript)
+        Call __logs.Flush()
+#End If
+        Return RServer.Evaluate(R.RScript)
+    End Function
+
+    ''' <summary>
     ''' Quite the R system.
     ''' </summary>
     <Extension> Public Sub q(REngine As REngine)

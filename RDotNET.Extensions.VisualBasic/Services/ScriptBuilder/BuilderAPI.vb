@@ -1,6 +1,7 @@
 ﻿Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
@@ -51,10 +52,14 @@ Namespace Services.ScriptBuilder
                          Order By __isOptional Ascending)
             Dim parameters As String() =
                 props.ToArray(Function(x) __getExpr(token, x.prop, x.func, x.param))
-            Dim script As String =
-                $"{name}({String.Join(", " & vbCrLf, (From p As String
-                                                      In parameters
-                                                      Where Not String.IsNullOrEmpty(p) Select p).ToArray)})"
+            Dim args As String() = LinqAPI.Exec(Of String) <=
+ _
+                From p As String
+                In parameters
+                Where Not String.IsNullOrEmpty(p)
+                Select p
+
+            Dim script As String = $"{name}({String.Join(", " & vbCrLf, args)})"
             Return script
         End Function
 
