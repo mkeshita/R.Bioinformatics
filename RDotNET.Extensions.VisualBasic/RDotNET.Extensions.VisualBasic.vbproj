@@ -170,6 +170,8 @@
     <Content Include="Services\ScriptBuilder\Helpers\README.txt" />
     <Content Include="RSyntax\README.txt" />
     <Compile Include="API\base.vb" />
+    <Compile Include="API\as.vb" />
+    <Compile Include="API\is.vb" />
     <Compile Include="API\stats.vb" />
     <Compile Include="API\grDevices\dev.vb" />
     <Compile Include="API\grDevices\images.vb" />

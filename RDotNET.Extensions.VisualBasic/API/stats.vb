@@ -1,4 +1,6 @@
-﻿Namespace API
+﻿Imports RDotNET.Extensions.VisualBasic
+
+Namespace API
 
     Public Module stats
 
@@ -85,8 +87,57 @@
                               Optional SSinit As String = "c(""Gardner1980"", ""Rossignol2011"")",
                               Optional optimmethod As String = "BFGS",
                               Optional optimcontrol As String = "list()",
-                              Optional kappa As String = "1e6")
+                              Optional kappa As String = "1e6") As String
+
+            Dim out As String = App.NextTempName
+
+            Call $"{out} <- arima({x}, order = {order},
+      seasonal = {seasonal},
+      xreg = {xreg}, include.mean = {includemean.λ},
+      transform.pars = {transformpars.λ},
+      fixed = {fixed}, init = {init},
+      method = {method}, n.cond = {ncond},
+      SSinit = {SSinit},
+      optim.method = {Rstring(optimmethod)},
+      optim.control = {optimcontrol}, kappa = {kappa})".ζ
+
+            Return out
         End Function
 
+        ''' <summary>
+        ''' Time-Series Objects, The function ts is used to create time-series objects.
+        ''' </summary>
+        ''' <param name="data">a vector or matrix of the observed time-series values. A data frame will be coerced to a numeric matrix via data.matrix. (See also ‘Details’.)</param>
+        ''' <param name="start">the time of the first observation. Either a single number or a vector of two integers, which specify a natural time unit and a (1-based) number of samples into the time unit. See the examples for the use of the second form.</param>
+        ''' <param name="[end]">the time of the last observation, specified in the same way as start.</param>
+        ''' <param name="frequency">the number of observations per unit of time.</param>
+        ''' <param name="deltat">the fraction of the sampling period between successive observations; e.g., 1/12 for monthly data. Only one of frequency or deltat should be provided.</param>
+        ''' <param name="tseps">time series comparison tolerance. Frequencies are considered equal if their absolute difference is less than ts.eps.</param>
+        ''' <param name="[class]">class to be given to the result, or none if NULL or "none". The default is "ts" for a single series, c("mts", "ts", "matrix") for multiple series.</param>
+        ''' <param name="names">a character vector of names for the series in a multiple series: defaults to the colnames of data, or Series 1, Series 2, ....</param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' The function ts is used to create time-series objects. These are vector or matrices with class of "ts" (and additional attributes) which represent data which has been sampled at equispaced points in time. In the matrix case, each column of the matrix data is assumed to contain a single (univariate) time series. Time series must have at least one observation, and although they need not be numeric there is very limited support for non-numeric series.
+        ''' Class "ts" has a number of methods. In particular arithmetic will attempt to align time axes, And subsetting to extract subsets of series can be used (e.g., EuStockMarkets[, "DAX"]). However, subsetting the first (Or only) dimension will return a matrix Or vector, as will matrix subsetting. Subassignment can be used to replace values but Not to extend a series (see window). There Is a method for t that transposes the series as a matrix (a one-column matrix if a vector) And hence returns a result that does Not inherit from class "ts".
+        ''' The value Of argument frequency Is used When the series Is sampled an integral number Of times In Each unit time interval. For example, one could use a value Of 7 For frequency When the data are sampled daily, And the natural time period Is a week, Or 12 When the data are sampled monthly And the natural time period Is a year. Values Of 4 And 12 are assumed In (e.g.) print methods To imply a quarterly And monthly series respectively.
+        ''' </remarks>
+        Public Function ts(Optional data As String = "NA",
+                           Optional start As Integer = 1,
+                           Optional [end] As String = "numeric()",
+                           Optional frequency As Integer = 1,
+                           Optional deltat As Integer = 1,
+                           Optional tseps As String = "getOption(""ts.eps"")",
+                           Optional [class] As String = NULL,
+                           Optional names As String = NULL) As String
+
+            Dim tmp As String = App.NextTempName
+
+            Call $"{tmp} <- ts(data = {data}, start = {start}, 
+end = {[end]}, frequency = {frequency},
+deltat = {deltat}, ts.eps = {tseps}, 
+class = {[class]}, names = {names})".ζ
+
+            Return tmp
+        End Function
     End Module
 End Namespace
