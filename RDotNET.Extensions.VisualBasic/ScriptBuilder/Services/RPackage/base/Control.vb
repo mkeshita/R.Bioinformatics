@@ -28,13 +28,13 @@
 
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 
-Namespace base
+Namespace SymbolBuilder.base
 
     ''' <summary>
     ''' These are the basic control-flow constructs of the R language. They function in much the same way as control statements in any Algol-like language. 
     ''' They are all reserved words.
     ''' </summary>
-    Public Module Control
+    Public Module ControlFlow
 
         ''' <summary>
         ''' A length-one logical vector that is not NA. Conditions of length greater than one are accepted with a warning, but only the first element is used. Other types are coerced to logical if possible, ignoring any class.

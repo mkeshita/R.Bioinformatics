@@ -29,7 +29,7 @@
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
-Namespace base
+Namespace SymbolBuilder.base
 
     Public Module getOption
         Public Const verbose As String = "getOption(""verbose"")"

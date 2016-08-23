@@ -29,7 +29,7 @@
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
-Namespace base
+Namespace SymbolBuilder.base
 
     <RFunc("ifelse")> Public Class ifelse : Inherits IRToken
         Public Property test As RExpression

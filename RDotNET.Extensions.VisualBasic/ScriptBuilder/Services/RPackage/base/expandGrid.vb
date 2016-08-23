@@ -29,7 +29,7 @@
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
-Namespace base
+Namespace SymbolBuilder.base
 
     ''' <summary>
     ''' Create a data frame from all combinations of the supplied vectors or factors. See the description of the return value for precise details of the way this is done.

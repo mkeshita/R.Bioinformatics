@@ -28,7 +28,7 @@
 
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
-Namespace base
+Namespace SymbolBuilder.base
 
     Public Module DataFrameAPI
 

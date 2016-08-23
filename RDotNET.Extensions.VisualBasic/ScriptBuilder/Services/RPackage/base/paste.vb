@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
-Namespace base
+Namespace SymbolBuilder.base
 
     <RFunc("paste0")> Public Class paste0 : Inherits IRToken
 
