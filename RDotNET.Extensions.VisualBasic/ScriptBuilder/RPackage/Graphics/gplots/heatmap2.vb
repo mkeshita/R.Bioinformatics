@@ -28,7 +28,7 @@
 
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.Abstract
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.Rtypes
-Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.stats
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.packages.stats
 
 Namespace SymbolBuilder.packages.gplots
 
