@@ -72,9 +72,9 @@ Public Module RInit
     ''' <remarks></remarks>
     Public Function StartEngineServices(R_HOME As String) As REngine
         Dim oldPath As String = Environment.GetEnvironmentVariable("PATH")
-        Dim rPath As String = IIf(Environment.Is64BitProcess,
-                                  $"{R_HOME}/x64",
-                                  $"{R_HOME}/i386")
+        Dim rPath As String = If(Environment.Is64BitProcess,
+                                 $"{R_HOME}/x64",
+                                 $"{R_HOME}/i386")
 
         If Directory.Exists(rPath) = False Then
             Throw New DirectoryNotFoundException(R_HOME_NOT_FOUND & " ---> """ & rPath & """")

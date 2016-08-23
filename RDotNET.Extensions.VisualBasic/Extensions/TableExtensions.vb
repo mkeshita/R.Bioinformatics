@@ -27,9 +27,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.DocumentFormat.Csv
-Imports Microsoft.VisualBasic
 Imports System.Text
+Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Linq
 
@@ -135,11 +135,32 @@ Public Module TableExtensions
         End If
     End Sub
 
+    ''' <summary>
+    ''' Push this object collection into the R memory as dataframe object.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="var"></param>
     Public Sub PushAsDataFrame(Of T)(source As IEnumerable(Of T), var As String)
         Dim schema As Dictionary(Of String, Type) = Nothing
-        Reflector _
+
+        ' 初始化schema对象会在save函数之中完成，然后被pushasdataframe调用
+        Call Reflector _
             .Save(source, schemaOut:=schema) _
             .PushAsDataFrame(var, types:=schema, typeParsing:=False)
     End Sub
+
+    ''' <summary>
+    ''' Push this object collection into the R memory as dataframe object.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns>Returns the temp variable name that reference to the dataframe object in R memory.</returns>
+    <Extension>
+    Public Function dataframe(Of T)(source As IEnumerable(Of T)) As String
+        Dim tmp As String = App.NextTempName
+        Call PushAsDataFrame(source, var:=tmp)
+        Return tmp
+    End Function
 End Module
 

@@ -59,10 +59,10 @@ Wikipedia: Skellam distribution: http://en.wikipedia.org/wiki/Skellam_distributi
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("dskellam.sp", Info:="Density, distribution function, quantile function and random number generation for the Skellam distribution with parameters lambda1 and lambda2. ")>
-        Public Function DskellamSp(<Scripting.MetaData.Parameter("X", "Vector of quantiles")> x As Vector,
-                               <Scripting.MetaData.Parameter("lambda1", "vectors of (non-negative) means.")> lambda1 As Vector,
-                               <Scripting.MetaData.Parameter("lambda2", "vectors of (non-negative) means.")> Optional lambda2 As Vector = Nothing,
-                               <Scripting.MetaData.Parameter("log", "logical; if TRUE, probabilities p are given as log(p).")> Optional log As Boolean = False) As Vector
+        Public Function DskellamSp(<Parameter("X", "Vector of quantiles")> x As Vector,
+                                   <Parameter("lambda1", "vectors of (non-negative) means.")> lambda1 As Vector,
+                                   <Parameter("lambda2", "vectors of (non-negative) means.")> Optional lambda2 As Vector = Nothing,
+                                   <Parameter("log", "logical; if TRUE, probabilities p are given as log(p).")> Optional log As Boolean = False) As Vector
 
             If lambda2.IsNullOrEmpty Then
                 lambda2 = lambda1
