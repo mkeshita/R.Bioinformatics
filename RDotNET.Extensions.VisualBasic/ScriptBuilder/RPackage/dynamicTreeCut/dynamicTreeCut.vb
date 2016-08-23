@@ -27,7 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Linq
-Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
 
 Namespace SymbolBuilder.dynamicTreeCut
 

@@ -28,8 +28,8 @@
 
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Linq
-Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
-Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.Abstract
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.Rtypes
 
 Namespace SymbolBuilder.base
 
