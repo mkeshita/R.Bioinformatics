@@ -29,7 +29,7 @@
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
-Namespace stats
+Namespace SymbolBuilder.stats
 
     Public MustInherit Class heatmap_plot : Inherits IRToken
 

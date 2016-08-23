@@ -29,7 +29,7 @@
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
-Namespace gplots
+Namespace SymbolBuilder.gplots
 
     ''' <summary>
     ''' Plot a Venn diagrams for up to 5 sets

@@ -30,7 +30,7 @@ Imports Microsoft.VisualBasic.Serialization
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
-Namespace utils.read.table
+Namespace SymbolBuilder.utils.read.table
 
     ''' <summary>
     ''' write.table prints its required argument x (after converting it to a data frame if it is not one nor a matrix) to a file or connection.

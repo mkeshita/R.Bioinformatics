@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.MMFProtocol.Pipeline
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace Graphics
+Namespace API.Graphics
 
     <PackageNamespace("PieChart",
                   Description:="Pie charts are not recommended in the R documentation, and their features are somewhat limited. 

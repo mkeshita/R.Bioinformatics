@@ -28,7 +28,7 @@
 
 Imports System.Text
 
-Namespace Services.ScriptBuilder
+Namespace SymbolBuilder
 
     Public Class ScriptBuilder
 

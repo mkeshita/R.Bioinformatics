@@ -29,7 +29,7 @@
 Imports System.Xml.Serialization
 Imports RDotNET.Extensions.VisualBasic
 
-Namespace Services.ScriptBuilder.RTypes
+Namespace SymbolBuilder.Rtypes
 
     ''' <summary>
     ''' TRUE, FALSE, T, F

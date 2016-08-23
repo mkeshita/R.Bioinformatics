@@ -29,7 +29,7 @@
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 Imports RDotNET.Extensions.VisualBasic.base.Control
 
-Namespace grDevices
+Namespace SymbolBuilder.grDevices
 
     ''' <summary>
     ''' pdf starts the graphics device driver for producing PDF graphics.

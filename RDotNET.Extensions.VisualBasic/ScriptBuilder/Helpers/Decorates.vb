@@ -31,7 +31,7 @@ Imports System.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Services.ScriptBuilder
+Namespace SymbolBuilder
 
     Public MustInherit Class RAttribute : Inherits Attribute
 

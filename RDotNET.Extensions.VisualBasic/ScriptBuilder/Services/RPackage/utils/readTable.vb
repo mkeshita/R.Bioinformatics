@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
-Namespace utils.read.table
+Namespace SymbolBuilder.utils.read.table
 
     ''' <summary>
     ''' Reads a file in table format and creates a data frame from it, with cases corresponding to lines and variables to fields in the file.

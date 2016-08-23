@@ -28,7 +28,7 @@
 
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
-Namespace base.as.data
+Namespace SymbolBuilder.base.as.data
 
     ''' <summary>
     ''' Functions to check if an object is a data frame, or coerce it if possible.

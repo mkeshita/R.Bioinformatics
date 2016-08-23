@@ -29,7 +29,7 @@
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace Graphics
+Namespace SymbolBuilder.Graphics
 
     ''' <summary>
     ''' Graphics devices for BMP, JPEG, PNG and TIFF format bitmap files. 

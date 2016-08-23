@@ -28,7 +28,7 @@
 
 Imports System.Text
 
-Namespace grDevices
+Namespace SymbolBuilder.grDevices
 
     Public MustInherit Class grDevice : Inherits IRToken
 

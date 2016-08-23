@@ -30,7 +30,7 @@ Imports System.Text
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
-Namespace grDevices
+Namespace SymbolBuilder.grDevices
 
     ''' <summary>
     ''' Graphics devices for BMP, JPEG, PNG and TIFF format bitmap files.

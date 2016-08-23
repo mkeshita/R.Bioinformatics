@@ -215,7 +215,7 @@
     <Compile Include="ScriptBuilder\Services\Abstract\IScriptProvider.vb" />
     <Compile Include="ScriptBuilder\Services\RPackage\utils\readTable.vb" />
     <Compile Include="ScriptBuilder\Services\RPackage\Graphics\GraphicsDevice.vb" />
-    <Compile Include="ScriptBuilder\Services\RPackage\Graphics\PieChart.vb" />
+    <Compile Include="API\graphics\PieChart.vb" />
     <Compile Include="ScriptBuilder\Services\RPackage\Extensions.vb" />
     <Compile Include="ScriptBuilder\Services\Abstract\IRScript.vb" />
     <Compile Include="RSyntax\Math\Math.vb" />

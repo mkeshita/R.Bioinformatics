@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
-Namespace Services.ScriptBuilder
+Namespace SymbolBuilder
 
     ''' <summary>
     ''' Build script token

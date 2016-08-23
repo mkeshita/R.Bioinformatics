@@ -30,7 +30,7 @@ Imports Microsoft.VisualBasic.Serialization
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
 Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 
-Namespace Graphics
+Namespace SymbolBuilder.Graphics
 
     ''' <summary>
     ''' Generic function for plotting of R objects. For more details about the graphical parameter arguments, see par.
