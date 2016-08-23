@@ -1,4 +1,5 @@
 ﻿Imports RDotNET.Extensions.VisualBasic
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
 
 Namespace API
 
