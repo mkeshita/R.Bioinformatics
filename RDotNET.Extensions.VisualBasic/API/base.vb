@@ -31,6 +31,44 @@ Namespace API
     Public Module base
 
         ''' <summary>
+        ''' Combine Values into a Vector or List
+        ''' 
+        ''' This is a generic function which combines its arguments.
+        ''' The Default method combines its arguments To form a vector. All arguments are coerced To a common type which Is the type Of the returned value, And all attributes except names are removed.
+        ''' </summary>
+        ''' <param name="list">objects to be concatenated.</param>
+        ''' <param name="recursive">logical. If recursive = TRUE, the function recursively descends through lists (and pairlists) combining all their elements into a vector.
+        ''' </param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' The output type is determined from the highest type of the components in the hierarchy NULL &lt; raw &lt; logical &lt; integer &lt; double &lt; complex &lt; character &lt; list &lt; expression. Pairlists are treated as lists, but non-vector components (such names and calls) are treated as one-element lists which cannot be unlisted even if recursive = TRUE.
+        ''' c Is sometimes used for its side effect of removing attributes except names, for example to turn an array into a vector. as.vector Is a more intuitive way to do this, but also drops names. Note too that methods other than the default are Not required to do this (And they will almost certainly preserve a class attribute).
+        ''' This Is a primitive function.
+        ''' </remarks>
+        Public Function c(list As IEnumerable(Of String), Optional recursive As Boolean = False) As String
+            Dim out As String = App.NextTempName
+            Call $"{out} <- c({list.JoinBy(", ")}, recursive = {recursive.λ})".ζ
+            Return out
+        End Function
+
+        ''' <summary>
+        ''' Combine Values into a Vector or List
+        ''' 
+        ''' This is a generic function which combines its arguments.
+        ''' The Default method combines its arguments To form a vector. All arguments are coerced To a common type which Is the type Of the returned value, And all attributes except names are removed.
+        ''' </summary>
+        ''' <param name="list">objects to be concatenated.</param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' The output type is determined from the highest type of the components in the hierarchy NULL &lt; raw &lt; logical &lt; integer &lt; double &lt; complex &lt; character &lt; list &lt; expression. Pairlists are treated as lists, but non-vector components (such names and calls) are treated as one-element lists which cannot be unlisted even if recursive = TRUE.
+        ''' c Is sometimes used for its side effect of removing attributes except names, for example to turn an array into a vector. as.vector Is a more intuitive way to do this, but also drops names. Note too that methods other than the default are Not required to do this (And they will almost certainly preserve a class attribute).
+        ''' This Is a primitive function.
+        ''' </remarks>
+        Public Function c(ParamArray list As String()) As String
+            Return c(list, False)
+        End Function
+
+        ''' <summary>
         ''' Loading/Attaching and Listing of Packages, library and require load and attach add-on packages.
         ''' Load a available R package which was installed in the R system.(加载一个可用的R包)
         ''' </summary>
