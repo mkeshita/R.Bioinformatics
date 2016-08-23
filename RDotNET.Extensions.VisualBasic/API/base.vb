@@ -185,7 +185,14 @@ Namespace API
                                   Optional checkRows As Boolean = False,
                                   Optional checkNames As Boolean = True,
                                   Optional stringsAsFactors As String = "default.stringsAsFactors()") As String
-            Throw New NotImplementedException
+
+            Dim out As String = App.NextTempName
+
+            Call $"{out} <- data.frame({x.JoinBy(", ")}, row.names = {rowNames}, check.rows = {checkRows},
+           check.names = {checkNames},
+           stringsAsFactors = {stringsAsFactors})".ζ
+
+            Return out
         End Function
 
         ''' <summary>
