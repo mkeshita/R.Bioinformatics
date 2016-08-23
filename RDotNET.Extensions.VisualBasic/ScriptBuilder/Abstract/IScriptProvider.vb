@@ -27,12 +27,12 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
-Imports Microsoft.VisualBasic
-Imports RDotNET.Extensions.VisualBasic
-Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
-Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
+Imports RDotNET.Extensions.VisualBasic
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.Rtypes
 
 ''' <summary>
 ''' A basic object model as a token in the R script.(一个提供脚本语句的最基本的抽象对象)
