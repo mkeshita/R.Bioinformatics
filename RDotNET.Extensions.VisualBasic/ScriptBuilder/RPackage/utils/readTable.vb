@@ -29,8 +29,8 @@
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
-Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
-Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.Abstract
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.Rtypes
 
 Namespace SymbolBuilder.utils.read.table
 

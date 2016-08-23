@@ -30,7 +30,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports RDotNET.Extensions.VisualBasic.RBase.Vectors
 
-Namespace RBase.MathExtension
+Namespace SyntaxAPI.MathExtension
 
     <PackageNamespace("R.Math.Vector", Url:="", Publisher:="", Category:=APICategories.UtilityTools, Description:="")>
     Public Module VectorMath
@@ -116,7 +116,7 @@ Namespace RBase.MathExtension
         ''' 
         <ExportAPI("Besseli")>
         Public Function BesselI(x As Vector, nu As Vector,
-                            <Scripting.MetaData.Parameter("expon.scaled", "logical; if TRUE, the results are exponentially scaled in order to avoid overflow (I(nu)) or underflow (K(nu)), respectively.")>
+                            <MetaData.Parameter("expon.scaled", "logical; if TRUE, the results are exponentially scaled in order to avoid overflow (I(nu)) or underflow (K(nu)), respectively.")>
                             Optional ExponScaled As Boolean = False) As Vector
             Throw New NotImplementedException
         End Function

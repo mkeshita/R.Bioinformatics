@@ -27,8 +27,8 @@
 #End Region
 
 Imports System.Text
-Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder
-Imports RDotNET.Extensions.VisualBasic.Services.ScriptBuilder.RTypes
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.Rtypes
 
 Namespace SymbolBuilder.grDevices
 

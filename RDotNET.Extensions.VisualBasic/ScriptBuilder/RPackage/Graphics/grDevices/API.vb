@@ -26,6 +26,8 @@
 
 #End Region
 
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.Abstract
+
 Namespace SymbolBuilder.grDevices
 
     Public Module API

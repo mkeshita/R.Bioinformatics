@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports RDotNET.Extensions.VisualBasic.RBase.Vectors
 
-Namespace RBase
+Namespace SyntaxAPI
 
     <PackageNamespace("RBase.Read")>
     Public Module Read

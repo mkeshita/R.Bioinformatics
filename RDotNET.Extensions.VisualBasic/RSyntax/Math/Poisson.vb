@@ -30,7 +30,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports RDotNET.Extensions.VisualBasic.RBase.Vectors
 
-Namespace RBase.MathExtension
+Namespace SyntaxAPI.MathExtension
 
     ''' <summary>
     ''' Density, distribution function, quantile function and random generation for the Poisson distribution with parameter lambda.

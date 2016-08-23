@@ -30,7 +30,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports RDotNET.Extensions.VisualBasic.RBase.Vectors
 
-Namespace RBase.MathExtension
+Namespace SyntaxAPI.MathExtension
 
     ''' <summary>
     ''' Skellam distribution
@@ -163,7 +163,7 @@ Wikipedia: Skellam distribution: http://en.wikipedia.org/wiki/Skellam_distributi
         End Function
 
         <ExportAPI("pskellamSp")>
-        Public Function pskellamSp(q As Vector, lambda1 As Vector, Optional lambda2 As Vector = NULL, <Scripting.MetaData.Parameter("Lower.Tail")> Optional LowerTail As Boolean = True, <Scripting.MetaData.Parameter("log.p")> Optional logp As Boolean = False) As Vector
+        Public Function pskellamSp(q As Vector, lambda1 As Vector, Optional lambda2 As Vector = NULL, <MetaData.Parameter("Lower.Tail")> Optional LowerTail As Boolean = True, <MetaData.Parameter("log.p")> Optional logp As Boolean = False) As Vector
 
             If Missing(lambda2) Then
                 lambda2 = lambda1

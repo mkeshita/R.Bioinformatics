@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::8ff086be6693dc3e94c351e555603302, ..\R.Bioconductor\RDotNET.Extensions.VisualBasic\Services\RPackage\Graphics\GraphicsDevice.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace SymbolBuilder.Graphics
@@ -75,19 +76,19 @@ Once you have done the function from this namespace, then you can using the Shoa
         ''' 
         <ExportAPI("bmp")>
         Public Function bmp(plot As String,
-                        <Scripting.MetaData.Parameter("filename", "the name of the output file, up to 511 characters. The page number is substituted if a C integer format is included in the character string, as in the default, and tilde-expansion is performed (see path.expand). 
+                        <MetaData.Parameter("filename", "the name of the output file, up to 511 characters. The page number is substituted if a C integer format is included in the character string, as in the default, and tilde-expansion is performed (see path.expand). 
                         (The result must be less than 600 characters long. See postscript for further details.) ")> filename As String,
-                        <Scripting.MetaData.Parameter("width", "the width of the device.")> Optional width As Integer = 480,
-                        <Scripting.MetaData.Parameter("height", "the height of the device.")> Optional height As Integer = 480,
-                        <Scripting.MetaData.Parameter("units", "The units in which height and width are given. Can be px (pixels, the default), in (inches), cm or mm.")> Optional units As String = "px",
-                        <Scripting.MetaData.Parameter("pointsize", "the default pointsize of plotted text, interpreted as big points (1/72 inch) at res ppi.")> Optional pointsize As Integer = 12,
-                        <Scripting.MetaData.Parameter("bg", "the initial background colour: can be overridden by setting par(""bg"").")> Optional bg As String = "white",
-                        <Scripting.MetaData.Parameter("res", "The nominal resolution in ppi which will be recorded in the bitmap file, if a positive integer. Also used for units other than the default. 
+                        <MetaData.Parameter("width", "the width of the device.")> Optional width As Integer = 480,
+                        <MetaData.Parameter("height", "the height of the device.")> Optional height As Integer = 480,
+                        <MetaData.Parameter("units", "The units in which height and width are given. Can be px (pixels, the default), in (inches), cm or mm.")> Optional units As String = "px",
+                        <MetaData.Parameter("pointsize", "the default pointsize of plotted text, interpreted as big points (1/72 inch) at res ppi.")> Optional pointsize As Integer = 12,
+                        <MetaData.Parameter("bg", "the initial background colour: can be overridden by setting par(""bg"").")> Optional bg As String = "white",
+                        <MetaData.Parameter("res", "The nominal resolution in ppi which will be recorded in the bitmap file, if a positive integer. Also used for units other than the default. 
                         If not specified, taken as 72 ppi to set the size of text and line widths.")> Optional res As String = NA,
-                        <Scripting.MetaData.Parameter("family", "A length-one character vector specifying the default font family. 
+                        <MetaData.Parameter("family", "A length-one character vector specifying the default font family. 
                         The default means to use the font numbers on the Windows GDI versions and ""sans"" on the cairographics versions.")> Optional family As String = "",
-                        <Scripting.MetaData.Parameter("restoreConsole", "See the ‘Details’ section of windows. For type == ""windows"" only.")> Optional restoreConsole As Boolean = True,
-                        <Scripting.MetaData.Parameter("type", "Should be plotting be done using Windows GDI or cairographics?")> Optional type As String = "c(""windows"", ""cairo"")") As String
+                        <MetaData.Parameter("restoreConsole", "See the ‘Details’ section of windows. For type == ""windows"" only.")> Optional restoreConsole As Boolean = True,
+                        <MetaData.Parameter("type", "Should be plotting be done using Windows GDI or cairographics?")> Optional type As String = "c(""windows"", ""cairo"")") As String
 
             Return $"bmp(filename = ""{filename.Replace("\", "/")}"", width = {width}, height = {height}, units = ""{units}"", pointsize = {pointsize},    
                                                                                     bg = ""{bg}"", res = {res}, family = ""{family}"", restoreConsole = {If(restoreConsole, "T", "F")}, type = {type})
@@ -113,20 +114,20 @@ Once you have done the function from this namespace, then you can using the Shoa
         ''' 
         <ExportAPI("jpeg")>
         Public Function jpeg(plot As String,
-                         <Scripting.MetaData.Parameter("filename", "the name of the output file, up to 511 characters. The page number is substituted if a C integer format is included in the character string, as in the default, and tilde-expansion is performed (see path.expand). 
+                         <MetaData.Parameter("filename", "the name of the output file, up to 511 characters. The page number is substituted if a C integer format is included in the character string, as in the default, and tilde-expansion is performed (see path.expand). 
                         (The result must be less than 600 characters long. See postscript for further details.) ")> filename As String,
-                         <Scripting.MetaData.Parameter("width", "the width of the device.")> Optional width As Integer = 480,
-                         <Scripting.MetaData.Parameter("height", "the height of the device.")> Optional height As Integer = 480,
-                         <Scripting.MetaData.Parameter("units", "The units in which height and width are given. Can be px (pixels, the default), in (inches), cm or mm.")> Optional units As String = "px",
-                         <Scripting.MetaData.Parameter("pointsize", "the default pointsize of plotted text, interpreted as big points (1/72 inch) at res ppi.")> Optional pointsize As Integer = 12,
-                         <Scripting.MetaData.Parameter("quality", "the ‘quality’ of the JPEG image, as a percentage. Smaller values will give more compression but also more degradation of the image.")> Optional quality As Integer = 75,
-                          <Scripting.MetaData.Parameter("bg", "the initial background colour: can be overridden by setting par(""bg"").")> Optional bg As String = "white",
-                         <Scripting.MetaData.Parameter("res", "The nominal resolution in ppi which will be recorded in the bitmap file, if a positive integer. Also used for units other than the default. 
+                         <MetaData.Parameter("width", "the width of the device.")> Optional width As Integer = 480,
+                         <MetaData.Parameter("height", "the height of the device.")> Optional height As Integer = 480,
+                         <MetaData.Parameter("units", "The units in which height and width are given. Can be px (pixels, the default), in (inches), cm or mm.")> Optional units As String = "px",
+                         <MetaData.Parameter("pointsize", "the default pointsize of plotted text, interpreted as big points (1/72 inch) at res ppi.")> Optional pointsize As Integer = 12,
+                         <MetaData.Parameter("quality", "the ‘quality’ of the JPEG image, as a percentage. Smaller values will give more compression but also more degradation of the image.")> Optional quality As Integer = 75,
+                          <MetaData.Parameter("bg", "the initial background colour: can be overridden by setting par(""bg"").")> Optional bg As String = "white",
+                         <MetaData.Parameter("res", "The nominal resolution in ppi which will be recorded in the bitmap file, if a positive integer. Also used for units other than the default. 
                         If not specified, taken as 72 ppi to set the size of text and line widths.")> Optional res As String = NA,
-                         <Scripting.MetaData.Parameter("family", "A length-one character vector specifying the default font family. 
+                         <MetaData.Parameter("family", "A length-one character vector specifying the default font family. 
                         The default means to use the font numbers on the Windows GDI versions and ""sans"" on the cairographics versions.")> Optional family As String = "",
-                         <Scripting.MetaData.Parameter("restoreConsole", "See the ‘Details’ section of windows. For type == ""windows"" only.")> Optional restoreConsole As Boolean = True,
-                         <Scripting.MetaData.Parameter("type", "Should be plotting be done using Windows GDI or cairographics?")> Optional type As String = "c(""windows"", ""cairo"")") As String
+                         <MetaData.Parameter("restoreConsole", "See the ‘Details’ section of windows. For type == ""windows"" only.")> Optional restoreConsole As Boolean = True,
+                         <MetaData.Parameter("type", "Should be plotting be done using Windows GDI or cairographics?")> Optional type As String = "c(""windows"", ""cairo"")") As String
 
             Return $"jpeg(filename = ""{filename.Replace("\", "/")}"",
      width = {width}, height = {height}, units = ""{units}"", pointsize = {pointsize},
@@ -154,19 +155,19 @@ Once you have done the function from this namespace, then you can using the Shoa
         ''' 
         <ExportAPI("png")>
         Public Function png(plot As String,
-                           <Scripting.MetaData.Parameter("filename", "the name of the output file, up to 511 characters. The page number is substituted if a C integer format is included in the character string, as in the default, and tilde-expansion is performed (see path.expand). 
+                           <MetaData.Parameter("filename", "the name of the output file, up to 511 characters. The page number is substituted if a C integer format is included in the character string, as in the default, and tilde-expansion is performed (see path.expand). 
                         (The result must be less than 600 characters long. See postscript for further details.) ")> filename As String,
-                           <Scripting.MetaData.Parameter("width", "the width of the device.")> Optional width As Integer = 480,
-                         <Scripting.MetaData.Parameter("height", "the height of the device.")> Optional height As Integer = 480,
-                       <Scripting.MetaData.Parameter("units", "The units in which height and width are given. Can be px (pixels, the default), in (inches), cm or mm.")> Optional units As String = "px",
-                        <Scripting.MetaData.Parameter("pointsize", "the default pointsize of plotted text, interpreted as big points (1/72 inch) at res ppi.")> Optional pointsize As Integer = 12,
-                         <Scripting.MetaData.Parameter("bg", "the initial background colour: can be overridden by setting par(""bg"").")> Optional bg As String = "white",
-                        <Scripting.MetaData.Parameter("res", "The nominal resolution in ppi which will be recorded in the bitmap file, if a positive integer. Also used for units other than the default. 
+                           <MetaData.Parameter("width", "the width of the device.")> Optional width As Integer = 480,
+                         <MetaData.Parameter("height", "the height of the device.")> Optional height As Integer = 480,
+                       <MetaData.Parameter("units", "The units in which height and width are given. Can be px (pixels, the default), in (inches), cm or mm.")> Optional units As String = "px",
+                        <MetaData.Parameter("pointsize", "the default pointsize of plotted text, interpreted as big points (1/72 inch) at res ppi.")> Optional pointsize As Integer = 12,
+                         <MetaData.Parameter("bg", "the initial background colour: can be overridden by setting par(""bg"").")> Optional bg As String = "white",
+                        <MetaData.Parameter("res", "The nominal resolution in ppi which will be recorded in the bitmap file, if a positive integer. Also used for units other than the default. 
                         If not specified, taken as 72 ppi to set the size of text and line widths.")> Optional res As String = NA,
-                        <Scripting.MetaData.Parameter("family", "A length-one character vector specifying the default font family. 
+                        <MetaData.Parameter("family", "A length-one character vector specifying the default font family. 
                         The default means to use the font numbers on the Windows GDI versions and ""sans"" on the cairographics versions.")> Optional family As String = "",
-                      <Scripting.MetaData.Parameter("restoreConsole", "See the ‘Details’ section of windows. For type == ""windows"" only.")> Optional restoreConsole As Boolean = True,
-                        <Scripting.MetaData.Parameter("type", "Should be plotting be done using Windows GDI or cairographics?")> Optional type As String = "c(""windows"", ""cairo"", ""cairo-png"")") As String
+                      <MetaData.Parameter("restoreConsole", "See the ‘Details’ section of windows. For type == ""windows"" only.")> Optional restoreConsole As Boolean = True,
+                        <MetaData.Parameter("type", "Should be plotting be done using Windows GDI or cairographics?")> Optional type As String = "c(""windows"", ""cairo"", ""cairo-png"")") As String
 
             Return $"png(filename = ""{filename.Replace("\", "/")}"",
     width = {width}, height = {height}, units = ""{units}"", pointsize = {pointsize},
@@ -193,20 +194,20 @@ Once you have done the function from this namespace, then you can using the Shoa
         ''' 
         <ExportAPI("tiff")>
         Public Function tiff(plot As String,
-                             <Parameter("filename", "the name of the output file, up to 511 characters. The page number is substituted if a C integer format is included in the character string, as in the default, and tilde-expansion is performed (see path.expand). 
+                             <MetaData.Parameter("filename", "the name of the output file, up to 511 characters. The page number is substituted if a C integer format is included in the character string, as in the default, and tilde-expansion is performed (see path.expand). 
                         (The result must be less than 600 characters long. See postscript for further details.) ")> filename As String,
-                             <Parameter("width", "the width of the device.")> Optional width As Integer = 480,
-                             <Parameter("height", "the height of the device.")> Optional height As Integer = 480,
-                             <Parameter("units", "The units in which height and width are given. Can be px (pixels, the default), in (inches), cm or mm.")> Optional units As String = "px",
-                        <Scripting.MetaData.Parameter("pointsize", "the default pointsize of plotted text, interpreted as big points (1/72 inch) at res ppi.")> Optional pointsize As Integer = 12,
-                       <Scripting.MetaData.Parameter("compression", "the type of compression to be used.")> Optional compression As String = "c(""none"", ""rle"", ""lzw"", ""jpeg"", ""zip"", ""lzw+p"", ""zip+p"")",
-                          <Scripting.MetaData.Parameter("bg", "the initial background colour: can be overridden by setting par(""bg"").")> Optional bg As String = "white",
-                          <Scripting.MetaData.Parameter("res", "The nominal resolution in ppi which will be recorded in the bitmap file, if a positive integer. Also used for units other than the default. 
-                        If not specified, taken as 72 ppi to set the size of text and line widths.")> Optional res As String = NA,
-                          <Scripting.MetaData.Parameter("family", "A length-one character vector specifying the default font family. 
+                             <MetaData.Parameter("width", "the width of the device.")> Optional width As Integer = 480,
+                             <MetaData.Parameter("height", "the height of the device.")> Optional height As Integer = 480,
+                             <MetaData.Parameter("units", "The units in which height and width are given. Can be px (pixels, the default), in (inches), cm or mm.")> Optional units As String = "px",
+                             <MetaData.Parameter("pointsize", "the default pointsize of plotted text, interpreted as big points (1/72 inch) at res ppi.")> Optional pointsize As Integer = 12,
+                             <MetaData.Parameter("compression", "the type of compression to be used.")> Optional compression As String = "c(""none"", ""rle"", ""lzw"", ""jpeg"", ""zip"", ""lzw+p"", ""zip+p"")",
+                             <MetaData.Parameter("bg", "the initial background colour: can be overridden by setting par(""bg"").")> Optional bg As String = "white",
+                             <MetaData.Parameter("res", "The nominal resolution in ppi which will be recorded in the bitmap file, if a positive integer. Also used for units other than the default. 
+                          If not specified, taken as 72 ppi to set the size of text and line widths.")> Optional res As String = NA,
+                             <MetaData.Parameter("family", "A length-one character vector specifying the default font family. 
                         The default means to use the font numbers on the Windows GDI versions and ""sans"" on the cairographics versions.")> Optional family As String = "",
-                          <Scripting.MetaData.Parameter("restoreConsole", "See the ‘Details’ section of windows. For type == ""windows"" only.")> Optional restoreConsole As Boolean = True,
-                         <Scripting.MetaData.Parameter("type", "Should be plotting be done using Windows GDI or cairographics?")> Optional type As String = "c(""windows"", ""cairo"")") As String
+                             <MetaData.Parameter("restoreConsole", "See the ‘Details’ section of windows. For type == ""windows"" only.")> Optional restoreConsole As Boolean = True,
+                             <MetaData.Parameter("type", "Should be plotting be done using Windows GDI or cairographics?")> Optional type As String = "c(""windows"", ""cairo"")") As String
 
             Return $"tiff(filename = ""{filename.Replace("\", "/")}"",
      width = {width}, height = {height}, units = ""{units}"", pointsize = {pointsize},
