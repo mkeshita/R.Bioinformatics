@@ -29,6 +29,7 @@
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MMFProtocol.Pipeline
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -44,33 +45,46 @@ Namespace API.Graphics
     Public Module PieChart
 
         <ExportAPI("Pie", Info:="Draw a simple pie chart.")>
-        Public Function PieSimple(slices As IEnumerable(Of KeyValuePair(Of String, Double)),
+        Public Function PieSimple(slices As IEnumerable(Of NamedValue(Of Double)),
                               Optional Title As String = "",
                               <Parameter("Path.Save")> Optional SaveTo As String = "./pie.png") As Boolean
-            Dim Script As String =
-$"# Simple Pie Chart
- slices <- c({String.Join(", ", (From n In slices Select CStr(n.Value)).ToArray)})
- lbls <- c({String.Join(", ", (From n In slices Select $"""{n.Key}""").ToArray)})
-{GraphicsDevice.tiff(plot:=$"pie(slices, labels = lbls, main=""{Title}"")", filename:=SaveTo, width:=3000, height:=2500)}"
-            Dim STD As String() = RServer.WriteLine(Script)
+
+            Call $"# Simple Pie Chart
+slices <- c({String.Join(", ", (From n In slices Select CStr(n.x)).ToArray)})
+lbls   <- c({String.Join(", ", (From n In slices Select $"""{n.Name}""").ToArray)})
+{GraphicsDevice.tiff(plot:=$"pie(slices, labels = lbls, main=""{Title}"")", filename:=SaveTo, width:=3000, height:=2500)}".ζ
             Return True
         End Function
 
         <ExportAPI("Data.Frame")>
         Public Function DataFrame(path As String) As NamedValue(Of Double)()
-            Dim Csv = File.Load(path)
-            Dim LQuery = (From row As RowObject In Csv.Skip(1).AsParallel
-                          Select New KeyValuePair(Of String, Double)(row(0), Val(row(1)))).ToArray
+            Dim df As File = File.Load(path)
+            Dim LQuery = LinqAPI.Exec(Of NamedValue(Of Double)) <=
+ _
+                From row As RowObject
+                In df.Skip(1).AsParallel
+                Select New NamedValue(Of Double) With {
+                    .Name = row(0),
+                    .x = Val(row(1))
+                }
+
             Return LQuery
         End Function
 
         <ExportAPI("Data.Frame")>
-        Public Function DataFrame(data As IEnumerable(Of Object)) As KeyValuePair(Of String, Double)()
-            Dim LQuery = (From obj In data.AsParallel
-                          Let values = InputHandler.CastArray(Of Object)(obj)
-                          Select New KeyValuePair(Of String, Double)(
-                          InputHandler.ToString(values(0)),
-                          Val(InputHandler.ToString(values(1))))).ToArray
+        Public Function DataFrame(data As IEnumerable(Of Object)) As NamedValue(Of Double)()
+            Dim LQuery = LinqAPI.Exec(Of NamedValue(Of Double)) <=
+ _
+                From obj As Object
+                In data.AsParallel
+                Let values = InputHandler.CastArray(Of Object)(obj)
+                Let name As String = InputHandler.ToString(values(0)),
+                    value As Double = Val(InputHandler.ToString(values(1)))
+                Select New NamedValue(Of Double) With {
+                    .Name = name,
+                    .x = value
+                }
+
             Return LQuery
         End Function
     End Module
