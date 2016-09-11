@@ -108,6 +108,26 @@ Namespace deSolve
         ''' method = "impAdams" selects the implicit Adams method that uses Newton- Raphson iteration (equal to method = "lsode", mf = 12.
         ''' method = "impAdams_d" selects the implicit Adams method that uses Jacobi- Newton iteration, i.e. neglecting all off-diagonal elements (equal to method = "lsode", mf = 13.
         ''' For very stiff systems, method = "daspk" may outperform method = "bdf".
+        ''' 
+        ''' ###### Example
+        ''' 
+        ''' ```R
+        ''' a &lt;- -8/3 ; b &lt;- -10; c &lt;- 28
+        ''' yini &lt;- c(X = 1, Y = 1, Z = 1)
+        ''' Lorenz &lt;- function (t, y, parms) {
+        '''    with(as.list(y), {
+        '''       dX &lt;- a * X + Y * Z
+        '''       dY &lt;- b * (Y - Z)
+        '''       dZ &lt;- -X * Y + c * Y - Z
+        '''       list(c(dX, dY, dZ))
+        '''    })
+        ''' }
+        ''' times &lt;- seq(from = 0, to = 100, by = 0.01)
+        ''' out &lt;- ode(y = yini, times = times, func = Lorenz, parms = NULL)
+        ''' plot(out, lwd = 2)
+        ''' plot(out[,"X"], out[,"Y"], type = "l", xlab = "X",
+        '''      ylab = "Y", main = "butterfly")
+        ''' ```
         ''' </remarks>
         Public Function ode(y As String, times As String, func As String, parms As String, method As String, ParamArray additionals As String()) As String
             Dim tmp As String = App.NextTempName
