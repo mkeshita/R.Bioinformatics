@@ -2,6 +2,11 @@
 
 Namespace bnlearn
 
+    ''' <summary>
+    ''' ```R
+    ''' require(bnlearn)
+    ''' ```
+    ''' </summary>
     Public MustInherit Class bnlearn : Inherits IRScript
 
         Sub New()
