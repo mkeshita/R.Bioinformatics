@@ -58,26 +58,6 @@ Namespace deSolve
     ''' </summary>
     Public Module API
 
-        Public Enum integrator
-            lsoda
-            lsode
-            lsodes
-            lsodar
-            vode
-            daspk
-            euler
-            rk4
-            ode23
-            ode45
-            radau
-            bdf
-            bdf_d
-            adams
-            impAdams
-            impAdams_d
-            iteration
-        End Enum
-
         ''' <summary>
         ''' General Solver for Ordinary Differential Equations
         ''' Solves a system of ordinary differential equations; a wrapper around the implemented ODE solvers
@@ -136,6 +116,10 @@ Namespace deSolve
             Call $"{tmp} <- ode({y}, {times}, {func}, {parms}, method = {method} {addis})".ζ
 
             Return tmp
+        End Function
+
+        Public Function ode(y As String, times As String, func As String, parms As String, method As integrator, ParamArray additionals As String()) As String
+            Return ode(y, times, func, parms, method.ToString, additionals)
         End Function
     End Module
 End Namespace
