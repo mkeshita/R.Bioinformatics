@@ -1,5 +1,7 @@
 ﻿Imports System.Web.Script.Serialization
+Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
 
 ''' <summary>
 ''' The R runtime variable
@@ -63,7 +65,7 @@ Public Class var
     End Function
 
     Public Overrides Function ToString() As String
-        Return Me.GetJson
+        Return Me.GetJson(simpleDict:=False)
     End Function
 
     Public Shared Narrowing Operator CType(var As var) As String
@@ -72,5 +74,57 @@ Public Class var
 
     Public Shared Widening Operator CType(expr As String) As var
         Return New var(expr)
+    End Operator
+
+    Public Shared Widening Operator CType(expr As Integer) As var
+        Return New var(expr)
+    End Operator
+
+    Public Shared Widening Operator CType(expr As Double) As var
+        Return New var(expr)
+    End Operator
+
+    Public Shared Widening Operator CType(expr As Long) As var
+        Return New var(expr)
+    End Operator
+
+    Public Shared Widening Operator CType(expr As Single) As var
+        Return New var(expr)
+    End Operator
+
+    Public Shared Widening Operator CType(expr As Boolean) As var
+        Return New var(Rbool(expr))
+    End Operator
+
+    Public Shared Widening Operator CType(expr As String()) As var
+        Return New var(expr:=$"c({expr.Select(AddressOf Rstring).JoinBy(", ")})")
+    End Operator
+
+    Public Shared Widening Operator CType(expr As Integer()) As var
+        Return New var(c(expr))
+    End Operator
+
+    Public Shared Widening Operator CType(expr As Double()) As var
+        Return New var(c(expr))
+    End Operator
+
+    Public Shared Widening Operator CType(expr As Boolean()) As var
+        Return New var(c(expr))
+    End Operator
+
+    Public Shared Widening Operator CType(expr As Long()) As var
+        Return New var(c(expr))
+    End Operator
+
+    Public Shared Widening Operator CType(expr As Single()) As var
+        Return New var(c(expr))
+    End Operator
+
+    Public Shared Widening Operator CType(expr As var()) As var
+        Return New var($"c({expr.Select(Function(x) x.Name).JoinBy(", ")})")
+    End Operator
+
+    Public Shared Widening Operator CType(expr As Microsoft.VisualBasic.Language.Value) As var
+        Return New var(Scripting.ToString(expr.value, NULL))
     End Operator
 End Class
