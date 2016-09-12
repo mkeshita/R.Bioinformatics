@@ -1,10 +1,39 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::6675bfe711526dc8777c55dc15cab065, ..\R.Bioconductor\RDotNet.Extensions.Bioinformatics\Declares\genetics\API.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
-Imports RDotNet.Extensions.VisualBasic
-Imports RDotNet.Extensions.VisualBasic.RScripts
-Imports RDotNet.Extensions.VisualBasic.API.base
-Imports Microsoft.VisualBasic
+Imports RDotNET.Extensions.VisualBasic
+Imports RDotNET.Extensions.VisualBasic.API.base
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.RScripts
 
 Namespace genetics
 
@@ -82,7 +111,7 @@ Namespace genetics
 
             For Each col In df.Columns.Where(Function(x) x(Scan0) <> NameOf(EntityObject.Identifier))
                 Dim loci As String = col(Scan0)
-                Dim vec As String = c(col.Skip(1).ToArray)
+                Dim vec As String = RScripts.c(col.Skip(1).ToArray)
 
                 Call $"{loci} <- {genotype(vec, removeSpaces:=False)}".ζ
                 locis += loci
