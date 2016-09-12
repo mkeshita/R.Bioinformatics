@@ -226,24 +226,6 @@ Public Module RSystem
     End Function
 
     ''' <summary>
-    ''' [Sequence Generation] Generate regular sequences. seq is a standard generic with a default method.
-    ''' </summary>
-    ''' <param name="From">the starting and (maximal) end values of the sequence. Of length 1 unless just from is supplied as an unnamed argument.</param>
-    ''' <param name="To">the starting and (maximal) end values of the sequence. Of length 1 unless just from is supplied as an unnamed argument.</param>
-    ''' <param name="By">number: increment of the sequence</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Function seq([From] As Integer, [To] As Integer, Optional By As Double = 1) As Integer()
-        Dim seqs(([To] - From) / By) As Integer
-        seqs(Scan0) = [From]
-        For i As Integer = 1 To seqs.Length - 1
-            seqs(i) = seqs(i - 1) + By
-        Next
-
-        Return seqs
-    End Function
-
-    ''' <summary>
     ''' 枚举R中所有的颜色代码
     ''' </summary>
     ''' <value></value>
