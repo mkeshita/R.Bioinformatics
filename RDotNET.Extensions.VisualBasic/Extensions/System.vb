@@ -37,6 +37,8 @@ Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
 ''' </summary>
 Public Module RSystem
 
+    Public Const NULL As String = "NULL"
+
     <Extension>
     Public Function params(additionals As String()) As String
         If additionals.IsNullOrEmpty Then

@@ -48,9 +48,10 @@ Public Module RExtensionInvoke
     ''' <returns></returns>
     Public Function [function](args As IEnumerable(Of String), def As String) As String
         Dim tmp As String = App.NextTempName
-        Call $"{tmp} <- function({String.Join(", ", args.ToArray)}, {"{
+
+        Call $"{tmp} <- function({String.Join(", ", args.ToArray)}) {"{
 " & def & "
-}"})".ζ
+}"}".ζ
 
         Return tmp
     End Function

@@ -178,6 +178,7 @@
     <Compile Include="API\stats\stats.vb" />
     <Compile Include="API\grDevices\dev.vb" />
     <Compile Include="API\grDevices\images.vb" />
+    <Compile Include="API\utils\csv.vb" />
     <Compile Include="API\utils\install.vb" />
     <Compile Include="API\utils\utils.vb" />
     <Compile Include="Extensions\out.vb" />

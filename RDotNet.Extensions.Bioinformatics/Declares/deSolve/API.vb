@@ -113,7 +113,12 @@ Namespace deSolve
             Dim tmp As String = App.NextTempName
             Dim addis As String = If(additionals.IsNullOrEmpty, "", "," & additionals.JoinBy(", "))
 
-            Call $"{tmp} <- ode({y}, {times}, {func}, {parms}, method = {method} {addis})".ζ
+            Call $"{tmp} <- ode(y={y}, 
+times={times}, 
+func={func}, 
+parms={parms}, 
+method = {method} 
+{addis})".ζ
 
             Return tmp
         End Function
