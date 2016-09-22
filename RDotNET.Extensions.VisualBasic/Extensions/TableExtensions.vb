@@ -61,15 +61,14 @@ Public Module TableExtensions
             End If
         Next
 
-        Dim sb As New StringBuilder()
         Dim colNames As String = c(table.First.Skip(If(skipFirst, 1, 0)).ToArray)
-
-        sb.AppendLine($"{tableName} <- matrix(c({MAT.JoinBy(",")}),ncol={ncol},byrow=TRUE);")
-        sb.AppendLine($"colnames({tableName}) <- {colNames}")
 
         SyncLock R
             With R
-                .call = sb.ToString
+
+                .call = $"{tableName} <- matrix(c({MAT.JoinBy(",")}),ncol={ncol},byrow=TRUE);"
+                .call = $"colnames({tableName}) <- {colNames}"
+
             End With
         End SyncLock
     End Sub
