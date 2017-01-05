@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f02ce2bc0328325a9e91d6c6ea2f37c, ..\R.Bioconductor\RDotNET.Extensions.VisualBasic\R.Extension\TableExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::01e220864961b8f1b3adb73766141676, ..\R.Bioconductor\RDotNET.Extensions.VisualBasic\Extensions\TableExtensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
+Imports vbList = Microsoft.VisualBasic.Language.List(Of String)
 
 Public Module TableExtensions
 
@@ -46,7 +47,7 @@ Public Module TableExtensions
     ''' </param>
     <Extension>
     Public Sub PushAsTable(table As DocumentStream.File, tableName As String, Optional skipFirst As Boolean = True)
-        Dim MAT As New List(Of String)
+        Dim MAT As New vbList ' 因为Language命名空间下面的C命名空间和c函数有冲突，所以在这里导入类型别名
         Dim ncol As Integer
 
         For Each row In table.Skip(1)
@@ -61,14 +62,15 @@ Public Module TableExtensions
             End If
         Next
 
+        Dim sb As New StringBuilder()
         Dim colNames As String = c(table.First.Skip(If(skipFirst, 1, 0)).ToArray)
+
+        sb.AppendLine($"{tableName} <- matrix(c({MAT.JoinBy(",")}),ncol={ncol},byrow=TRUE);")
+        sb.AppendLine($"colnames({tableName}) <- {colNames}")
 
         SyncLock R
             With R
-
-                .call = $"{tableName} <- matrix(c({MAT.JoinBy(",")}),ncol={ncol},byrow=TRUE);"
-                .call = $"colnames({tableName}) <- {colNames}"
-
+                .call = sb.ToString
             End With
         End SyncLock
     End Sub
@@ -114,17 +116,17 @@ Public Module TableExtensions
                         types.ContainsKey(name),
                         types(name),
                         If(typeParsing,
-                           col.obj.SampleForType,
+                           col.value.SampleForType,
                            GetType(String)))
                     Dim cc As String
 
                     Select Case type
                         Case GetType(String)
-                            cc = c(col.obj)
+                            cc = c(col.value)
                         Case GetType(Boolean)
-                            cc = c(col.obj.ToArray(AddressOf getBoolean))
+                            cc = c(col.value.ToArray(AddressOf getBoolean))
                         Case Else
-                            cc = c(col.obj.ToArray(Function(x) DirectCast(x, Object)))
+                            cc = c(col.value.ToArray(Function(x) DirectCast(x, Object)))
                     End Select
 
                     .call = $"{name} <- {cc}"   ' x <- c(....)
@@ -171,4 +173,3 @@ Public Module TableExtensions
         Return tmp
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbe6957f9f912214187179b70603a6bf, ..\R.Bioconductor\RDotNet.Extensions.Bioinformatics\Declares\VennDiagram\VennDiagram\RModelAPI.vb"
+﻿#Region "Microsoft.VisualBasic::1add034cd05bc2a6ba37028f932735ac, ..\R.Bioconductor\RDotNet.Extensions.Bioinformatics\Declares\VennDiagram\VennDiagram\RModelAPI.vb"
 
     ' Author:
     ' 
@@ -96,7 +96,7 @@ Namespace VennDiagram.ModelAPI
         <Extension>
         Public Function VectorMapper(Of T As IEnumerable(Of IEnumerable(Of String)))(entities As T) As String()
             Dim dictTokens As Dictionary(Of String, Integer) =
-            entities.MatrixAsIterator.Distinct.ToArray(
+            entities.IteratesALL.Distinct.ToArray(
               Function(name, idx) New With {.name = name, .idx = idx}) _
                   .ToDictionary(Function(entity) entity.name,
                                 Function(entity) entity.idx)

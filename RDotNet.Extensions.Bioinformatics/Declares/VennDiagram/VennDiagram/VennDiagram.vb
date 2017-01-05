@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::91c63ed7e13edf8d5026aee131e41e8e, ..\R.Bioconductor\RDotNet.Extensions.Bioinformatics\Declares\VennDiagram\VennDiagram\VennDiagram.vb"
+﻿#Region "Microsoft.VisualBasic::06655e0555bfb511800d4f82e2f013a3, ..\R.Bioconductor\RDotNet.Extensions.Bioinformatics\Declares\VennDiagram\VennDiagram\VennDiagram.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -35,6 +35,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports RDotNET.Extensions.VisualBasic
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.Abstract
+Imports vbList = Microsoft.VisualBasic.Language.List(Of String)
 
 Namespace VennDiagram.ModelAPI
 
@@ -146,14 +147,14 @@ Namespace VennDiagram.ModelAPI
         ''' <returns></returns>
         Public Shared Operator +(venn As VennDiagram, opts As IEnumerable(Of String())) As VennDiagram
             For Each opt As SeqValue(Of String()) In opts.SeqIterator
-                Dim name As String = opt.obj.First
+                Dim name As String = opt.value.First
                 Dim part As Partition = venn.__partitions.Find(name)
 
                 If part Is Nothing Then
                     part = venn.partitions(opt.i)
                 End If
 
-                Call part.ApplyOptions(opt.obj)
+                Call part.ApplyOptions(opt.value)
             Next
 
             Return venn
@@ -167,9 +168,9 @@ Namespace VennDiagram.ModelAPI
         ''' <returns></returns>
         ''' <remarks></remarks>
         Protected Overrides Function __R_script() As String
-            Dim R As ScriptBuilder = New ScriptBuilder(capacity:=5 * 1024)
-            Dim dataList As New List(Of String) ' The list elements for the venn diagram partitions
-            Dim color As New List(Of String) ' The partitions color name vector
+            Dim R As New ScriptBuilder(capacity:=5 * 1024)
+            Dim dataList As New vbList ' The list elements for the venn diagram partitions
+            Dim color As New vbList    ' The partitions color name vector
 
             For i As Integer = 0 To partitions.Length - 1
                 Dim x As Partition = partitions(i)

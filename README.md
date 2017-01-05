@@ -6,25 +6,20 @@ This project is aim at provides a high performance distribution and parallel com
 
 ##### Runtime
 
-Require of ``sciBASIC#`` runtime
+Require of VisualBasic server CLI runtime
 
-```bash
-# https://www.nuget.org/packages/sciBASIC/
-PM> Install-Package sciBASIC -Pre
-```
+> PM> Install-Package VB_AppFramework
 
 Or reference to source code project:
 
-> https://github.com/xieguigang/sciBASIC#
+> https://github.com/xieguigang/VisualBasic_AppFramework
 
-Forks from project:
-+ R.NET   [https://rdotnet.codeplex.com/](https://rdotnet.codeplex.com/)
+Folks from project:
+R.NET   [https://rdotnet.codeplex.com/](https://rdotnet.codeplex.com/)
 
 Currently there is a bioconductor GUI installer was included in this project for those beginners in the area of bioinformatics and some of the common used R package wrapper class which written in VisualBasic was developed to extends the biological data analysis ability of GCModeller and Microsoft .NET languages.
 
 ![](./Bioconductor/bioconductor_logo_rgb.jpg)
-![](./Bioconductor/screenshot.png?raw=true)
-![](./20160312032449.png)
 
 ## VisualBasic & R language hybrids
 
@@ -87,6 +82,5 @@ Dim out = ode(y:=yini,
               method:=integrator.rk4)
 
 ' Calling write.csv{utils}
-Call write.csv(out, $"{App.HOME}/ebola_test.csv")
+Call write.csv(out, "x:\ebola_test.csv")
 ```
-
