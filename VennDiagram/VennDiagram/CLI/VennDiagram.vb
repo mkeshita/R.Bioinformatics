@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::28e0157841f2ffc24c2d64eeb1457ba3, ..\R.Bioconductor\VennDiagram\VennDiagram\CLI\VennDiagram.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Terminal.STDIO
 Imports Microsoft.VisualBasic.Text
@@ -91,6 +92,15 @@ Public Module CLI
         Return __run(inds, title, partitionsOption, out, RBin)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="inData"></param>
+    ''' <param name="title"></param>
+    ''' <param name="options">分区的颜色和标题的配置数据</param>
+    ''' <param name="out"></param>
+    ''' <param name="R_HOME"></param>
+    ''' <returns></returns>
     Private Function __run(inData As String, title As String, options As String, out As String, R_HOME As String) As Integer
         Dim dataset As DocumentStream.File = New DocumentStream.File(inData)
         Dim VennDiagram As VennDiagram = RModelAPI.Generate(source:=dataset)
@@ -98,7 +108,15 @@ Public Module CLI
         If String.IsNullOrEmpty(options) Then '从原始数据中进行推测
             VennDiagram += From col As String In dataset.First Select {col, GetRandomColor()} '
         Else '从用户输入之中进行解析
-            VennDiagram += From s As String In options.Split(CChar(";")) Select s.Split(CChar(",")) '
+            If options.FileExists(True) Then
+                VennDiagram += From row As RowObject
+                               In File.Load(options).Skip(1)
+                               Select row.ToArray
+            Else
+                VennDiagram += From s As String
+                               In options.Split(CChar(";"))
+                               Select s.Split(CChar(",")) '
+            End If
         End If
 
         VennDiagram.Title = title

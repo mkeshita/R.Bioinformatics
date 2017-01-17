@@ -60,6 +60,8 @@ Module Program
             example += {"pa14", "yellow", "PA14"}
             example += {"ftn", "black", "FTN"}
             example += {"aciad", "red", "ACIAD"}
+
+            Call example.Save(template, Encodings.ASCII)
         End If
     End Sub
 
