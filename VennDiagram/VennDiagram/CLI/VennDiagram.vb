@@ -29,7 +29,6 @@
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Terminal.STDIO
 Imports Microsoft.VisualBasic.Text
@@ -41,12 +40,13 @@ Imports RDotNET.Extensions.VisualBasic.RSystem
                   Description:="Tools for creating venn diagram model for the R program and venn diagram visualize drawing.",
                   Publisher:="xie.guigang@gmail.com",
                   Url:="http://gcmodeller.org")>
+<GroupingDefine(Program.PlotTools, Description:="The R language API tools for invoke the venn diagram plot.")>
 Public Module CLI
 
     <ExportAPI(".Draw",
                Info:="Draw the venn diagram from a csv data file, you can specific the diagram drawing options from this command switch value. " &
                      "The generated venn dragram will be saved as tiff file format.",
-        Usage:=".Draw -i <csv_file> [-t <diagram_title> -o <_diagram_saved_path> -s <partitions_option_pairs> -rbin <r_bin_directory>]",
+        Usage:=".Draw -i <csv_file> [-t <diagram_title> -o <_diagram_saved_path> -s <partitions_option_pairs/*.csv> -rbin <r_bin_directory>]",
         Example:=".Draw -i /home/xieguigang/Desktop/genomes.csv -t genome-compared -o ~/Desktop/xcc8004.tiff -s ""Xcc8004,blue,Xcc 8004;ecoli,green,Ecoli. K12;pa14,yellow,PA14;ftn,black,FTN;aciad,red,ACIAD""")>
     <Argument("-i",
         Description:="The csv data source file for drawing the venn diagram graph.",
@@ -58,7 +58,7 @@ Public Module CLI
         Description:="Optional, the saved file location for the venn diagram, if this switch value is not specific by the user then \n" &
                      "the program will save the generated venn diagram to user desktop folder and using the file name of the input csv file as default.",
         Example:="~/Desktop/xcc8004.tiff")>
-    <Argument("-s", True,
+    <Argument("-s", True, CLITypes.File,
         Description:="Optional, the profile settings for the partitions in the venn diagram, each partition profile data is\n " &
                      "in a key value paired like: name,color, and each partition profile pair is seperated by a ';' character.\n" &
                      "If this switch value is not specific by the user then the program will trying to parse the partition name\n" &
@@ -73,6 +73,7 @@ Public Module CLI
                      "system, you can ignore this switch value, but you should install the R program in your linux/MAC first if you wish to\n " &
                      "get the venn diagram directly from this program.",
         Example:="C:\\R\\bin\\")>
+    <Group(Program.PlotTools)>
     Public Function VennDiagramA(args As CommandLine) As Integer
         Dim inds As String = args("-i")
         Dim title As String = args.GetValue("-t", inds.BaseName)
