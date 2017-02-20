@@ -27,6 +27,7 @@
 #End Region
 
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
+Imports Microsoft.VisualBasic.Linq
 
 Namespace API
 
@@ -67,7 +68,21 @@ Namespace API
         ''' This Is a primitive function.
         ''' </remarks>
         Public Function c(ParamArray list As String()) As String
-            Return c(list, False)
+            Return c(list, recursive:=False)
+        End Function
+
+        ''' <summary>
+        ''' 默认为生成字符串数组
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="stringVector"></param>
+        ''' <returns></returns>
+        Public Function c(list As String(), Optional stringVector As Boolean = True) As String
+            If stringVector Then
+                Return c(list.Select(AddressOf Rstring), recursive:=False)
+            Else
+                Return c(list, recursive:=False)
+            End If
         End Function
 
         ''' <summary>
@@ -260,7 +275,8 @@ Namespace API
                                      Optional ncol As Integer = -1,
                                      Optional byrow As Boolean = False,
                                      Optional dimnames As String = NULL) As String
-            Dim vec As String = c(data.ToArray)
+            Dim strings$() = data.ToArray(AddressOf Scripting.ToString)
+            Dim vec As String = c(strings, recursive:=False)
             Return matrix(vec, nrow, ncol, byrow, dimnames)
         End Function
 
