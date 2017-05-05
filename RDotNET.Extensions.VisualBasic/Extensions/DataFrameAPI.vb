@@ -31,7 +31,9 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports RDotNET.Extensions.VisualBasic.API
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
 Imports vbList = Microsoft.VisualBasic.Language.List(Of String)
 
@@ -54,25 +56,25 @@ Public Module DataFrameAPI
     ''' </param>
     <Extension>
     Public Sub PushAsTable(table As IO.File, tableName As String, Optional skipFirst As Boolean = True)
-        Dim MAT As New vbList ' 因为Language命名空间下面的C命名空间和c函数有冲突，所以在这里导入类型别名
+        Dim matrix As New vbList ' 因为Language命名空间下面的C命名空间和c函数有冲突，所以在这里导入类型别名
         Dim ncol As Integer
 
         For Each row In table.Skip(1)
             If skipFirst Then
-                MAT += row.Skip(1)
+                matrix += row.Skip(1)
             Else
-                MAT += row.ToArray
+                matrix += row.ToArray
             End If
 
             If ncol = 0 Then
-                ncol = MAT.Count
+                ncol = matrix.Count
             End If
         Next
 
         Dim sb As New StringBuilder()
-        Dim colNames As String = c(table.First.Skip(If(skipFirst, 1, 0)).ToArray)
+        Dim colNames As String = RScripts.c(table.First.Skip(If(skipFirst, 1, 0)).ToArray)
 
-        sb.AppendLine($"{tableName} <- matrix(c({MAT.JoinBy(",")}),ncol={ncol},byrow=TRUE);")
+        sb.AppendLine($"{tableName} <- matrix(c({matrix.JoinBy(",")}),ncol={ncol},byrow=TRUE);")
         sb.AppendLine($"colnames({tableName}) <- {colNames}")
 
         SyncLock R
@@ -102,8 +104,7 @@ Public Module DataFrameAPI
     ''' <param name="df"></param>
     ''' <param name="var"></param>
     <Extension>
-    Public Sub PushAsDataFrame(df As IO.File,
-                               var As String,
+    Public Sub PushAsDataFrame(df As IO.File, var$,
                                Optional types As Dictionary(Of String, Type) = Nothing,
                                Optional typeParsing As Boolean = True,
                                Optional rowNames As IEnumerable(Of String) = Nothing)
@@ -129,11 +130,11 @@ Public Module DataFrameAPI
 
                     Select Case type
                         Case GetType(String)
-                            cc = c(col.value)
+                            cc = RScripts.c(col.value)
                         Case GetType(Boolean)
-                            cc = c(col.value.ToArray(AddressOf getBoolean))
+                            cc = RScripts.c(col.value.ToArray(AddressOf getBoolean))
                         Case Else
-                            cc = c(col.value.ToArray(Function(x) DirectCast(x, Object)))
+                            cc = RScripts.c(col.value.ToArray(Function(x) DirectCast(x, Object)))
                     End Select
 
                     .call = $"{name} <- {cc}"   ' x <- c(....)
@@ -145,7 +146,7 @@ Public Module DataFrameAPI
                     Dim rows As String() = rowNames.ToArray
 
                     If rows.Length > 0 Then
-                        .call = $"rownames({var}) <- {c(rows)}"
+                        .call = $"rownames({var}) <- {RScripts.c(rows)}"
                     End If
                 End If
             End With
@@ -191,17 +192,58 @@ Public Module DataFrameAPI
     End Function
 
     ''' <summary>
+    ''' Helper script for converts the R dataframe to VB.NET dataframe
+    ''' 
+    ''' ```R
+    ''' l &lt;- as.list(%dataframe%);
+    '''
+    ''' for(name in names(l)) {
+    '''     l[[name]] &lt;- as.vector(l[[name]]);
+    ''' }
+    '''
+    ''' l;
+    ''' ```
+    ''' </summary>
+    Const Rscript$ = "
+## Helper script for converts the R dataframe to VB.NET dataframe
+
+l <- as.list(%dataframe%);
+
+for(name in names(l)) {
+    l[[name]] <- as.vector(l[[name]]);
+}
+
+l;
+"
+
+    ''' <summary>
     ''' 将R之中的dataframe对象转换为.NET之中的csv文件数据框
     ''' </summary>
     ''' <param name="dataframe$"></param>
     ''' <returns></returns>
     Public Function GetDataFrame(dataframe$) As File
+
         SyncLock R
             With R
-                Dim data As SymbolicExpression = .Evaluate(statement:=dataframe)
+                Dim data As SymbolicExpression = .Evaluate(statement:=Rscript.Replace("%dataframe%", dataframe))
+                Dim list As SymbolicExpression() = data.AsList.ToArray ' dataframe对象实际上是一个list对象
+                Dim names$() = base.names(dataframe)
                 Dim csv As New File
-                Dim list = data.AsList.ToArray ' dataframe对象实际上是一个list对象
+                Dim columns = list _
+                    .Select(Function(c) c.ToStringsGeneric) _
+                    .ToArray
 
+                csv += names ' The csv header row 
+
+                For i% = 0 To columns(Scan0).Length - 1
+                    Dim row As New List(Of String)
+
+                    For Each column As String() In columns
+                        row += column(i)
+                    Next
+
+                    csv += row
+                Next
 
                 Return csv
             End With

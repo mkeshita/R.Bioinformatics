@@ -192,6 +192,7 @@
     <Compile Include="API\utils\write.vb" />
     <Compile Include="API\utils\install.vb" />
     <Compile Include="API\utils\utils.vb" />
+    <Compile Include="Extensions\Serialization\Vector.vb" />
     <Compile Include="ScriptBuilder\EscapingHelper.vb" />
     <Compile Include="ScriptBuilder\ScriptBuilder.vb" />
     <Compile Include="userFunctions\Tools.vb" />
@@ -240,7 +241,7 @@
     <Compile Include="ScriptBuilder\Abstract\IRScript.vb" />
     <Compile Include="Extensions\REngine.vb" />
     <Compile Include="ScriptBuilder\BuilderAPI.vb" />
-    <Compile Include="Extensions\Serialization.vb" />
+    <Compile Include="Extensions\Serialization\Serialization.vb" />
     <Compile Include="Extensions\System.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
