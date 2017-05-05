@@ -34,6 +34,39 @@ Namespace API
     Public Module base
 
         ''' <summary>
+        ''' ###### load {base}
+        ''' 
+        ''' Reload Saved Datasets, Reload datasets written with the function <see cref="save"/>.
+        ''' 
+        ''' 
+        ''' </summary>
+        ''' <param name="file$">
+        ''' a (readable binary-mode) connection or a character string giving the name of the file to load (when tilde expansion is done).
+        ''' </param>
+        ''' <param name="verbose">should item names be printed during loading?</param>
+        ''' <returns>
+        ''' load can load R objects saved in the current or any earlier format. It can read a compressed file (see save) directly from a file or from a suitable connection (including a call to url).
+        ''' A not-open connection will be opened in mode "rb" and closed after use. Any connection other than a gzfile or gzcon connection will be wrapped in gzcon to allow compressed saves to be handled: note that this leaves the connection in an altered state (in particular, binary-only), and that it needs to be closed explicitly (it will not be garbage-collected).
+        ''' Only R objects saved in the current format (used since R 1.4.0) can be read from a connection. If no input is available on a connection a warning will be given, but any input not in the current format will result in a error.
+        ''' Loading from an earlier version will give a warning about the ‘magic number’: magic numbers 1971:1977 are from R &lt; 0.99.0, and RD[ABX]1 from R 0.99.0 to R 1.3.1. These are all obsolete, and you are strongly recommended to re-save such files in a current format.
+        ''' The verbose argument is mainly intended for debugging. If it is TRUE, then as objects from the file are loaded, their names will be printed to the console. If verbose is set to an integer value greater than one, additional names corresponding to attributes and other parts of individual objects will also be printed. Larger values will print names to a greater depth.
+        ''' Objects can be saved with references to namespaces, usually as part of the environment of a function or formula. As from R 3.1.0 such objects can be loaded even if the namespace is not available: it is replaced by a reference to the global environment with a warning. The warning identifies the first object with such a reference (but there may be more than one).
+        ''' </returns>
+        Public Function load(file$, Optional verbose As Boolean = False) As String()
+            SyncLock R
+                With R
+                    Dim names$() = .Evaluate($"load(file = {Rstring(file.UnixPath)}, verbose = {verbose.λ})") _
+                        .AsList _
+                        .ToArray _
+                        .Select(Function(s) s.AsCharacter.ToStringArray) _
+                        .IteratesALL _
+                        .ToArray
+                    Return names
+                End With
+            End SyncLock
+        End Function
+
+        ''' <summary>
         ''' Remove Objects from a Specified Environment
         ''' 
         ''' ``remove`` and ``rm`` can be used to remove objects. These can be specified 

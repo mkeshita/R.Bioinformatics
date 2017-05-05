@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::01e220864961b8f1b3adb73766141676, ..\R.Bioconductor\RDotNET.Extensions.VisualBasic\Extensions\TableExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
 Imports vbList = Microsoft.VisualBasic.Language.List(Of String)
 
-Public Module TableExtensions
+Public Module DataFrameAPI
 
     <Extension>
     Public Function PushAsTable(table As IO.File, Optional skipFirst As Boolean = True) As String
@@ -188,5 +188,23 @@ Public Module TableExtensions
         Dim tmp As String = App.NextTempName
         Call PushAsDataFrame(source, var:=tmp, maps:=maps)
         Return tmp
+    End Function
+
+    ''' <summary>
+    ''' 将R之中的dataframe对象转换为.NET之中的csv文件数据框
+    ''' </summary>
+    ''' <param name="dataframe$"></param>
+    ''' <returns></returns>
+    Public Function GetDataFrame(dataframe$) As File
+        SyncLock R
+            With R
+                Dim data As SymbolicExpression = .Evaluate(statement:=dataframe)
+                Dim csv As New File
+                Dim list = data.AsList.ToArray ' dataframe对象实际上是一个list对象
+
+
+                Return csv
+            End With
+        End SyncLock
     End Function
 End Module
