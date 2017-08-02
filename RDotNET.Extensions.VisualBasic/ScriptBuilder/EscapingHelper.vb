@@ -38,27 +38,41 @@ Namespace SymbolBuilder
         End Function
 
         Const R_quot$ = "\"""
-        Const R_quot_escape$ = "\R.quot;"
+        Const R_quot_escape$ = "$R.quot;"
+        Const splash$ = "\\"
+        Const splash_escape$ = "$R.splash;"
 
         ''' <summary>
         ''' MySQL和R之间的转移符不兼容，所以在这里需要将mysql之中的不兼容的转移符取消掉，否则自动生成的R脚本会出现语法错误
         ''' </summary>
         ''' <param name="value$"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' ###### 2017-07-25
+        ''' 
+        ''' ```
+        ''' Error: '\-' is an unrecognized escape in character string starting ""4\-"
+        ''' In addition: There were 35 warnings (use warnings() To see them)
+        ''' Error: unprotect_ptr: pointer Not found
+        ''' ```
+        ''' </remarks>
         <Extension> Public Function R_Escaping(value$) As String
             If value.StringEmpty Then
                 Return ""
             Else
                 Dim sb As New StringBuilder(value)
 
-                Call sb.Replace("\%", "%")
-                Call sb.Replace("\'", "'")
-                Call sb.Replace("\Z", "[Z]")
+                Call sb.Replace(splash, splash_escape)
+
                 Call sb.Replace("\0", "")
+                Call sb.Replace("\Z", "[Z]")
 
                 Call sb.Replace(R_quot, R_quot_escape)
-                Call sb.Replace(ASCII.Quot, R_quot)
+                Call sb.Replace(ASCII.Quot, "'")
                 Call sb.Replace(R_quot_escape, R_quot)
+
+                Call sb.Replace("\"c, "")
+                Call sb.Replace(splash_escape, splash)
 
                 Return sb.ToString
             End If
