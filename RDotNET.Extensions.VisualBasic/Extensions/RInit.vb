@@ -59,6 +59,8 @@ Module RInit
             .LazyValue = New Lazy(Of String)(AddressOf searchAuto)
         }
 
+        ' Read R_HOME path from environment variable or using auto path search value 
+        ' as default if the R_HOME variable is nothing in the commandline.
         With App.GetVariable(NameOf(R_HOME)) Or R_HOME
             Return RInit.StartEngineServices(R_HOME:= .ByRef)
         End With
