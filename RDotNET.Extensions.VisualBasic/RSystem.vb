@@ -152,7 +152,7 @@ Public Module RSystem
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Function Library() As String
-        Dim result As String = R.WriteLine("library()").JoinBy(vbCrLf)
+        Dim result$ = R.WriteLine("library()").JoinBy(vbCrLf)
         Dim sBuilder As New StringBuilder(result, 5 * 1024)
 
         sBuilder.Remove(0, 2)
@@ -160,13 +160,17 @@ Public Module RSystem
 
         Dim array$() = Regex.Split(sBuilder.ToString, SPLIT_REGX_EXPRESSION)
         Dim width As Integer = array.Length / 3
+        Dim s$
 
         sBuilder.Clear()
+
         For i As Integer = 0 To width - 1
-            Dim s = String.Format("{1}  {0}  {2}", array(i), array(i + width), array(i + width * 2))
+            s = String.Format("{1}  {0}  {2}", array(i), array(i + width), array(i + width * 2))
             sBuilder.AppendLine(s)
         Next
+
         sBuilder.Replace("""", "")
+
         Call Console.WriteLine(sBuilder.ToString)
 
         Return sBuilder.ToString
@@ -320,15 +324,15 @@ Public Module RSystem
         "yellow", "yellow1", "yellow2", "yellow3", "yellow4", "yellowgreen"
     }
 
+    ''' <summary>
+    ''' Maps color to each object in the <paramref name="source"/> sequence.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     Public Function ColorMaps(Of T)(source As IEnumerable(Of T)) As Dictionary(Of T, String)
-        Dim uniques As T() = source.Distinct.ToArray
-        Dim colors As String() = RColors.Shuffles
-        Dim dict As Dictionary(Of T, String) = (From idx As SeqValue(Of T)
-                                                In uniques.SeqIterator
-                                                Select id = idx.value,
-                                                    cl = colors(idx.i)) _
-                                                   .ToDictionary(Function(obj) obj.id,
-                                                                 Function(obj) obj.cl)
-        Return dict
+        With RColors.Shuffles.AsLoop
+            Return source.ToDictionary(Function(x) x, Function() .Next)
+        End With
     End Function
 End Module
