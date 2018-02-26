@@ -40,6 +40,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 
@@ -80,16 +81,11 @@ Module RInit
             files$ = ProgramPathSearchTool.SearchProgram(direactory, "R")
 
             If Not files.IsNullOrEmpty Then
-                R = files.First
-                Exit For
+                Return files.First.ParentPath
             End If
         Next
 
-        If String.IsNullOrEmpty(R) Then
-            Throw New Exception(INIT_FAILURE)
-        Else
-            Return R.ParentPath
-        End If
+        Throw New Exception(INIT_FAILURE)
     End Function
 
     Const INIT_FAILURE As String = "Could not initialize the R session automatically!"
@@ -123,7 +119,7 @@ Module RInit
             Case PlatformID.MacOSX : rHome = "/Library/Frameworks/R.framework/Resources"
             Case PlatformID.Unix : rHome = "/usr/lib/R"
             Case Else
-                Throw New NotSupportedException($"No support such platform: {Environment.OSVersion.Platform.ToString}")
+                Throw platformNotSupport()
         End Select
 
         Call Environment.SetEnvironmentVariable("PATH", newPath)
@@ -136,5 +132,14 @@ Module RInit
             Call .Initialize()
             Return .ByRef
         End With
+    End Function
+
+    ''' <summary>
+    ''' Current platform is not surppoted for running R server!
+    ''' </summary>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Function platformNotSupport() As Exception
+        Return New NotSupportedException($"No support such platform: {Environment.OSVersion.Platform}")
     End Function
 End Module
