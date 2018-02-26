@@ -303,6 +303,7 @@
     <Compile Include="ScriptBuilder\ParameterList.vb" />
     <Compile Include="ScriptBuilder\EscapingHelper.vb" />
     <Compile Include="ScriptBuilder\ScriptBuilder.vb" />
+    <Compile Include="Server\ExtendedEngine.vb" />
     <Compile Include="userFunctions\Tools.vb" />
     <Compile Include="Extensions\var.vb" />
     <Compile Include="Extensions\out.vb" />
@@ -350,7 +351,7 @@
     <Compile Include="Server\REngine.vb" />
     <Compile Include="ScriptBuilder\BuilderAPI.vb" />
     <Compile Include="Extensions\Serialization\Serialization.vb" />
-    <Compile Include="Server\System.vb" />
+    <Compile Include="RSystem.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

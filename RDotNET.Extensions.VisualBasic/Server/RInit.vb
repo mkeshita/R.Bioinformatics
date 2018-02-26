@@ -105,7 +105,7 @@ Module RInit
     ''' <param name="R_HOME"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function StartEngineServices(R_HOME$) As ExtendedEngine
+    Public Function StartEngineServices(R_HOME As String) As ExtendedEngine
         Dim oldPath$ = Environment.GetEnvironmentVariable("PATH")
         Dim rPath As String = $"{R_HOME}/{x64 Or i386}"
 
