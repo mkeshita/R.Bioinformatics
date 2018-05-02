@@ -1,10 +1,10 @@
-Imports System.Collections.Generic
 Imports System.IO
 Imports System.Linq
 Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Language
 Imports RDotNet.Devices
 Imports RDotNet.Internals
 Imports RDotNet.NativeLibrary
@@ -551,8 +551,8 @@ Public Class REngine
 
         Using reader As TextReader = New StringReader(statement)
             Dim incompleteStatement = New StringBuilder()
-            Dim line As String
-            While (InlineAssignHelper(line, reader.ReadLine())) IsNot Nothing
+            Dim line As Value(Of String) = ""
+            While (line = reader.ReadLine()) IsNot Nothing
                 For Each Segment As String In Me.Segment(line)
                     Dim result = Parse(Segment, incompleteStatement)
                     If result IsNot Nothing Then
@@ -579,8 +579,8 @@ Public Class REngine
 
         Using reader As TextReader = New StreamReader(stream)
             Dim incompleteStatement = New StringBuilder()
-            Dim line As String
-            While (InlineAssignHelper(line, reader.ReadLine())) IsNot Nothing
+            Dim line As Value(Of String) = ""
+            While (line = reader.ReadLine()) IsNot Nothing
                 For Each Segment As String In Me.Segment(line)
                     Dim result = Parse(Segment, incompleteStatement)
                     If result IsNot Nothing Then
@@ -994,8 +994,4 @@ Public Class REngine
             Return stringNaSexp
         End Get
     End Property
-    Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-        target = value
-        Return value
-    End Function
 End Class
