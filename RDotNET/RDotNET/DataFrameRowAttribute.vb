@@ -32,7 +32,7 @@ Public Class DataFrameRowAttribute
 	End Function
 
 	Private Shared Function CreateMap(rowType As Type) As Map
-        Dim tuples = (From [property] In rowType.GetProperties() Let attribute = DirectCast([property].GetCustomAttributes(GetType(DataFrameColumnAttribute), True).SingleOrDefault(), DataFrameColumnAttribute) Where attribute IsNot Nothing Select Tuple.Create(attribute, [property].GetSetMethod())).ToArray()
+        Dim tuples = (From [property] In rowType.GetProperties() Let attribute = DirectCast([property].GetCustomAttributes(GetType(DataFrameColumnAttribute), True).SingleOrDefault(), DataFrameColumnAttribute) Where attribute IsNot Nothing Select System.Tuple.Create(attribute, [property].GetSetMethod())).ToArray()
         Return Sub(from, [to]) Call Map(from, [to], tuples)
     End Function
 
