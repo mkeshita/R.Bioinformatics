@@ -1,51 +1,54 @@
 Imports System.Collections.Generic
 
-Public Interface IGraphicsDevice
-	' for R_GE_checkVersionOrDie
-	'int Version { get; }
-	ReadOnly Property Name() As String
+Namespace Graphics
 
-	Sub OnActivated(description As DeviceDescription)
+    Public Interface IGraphicsDevice
+        ' for R_GE_checkVersionOrDie
+        'int Version { get; }
+        ReadOnly Property Name() As String
 
-	Sub OnDeactivated(description As DeviceDescription)
+        Sub OnActivated(description As DeviceDescription)
 
-	Sub OnNewPageRequested(context As GraphicsContext, description As DeviceDescription)
+        Sub OnDeactivated(description As DeviceDescription)
 
-	Function OnResized(description As DeviceDescription) As Rectangle
+        Sub OnNewPageRequested(context As GraphicsContext, description As DeviceDescription)
 
-	Sub OnClosed(description As DeviceDescription)
+        Function OnResized(description As DeviceDescription) As Rectangle
 
-	Sub OnDrawStarted(description As DeviceDescription)
+        Sub OnClosed(description As DeviceDescription)
 
-	Sub OnDrawStopped(description As DeviceDescription)
+        Sub OnDrawStarted(description As DeviceDescription)
 
-	Function GetSize(context As GraphicsContext, description As DeviceDescription) As Rectangle
+        Sub OnDrawStopped(description As DeviceDescription)
 
-	Function ConfirmNewFrame(description As DeviceDescription) As Boolean
+        Function GetSize(context As GraphicsContext, description As DeviceDescription) As Rectangle
 
-	Sub DrawCircle(center As Point, radius As Double, context As GraphicsContext, description As DeviceDescription)
+        Function ConfirmNewFrame(description As DeviceDescription) As Boolean
 
-	Sub Clip(rectangle As Rectangle, description As DeviceDescription)
+        Sub DrawCircle(center As Point, radius As Double, context As GraphicsContext, description As DeviceDescription)
 
-	Function GetLocation(description As DeviceDescription) As System.Nullable(Of Point)
+        Sub Clip(rectangle As Rectangle, description As DeviceDescription)
 
-	Sub DrawLine(source As Point, destination As Point, context As GraphicsContext, description As DeviceDescription)
+        Function GetLocation(description As DeviceDescription) As System.Nullable(Of Point)
 
-	Function GetMetricInfo(character As Integer, context As GraphicsContext, description As DeviceDescription) As MetricsInfo
+        Sub DrawLine(source As Point, destination As Point, context As GraphicsContext, description As DeviceDescription)
 
-	Sub DrawPolygon(points As IEnumerable(Of Point), context As GraphicsContext, description As DeviceDescription)
+        Function GetMetricInfo(character As Integer, context As GraphicsContext, description As DeviceDescription) As MetricsInfo
 
-	Sub DrawPolyline(points As IEnumerable(Of Point), context As GraphicsContext, description As DeviceDescription)
+        Sub DrawPolygon(points As IEnumerable(Of Point), context As GraphicsContext, description As DeviceDescription)
 
-	Sub DrawRectangle(rectangle As Rectangle, context As GraphicsContext, description As DeviceDescription)
+        Sub DrawPolyline(points As IEnumerable(Of Point), context As GraphicsContext, description As DeviceDescription)
 
-	Sub DrawPath(points As IEnumerable(Of IEnumerable(Of Point)), winding As Boolean, context As GraphicsContext, description As DeviceDescription)
+        Sub DrawRectangle(rectangle As Rectangle, context As GraphicsContext, description As DeviceDescription)
 
-	Sub DrawRaster(raster As Raster, destination As Rectangle, rotation As Double, interpolated As Boolean, context As GraphicsContext, description As DeviceDescription)
+        Sub DrawPath(points As IEnumerable(Of IEnumerable(Of Point)), winding As Boolean, context As GraphicsContext, description As DeviceDescription)
 
-	Function Capture(description As DeviceDescription) As Raster
+        Sub DrawRaster(raster As Raster, destination As Rectangle, rotation As Double, interpolated As Boolean, context As GraphicsContext, description As DeviceDescription)
 
-	Function MeasureWidth(s As String, context As GraphicsContext, description As DeviceDescription) As Double
+        Function Capture(description As DeviceDescription) As Raster
 
-	Sub DrawText(s As String, location As Point, rotation As Double, adjustment As Double, context As GraphicsContext, description As DeviceDescription)
-End Interface
+        Function MeasureWidth(s As String, context As GraphicsContext, description As DeviceDescription) As Double
+
+        Sub DrawText(s As String, location As Point, rotation As Double, adjustment As Double, context As GraphicsContext, description As DeviceDescription)
+    End Interface
+End Namespace
