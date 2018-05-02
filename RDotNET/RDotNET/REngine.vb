@@ -523,7 +523,7 @@ Public Class REngine
     ''' </summary>
     ''' <param name="statement">The statement.</param>
     ''' <returns>Last evaluation.</returns>
-    Public Function Evaluate(statement As String) As SymbolicExpression
+    Public Overridable Function Evaluate(statement As String) As SymbolicExpression
         CheckEngineIsRunning()
         Return Defer(EncodeNonAsciiCharacters(statement)).LastOrDefault()
     End Function
