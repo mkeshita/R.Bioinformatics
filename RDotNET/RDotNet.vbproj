@@ -148,7 +148,6 @@
     <Compile Include="RDotNET\Pairlist.vb" />
     <Compile Include="RDotNET\ParseException.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
-    <Compile Include="Properties\VersionInfo.vb" />
     <Compile Include="RDotNET\ProtectedPointer.vb" />
     <Compile Include="RDotNET\RawMatrix.vb" />
     <Compile Include="RDotNET\RawVector.vb" />
