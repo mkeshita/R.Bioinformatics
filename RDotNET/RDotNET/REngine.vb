@@ -49,8 +49,8 @@ Public Class REngine
         Me.m_id = id
         Me.m_isRunning = False
         Me.Disposed = False
-        Me.EnableLock = True
         ' See https://rdotnet.codeplex.com/workitem/113; it seems wise to enable it by default.
+        Me.EnableLock = False
         Me.AutoPrint = True
     End Sub
 
@@ -60,14 +60,6 @@ Public Class REngine
     ''' </summary>
     ''' <remarks>Thanks to gchapman for proposing the fix. See https://rdotnet.codeplex.com/workitem/67 for details</remarks>
     Public Property EnableLock() As Boolean
-        Get
-            Return m_EnableLock
-        End Get
-        Set
-            m_EnableLock = Value
-        End Set
-    End Property
-    Private m_EnableLock As Boolean
 
     ''' <summary>
     ''' Gets whether this instance is running.
@@ -544,17 +536,19 @@ Public Class REngine
     ''' <param name="statement">The statement.</param>
     ''' <returns>Each evaluation.</returns>
     Private Iterator Function Defer(statement As String) As IEnumerable(Of SymbolicExpression)
-        CheckEngineIsRunning()
+        Call CheckEngineIsRunning()
+
         If statement Is Nothing Then
             Throw New ArgumentNullException()
         End If
 
         Using reader As TextReader = New StringReader(statement)
-            Dim incompleteStatement = New StringBuilder()
+            Dim incompleteStatement As New StringBuilder()
             Dim line As Value(Of String) = ""
+
             While (line = reader.ReadLine()) IsNot Nothing
-                For Each Segment As String In Me.Segment(line)
-                    Dim result = Parse(Segment, incompleteStatement)
+                For Each segmentText As String In Segment(line)
+                    Dim result = Parse(segmentText, incompleteStatement)
                     If result IsNot Nothing Then
                         Yield result
                     End If
@@ -580,9 +574,10 @@ Public Class REngine
         Using reader As TextReader = New StreamReader(stream)
             Dim incompleteStatement = New StringBuilder()
             Dim line As Value(Of String) = ""
+
             While (line = reader.ReadLine()) IsNot Nothing
-                For Each Segment As String In Me.Segment(line)
-                    Dim result = Parse(Segment, incompleteStatement)
+                For Each segmentText As String In Segment(line)
+                    Dim result = Parse(segmentText, incompleteStatement)
                     If result IsNot Nothing Then
                         Yield result
                     End If
@@ -593,6 +588,7 @@ Public Class REngine
 
     Private Shared Iterator Function Segment(line As String) As IEnumerable(Of String)
         Dim segments = processInputString(line)
+
         For index = 0 To segments.Length - 1
             If index = segments.Length - 1 Then
                 If segments(index) <> String.Empty Then
@@ -630,7 +626,7 @@ Public Class REngine
             Return New String() {line}
         End If
 
-        Dim theRest As String
+        Dim theRest As String = ""
         Dim statement As String = splitOnFirst(line, theRest, ";"c)
 
         Dim result = New List(Of String)()
@@ -653,7 +649,7 @@ Public Class REngine
                 ' firstComment is a valid comment marker - not need to process "the rest"
                 result.Add(statement.Substring(0, firstComment))
             End If
-            Dim restFirstStatement As String
+            Dim restFirstStatement As String = ""
             Dim beforeComment As String = splitOnFirst(statement, restFirstStatement, "#"c)
         End If
         Return result.ToArray()
@@ -703,7 +699,7 @@ Public Class REngine
         Return (Not inSingleQuote) AndAlso (Not inDoubleQuotes)
     End Function
 
-    Private Shared Function splitOnFirst(statement As String, ByRef rest As String, sep As Char) As String
+    Private Shared Function splitOnFirst(statement As String, <Out> ByRef rest As String, sep As Char) As String
         Dim split = statement.Split({sep}, 2)
         If split.Length = 1 Then
             rest = String.Empty
@@ -738,7 +734,7 @@ Public Class REngine
                         Return Nothing
                     End If
                     Using New ProtectedPointer(vector)
-                        Dim result As SymbolicExpression
+                        Dim result As SymbolicExpression = Nothing
                         If Not vector.First().TryEvaluate(GlobalEnvironment, result) Then
                             Throw New EvaluationException(LastErrorMessage)
                         End If
@@ -770,14 +766,6 @@ Public Class REngine
     ''' </summary>
     ''' <value><c>true</c> if auto print; otherwise, <c>false</c>.</value>
     Public Property AutoPrint() As Boolean
-        Get
-            Return m_AutoPrint
-        End Get
-        Set
-            m_AutoPrint = Value
-        End Set
-    End Property
-    Private m_AutoPrint As Boolean
 
     Private Function GetVisible() As Boolean
         Dim symbol = DangerousGetHandle("R_Visible")
@@ -818,7 +806,7 @@ Public Class REngine
                 End If
                 geterrmessage = vector.First()
             End If
-            Dim result As SymbolicExpression
+            Dim result As SymbolicExpression = Nothing
             If geterrmessage.TryEvaluate(GlobalEnvironment, result) Then
                 Dim msgs = SymbolicExpressionExtension.AsCharacter(result).ToArray()
                 If msgs.Length > 1 Then
