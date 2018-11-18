@@ -66,6 +66,8 @@ Namespace lpSolveAPI
     ''' </summary>
     Public Module APIExtensions
 
+        Public Const packageName$ = "lpSolveAPI"
+
         ''' <summary>
         ''' Set the objective function in an lpSolve linear program model object.
         ''' </summary>
@@ -77,7 +79,7 @@ Namespace lpSolveAPI
         ''' from the set {1, ..., n} where n is the number of decision variables in lprec; obj[i] is entered into 
         ''' column indices[i] in objective function. The coefficients for the columns not in indices are set to zero. 
         ''' This argument should be omitted when length(obj) == n.</param>
-        Public Sub setobjfn(lprec$, obj As IEnumerable(Of Integer), Optional indices As IEnumerable(Of Integer) = Nothing)
+        Public Sub setobjfn(lprec$, obj As IEnumerable(Of Double), Optional indices As IEnumerable(Of Integer) = Nothing)
             SyncLock R
                 With R
                     If indices Is Nothing Then
@@ -139,6 +141,92 @@ Namespace lpSolveAPI
                 End With
             End SyncLock
         End Sub
+
+        ''' <summary>
+        ''' Set bounds on the decision variables in an lpSolve linear program model object.
+        ''' </summary>
+        ''' <param name="lprec$">an lpSolve linear program model object.</param>
+        ''' <param name="lower$">a numeric vector of lower bounds to be set on the decision variables specified in columns. 
+        ''' If NULL the lower bounds are not changed.</param>
+        ''' <param name="upper$">a numeric vector of upper bounds to be set on the decision variables specified in columns. 
+        ''' If NULL the upper bounds are not changed.</param>
+        ''' <param name="columns$">a numeric vector of values from the set ``{1, ..., n}`` specifying the columns to have 
+        ''' their bounds set. If NULL all columns are set.</param>
+        Public Sub setbounds(lprec$, Optional lower$ = NULL, Optional upper$ = NULL, Optional columns$ = NULL)
+            SyncLock R
+                With R
+                    .call = $"set.bounds({lprec}, lower = {lower}, upper = {upper}, columns = {columns});"
+                End With
+            End SyncLock
+        End Sub
+
+        ''' <summary>
+        ''' Create a new lpSolve linear program model object.
+        ''' </summary>
+        ''' <param name="nrow%">a nonnegative integer value specifying the number of constaints in the linear program.</param>
+        ''' <param name="ncol%">a nonnegative integer value specifying the number of decision variables in the linear program.</param>
+        ''' <param name="verbose$">a character string controlling the level of error reporting. The default value "neutral" is no error reporting. 
+        ''' Use "normal" or "full" for more comprehensive error reporting. See the verbose entry in lp.control.options for a complete description 
+        ''' of this argument and its possible values.</param>
+        ''' <returns>an lpSolve linear program model object. Specifically an R external pointer with class lpExtPtr.</returns>
+        Public Function makelp(Optional nrow% = 0, Optional ncol% = 0, Optional verbose$ = "neutral") As String
+            Dim var$ = App.NextTempName
+
+            SyncLock R
+                With R
+                    .call = $"{var} <- make.lp(nrow = {nrow}, ncol = {ncol}, verbose = {verbose.Rstring});"
+                End With
+            End SyncLock
+
+            Return var
+        End Function
+
+        ''' <summary>
+        ''' Retrieve the value of the objective function from a successfully solved lpSolve linear program 
+        ''' model object.
+        ''' </summary>
+        ''' <param name="lprec">an lpSolve linear program model object.</param>
+        ''' <returns>a single numeric value containing the value of the objective function.</returns>
+        Public Function getobjective(lprec As String) As Double
+            SyncLock R
+                With R
+                    Dim result = App.NextTempName
+                    Dim val#
+
+                    .call = $"{result} <- get.objective({lprec});"
+                    val = .Evaluate(result) _
+                          .AsNumeric _
+                          .First
+
+                    Return val
+                End With
+            End SyncLock
+        End Function
+
+        ''' <summary>
+        ''' Retrieve the values of the decision variables from a successfully solved lpSolve linear 
+        ''' program model object.
+        ''' </summary>
+        ''' <param name="lprec">an lpSolve linear program model object.</param>
+        ''' <returns>
+        ''' a numeric vector containing the values of the decision variables corresponding to the 
+        ''' optimal solution.
+        ''' </returns>
+        Public Function getvariables(lprec As String) As Double()
+            SyncLock R
+                With R
+                    Dim result = App.NextTempName
+                    Dim val#()
+
+                    .call = $"{result} <- get.variables({lprec});"
+                    val = .Evaluate(result) _
+                          .AsNumeric _
+                          .ToArray
+
+                    Return val
+                End With
+            End SyncLock
+        End Function
     End Module
 
     <RFunc("add.constraint")>
