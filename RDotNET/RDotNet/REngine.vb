@@ -1,15 +1,13 @@
-﻿Imports RDotNet.Devices
-Imports RDotNet.Internals
-Imports RDotNet.NativeLibrary
-Imports RDotNet.Utilities
-Imports System
-Imports System.Collections.Generic
-Imports System.IO
-Imports System.Linq
+﻿Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports RDotNet.Devices
+Imports RDotNet.Internals
+Imports RDotNet.NativeLibrary
+Imports RDotNet.Utilities
 
 
 ''' <summary>
@@ -367,8 +365,8 @@ Public Class REngine
 
         For Each c In value
 
-            If c > 127 Then
-                Dim encodedValue As String = "\u" & Microsoft.VisualBasic.AscW(c).ToString("x4")
+            If AscW(c) > 127 Then
+                Dim encodedValue As String = "\u" & AscW(c).ToString("x4")
                 sb.Append(encodedValue)
             Else
                 sb.Append(c)
@@ -685,8 +683,8 @@ Public Class REngine
 
             While Not Equals((CSharpImpl.__Assign(line, reader.ReadLine())), Nothing)
 
-                For Each Segment In Segment(line)
-                    Dim result = Me.Parse(Segment, incompleteStatement, environment)
+                For Each segment As String In REngine.Segment(line)
+                    Dim result = Me.Parse(segment, incompleteStatement, environment)
 
                     If result IsNot Nothing Then
                         Yield result
@@ -719,8 +717,8 @@ Public Class REngine
 
             While Not Equals((CSharpImpl.__Assign(line, reader.ReadLine())), Nothing)
 
-                For Each Segment In Segment(line)
-                    Dim result = Me.Parse(Segment, incompleteStatement, environment)
+                For Each segment As String In REngine.Segment(line)
+                    Dim result = Me.Parse(segment, incompleteStatement, environment)
 
                     If result IsNot Nothing Then
                         Yield result
@@ -860,7 +858,7 @@ Public Class REngine
     ''' <returns> The zero-based index of the found all, or -1 if no match was found.</returns>
     Private Shared Function IndexOfAll(ByVal sourceString As String, ByVal matchString As String) As Integer()
         matchString = Regex.Escape(matchString)
-        Dim res = From match In Regex.Matches(sourceString, matchString) Select match.Index
+        Dim res = From match As Match In Regex.Matches(sourceString, matchString) Select match.Index
         Return res.ToArray()
     End Function
 
