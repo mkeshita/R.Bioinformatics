@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::943be30e195c1c2152232079e11b1725, RDotNET.Extensions.VisualBasic\Server\ExtendedEngine.vb"
+﻿#Region "Microsoft.VisualBasic::4d9cd6e8f954c5c97738ed39ea78646d, RDotNET.Extensions.VisualBasic\Server\ExtendedEngine.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,20 @@
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: __init, Evaluate, hasSlot
+    '     Function: __init, Evaluate, hasSlot, MyDefault
     ' 
-    '     Sub: __cleanHook
+    '     Sub: __cleanHook, Dispose, Reset
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Text
+Imports RDotNET.Extensions.VisualBasic.API
 
 Public Class ExtendedEngine : Inherits REngine
 
@@ -63,6 +67,23 @@ Public Class ExtendedEngine : Inherits REngine
     End Property
 
     ''' <summary>
+    ''' Language syntax supports for argument list.(将一个变量的结果值赋值给另外一个变量)
+    ''' </summary>
+    ''' <param name="name"></param>
+    Default Public Property Assign(name As String) As ArgumentReference
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return New ArgumentReference With {
+                .name = name
+            }
+        End Get
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Set(value As ArgumentReference)
+            [call] = $"{name} <- {value.name}"
+        End Set
+    End Property
+
+    ''' <summary>
     ''' 返回一个逻辑值类型的变量指针
     ''' </summary>
     ''' <param name="object$">An object from a formally defined class.</param>
@@ -75,7 +96,7 @@ Public Class ExtendedEngine : Inherits REngine
     ''' to be computed.</param>
     ''' <returns></returns>
     Public Function hasSlot(object$, name$) As String
-        Dim var$ = App.NextTempName
+        Dim var$ = RDotNetGC.Allocate
 
         SyncLock Me
             With Me
@@ -86,9 +107,18 @@ Public Class ExtendedEngine : Inherits REngine
         Return var
     End Function
 
+    ' 20181211 将脚本日志文件放在系统数据文件夹, 会导致系统空间被过多占用
+    ' 现修改为将脚本日志放置于当前的工作区之中
+    Friend ReadOnly __logs As StreamWriter
+
     Sub New(id As String, dll As String)
         MyBase.New(id, dll)
+
+        Dim logfile As String = ($"{App.CurrentDirectory}/.R_logs/{Now.ToNormalizedPathString}_pid={App.PID}_logs.R")
+        __logs = logfile.OpenWriter(Encodings.UTF8)
+
         Call App.AddExitCleanHook(hook:=AddressOf __cleanHook)
+        Call Me.GetType.Assembly.Location.__DEBUG_ECHO
     End Sub
 
     Public Overrides Function Evaluate(statement As String) As SymbolicExpression
@@ -103,10 +133,6 @@ Public Class ExtendedEngine : Inherits REngine
             Throw ex
         End Try
     End Function
-
-    Friend ReadOnly __logs As StreamWriter =
-        (App.GetProductSharedTemp & $"/.logs/{Now.ToNormalizedPathString} {App.PID}_logs.R") _
-        .OpenWriter(Encodings.UTF8)
 
     Private Sub __cleanHook()
         Call __logs.WriteLine()
@@ -124,8 +150,21 @@ Public Class ExtendedEngine : Inherits REngine
         Call "Execute R server logs clean job done!".__INFO_ECHO
     End Sub
 
+    ''' <summary>
+    ''' Reset current R environment
+    ''' </summary>
+    Public Sub Reset()
+        ' rm(list=ls(all=TRUE))
+        Call base.rm(list:=base.ls(allnames:=True))
+        Call base.gc()
+    End Sub
+
     Shared Sub New()
     End Sub
+
+    Public Shared Function MyDefault() As [Default](Of  ExtendedEngine)
+        Return RSystem.R.AsDefault
+    End Function
 
     Friend Shared Function __init(id$, Optional dll$ = Nothing) As ExtendedEngine
         If id Is Nothing Then
@@ -139,8 +178,20 @@ Public Class ExtendedEngine : Inherits REngine
         '   throw new ArgumentException();
         '}
 
-        Dim engine As New ExtendedEngine(id, dll:=ProcessRDllFileName(dll))
+        Dim engine As New ExtendedEngine(id, dll:=ProcessRDllFileName(dll)) With {
+            .AutoPrint = False
+        }
         'instances.Add(id, engine);
         Return engine
     End Function
+
+    Protected Overrides Sub Dispose(disposing As Boolean)
+        ' 2019-03-19 RDotNet在销毁实例之后会改变当前的工作区到R_HOME
+        ' 在这里改回来
+        With App.CurrentDirectory
+            Call __cleanHook()
+            Call MyBase.Dispose(disposing)
+            Call Directory.SetCurrentDirectory(.ByRef)
+        End With
+    End Sub
 End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ad9810f676cabad98b2fd93a95630b1, RDotNET.Extensions.VisualBasic\ScriptBuilder\BuilderAPI.vb"
+﻿#Region "Microsoft.VisualBasic::ca06048d91463b56685f323556778588, RDotNET.Extensions.VisualBasic\ScriptBuilder\BuilderAPI.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Module BuilderAPI
     ' 
-    '         Function: __getExpr, __getName, __getScript, __getValue, __isOptional
-    '                   GetAPIName, (+2 Overloads) GetScript, list
+    '         Function: __getName, __isOptional, GetAPIName, getExpr, getRValue
+    '                   getScript, (+2 Overloads) GetScript, list
     ' 
     ' 
     ' /********************************************************************************/
@@ -60,6 +60,8 @@ Namespace SymbolBuilder
         ''' </summary>
         ''' <param name="parameters$"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function list(ParamArray parameters$()) As ParameterList
             Return New ParameterList(parameters)
         End Function
@@ -67,7 +69,7 @@ Namespace SymbolBuilder
         Const IsNotAFunc = "Target object is not a R function abstract!"
 
         ''' <summary>
-        ''' R.func(param="",...)
+        ''' ``R.func(param="",...)``
         ''' </summary>
         ''' <param name="token"></param>
         ''' <returns></returns>
@@ -82,7 +84,7 @@ Namespace SymbolBuilder
                 type = token.GetType
             End If
 
-            Return __getScript(token, type)
+            Return type.getScript(token)
         End Function
 
         ''' <summary>
@@ -91,7 +93,7 @@ Namespace SymbolBuilder
         ''' <param name="token"></param>
         ''' <param name="type"></param>
         ''' <returns></returns>
-        Private Function __getScript(token As Object, type As Type) As String
+        <Extension> Private Function getScript(type As Type, token As Object) As String
             Dim name As String = type.GetAPIName
             Dim props = (From prop As PropertyInfo In type.GetProperties
                          Where prop.GetAttribute(Of Ignored) Is Nothing AndAlso
@@ -102,14 +104,17 @@ Namespace SymbolBuilder
                              param.__isOptional,
                              param
                          Order By __isOptional Ascending)
-            Dim parameters As String() =
-                props.Select(Function(x) __getExpr(token, x.prop, x.func, x.param)).ToArray
-            Dim args As String() = LinqAPI.Exec(Of String) <=
+            Dim parameters$() = props _
+                .Select(Function(x)
+                            Return getExpr(token, x.prop, x.func, x.param)
+                        End Function) _
+                .ToArray
+            Dim args As String() = LinqAPI.Exec(Of String) _
  _
-                From p As String
-                In parameters
-                Where Not String.IsNullOrEmpty(p)
-                Select p
+                () <= From p As String
+                      In parameters
+                      Where Not String.IsNullOrEmpty(p)
+                      Select p
 
             Dim script As String = $"{name}({String.Join(", " & vbCrLf, args)})"
             Return script
@@ -119,14 +124,23 @@ Namespace SymbolBuilder
         ''' GET API name
         ''' </summary>
         ''' <param name="type"></param>
+        ''' <param name="typeNameAsFuncCalls">
+        ''' 是否允许当程序在查找不到<see cref="RFunc"/>自定义属性标记的时候，直接使用类型的名称作为函数名？
+        ''' 如果不的话，则在没有查找结果的时候会抛出错误
+        ''' </param>
         ''' <returns></returns>
-        <Extension> Public Function GetAPIName(type As Type) As String
-            Dim name As RFunc = type.GetAttribute(Of RFunc) ' Get function name
+        <Extension> Public Function GetAPIName(type As Type, Optional typeNameAsFuncCalls As Boolean = False) As String
+            ' Get function name
+            Dim name As RFunc = type.GetAttribute(Of RFunc)
 
             If name Is Nothing Then
-                Dim ex As New Exception(IsNotAFunc)
-                ex = New Exception(type.FullName, ex)
-                Throw ex
+                If typeNameAsFuncCalls Then
+                    Return type.Name
+                Else
+                    With New Exception(IsNotAFunc)
+                        Throw New Exception(type.FullName, .ByRef)
+                    End With
+                End If
             Else
                 Return name.Name
             End If
@@ -138,11 +152,9 @@ Namespace SymbolBuilder
         ''' <typeparam name="T"></typeparam>
         ''' <param name="token"></param>
         ''' <returns></returns>
-        ''' 
-        <Extension>
-        Public Function GetScript(Of T)(token As T) As String
-            Dim type As Type = GetType(T)
-            Return __getScript(token, type)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function GetScript(Of T)(token As T) As String
+            Return GetType(T).getScript(token)
         End Function
 
         ''' <summary>
@@ -152,10 +164,13 @@ Namespace SymbolBuilder
         ''' <param name="prop"></param>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Private Function __getExpr(x As Object, prop As PropertyInfo, name As String, param As Parameter) As String
+        Private Function getExpr(x As Object, prop As PropertyInfo, name As String, param As Parameter) As String
             Dim value As Object = prop.GetValue(x)
-            Dim type = If(param Is Nothing, ValueTypes.String, param.Type)
-            Dim s As String = prop.PropertyType.__getValue(value, type)
+            Dim type = If(param Is Nothing, ValueTypes.ref, param.Type)
+            Dim s As String = prop.PropertyType.getRValue(value, type)
+
+            ' 如果参数值为空值，则会返回空字符串，在后面构建表达式的时候
+            ' 会忽略掉这个空字符串
             If String.IsNullOrEmpty(s) Then
                 Return ""
             Else
@@ -163,8 +178,15 @@ Namespace SymbolBuilder
             End If
         End Function
 
+        ''' <summary>
+        ''' 将.NET环境之中的变量值转换为R脚本语言环境之中的变量值
+        ''' </summary>
+        ''' <param name="type">The type info of the property <paramref name="value"/></param>
+        ''' <param name="value"></param>
+        ''' <param name="valueType"></param>
+        ''' <returns></returns>
         <Extension>
-        Private Function __getValue(type As Type, value As Object, valueType As ValueTypes) As String
+        Private Function getRValue(type As Type, value As Object, valueType As ValueTypes) As String
             If value Is Nothing Then
                 Return Nothing
             End If
@@ -172,21 +194,58 @@ Namespace SymbolBuilder
             Select Case type
 
                 Case GetType(String)
-                    If valueType = ValueTypes.Path Then
-                        Return Rstring(Scripting.ToString(value).UnixPath)
+
+                    ' 如果在VB.NET环境之中, 值的类型在R语言环境之中可能为:
+                    '
+                    ' 文件路径: 则会自动替换\符号为Linux下面的路径分隔符号/, 并添加双引号在脚本之中表示当前的值为字符串
+                    ' R环境之中的对象引用: 则这个时候不进行任何字符串上面的操作处理
+                    ' R环境之中的字符串: 则直接添加双引号以在R脚本之中表示其为字符串
+                    If valueType = ValueTypes.path Then
+                        ' 因为UnixPath拓展函数可能会自动添加双引号
+                        ' 所以在这里就直接进行字符替换操作了, 避免可能由于UnixPath
+                        ' 函数所可能产生的bug
+                        Return Rstring(Scripting.ToString(value).Replace("\", "/"))
+                    ElseIf valueType = ValueTypes.ref Then
+                        ' 变量引用，则不添加双引号
+                        Return Scripting.ToString(value)
                     Else
                         Return Rstring(Scripting.ToString(value))
                     End If
+
                 Case GetType(Boolean)
+
+                    ' 对于逻辑值,则直接根据值返回R语言环境之中的TRUE或者FALSE
                     If True = DirectCast(value, Boolean) Then
-                        Return RBoolean.TRUE.__value
+                        Return NameOf(RBoolean.TRUE)
                     Else
-                        Return RBoolean.FALSE.__value
+                        Return NameOf(RBoolean.FALSE)
                     End If
                 Case GetType(RExpression)
                     Return DirectCast(value, RExpression).RScript
+                Case GetType(Double()), GetType(Integer())
+                    ' 是一个数字向量
+                    ' 返回c()向量表达式, 因为R解释器会存在一个栈空间上线的问题, 所以在API之中会对向量内容进行分块传递
+                    ' 但是在这里的脚本构建器之中, 由于source函数运行部存在这个问题, 所以在这里可以直接通过c()向量函数
+                    ' 来生成最终的脚本表达式结果
+                    Return RScripts.c(vector:=DirectCast(value, Array))
                 Case Else
-                    Return Scripting.ToString(value)
+
+                    ' 对于枚举类型, 则会将枚举值转换为字符串之后传递到R脚本环境之中
+                    If type.IsInheritsFrom(GetType([Enum])) Then
+                        Dim str$ = DirectCast(value, [Enum]).Description
+
+                        ' 如果修饰的类型表明当前的参数值应该是一个字符串
+                        ' 则枚举值的描述结果字符串会被封装在双引号之中表明其为一个字符串
+                        ' 反之, 其他的类型装饰则会直接认为当前的枚举值为一个R环境之中
+                        ' 的对象引用表达式, 当前的枚举值的描述结果会被直接生成于脚本之中
+                        If valueType = ValueTypes.string Then
+                            Return Rstring(str)
+                        Else
+                            Return str
+                        End If
+                    Else
+                        Return Scripting.ToString(value)
+                    End If
             End Select
         End Function
 

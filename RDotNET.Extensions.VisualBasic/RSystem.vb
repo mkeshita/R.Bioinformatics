@@ -1,56 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::7607a0a3a84fbbc7eb08e8ac51d419c8, RDotNET.Extensions.VisualBasic\RSystem.vb"
+﻿#Region "Microsoft.VisualBasic::3aae7d26a2fbdbf19b3c71cc10f7aef0, RDotNET.Extensions.VisualBasic\RSystem.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module RSystem
-    ' 
-    '     Properties: R, RColors
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: ColorMaps, getwd, Library, packageVersion, params
-    '               setwd, source
-    ' 
-    '     Sub: (+2 Overloads) TryInit
-    ' 
-    ' /********************************************************************************/
+' Module RSystem
+' 
+'     Properties: R, RColors
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: ColorMaps, getwd, Library, packageVersion, params
+'               Rvar, setwd
+' 
+'     Sub: (+2 Overloads) TryInit
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
+Imports Microsoft.VisualBasic.My
 
 ''' <summary>
 ''' R Engine extensions.
@@ -81,12 +82,18 @@ Public Module RSystem
     ''' R server can not be initialized automatically, please manual set up init later.
     ''' </summary>
     Const UnableRunAutomatically As String = "R server can not be initialized automatically, please manual set up init later."
+    Const rdotnet_engine As String = "rdotnet_engine"
 
     ''' <summary>
     ''' Initialize the default R Engine.(可以通过在命令行之中使用``/@set``开关设置``R_HOME``参数来手动设置R的文件夹位置)
     ''' </summary>
     Sub New()
         Dim R_HOME$ = App.GetVariable("R_HOME")
+
+        'If Not SharedObject.GetObject(rdotnet_engine) Is Nothing Then
+        '    R = SharedObject.GetObject(rdotnet_engine)
+        '    Return
+        'End If
 
         Try
             If R_HOME.StringEmpty Then
@@ -99,8 +106,21 @@ Public Module RSystem
             ex = New Exception(UnableRunAutomatically, ex)
             Call ex.PrintException
             Call App.LogException(ex)
+            Call NativeLibrary.NativeUtility.SetEnvironmentVariablesLog.SaveTo("./R_inits.log")
+        Finally
+            If Not R Is Nothing Then
+                Call SharedObject.SetObject(rdotnet_engine, R)
+            End If
         End Try
     End Sub
+
+    Public Function ref(name As String) As String
+        Return "&" & Strings.Trim(name).Trim("&"c)
+    End Function
+
+    Public Function ref(var As var) As String
+        Return "&" & var.name
+    End Function
 
     ''' <summary>
     ''' Manual set up R init environment.
@@ -117,6 +137,17 @@ Public Module RSystem
             _R = RInit.StartEngineServices
         End If
     End Sub
+
+    ''' <summary>
+    ''' 从一个变量名称创建一个R变量帮助对象
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Rvar(name As String) As var
+        Return New var(name)
+    End Function
 
     ''' <summary>
     ''' Parses and returns the ‘DESCRIPTION’ file of a package.
@@ -168,87 +199,6 @@ Public Module RSystem
         Call Console.WriteLine(sBuilder.ToString)
 
         Return sBuilder.ToString
-    End Function
-
-    ''' <summary>
-    ''' The R engine execute a R script. source causes R to accept its input from the named file or URL or connection.
-    ''' Input is read and parsed from that file until the end of the file is reached, then the parsed expressions are
-    ''' evaluated sequentially in the chosen environment.
-    ''' (R引擎执行文件系统之中的一个R脚本)
-    ''' </summary>
-    ''' <param name="file">a connection Or a character String giving the pathname Of the file Or URL To read from. ""
-    ''' indicates the connection stdin().
-    ''' </param>
-    ''' <param name="local">TRUE, FALSE or an environment, determining where the parsed expressions are evaluated.
-    ''' FALSE (the default) corresponds to the user's workspace (the global environment) and TRUE to the environment
-    ''' from which source is called.</param>
-    ''' <param name="echo">logical; if TRUE, each expression is printed after parsing, before evaluation.</param>
-    ''' <param name="printEval">logical; if TRUE, the result of eval(i) is printed for each expression i; defaults to the value of echo.</param>
-    ''' <param name="verbose">if TRUE, more diagnostics (than just echo = TRUE) are printed during parsing and evaluation of input,
-    ''' including extra info for each expression.</param>
-    ''' <param name="promptEcho">character; gives the prompt to be used if echo = TRUE.</param>
-    ''' <param name="maxDeparseLength">integer; is used only if echo is TRUE and gives the maximal number of characters output for
-    ''' the deparse of a single expression.</param>
-    ''' <param name="chdir">logical; if TRUE And file Is a pathname, the R working directory Is temporarily changed to the
-    ''' directory containing file for evaluating.</param>
-    ''' <param name="encoding">character vector. The encoding(s) to be assumed when file is a character string: see file.
-    ''' A possible value is "unknown" when the encoding is guessed: see the ‘Encodings’ section.</param>
-    ''' <param name="continueEcho">character; gives the prompt to use on continuation lines if echo = TRUE.</param>
-    ''' <param name="skipEcho">integer; how many comment lines at the start of the file to skip if echo = TRUE.</param>
-    ''' <param name="keepSource">logical: should the source formatting be retained When echoing expressions, If possible?</param>
-    ''' <returns></returns>
-    ''' <remarks>
-    ''' Note that running code via source differs in a few respects from entering it at the R command line. Since expressions are not executed
-    ''' at the top level, auto-printing is not done. So you will need to include explicit print calls for things you want to be printed
-    ''' (and remember that this includes plotting by lattice, FAQ Q7.22). Since the complete file is parsed before any of it is run, syntax
-    ''' errors result in none of the code being run. If an error occurs in running a syntactically correct script, anything assigned into the
-    ''' workspace by code that has been run will be kept (just as from the command line), but diagnostic information such as traceback() will
-    ''' contain additional calls to withVisible.
-    '''
-    ''' All versions Of R accept input from a connection With End Of line marked by LF (As used On Unix), CRLF (As used On DOS/Windows) Or CR
-    ''' (As used On classic Mac OS) And map this To newline. The final line can be incomplete, that Is missing the final End-Of-line marker.
-    '''
-    ''' If keep.source Is True(the Default In interactive use), the source Of functions Is kept so they can be listed exactly As input.
-    '''
-    ''' Unlike input from a console, lines In the file Or On a connection can contain an unlimited number Of characters.
-    '''
-    ''' When skip.echo > 0, that many comment lines at the start of the file will Not be echoed. This does Not affect the execution of the code at all.
-    ''' If there are executable lines within the first skip.echo lines, echoing will start with the first of them.
-    '''
-    ''' If echo Is True And a deparsed expression exceeds max.deparse.length, that many characters are output followed by .... [TRUNCATED] .
-    '''
-    ''' [Encodings]
-    ''' By Default the input Is read And parsed In the current encoding Of the R session. This Is usually what it required, but occasionally re-encoding
-    ''' Is needed, e.g. If a file from a UTF-8-Using system Is To be read On Windows (Or vice versa).
-    '''
-    ''' The rest Of this paragraph applies If file Is an actual filename Or URL (And Not "" nor a connection). If encoding = "unknown", an attempt Is
-    ''' made To guess the encoding: the result Of localeToCharset() Is used As a guide. If encoding has two Or more elements, they are tried In turn
-    ''' until the file/URL can be read without Error In the trial encoding. If an actual encoding Is specified (rather than the Default Or "unknown")
-    ''' In a Latin-1 Or UTF-8 locale Then character strings In the result will be translated To the current encoding And marked As such (see Encoding).
-    '''
-    ''' If file Is a connection (including one specified by "", it Is Not possible To re-encode the input inside source, And so the encoding argument
-    ''' Is just used To mark character strings In the parsed input In Latin-1 And UTF-8 locales: see parse.
-    ''' </remarks>
-    Public Function source(file As String,
-                           Optional local As Boolean = True,
-                           Optional echo As Boolean = False,
-                           Optional printEval As Boolean = False,
-                           Optional verbose As Boolean = False,
-                           Optional promptEcho As Boolean = False,
-                           Optional maxDeparseLength As Integer = 150,
-                           Optional chdir As Boolean = False,
-                           Optional encoding As String = "unknown",
-                           Optional continueEcho As Boolean = False,
-                           Optional skipEcho As Integer = 0,
-                           Optional keepSource As Boolean = False) As String()
-        Dim cmdl As String = $"source(""{If(local, UnixPath(file), file)}"", local = {Rbool(local)}, echo = {Rbool(echo)}, print.eval = {Rbool(printEval)},
-                               verbose = {Rbool(verbose)},
-                               prompt.echo = {Rbool(promptEcho)},
-                               max.deparse.length = {maxDeparseLength}, chdir = {Rbool(chdir)},
-                               encoding = {Rstring(encoding)},
-                               continue.echo = {Rbool(continueEcho)},
-                               skip.echo = {skipEcho}, keep.source = {Rbool(keepSource)});"
-        Return R.WriteLine(cmdl)
     End Function
 
     ''' <summary>

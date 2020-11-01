@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73aa26bea3716daa259a82d6a46669ad, RDotNet.Extensions.Bioinformatics\Declares\adegenet\genind.vb"
+﻿#Region "Microsoft.VisualBasic::33b56f39f1263e37496b27f891da6496, RDotNet.Extensions.Bioinformatics\Declares\adegenet\genind.vb"
 
     ' Author:
     ' 
@@ -46,9 +46,10 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
-Imports RDotNet.Extensions.VisualBasic
-Imports RDotNet.Extensions.VisualBasic.API.base
-Imports RDotNet.Extensions.VisualBasic.API.utils
+Imports RDotNET.Extensions.VisualBasic
+Imports RDotNET.Extensions.VisualBasic.API.base
+Imports RDotNET.Extensions.VisualBasic.API.utils
+Imports RDotNET.Extensions.VisualBasic.Serialization
 
 Namespace adegenet
 
@@ -63,7 +64,7 @@ Namespace adegenet
     ''' To the @tab slot. Note that As In other S4 classes, slots are accessed 
     ''' Using @ instead Of \$.
     ''' </summary>
-    Public Class genind : Inherits BaseClass
+    Public Class genind
 
         ''' <summary>
         ''' matrix integers containing genotypes data for individuals (in rows) for 

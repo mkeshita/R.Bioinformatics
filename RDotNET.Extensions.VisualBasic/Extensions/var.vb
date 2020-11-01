@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::feac868bdbb7360cab8ec94e7d64d5f0, RDotNET.Extensions.VisualBasic\Extensions\var.vb"
+﻿#Region "Microsoft.VisualBasic::2e3b65691a5bf8206d6aa8195e9b0d16, RDotNET.Extensions.VisualBasic\Extensions\var.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,13 @@
 
     ' Class var
     ' 
-    '     Properties: Expression, Name, RValue, type
+    '     Properties: Expression, name, RValue, type
     ' 
     '     Constructor: (+3 Overloads) Sub New
     ' 
-    '     Function: [As], Rvariable, ToString
+    '     Function: [As], Enumerates, EvaluateAs, Rvariable, ToString
     ' 
-    '     Sub: __setValue
+    '     Sub: (+2 Overloads) Dispose, setValInternal
     ' 
     '     Operators: <=, >=
     ' 
@@ -47,22 +47,29 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Web.Script.Serialization
-Imports Microsoft.VisualBasic
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
+Imports RDotNET.Extensions.VisualBasic
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
+Imports Rbase = RDotNET.Extensions.VisualBasic.API.base
 
 ''' <summary>
 ''' The R runtime variable.(当隐式转换为字符串的时候，返回的是变量名)
 ''' </summary>
 ''' 
-Public Class var
+Public Class var : Implements IDisposable
 
-    Public ReadOnly Property Name As String
+    ''' <summary>
+    ''' The variable name in R runtime environment.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property name As String
 
     Public ReadOnly Property type As String
         Get
-            Return $"typeof({Name})".__call _
+            Return $"typeof({name})".__call _
                 .AsCharacter _
                 .ToArray _
                 .FirstOrDefault
@@ -72,56 +79,115 @@ Public Class var
     <ScriptIgnore>
     Public ReadOnly Property RValue As SymbolicExpression
         Get
-            Return R.Evaluate(Name)
+            Return R.Evaluate(name)
         End Get
     End Property
 
-    Dim _expr As String
-
-    Public Property Expression As String
+    Default Public Property Item(attrName As String) As String
         Get
-            Return _expr
+            With RDotNetGC.Allocate
+                Call $"{ .ByRef} <- {name}[['{attrName}']];".__call
+                Return .ByRef
+            End With
         End Get
         Set(value As String)
-            _expr = value
-            Call __setValue()
+            Call $"{name}[['{attrName}']] <- {value};".__call
         End Set
     End Property
 
-    Private Sub __setValue()
-        Call $"{Name} <- {_expr}".__call
+    Dim expr As String
+
+    Public Property Expression As String
+        Get
+            Return expr
+        End Get
+        Set(value As String)
+            expr = value
+
+            Call setValInternal()
+        End Set
+    End Property
+
+    Private Sub setValInternal()
+        SyncLock R
+            Call R.Evaluate($"{name} <- {expr}")
+        End SyncLock
     End Sub
 
     Sub New()
-        Name = App.NextTempName
+        name = RDotNetGC.Allocate
     End Sub
 
+    ''' <summary>
+    ''' When this variable object narrowing convert to <see cref="String"/> type, 
+    ''' then the ctype function will returns the <see cref="name"/> property 
+    ''' value.
+    ''' </summary>
+    ''' <param name="expr">A value expression for initialize current R variable</param>
     Sub New(expr As String)
         Call Me.New
-        Me._expr = expr
-        Call __setValue()
+        Me.expr = expr
+
+        Call setValInternal()
     End Sub
 
     Sub New(name As String, expr As String)
-        Me.Name = name
-        Me._expr = expr
-        Call __setValue()
+        Me.name = name
+        Me.expr = expr
+
+        Call setValInternal()
     End Sub
+
+    ''' <summary>
+    ''' 这个函数会枚举出list对象之中的所有的成员
+    ''' </summary>
+    ''' <returns></returns>
+    Public Iterator Function Enumerates() As IEnumerable(Of NamedValue(Of String))
+        For Each name As String In Rbase.names(Me.name)
+            Yield New NamedValue(Of String)(name, $"{Me.name}$'{name}'")
+        Next
+    End Function
 
     Public Shared Function Rvariable(var$) As var
         Return New var With {
-            ._Name = var,
-            ._expr = var
+            ._name = var,
+            .expr = var
         }
     End Function
 
+    Public Shared Function EvaluateAs(Of T)(var As String) As T
+        Dim ref As SymbolicExpression = R.Evaluate(var)
+        Dim value As Object
+
+        Select Case GetType(T)
+            Case GetType(Integer)
+                value = ref.AsInteger.First
+            Case GetType(Integer())
+                value = ref.AsInteger.ToArray
+            Case GetType(Double)
+                value = ref.AsNumeric.First
+            Case GetType(Double())
+                value = ref.AsNumeric.ToArray
+            Case Else
+                Throw New NotImplementedException(GetType(T).FullName)
+        End Select
+
+        Return DirectCast(value, T)
+    End Function
+
     ''' <summary>
-    ''' <see cref="out"/>
+    ''' 可以尝试使用这个函数将<see cref="name"/>在R语言环境之中的变量引用结果解析
+    ''' 为``.NET``环境之中的对象结果值
+    ''' 
+    ''' + 如果是初级类型, 则这个函数可以直接进行转换
+    ''' + 但是对于复杂的数据类型, 则需要在类型定义申明上面添加<see cref="out"/>自定义解释器的修饰
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function [As](Of T)() As T
-        Throw New NotImplementedException
+        Return EvaluateAs(Of T)(var:=name)
     End Function
 
     Public Overloads Shared Operator <=(x As var, expr As String) As String
@@ -139,7 +205,7 @@ Public Class var
     ''' </summary>
     ''' <returns></returns>
     Public Overrides Function ToString() As String
-        Return Name
+        Return name
     End Function
 
     ''' <summary>
@@ -148,7 +214,7 @@ Public Class var
     ''' <param name="var"></param>
     ''' <returns></returns>
     Public Shared Narrowing Operator CType(var As var) As String
-        Return var.Name
+        Return var.name
     End Operator
 
     Public Shared Widening Operator CType(expr As String) As var
@@ -180,30 +246,68 @@ Public Class var
     End Operator
 
     Public Shared Widening Operator CType(expr As Integer()) As var
-        Return New var(c(expr))
+        Return New var(SymbolBuilder.c(expr))
     End Operator
 
     Public Shared Widening Operator CType(expr As Double()) As var
-        Return New var(c(expr))
+        Return New var(SymbolBuilder.c(expr))
     End Operator
 
     Public Shared Widening Operator CType(expr As Boolean()) As var
-        Return New var(c(expr))
+        Return New var(SymbolBuilder.c(expr))
     End Operator
 
     Public Shared Widening Operator CType(expr As Long()) As var
-        Return New var(c(expr))
+        Return New var(SymbolBuilder.c(expr))
     End Operator
 
     Public Shared Widening Operator CType(expr As Single()) As var
-        Return New var(c(expr))
+        Return New var(SymbolBuilder.c(expr))
     End Operator
 
     Public Shared Widening Operator CType(expr As var()) As var
-        Return New var($"c({expr.Select(Function(x) x.Name).JoinBy(", ")})")
+        Return New var($"c({expr.Select(Function(x) x.name).JoinBy(", ")})")
     End Operator
 
     Public Shared Widening Operator CType(expr As Microsoft.VisualBasic.Language.Value) As var
-        Return New var(Scripting.ToString(expr.value, NULL))
+        Return New var(Scripting.ToString(expr.Value, NULL))
     End Operator
+
+#Region "IDisposable Support"
+    Private disposedValue As Boolean ' To detect redundant calls
+
+    ' IDisposable
+    ''' <summary>
+    ''' Call gc() in R environment.
+    ''' </summary>
+    ''' <param name="disposing"></param>
+    Protected Overridable Sub Dispose(disposing As Boolean)
+        If Not disposedValue Then
+            If disposing Then
+                ' TODO: dispose managed state (managed objects).
+                Rbase.rm(list:=name)
+                Rbase.gc()
+            End If
+
+            ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+            ' TODO: set large fields to null.
+        End If
+        disposedValue = True
+    End Sub
+
+    ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
+    'Protected Overrides Sub Finalize()
+    '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+    '    Dispose(False)
+    '    MyBase.Finalize()
+    'End Sub
+
+    ' This code added by Visual Basic to correctly implement the disposable pattern.
+    Public Sub Dispose() Implements IDisposable.Dispose
+        ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        Dispose(True)
+        ' TODO: uncomment the following line if Finalize() is overridden above.
+        ' GC.SuppressFinalize(Me)
+    End Sub
+#End Region
 End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::857afe774f8d54bbd305f228be703610, RDotNET.Extensions.VisualBasic\API\utils\utils.vb"
+﻿#Region "Microsoft.VisualBasic::7f8c7753859faffef4dc94973493f3f7, RDotNET.Extensions.VisualBasic\API\utils\utils.vb"
 
     ' Author:
     ' 
@@ -33,14 +33,14 @@
 
     '     Module utils
     ' 
-    '         Function: (+2 Overloads) data
+    '         Function: (+2 Overloads) data, memory_size
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
 
 Namespace API.utils
 
@@ -103,6 +103,30 @@ Namespace API.utils
         ''' <remarks>Simplify version of <see cref="data"/></remarks>
         Public Function data(x As String) As String
             Return data({x}).FirstOrDefault
+        End Function
+
+        ''' <summary>
+        ''' ### Report on Memory Allocation
+        ''' 
+        ''' reports the current or maximum memory allocation of the malloc function used in this version of R.
+        ''' </summary>
+        ''' <param name="max">
+        ''' logical. If TRUE the maximum amount of memory obtained from the OS Is reported, 
+        ''' if FALSE the amount currently in use, if NA the memory limit.
+        ''' </param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' These functions exist on other platforms but always report infinity as R does itself provide limits 
+        ''' on memory allocation—the OS's own facilities can be used.
+        ''' </remarks>
+        Public Function memory_size(Optional max As Boolean = False) As Double
+            SyncLock R
+                With R
+                    Return .Evaluate($"memory.size(max={max.λ})") _
+                           .AsNumeric _
+                           .First
+                End With
+            End SyncLock
         End Function
     End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e5c5b72f988c07a960bc40b783f754b, RDotNET.Extensions.VisualBasic\Extensions\out.vb"
+﻿#Region "Microsoft.VisualBasic::a3d4f5472e37b868320d90359408bb10, RDotNET.Extensions.VisualBasic\Extensions\out.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,9 @@
 
 #End Region
 
+''' <summary>
+''' 这个自定义属性是装饰于类型上面, 用于帮助<see cref="var.As(Of T)()"/>函数进行结果数据解析操作的
+''' </summary>
 <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
 Public Class out : Inherits Attribute
 
@@ -57,6 +60,10 @@ Public Class out : Inherits Attribute
     ''' <returns>.NET对象</returns>
     Public Delegate Function RObjectParser(var As String) As Object
 
+    ''' <summary>
+    ''' 将会调用这个接口函数进行R环境之中的结果解析为.NET语言环境之中的对象
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Parser As RObjectParser
 
     Sub New(func As RObjectParser)

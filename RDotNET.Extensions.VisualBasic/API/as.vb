@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::939980a0cf3e3be39c6ce736387dc6f4, RDotNET.Extensions.VisualBasic\API\as.vb"
+﻿#Region "Microsoft.VisualBasic::e25d7a14e9fce02ca5b09a751717ce3e, RDotNET.Extensions.VisualBasic\API\as.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '     Module base
     ' 
-    '         Function: Character, Logical, matrix, numeric, vector
+    '         Function: character, logical, matrix, numeric, vector
     ' 
     ' 
     ' /********************************************************************************/
@@ -67,12 +67,20 @@ Namespace API.as
         ''' if it has one to set the start and end times and frequency.
         ''' </returns>
         Public Function ts(x As String, ParamArray additionals As String()) As String
-            Dim out As String = App.NextTempName
+            Dim out As String = RDotNetGC.Allocate
             Call $"{out} <- as.ts({x}, {String.Join(",", additionals)})".__call
             Return out
         End Function
     End Module
 
+    ''' <summary>
+    ''' ## The R Base Package
+    ''' 
+    ''' This package contains the basic functions which let R function as a language: arithmetic, input/output, 
+    ''' basic programming support, etc. Its contents are available through inheritance from any environment.
+    ''' 
+    ''' For a complete list of functions, use ``library(help = "base")``.
+    ''' </summary>
     Public Module base
 
         ''' <summary>
@@ -84,7 +92,7 @@ Namespace API.as
         ''' <param name="mode$"></param>
         ''' <returns></returns>
         Public Function vector(x$, Optional mode$ = "any") As String
-            Dim var$ = App.NextTempName
+            Dim var$ = RDotNetGC.Allocate
 
             SyncLock R
                 With R
@@ -110,7 +118,7 @@ Namespace API.as
         Public Function matrix(x$, Optional rownamesForce As String = "NA", Optional list As ParameterList = Nothing) As String
             SyncLock R
                 With R
-                    Dim var$ = App.NextTempName
+                    Dim var$ = RDotNetGC.Allocate
 
                     .call = $"{var} <- as.matrix({x}, rownames.force = {rownamesForce}, {list?.ToString})"
                     Return var
@@ -141,7 +149,7 @@ Namespace API.as
         ''' </summary>
         ''' <param name="x$"></param>
         ''' <returns></returns>
-        Public Function Character(x$) As String()
+        Public Function character(x$) As String()
             SyncLock R
                 With R
                     Return .Evaluate($"as.character({x})").AsCharacter.ToArray
@@ -154,7 +162,7 @@ Namespace API.as
         ''' </summary>
         ''' <param name="x$"></param>
         ''' <returns></returns>
-        Public Function Logical(x$) As Boolean()
+        Public Function logical(x$) As Boolean()
             SyncLock R
                 With R
                     Return .Evaluate($"as.logical({x})").AsLogical.ToArray

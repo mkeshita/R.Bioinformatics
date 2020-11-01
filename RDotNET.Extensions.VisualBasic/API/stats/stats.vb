@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a2c4ffab9b7df1883b17d9348f1a8e8, RDotNET.Extensions.VisualBasic\API\stats\stats.vb"
+﻿#Region "Microsoft.VisualBasic::f2629e68a37fc4a7fe3447b6aec36699, RDotNET.Extensions.VisualBasic\API\stats\stats.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module stats
     ' 
-    '         Function: anova, arima, ts
+    '         Function: anova, arima, pnorm, (+2 Overloads) quantile, ts
     '         Enum padjusts
     ' 
     '             BH, bonferroni, BY, fdr, hochberg
@@ -57,7 +57,9 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports RDotNET.Extensions.VisualBasic
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
@@ -78,6 +80,95 @@ Namespace API
         ''' </returns>
         Public Function anova(object$, Optional additional As Dictionary(Of String, String) = Nothing) As String
             Throw New NotImplementedException
+        End Function
+
+        ReadOnly quartile As [Default](Of  Double()) = {0, 0.25, 0.5, 0.75, 1}
+
+        ''' <summary>
+        ''' The generic function quantile produces sample quantiles corresponding to the given probabilities. 
+        ''' The smallest observation corresponds to a probability of 0 and the largest to a probability of 1.
+        ''' </summary>
+        ''' <param name="x">numeric vector whose sample quantiles are wanted, or an object of a class for which 
+        ''' a method has been defined (see also ‘details’). NA and NaN values are not allowed in numeric vectors 
+        ''' unless na.rm is TRUE.</param>
+        ''' <param name="probs">numeric vector of probabilities with values in [0,1]. (Values up to 2e-14 
+        ''' outside that range are accepted and moved to the nearby endpoint.)</param>
+        ''' <param name="narm">
+        ''' logical; if true, any NA and NaN's are removed from x before the quantiles are computed.
+        ''' </param>
+        ''' <param name="names">
+        ''' logical; if true, the result has a names attribute. Set to FALSE for speedup with many probs.
+        ''' </param>
+        ''' <param name="type">
+        ''' an integer between 1 and 9 selecting one of the nine quantile algorithms detailed below to be used.
+        ''' </param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function quantile(x As IEnumerable(Of Double),
+                                 Optional probs#() = Nothing,
+                                 Optional narm As Boolean = False,
+                                 Optional names As Boolean = True,
+                                 Optional type% = 7) As String
+            Return quantile(c(x), c(probs Or quartile), narm, names, type)
+        End Function
+
+        ''' <summary>
+        ''' The generic function quantile produces sample quantiles corresponding to the given probabilities. 
+        ''' The smallest observation corresponds to a probability of 0 and the largest to a probability of 1.
+        ''' </summary>
+        ''' <param name="x">numeric vector whose sample quantiles are wanted, or an object of a class for which 
+        ''' a method has been defined (see also ‘details’). NA and NaN values are not allowed in numeric vectors 
+        ''' unless na.rm is TRUE.</param>
+        ''' <param name="probs">numeric vector of probabilities with values in [0,1]. (Values up to 2e-14 
+        ''' outside that range are accepted and moved to the nearby endpoint.)</param>
+        ''' <param name="narm">
+        ''' logical; if true, any NA and NaN's are removed from x before the quantiles are computed.
+        ''' </param>
+        ''' <param name="names">
+        ''' logical; if true, the result has a names attribute. Set to FALSE for speedup with many probs.
+        ''' </param>
+        ''' <param name="type">
+        ''' an integer between 1 and 9 selecting one of the nine quantile algorithms detailed below to be used.
+        ''' </param>
+        ''' <returns></returns>
+        Public Function quantile(x$,
+                                 Optional probs$ = "seq(0, 1, 0.25)",
+                                 Optional narm As Boolean = False,
+                                 Optional names As Boolean = True,
+                                 Optional type% = 7) As String
+
+            Dim var$ = RDotNetGC.Allocate
+
+            SyncLock R
+                With R
+                    .call = $"{var} <- quantile({x}, probs = {probs}, na.rm = {narm.λ},
+         names = {names.λ}, type = {type})"
+                End With
+            End SyncLock
+
+            Return var
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="q">vector of quantiles.</param>
+        ''' <param name="mean">vector of means.</param>
+        ''' <param name="sd">vector of standard deviations.</param>
+        ''' <param name="lowertail">logical; if TRUE (default), probabilities are ``P[X ≤ x]`` otherwise, ``P[X > x]``.</param>
+        ''' <param name="logp">logical; if TRUE, probabilities p are given as log(p).</param>
+        ''' <returns></returns>
+        Public Function pnorm(q$, Optional mean# = 0, Optional sd# = 1, Optional lowertail As Boolean = True, Optional logp As Boolean = False) As String
+            Dim var$ = RDotNetGC.Allocate
+
+            SyncLock R
+                With R
+                    .call = $"{var} <- pnorm({q}, mean = {mean}, sd = {sd}, lower.tail = {lowertail.λ}, log.p = {logp.λ});"
+                End With
+            End SyncLock
+
+            Return var
         End Function
 
         ''' <summary>
@@ -165,7 +256,7 @@ Namespace API
                               Optional optimcontrol As String = "list()",
                               Optional kappa As String = "1e6") As String
 
-            Dim out As String = App.NextTempName
+            Dim out As String = RDotNetGC.Allocate
 
             Call $"{out} <- arima({x}, order = {order},
       seasonal = {seasonal},
@@ -206,7 +297,7 @@ Namespace API
                            Optional [class] As String = Nothing,
                            Optional names As String = Nothing) As String
 
-            Dim tmp As String = App.NextTempName
+            Dim tmp As String = RDotNetGC.Allocate
             Dim func As New packages.stats.ts With {
                 .data = data,
                 .start = start,
@@ -264,7 +355,7 @@ Namespace API
 
             SyncLock R
                 With R
-                    Dim x$ = App.NextTempName
+                    Dim x$ = RDotNetGC.Allocate
 
                     .call = $"{x} <- p.adjust({v}, method = {Rstring(method.Description)}, n = length({v}));"
 
@@ -411,7 +502,7 @@ Namespace API
             SyncLock R
                 With R
 
-                    Dim var$ = App.NextTempName
+                    Dim var$ = RDotNetGC.Allocate
 
                     .call = $"{var} <- t.test({x}, {y},
        alternative = {Rstring(alternative)},

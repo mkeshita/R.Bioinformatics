@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5da10561ee14841eaf3e607fd5cb98fd, RDotNET.Extensions.VisualBasic\Extensions\Serialization\DataFrameAPI.vb"
+﻿#Region "Microsoft.VisualBasic::5f4807caa5f4d8d252e21464f52df830, RDotNET.Extensions.VisualBasic\Extensions\Serialization\DataFrameAPI.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     ' Module DataFrameAPI
     ' 
-    '     Function: AsDataFrame, dataframe, GetDataFrame, PushAsDataFrame, PushAsTable
-    '               WriteDataFrame
+    '     Function: AsDataFrame, csv, dataframe, GetDataFrame, PushAsDataFrame
+    '               PushAsTable, WriteDataFrame
     ' 
     '     Sub: (+2 Overloads) PushAsDataFrame, PushAsTable
     ' 
@@ -43,7 +43,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
@@ -51,14 +51,33 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 Imports RDotNET.Extensions.VisualBasic.API
+Imports RDotNET.Extensions.VisualBasic.Serialization
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
 Imports vbList = Microsoft.VisualBasic.Language.List(Of String)
 
 Public Module DataFrameAPI
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="R">R engine</param>
+    ''' <param name="var$">Variable name</param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function csv(R As ExtendedEngine, var$) As csvHandle
+        Return New csvHandle(
+            path:=App.GetAppSysTempFile(".csv", App.PID),
+            var:=var,
+            append:=False,
+            encoding:=TextEncodings.UTF8WithoutBOM
+        )
+    End Function
+
     <Extension>
     Public Function PushAsTable(table As IO.File, Optional skipFirst As Boolean = True) As String
-        Dim var$ = App.NextTempName
+        Dim var$ = RDotNetGC.Allocate
         Call table.PushAsTable(var, skipFirst)
         Return var
     End Function
@@ -69,7 +88,8 @@ Public Module DataFrameAPI
     ''' <param name="table"></param>
     ''' <param name="tableName"></param>
     ''' <param name="skipFirst">
-    ''' If the first column is the rows name, and you don't want these names, then you should set this as TRUE to skips this data.
+    ''' If the first column is the rows name, and you don't want these names, then you should set this as 
+    ''' ``TRUE`` to skips this data.
     ''' </param>
     <Extension>
     Public Sub PushAsTable(table As IO.File, tableName As String, Optional skipFirst As Boolean = True)
@@ -88,11 +108,18 @@ Public Module DataFrameAPI
             End If
         Next
 
-        Dim sb As New StringBuilder()
-        Dim colNames As String = RScripts.c(table.First.Skip(If(skipFirst, 1, 0)).ToArray)
+        Dim sb As ScriptBuilder = "
+            {$tableName} <- matrix(c({$matrix}),ncol={$ncol},byrow=TRUE);
+            colnames({$tableName}) <- {$colNames}
+        "
+        Dim colNames$ = RScripts.c(table.First.Skip(If(skipFirst, 1, 0)).ToArray)
 
-        sb.AppendLine($"{tableName} <- matrix(c({matrix.JoinBy(",")}),ncol={ncol},byrow=TRUE);")
-        sb.AppendLine($"colnames({tableName}) <- {colNames}")
+        With sb
+            !tableName = tableName
+            !matrix = matrix.JoinBy(",")
+            !ncol = ncol
+            !colNames = colNames
+        End With
 
         SyncLock R
             With R
@@ -109,6 +136,7 @@ Public Module DataFrameAPI
     ''' n = c(2, 3, 5) 
     ''' s = c("aa", "bb", "cc") 
     ''' b = c(TRUE, FALSE, TRUE) 
+    ''' 
     ''' df = data.frame(n, s, b)       # df Is a data frame
     ''' 
     ''' # df
@@ -128,29 +156,36 @@ Public Module DataFrameAPI
                                Optional typeParsing As Boolean = True,
                                Optional rowNames As IEnumerable(Of String) = Nothing)
 
-        Dim names As String() = df.First.ToArray
+        Dim names$() = df.First.ToArray
 
         df = New IO.File(df.Skip(1))
-        If types Is Nothing Then
-            types = New Dictionary(Of String, Type)
-        End If
+        types = types Or New Dictionary(Of String, Type)().AsDefault
+
+        ' 转换为data.frame的原理：
+        ' 将csv对象之中的每一列都转换为相应的向量列
+        ' 然后再使用data.frame(n, s, b)即可转换为data.frame对象
 
         SyncLock R
             With R
-                Dim ref$ = App.NextTempName
+                Dim ref$ = RDotNetGC.Allocate
                 Dim refNames$() = New String(names.Length - 1) {}
 
                 .call = $"{ref} <- list();"
 
                 For Each col As SeqValue(Of String()) In df.Columns.SeqIterator
                     Dim name As String = names(col.i)
-                    Dim type As Type = If(
-                        types.ContainsKey(name),
-                        types(name),
-                        If(typeParsing,
-                           col.value.SampleForType,
-                           GetType(String)))
+                    Dim type As Type
                     Dim cc As String
+
+                    If types.ContainsKey(name) Then
+                        type = types(name)
+                    Else
+                        If typeParsing Then
+                            type = col.value.SampleForType
+                        Else
+                            type = GetType(String)
+                        End If
+                    End If
 
                     Select Case type
                         Case GetType(String)
@@ -185,7 +220,7 @@ Public Module DataFrameAPI
                                     Optional types As Dictionary(Of String, Type) = Nothing,
                                     Optional typeParsing As Boolean = True,
                                     Optional rowNames As IEnumerable(Of String) = Nothing) As String
-        Dim var$ = App.NextTempName
+        Dim var$ = RDotNetGC.Allocate
         Call df.PushAsDataFrame(var, types, typeParsing, rowNames)
         Return var
     End Function
@@ -213,7 +248,7 @@ Public Module DataFrameAPI
     ''' <returns>Returns the temp variable name that reference to the dataframe object in R memory.</returns>
     <Extension>
     Public Function dataframe(Of T)(source As IEnumerable(Of T), Optional maps As Dictionary(Of String, String) = Nothing) As String
-        Dim tmp As String = App.NextTempName
+        Dim tmp As String = RDotNetGC.Allocate
         Call PushAsDataFrame(source, var:=tmp, maps:=maps)
         Return tmp
     End Function
@@ -283,29 +318,34 @@ l;
     ''' <typeparam name="T"></typeparam>
     ''' <param name="var"></param>
     ''' <returns></returns>
-    <Extension> Public Function AsDataFrame(Of T As Class)(var As var, Optional maps As Dictionary(Of String, String) = Nothing) As T()
+    <Extension> Public Function AsDataFrame(Of T As Class)(var As var,
+                                                           Optional maps As NameMapping = Nothing,
+                                                           Optional mute As Boolean = False) As T()
         Dim tmp$ = App.GetAppSysTempFile
         Dim out As T()
 
-        utils.write.csv(x:=var.Name, file:=tmp, rowNames:=False)
+        utils.write.csv(x:=var.name, file:=tmp, rowNames:=False)
+        ' R的write.csv函数所保存的文件编码默认为UTF8编码
         out = tmp.LoadCsv(Of T)(
             encoding:=Encodings.UTF8.CodePage,
-            maps:=maps) ' R的write.csv函数所保存的文件编码默认为UTF8编码
+            maps:=maps,
+            mute:=mute
+        )
 
         Return out
     End Function
 
     ''' <summary>
     ''' Write the ``vb.net`` csv dataframe into the R server memory through file IO.
-    ''' (函数所返回来的字符串值为临时变量的名称)
+    ''' (函数所返回来的字符串值为临时变量的名称，这个函数适用于很大的csv文件)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="df"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function WriteDataFrame(Of T)(df As IEnumerable(Of T), Optional encoding As Encodings = Encodings.UTF8) As String
+    Public Function WriteDataFrame(Of T)(df As IEnumerable(Of T), Optional encoding As Encodings = Encodings.UTF8WithoutBOM) As String
         Dim tmp$ = App.GetAppSysTempFile(sessionID:=App.PID).UnixPath
-        Dim var$ = App.NextTempName
+        Dim var$ = RDotNetGC.Allocate
 
         SyncLock R
             With R

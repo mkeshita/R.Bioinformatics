@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81e4e87119863751fa685c0bbf736458, RDotNET.Extensions.VisualBasic\Extensions\RScriptInvoke.vb"
+﻿#Region "Microsoft.VisualBasic::c821ce1f9d944ce5de4380178d594d0f, RDotNET.Extensions.VisualBasic\Extensions\RScriptInvoke.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Linq
+Imports RDotNET.Extensions.VisualBasic.Serialization
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.Abstract
 
 ''' <summary>
@@ -118,7 +119,7 @@ Public Class RScriptInvoke
     ''' <returns></returns>
     Public Function Invoke(Of T As Class)() As T
         Dim raw As RDotNET.SymbolicExpression = R.Evaluate([Call])
-        Dim result As T = Serialization.S4Object(Of T)(raw)
+        Dim result As T = SerializationExtensions.S4Object(Of T)(raw)
         Return result
     End Function
 End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5496582bd2a9c7228139031b0371ad45, RDotNET.Extensions.VisualBasic\userFunctions\Tools.vb"
+﻿#Region "Microsoft.VisualBasic::ad3ab05c24278203e09e3425488fef45, RDotNET.Extensions.VisualBasic\userFunctions\Tools.vb"
 
     ' Author:
     ' 
@@ -68,7 +68,7 @@ Namespace Custom
         End Function
 
         <Extension> Public Function RemovesRlistNULL(list As var) As String
-            Return list.Name.RemovesRlistNULL
+            Return list.name.RemovesRlistNULL
         End Function
 
         ''' <summary>

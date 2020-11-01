@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8d1332c2e013e40b747003df21aa158, RDotNET.Extensions.VisualBasic\ScriptBuilder\Abstract\IRScript.vb"
+﻿#Region "Microsoft.VisualBasic::869f63a15018c850d4fe5abff8f78da4, RDotNET.Extensions.VisualBasic\ScriptBuilder\Abstract\IRScript.vb"
 
     ' Author:
     ' 
@@ -110,7 +110,7 @@ Namespace SymbolBuilder.Abstract
         Public Sub Dispose() Implements IDisposable.Dispose
             ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
             Dispose(True)
-            GC.SuppressFinalize(Me)
+            System.GC.SuppressFinalize(Me)
         End Sub
 #End Region
     End Class

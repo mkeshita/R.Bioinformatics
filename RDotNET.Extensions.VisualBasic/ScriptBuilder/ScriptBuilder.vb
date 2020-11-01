@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b203903733d70367e0829c23c6369344, RDotNET.Extensions.VisualBasic\ScriptBuilder\ScriptBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::2525740f9f047bb84cbacf759c0dac5c, RDotNET.Extensions.VisualBasic\ScriptBuilder\ScriptBuilder.vb"
 
     ' Author:
     ' 
@@ -41,10 +41,14 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Language
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.Abstract
 
 Namespace SymbolBuilder
 
+    ''' <summary>
+    ''' The R script builder
+    ''' </summary>
     Public Class ScriptBuilder : Inherits Scripting.SymbolBuilder.ScriptBuilder
 
         Sub New(capacity%)
@@ -64,6 +68,13 @@ Namespace SymbolBuilder
         Public Overloads Shared Operator +(sb As ScriptBuilder, s As IRToken) As ScriptBuilder
             Call sb.Script.AppendLine(s.RScript)
             Return sb
+        End Operator
+
+        Public Overloads Shared Widening Operator CType(script As String) As ScriptBuilder
+            With New ScriptBuilder
+                Call .AppendLine(script)
+                Return .ByRef
+            End With
         End Operator
     End Class
 End Namespace

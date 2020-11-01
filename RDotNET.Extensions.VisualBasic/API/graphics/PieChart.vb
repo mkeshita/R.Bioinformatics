@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adf9d72c6671857ec30de2e5bd752dc7, RDotNET.Extensions.VisualBasic\API\graphics\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::f45d4225d1f6324f92c450c5c4b61363, RDotNET.Extensions.VisualBasic\API\graphics\PieChart.vb"
 
     ' Author:
     ' 
@@ -44,21 +44,26 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MMFProtocol.Pipeline
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.packages.Graphics
 
 Namespace API.Graphics
 
-    <Package("PieChart",
+    <Package("R.PieChart",
                   Description:="Pie charts are not recommended in the R documentation, and their features are somewhat limited. 
                   The authors recommend bar or dot plots over pie charts because people are able to judge length more accurately than volume. 
                   Pie charts are created with the function pie(x, labels=) where x is a non-negative numeric vector indicating the area of each slice and labels= notes a character vector of names for the slices.",
                   Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://statmethods.net/graphs/pie.html")>
     Public Module PieChart
 
-        <ExportAPI("Pie", Info:="Draw a simple pie chart.")>
+        ''' <summary>
+        ''' Draw a simple pie chart.
+        ''' </summary>
+        ''' <param name="slices"></param>
+        ''' <param name="Title"></param>
+        ''' <param name="SaveTo"></param>
+        ''' <returns></returns>
         Public Function PieSimple(slices As IEnumerable(Of NamedValue(Of Double)),
                               Optional Title As String = "",
                               <Parameter("Path.Save")> Optional SaveTo As String = "./pie.png") As Boolean

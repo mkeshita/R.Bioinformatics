@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fcdf6c8944ac2affcda47e68c6c24e8, RDotNET.Extensions.VisualBasic\ScriptBuilder\RPackage\Graphics\gplots\DendrogramAPI.vb"
+﻿#Region "Microsoft.VisualBasic::2b362b5b1e15ddc53f7586eafc89532d, RDotNET\test\Module1.vb"
 
     ' Author:
     ' 
@@ -31,37 +31,22 @@
 
     ' Summaries:
 
-    '     Module DendrogramAPI
+    ' Module Module1
     ' 
-    '         Function: ClusterParts, GetEntities, IsLeaf, IsLeafX
-    ' 
+    '     Sub: init, Main
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures.BinaryTree
+Module Module1
 
-Namespace SymbolBuilder.packages.gplots
+    Sub Main()
+        Call init()
+    End Sub
 
-    Public Module DendrogramAPI
+    Sub init()
 
-        <Extension>
-        Public Function ClusterParts(Of T)(tree As BinaryTree(Of T)) As Dictionary(Of String, String())
-            Return tree.ClusterParts(AddressOf IsLeaf, AddressOf IsLeafX, AddressOf GetEntities)
-        End Function
+    End Sub
+End Module
 
-        Public Function IsLeaf(Of T)(x As TreeNode(Of T)) As Boolean
-            Throw New NotImplementedException
-        End Function
-
-        Public Function IsLeafX(Of T)(x As TreeNode(Of T)) As Boolean
-            Throw New NotImplementedException
-        End Function
-
-        Public Function GetEntities(Of T)(x As TreeNode(Of T)) As String()
-            Throw New NotImplementedException
-        End Function
-    End Module
-End Namespace

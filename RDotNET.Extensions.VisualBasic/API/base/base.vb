@@ -1,53 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::d0f27cbaf204546cbc919c6c49eadb6a, RDotNET.Extensions.VisualBasic\API\base\base.vb"
+﻿#Region "Microsoft.VisualBasic::3d23c8db15f4f4086e137f7fec521fb3, RDotNET.Extensions.VisualBasic\API\base\base.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module base
-    ' 
-    '         Properties: colnames, length, names, rownames
-    ' 
-    '         Function: (+4 Overloads) c, cbind, dataframe, library, list
-    '                   load, ls, (+2 Overloads) matrix, rbind, rep
-    '                   require, summary, vector, warning
-    ' 
-    '         Sub: __setNames, rm, save, suppressWarnings
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module base
+' 
+'         Properties: colnames, dimnames, length, names, rownames
+' 
+'         Function: argumentExpression, (+5 Overloads) c, cbind, (+2 Overloads) dataframe, exists
+'                   (+2 Overloads) lapply, library, (+4 Overloads) list, load, log2
+'                   ls, (+2 Overloads) matrix, order, parameterValueAssign, rbind
+'                   rep, require, save, solve, sum
+'                   summary, vector, warning
+' 
+'         Sub: __setNames, gc, rm, save, source
+'              suppressWarnings
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
 
@@ -61,7 +69,227 @@ Namespace API
     ''' 
     ''' For a complete list of functions, use ``library(help = "base")``.
     ''' </summary>
+    ''' 
+    <Package("Rinterop.base")>
     Public Module base
+
+        ''' <summary>
+        ''' Assign a Value to a Name
+        ''' 
+        ''' Assign a value to a name in an environment.
+        ''' </summary>
+        ''' <param name="x">a variable name, given as a character string. No coercion is done, 
+        ''' and the first element of a character vector of length greater than one will be 
+        ''' used, with a warning.</param>
+        ''' <param name="value">a value to be assigned to x.</param>
+        ''' <param name="pos">where to do the assignment. By default, assigns into the current 
+        ''' environment. See ‘Details’ for other possibilities.</param>
+        ''' <param name="envir">the environment to use. See ‘Details’.</param>
+        ''' <param name="inherits">should the enclosing frames of the environment be inspected?
+        ''' </param>
+        ''' <param name="immediate">an ignored compatibility feature.</param>
+        ''' <returns>
+        ''' This function is invoked for its side effect, which is assigning value to the 
+        ''' variable x. If no envir is specified, then the assignment takes place in the 
+        ''' currently active environment.
+        '''
+        ''' If inherits is TRUE, enclosing environments of the supplied environment are searched 
+        ''' until the variable x is encountered. The value is then assigned in the environment 
+        ''' in which the variable is encountered (provided that the binding is not locked: see 
+        ''' lockBinding: if it is, an error is signaled). If the symbol is not encountered then 
+        ''' assignment takes place in the user's workspace (the global environment).
+        '''
+        ''' If inherits is FALSE, assignment takes place in the initial frame of envir, unless 
+        ''' an existing binding is locked or there is no existing binding and the environment 
+        ''' is locked (when an error is signaled).
+        ''' </returns>
+        ''' <remarks>
+        ''' There are no restrictions on the name given as x: it can be a non-syntactic name 
+        ''' (see make.names).
+        '''
+        ''' The pos argument can specify the environment in which to assign the object in any 
+        ''' of several ways: as -1 (the default), as a positive integer (the position in the 
+        ''' search list); as the character string name of an element in the search list; or as 
+        ''' an environment (including using sys.frame to access the currently active function 
+        ''' calls). The envir argument is an alternative way to specify an environment, but 
+        ''' is primarily for back compatibility.
+        '''
+        ''' assign does not dispatch assignment methods, so it cannot be used to set elements 
+        ''' of vectors, names, attributes, etc.
+        '''
+        ''' Note that assignment to an attached list or data frame changes the attached copy 
+        ''' and not the original object: see attach and with.
+        ''' </remarks>
+        <ExportAPI("assign")>
+        Public Function assign(x$, value$,
+                               Optional pos% = -1,
+                               Optional envir$ = "as.environment({$pos})",
+                               Optional [inherits] As Boolean = False,
+                               Optional immediate As Boolean = True) As String
+            SyncLock R
+                With R
+                    .call = $"assign({x.Rstring}, {value}, pos = {pos}, envir = {envir.Replace("{$pos}", pos)},
+       inherits = {[inherits].λ}, immediate = {immediate.λ});"
+                End With
+            End SyncLock
+
+            Return x
+        End Function
+
+        Public Function log2(vector As IEnumerable(Of Double)) As String
+            Dim var$ = RDotNetGC.Allocate
+
+            SyncLock R
+                With R
+                    .call = $"{var} <- log2({c(vector)});"
+                End With
+            End SyncLock
+
+            Return var
+        End Function
+
+        Public Function order(x$, Optional nalast As Boolean = True, Optional decreasing As Boolean = False, Optional method$ = "shell") As String
+            Dim var$ = RDotNetGC.Allocate
+
+            SyncLock R
+                With R
+                    .call = $"{var} <- order({x}, na.last = {nalast.λ}, decreasing = {decreasing.λ}, method = {Rstring(method)});"
+                End With
+            End SyncLock
+
+            Return var
+        End Function
+
+        ''' <summary>
+        ''' Solve a System of Equations
+        ''' 
+        ''' This generic function solves the equation a %*% x = b for x, where b can be either a 
+        ''' vector or a matrix.
+        ''' </summary>
+        ''' <param name="a$">
+        ''' a square numeric or complex matrix containing the coefficients of the linear system. Logical matrices are coerced to numeric.
+        ''' </param>
+        ''' <param name="b$">
+        ''' a numeric or complex vector or matrix giving the right-hand side(s) of the linear system. If missing, b is taken to be an 
+        ''' identity matrix and solve will return the inverse of a</param>
+        ''' <param name="arguments">further arguments passed to or from other methods</param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' a or b can be complex, but this uses double complex arithmetic which might not be available on all platforms.
+        ''' The row and column names of the result are taken from the column names of a and of b respectively. If b is missing the column 
+        ''' names of the result are the row names of a. No check is made that the column names of a and the row names of b are equal.
+        ''' For back-compatibility a can be a (real) QR decomposition, although qr.solve should be called in that case. qr.solve can handle 
+        ''' non-square systems.
+        ''' Unsuccessful results from the underlying LAPACK code will result in an error giving a positive error code: these can only be 
+        ''' interpreted by detailed study of the FORTRAN code.
+        ''' </remarks>
+        Public Function solve(a$, Optional b$ = Nothing, Optional arguments As Dictionary(Of String, String) = Nothing) As String
+            Dim var$ = RDotNetGC.Allocate
+            Dim args = arguments _
+                .SafeQuery _
+                .Select(Function(v) $"{v.Key} = {v.Value}") _
+                .JoinBy(", ")
+            Dim params$
+
+            SyncLock R
+                With R
+                    If b.StringEmpty Then
+                        params = {a, args}.JoinBy(", ")
+                    Else
+                        params = {a, b, args}.JoinBy(", ")
+                    End If
+
+                    .call = $"{var} <- solve({params});"
+                End With
+            End SyncLock
+
+            Return var
+        End Function
+
+
+        ''' <summary>
+        ''' The R engine execute a R script. source causes R to accept its input from the named file or URL or connection.
+        ''' Input is read and parsed from that file until the end of the file is reached, then the parsed expressions are
+        ''' evaluated sequentially in the chosen environment.
+        ''' (R引擎执行文件系统之中的一个R脚本)
+        ''' </summary>
+        ''' <param name="file">a connection Or a character String giving the pathname Of the file Or URL To read from. ""
+        ''' indicates the connection stdin().
+        ''' </param>
+        ''' <param name="local">TRUE, FALSE or an environment, determining where the parsed expressions are evaluated.
+        ''' FALSE (the default) corresponds to the user's workspace (the global environment) and TRUE to the environment
+        ''' from which source is called.</param>
+        ''' <param name="echo">logical; if TRUE, each expression is printed after parsing, before evaluation.</param>
+        ''' <param name="printEval">logical; if TRUE, the result of eval(i) is printed for each expression i; defaults to the value of echo.</param>
+        ''' <param name="verbose">if TRUE, more diagnostics (than just echo = TRUE) are printed during parsing and evaluation of input,
+        ''' including extra info for each expression.</param>
+        ''' <param name="promptEcho">character; gives the prompt to be used if echo = TRUE.</param>
+        ''' <param name="maxDeparseLength">integer; is used only if echo is TRUE and gives the maximal number of characters output for
+        ''' the deparse of a single expression.</param>
+        ''' <param name="chdir">logical; if TRUE And file Is a pathname, the R working directory Is temporarily changed to the
+        ''' directory containing file for evaluating.</param>
+        ''' <param name="encoding">character vector. The encoding(s) to be assumed when file is a character string: see file.
+        ''' A possible value is "unknown" when the encoding is guessed: see the ‘Encodings’ section.</param>
+        ''' <param name="continueEcho">character; gives the prompt to use on continuation lines if echo = TRUE.</param>
+        ''' <param name="skipEcho">integer; how many comment lines at the start of the file to skip if echo = TRUE.</param>
+        ''' <param name="keepSource">logical: should the source formatting be retained When echoing expressions, If possible?</param>
+        ''' <remarks>
+        ''' Note that running code via source differs in a few respects from entering it at the R command line. Since expressions are not executed
+        ''' at the top level, auto-printing is not done. So you will need to include explicit print calls for things you want to be printed
+        ''' (and remember that this includes plotting by lattice, FAQ Q7.22). Since the complete file is parsed before any of it is run, syntax
+        ''' errors result in none of the code being run. If an error occurs in running a syntactically correct script, anything assigned into the
+        ''' workspace by code that has been run will be kept (just as from the command line), but diagnostic information such as traceback() will
+        ''' contain additional calls to withVisible.
+        '''
+        ''' All versions Of R accept input from a connection With End Of line marked by LF (As used On Unix), CRLF (As used On DOS/Windows) Or CR
+        ''' (As used On classic Mac OS) And map this To newline. The final line can be incomplete, that Is missing the final End-Of-line marker.
+        '''
+        ''' If keep.source Is True(the Default In interactive use), the source Of functions Is kept so they can be listed exactly As input.
+        '''
+        ''' Unlike input from a console, lines In the file Or On a connection can contain an unlimited number Of characters.
+        '''
+        ''' When skip.echo > 0, that many comment lines at the start of the file will Not be echoed. This does Not affect the execution of the code at all.
+        ''' If there are executable lines within the first skip.echo lines, echoing will start with the first of them.
+        '''
+        ''' If echo Is True And a deparsed expression exceeds max.deparse.length, that many characters are output followed by .... [TRUNCATED] .
+        '''
+        ''' [Encodings]
+        ''' By Default the input Is read And parsed In the current encoding Of the R session. This Is usually what it required, but occasionally re-encoding
+        ''' Is needed, e.g. If a file from a UTF-8-Using system Is To be read On Windows (Or vice versa).
+        '''
+        ''' The rest Of this paragraph applies If file Is an actual filename Or URL (And Not "" nor a connection). If encoding = "unknown", an attempt Is
+        ''' made To guess the encoding: the result Of localeToCharset() Is used As a guide. If encoding has two Or more elements, they are tried In turn
+        ''' until the file/URL can be read without Error In the trial encoding. If an actual encoding Is specified (rather than the Default Or "unknown")
+        ''' In a Latin-1 Or UTF-8 locale Then character strings In the result will be translated To the current encoding And marked As such (see Encoding).
+        '''
+        ''' If file Is a connection (including one specified by "", it Is Not possible To re-encode the input inside source, And so the encoding argument
+        ''' Is just used To mark character strings In the parsed input In Latin-1 And UTF-8 locales: see parse.
+        ''' </remarks>
+        Public Sub source(file As String,
+                          Optional local As Boolean = True,
+                          Optional echo As Boolean = False,
+                          Optional printEval As Boolean = False,
+                          Optional verbose As Boolean = False,
+                          Optional promptEcho As Boolean = False,
+                          Optional maxDeparseLength As Integer = 150,
+                          Optional chdir As Boolean = False,
+                          Optional encoding As String = "unknown",
+                          Optional continueEcho As Boolean = False,
+                          Optional skipEcho As Integer = 0,
+                          Optional keepSource As Boolean = False)
+            SyncLock R
+                With R
+                    .call = $"source(""{If(local, UnixPath(file), file)}"", local = {Rbool(local)}, echo = {Rbool(echo)}, print.eval = {Rbool(printEval)},
+                         verbose = {Rbool(verbose)},
+                         prompt.echo = {Rbool(promptEcho)},
+                         max.deparse.length = {maxDeparseLength}, chdir = {Rbool(chdir)},
+                         encoding = {Rstring(encoding)},
+                         continue.echo = {Rbool(continueEcho)},
+                         skip.echo = {skipEcho}, 
+                         keep.source = {Rbool(keepSource)});"
+                End With
+            End SyncLock
+        End Sub
 
         ''' <summary>
         ''' Replicate Elements of Vectors and Lists
@@ -80,7 +308,7 @@ Namespace API
         Public Function rep(x$, times%) As String
             SyncLock R
                 With R
-                    Dim var$ = App.NextTempName
+                    Dim var$ = RDotNetGC.Allocate
 
                     .call = $"{var} <- rep({x}, times = {times});"
 
@@ -140,6 +368,32 @@ Namespace API
         End Property
 
         ''' <summary>
+        ''' Retrieve or set the dimnames of an object.
+        ''' </summary>
+        ''' <param name="x">an R object, for example a matrix, array or data frame.</param>
+        ''' <returns>返回变量指针字符串</returns>
+        Public Property dimnames(x As String) As String
+            Get
+                Dim var$ = RDotNetGC.Allocate
+
+                SyncLock R
+                    With R
+                        .call = $"{var} <- dimnames({x});"
+                    End With
+                End SyncLock
+
+                Return var
+            End Get
+            Set(value As String)
+                SyncLock R
+                    With R
+                        .call = $"dimnames({x}) <- {value}"
+                    End With
+                End SyncLock
+            End Set
+        End Property
+
+        ''' <summary>
         ''' Retrieve or set the row or column names of a matrix-like object.
         ''' </summary>
         ''' <param name="x$">a matrix-Like R Object, With at least two dimensions For colnames.</param>
@@ -176,20 +430,84 @@ Namespace API
         ''' For a matrix or array this is either NULL or a character vector of non-zero length 
         ''' equal to the appropriate dimension.
         ''' </returns>
-        Public Property rownames(x$, Optional doNULL As Boolean = True, Optional prefix$ = "col") As String()
+        Public Property rownames(x$, Optional doNULL As Boolean = True, Optional prefix$ = "col") As StringVector
             Get
                 SyncLock R
                     With R
                         Dim s As SymbolicExpression = .Evaluate($"rownames({x}, do.NULL = {doNULL.λ}, prefix = {Rstring(prefix)})")
                         Dim namelist$() = s.ToStrings
+
                         Return namelist
                     End With
                 End SyncLock
             End Get
-            Set(value As String())
-                Call x.__setNames(value, "rownames")
+            Set(value As StringVector)
+                If value.IsSingle AndAlso base.exists(value.First) Then
+                    SyncLock R
+                        With R
+                            value = .Evaluate(value.First) _
+                                .AsCharacter _
+                                .ToArray
+                        End With
+                    End SyncLock
+                End If
+
+                Call x.__setNames(value.ToArray, "rownames")
             End Set
         End Property
+
+        ''' <summary>
+        ''' Look for an R object of the given name and possibly return it
+        ''' </summary>
+        ''' <param name="x$">a variable name (given as a character string).</param>
+        ''' <param name="where%">where to look for the object (see the details section); 
+        ''' if omitted, the function will search as if the name of the object appeared 
+        ''' unquoted in an expression.</param>
+        ''' <param name="envir$">an alternative way to specify an environment to look in, 
+        ''' but it is usually simpler to just use the where argument.</param>
+        ''' <param name="frame$">a frame in the calling list. Equivalent to giving where 
+        ''' as ``sys.frame(frame)``.</param>
+        ''' <param name="mode$">the mode or type of object sought: see the ‘Details’ section.
+        ''' </param>
+        ''' <param name="[inherits]">should the enclosing frames of the environment be searched?
+        ''' </param>
+        ''' <returns>
+        ''' Logical, true if and only if an object of the correct name and mode is found.
+        ''' </returns>
+        ''' <remarks>
+        ''' The where argument can specify the environment in which to look for the 
+        ''' object in any of several ways: as an integer (the position in the search 
+        ''' list); as the character string name of an element in the search list; 
+        ''' or as an environment (including using sys.frame to access the currently 
+        ''' active function calls). The envir argument is an alternative way to specify 
+        ''' an environment, but is primarily there for back compatibility.
+        ''' This Function looks To see If the name x has a value bound To it In the 
+        ''' specified environment. If Inherits Is True And a value Is Not found For 
+        ''' x In the specified environment, the enclosing frames Of the environment 
+        ''' are searched until the name x Is encountered. See environment And the 'R 
+        ''' Language Definition’ manual for details about the structure of environments 
+        ''' and their enclosures.
+        ''' Warning: Inherits = TRUE Is the default behaviour for R but Not for S.
+        ''' If mode Is specified Then only objects of that type are sought. The mode 
+        ''' may specify one of the collections "numeric" And "function" (see mode): 
+        ''' Any member Of the collection will suffice. (This Is True even If a member 
+        ''' Of a collection Is specified, so for example mode = "special" will seek 
+        ''' any type of function.)
+        ''' </remarks>
+        Public Function exists(x$,
+                               Optional where% = -1,
+                               Optional envir$ = "",
+                               Optional frame$ = NULL,
+                               Optional mode$ = "any",
+                               Optional [inherits] As Boolean = True) As Boolean
+            SyncLock R
+                With R
+                    Return .Evaluate(statement:=$"exists({Rstring(x)}, where = {where},  mode = {Rstring(mode)}, inherits = {[inherits].λ})") _
+                           .AsLogical _
+                           .First
+                End With
+            End SyncLock
+        End Function
 
         ''' <summary>
         ''' Template for invoke set names function in R language
@@ -226,6 +544,82 @@ Namespace API
         End Sub
 
         ''' <summary>
+        ''' lapply returns a list of the same length as X, each element of which is the result of applying 
+        ''' <paramref name="FUN"/> to the corresponding element of X.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x">
+        ''' a vector (atomic or list) or an expression object. Other objects (including classed objects) will 
+        ''' be coerced by ``base::as.list``.
+        ''' </param>
+        ''' <param name="FUN">
+        ''' the function to be applied to each element of X: see ‘Details’. In the case of functions like +, 
+        ''' %*%, the function name must be backquoted or quoted.
+        ''' </param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function lapply(Of T As INamedValue)(x As IEnumerable(Of T), FUN As Func(Of T, String), Optional autoGC As Boolean = False) As String
+            Return lapply(x, Function(obj) obj.Key, FUN, autoGC)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function lapply(Of T)(x As IEnumerable(Of IGrouping(Of String, T)), FUN As Func(Of IEnumerable(Of T), String), Optional autoGC As Boolean = False) As String
+            Return lapply(x, Function(group) group.Key, Function(group) FUN(group), autoGC)
+        End Function
+
+        ''' <summary>
+        ''' lapply returns a list of the same length as X, each element of which is the result of applying 
+        ''' <paramref name="FUN"/> to the corresponding element of X.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x">
+        ''' a vector (atomic or list) or an expression object. Other objects (including classed objects) will 
+        ''' be coerced by ``base::as.list``.
+        ''' </param>
+        ''' <param name="FUN">
+        ''' the function to be applied to each element of X: see ‘Details’. In the case of functions like +, 
+        ''' %*%, the function name must be backquoted or quoted.
+        ''' </param>
+        ''' <returns></returns>
+        Public Function lapply(Of T)(x As IEnumerable(Of T), key As Func(Of T, String), FUN As Func(Of T, String), Optional autoGC As Boolean = False) As String
+            Dim list$ = base.list
+
+            If autoGC Then
+                Call RDotNetGC.Exclude(list)
+            End If
+
+            SyncLock R
+                With R
+                    Call x.DoEach(Sub(obj)
+                                      .call = $"{list}[[""{key(obj)}""]] = {FUN(obj)}"
+
+                                      If autoGC AndAlso RDotNetGC.numObjects > 10000 Then
+                                          Call RDotNetGC.Do()
+                                      End If
+                                  End Sub)
+                End With
+            End SyncLock
+
+            Return list
+        End Function
+
+        ''' <summary>
+        ''' lapply on a dictionary list object.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
+        ''' <param name="FUN"></param>
+        ''' <returns></returns>
+        Public Function lapply(Of T)(x As Dictionary(Of String, T), FUN As Func(Of T, String, String)) As String
+            Return lapply(Of KeyValuePair(Of String, T))(
+                x:=x,
+                key:=Function(obj) obj.Key,
+                FUN:=Function(tuple) FUN(tuple.Value, tuple.Key)
+            )
+        End Function
+
+        ''' <summary>
         ''' ###### load {base}
         ''' 
         ''' Reload Saved Datasets, Reload datasets written with the function <see cref="save"/>.
@@ -249,7 +643,7 @@ Namespace API
             SyncLock R
                 With R
                     Dim expr$ = $"load(file = {Rstring(file.UnixPath)}, verbose = {verbose.λ})"
-                    Dim var$ = App.NextTempName
+                    Dim var$ = RDotNetGC.Allocate
 
                     .call = $"{var} <- {expr}"
 
@@ -279,6 +673,14 @@ Namespace API
             End SyncLock
         End Sub
 
+        Public Sub gc()
+            SyncLock R
+                With R
+                    .call = "gc();"
+                End With
+            End SyncLock
+        End Sub
+
         ''' <summary>
         ''' List Objects
         ''' 
@@ -288,52 +690,101 @@ Namespace API
         ''' When invoked with no argument inside a function, ls returns the names of 
         ''' the function's local variables: this is useful in conjunction with browser.
         ''' </summary>
-        ''' <param name="name$">which environment to use in listing the available objects. Defaults to the current environment. Although called name for back compatibility, in fact this argument can specify the environment in any form; see the ‘Details’ section.</param>
-        ''' <param name="pos$">an alternative argument to name for specifying the environment as a position in the search list. Mostly there for back compatibility.</param>
-        ''' <param name="allnames">a logical value. If TRUE, all object names are returned. If FALSE, names which begin with a . are omitted.</param>
-        ''' <param name="pattern$">an optional regular expression. Only names matching pattern are returned. glob2rx can be used to convert wildcard patterns to regular expressions.</param>
-        ''' <param name="sorted">logical indicating if the resulting character should be sorted alphabetically. Note that this is part of ls() may take most of the time.</param>
+        ''' <param name="name$">which environment to use in listing the available objects. Defaults to the current environment. 
+        ''' Although called name for back compatibility, in fact this argument can specify the environment in any form; see the 
+        ''' ``Details`` section.</param>
+        ''' <param name="pos$">
+        ''' an alternative argument to name for specifying the environment as a position in the search list. Mostly there for 
+        ''' back compatibility.
+        ''' </param>
+        ''' <param name="allnames">
+        ''' a logical value. If TRUE, all object names are returned. If FALSE, names which begin with a . are omitted.
+        ''' </param>
+        ''' <param name="pattern$">
+        ''' an optional regular expression. Only names matching pattern are returned. glob2rx can be used to convert wildcard 
+        ''' patterns to regular expressions.
+        ''' </param>
+        ''' <param name="sorted">
+        ''' logical indicating if the resulting character should be sorted alphabetically. Note that this is part of ``ls()``
+        ''' may take most of the time.
+        ''' </param>
         ''' <returns></returns>
         Public Function ls(Optional name$ = Nothing,
                            Optional pos$ = "-1L",
                            Optional allnames As Boolean = False,
                            Optional pattern$ = Nothing,
                            Optional sorted As Boolean = True) As String
-            Dim var$ = App.NextTempName
-            Dim args As New Dictionary(Of String, String)
+            Dim var$ = RDotNetGC.Allocate
 
             SyncLock R
                 With R
-                    .call = $"{var} <- ls({name}, pos = {pos}, envir = as.environment({pos}), all.names = {allnames.λ}, pattern = {pattern}, sorted = {sorted.λ})"
+                    If name.StringEmpty Then
+                        .call = $"{var} <- ls(pos = {pos}, envir = as.environment({pos}), all.names = {allnames.λ}, pattern = {pattern}, sorted = {sorted.λ});"
+                    Else
+                        .call = $"{var} <- ls({name}, pos = {pos}, envir = as.environment({pos}), all.names = {allnames.λ}, pattern = {pattern}, sorted = {sorted.λ});"
+                    End If
+
                     Return var
                 End With
             End SyncLock
         End Function
 
         ''' <summary>
-        ''' writes an external representation of R objects to the specified file. The objects can be read back from the file at a later date by using the function load or attach (or data in some cases).
+        ''' writes an external representation of R objects to the specified file. The objects can be read 
+        ''' back from the file at a later date by using the function load or attach (or data in some cases).
+        ''' (这个函数是安全的函数，假若文件夹不存在的话，这个函数会自动创建文件夹)
         ''' </summary>
         ''' <param name="objects">the names of the objects to be saved (as symbols or character strings).</param>
-        ''' <param name="file$">a (writable binary-mode) connection or the name of the file where the data will be saved (when tilde expansion is done). Must be a file name for save.image or version = 1.</param>
-        ''' <param name="ascii">if TRUE, an ASCII representation of the data is written. The default value of ascii is FALSE which leads to a binary file being written. If NA and version >= 2, a different ASCII representation is used which writes double/complex numbers as binary fractions.</param>
-        ''' <param name="version$">the workspace format version to use. NULL specifies the current default format. The version used from R 0.99.0 to R 1.3.1 was version 1. The default format as from R 1.4.0 is version 2.</param>
+        ''' <param name="file$">a (writable binary-mode) connection or the name of the file where the data 
+        ''' will be saved (when tilde expansion is done). Must be a file name for save.image or version = 1.</param>
+        ''' <param name="ascii">if TRUE, an ASCII representation of the data is written. The default 
+        ''' value of ascii is FALSE which leads to a binary file being written. If NA and version >= 2, a 
+        ''' different ASCII representation is used which writes double/complex numbers as binary fractions.</param>
+        ''' <param name="version$">the workspace format version to use. NULL specifies the current default format.
+        ''' The version used from R 0.99.0 to R 1.3.1 was version 1. The default format as from R 1.4.0 is version 2.</param>
         ''' <param name="envir$">environment to search for objects to be saved.</param>
-        ''' <param name="compress$">logical or character string specifying whether saving to a named file is to use compression. TRUE corresponds to gzip compression, and character strings "gzip", "bzip2" or "xz" specify the type of compression. Ignored when file is a connection and for workspace format version 1.</param>
-        ''' <param name="compression_level$">integer: the level of compression to be used. Defaults to 6 for gzip compression and to 9 for bzip2 or xz compression.</param>
+        ''' <param name="compress$">logical or character string specifying whether saving to a named file is 
+        ''' to use compression. TRUE corresponds to gzip compression, and character strings "gzip", "bzip2" 
+        ''' or "xz" specify the type of compression. Ignored when file is a connection and for workspace 
+        ''' format version 1.</param>
+        ''' <param name="compression_level$">integer: the level of compression to be used. Defaults to 6 
+        ''' for gzip compression and to 9 for bzip2 or xz compression.</param>
         ''' <param name="eval_promises">logical: should objects which are promises be forced before saving?</param>
-        ''' <param name="precheck">logical: should the existence of the objects be checked before starting to save (and in particular before opening the file/connection)? Does not apply to version 1 saves.</param>
+        ''' <param name="precheck">logical: should the existence of the objects be checked before starting 
+        ''' to save (and in particular before opening the file/connection)? Does not apply to version 1 saves.</param>
         ''' <remarks>
-        ''' The names of the objects specified either as symbols (or character strings) in ... or as a character vector in list are used to look up the objects from environment envir. By default promises are evaluated, but if eval.promises = FALSE promises are saved (together with their evaluation environments). (Promises embedded in objects are always saved unevaluated.)
-        ''' All R platforms use the XDR (bigendian) representation Of C ints And doubles In binary save-d files, And these are portable across all R platforms.
-        ''' ASCII saves used To be useful For moving data between platforms but are now mainly Of historical interest. They can be more compact than binary saves where compression Is Not used, but are almost always slower To both read And write: binary saves compress much better than ASCII ones. Further, Decimal ASCII saves may Not restore Double/complex values exactly, And what value Is restored may depend On the R platform.
-        ''' Default values For the ascii, compress, safe And version arguments can be modified With the "save.defaults" Option (used both by save And save.image), see also the 'Examples’ section. If a "save.image.defaults" option is set it is used in preference to "save.defaults" for function save.image (which allows this to have different defaults). In addition, compression_level can be part of the "save.defaults" option.
-        ''' A connection that Is Not already open will be opened In mode "wb". Supplying a connection which Is open And Not In binary mode gives an Error.
+        ''' The names of the objects specified either as symbols (or character strings) in ... or as a 
+        ''' character vector in list are used to look up the objects from environment envir. By default 
+        ''' promises are evaluated, but if eval.promises = FALSE promises are saved (together with their 
+        ''' evaluation environments). (Promises embedded in objects are always saved unevaluated.)
+        ''' All R platforms use the XDR (bigendian) representation Of C ints And doubles In binary saved 
+        ''' files, And these are portable across all R platforms.
+        ''' ASCII saves used To be useful For moving data between platforms but are now mainly Of historical 
+        ''' interest. They can be more compact than binary saves where compression Is Not used, but are 
+        ''' almost always slower To both read And write: binary saves compress much better than ASCII ones. 
+        ''' Further, Decimal ASCII saves may Not restore Double/complex values exactly, And what value Is 
+        ''' restored may depend On the R platform.
+        ''' Default values For the ascii, compress, safe And version arguments can be modified With the 
+        ''' "save.defaults" Option (used both by save And save.image), see also the 'Examples’ section. 
+        ''' If a "save.image.defaults" option is set it is used in preference to "save.defaults" for function 
+        ''' save.image (which allows this to have different defaults). In addition, compression_level can be 
+        ''' part of the "save.defaults" option.
+        ''' A connection that Is Not already open will be opened In mode "wb". Supplying a connection which 
+        ''' Is open And Not In binary mode gives an Error.
         ''' 
         ''' ###### Compression
-        ''' Large files can be reduced considerably In size by compression. A particular 46MB R Object was saved As 35MB without compression In 2 seconds, 22MB With gzip compression In 8 secs, 19MB With bzip2 compression In 13 secs And 9.4MB With xz compression In 40 secs. The load times were 1.3, 2.8, 5.5 And 5.7 seconds respectively. These results are indicative, but the relative performances Do depend On the actual file: xz compressed unusually well here.
-        ''' It Is possible to compress later (with gzip, bzip2 Or xz) a file saved with compress = FALSE: the effect Is the same As saving With compression. Also, a saved file can be uncompressed And re-compressed under a different compression scheme (And see resaveRdaFiles For a way To Do so from within R).
+        ''' Large files can be reduced considerably In size by compression. A particular 46MB R Object was 
+        ''' saved As 35MB without compression In 2 seconds, 22MB With gzip compression In 8 secs, 19MB With 
+        ''' bzip2 compression In 13 secs And 9.4MB With xz compression In 40 secs. The load times were 1.3, 
+        ''' 2.8, 5.5 And 5.7 seconds respectively. These results are indicative, but the relative performances 
+        ''' Do depend On the actual file: xz compressed unusually well here.
+        ''' It Is possible to compress later (with gzip, bzip2 Or xz) a file saved with compress = FALSE: the 
+        ''' effect Is the same As saving With compression. Also, a saved file can be uncompressed And re-compressed 
+        ''' under a different compression scheme (And see resaveRdaFiles For a way To Do so from within R).
         ''' </remarks>
-        Public Sub save(objects As IEnumerable(Of String),
+        ''' 
+        <ExportAPI("save")>
+        Public Sub save(objects As String(),
                         file$,
                         Optional ascii As Boolean = False,
                         Optional version$ = "NULL",
@@ -342,6 +793,20 @@ Namespace API
                         Optional compression_level% = 6,
                         Optional eval_promises As Boolean = True,
                         Optional precheck As Boolean = True)
+
+            If file.DirectoryExists Then
+
+                ' 2018-6-21
+                ' 如果在指定的位置存在一个同名的文件夹，将会产生
+                ' can not open the connection的错误
+                '
+                ' 在这里给出错误信息
+                Throw New InvalidOperationException($"There is a directory which is located at ""{file}"", please delete it and then try again!")
+
+            Else
+                Call file.ParentPath.MkDIR
+            End If
+
             SyncLock R
                 With R
                     .call = $"save({objects.JoinBy(", ")}, 
@@ -353,6 +818,89 @@ Namespace API
             End SyncLock
         End Sub
 
+        Public Function save(vars As var(),
+                             file$,
+                             Optional ascii As Boolean = False,
+                             Optional version$ = "NULL",
+                             Optional envir$ = "parent.frame()",
+                             Optional compress As Boolean = True,
+                             Optional compression_level% = 6,
+                             Optional eval_promises As Boolean = True,
+                             Optional precheck As Boolean = True) As Boolean
+            Try
+                Call base.save(objects:=vars.Select(Function(v) v.name),
+                               file:=file,
+                               ascii:=ascii,
+                               compress:=compress,
+                               compression_level:=compression_level,
+                               envir:=envir,
+                               eval_promises:=eval_promises,
+                               precheck:=precheck,
+                               version:=version
+                )
+            Catch ex As Exception
+                Call App.LogException(ex)
+                Call ex.PrintException
+
+                Return False
+            End Try
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' Serialization Interface for Single Objects
+        ''' 
+        ''' Functions to write a single R object to a file, and to restore it.
+        ''' </summary>
+        ''' <param name="object">R object to serialize.</param>
+        ''' <param name="file">a connection or the name of the file where the 
+        ''' R object is saved to or read from.</param>
+        ''' <param name="ascii">a logical. If TRUE or NA, an ASCII representation 
+        ''' is written; otherwise (default), a binary one is used. See the 
+        ''' comments in the help for save.</param>
+        ''' <param name="version">the workspace format version to use. NULL 
+        ''' specifies the current default version (3). The only other supported 
+        ''' value is 2, the default from R 1.4.0 to R 3.5.0.</param>
+        ''' <param name="compress">a logical specifying whether saving to a named 
+        ''' file is to use "gzip" compression, or one of "gzip", "bzip2" or "xz" 
+        ''' to indicate the type of compression to be used. Ignored if file is a 
+        ''' connection.</param>
+        ''' <param name="refhook">a hook function for handling reference objects.
+        ''' </param>
+        ''' <returns></returns>
+        ''' 
+        <ExportAPI("saveRDS")>
+        Public Function saveRDS([object] As String,
+                                Optional file$ = "",
+                                Optional ascii As Boolean = False,
+                                Optional version$ = "NULL",
+                                Optional compress As Boolean = True,
+                                Optional refhook$ = "NULL") As Boolean
+
+            If file.DirectoryExists Then
+
+                ' 2018-6-21
+                ' 如果在指定的位置存在一个同名的文件夹，将会产生
+                ' can not open the connection的错误
+                '
+                ' 在这里给出错误信息
+                Throw New InvalidOperationException($"There is a directory which is located at ""{file}"", please delete it and then try again!")
+
+            Else
+                Call file.ParentPath.MkDIR
+            End If
+
+            SyncLock R
+                With R
+                    .call = $"saveRDS({[object]}, file = {Rstring(file.UnixPath)}, ascii = {ascii.λ}, version = {version},
+        compress = {compress.λ}, refhook = {refhook});"
+                End With
+            End SyncLock
+
+            Return True
+        End Function
+
         ''' <summary>
         ''' vector produces a vector of the given length and mode.
         ''' </summary>
@@ -360,7 +908,7 @@ Namespace API
         ''' <param name="length%"></param>
         ''' <returns></returns>
         Public Function vector(Optional mode$ = "logical", Optional length% = 0) As String
-            Dim var$ = App.NextTempName
+            Dim var$ = RDotNetGC.Allocate
 
             SyncLock R
                 With R
@@ -369,6 +917,27 @@ Namespace API
             End SyncLock
 
             Return var
+        End Function
+
+        ''' <summary>
+        ''' 这个函数会自动将NAN,Inf等结果值转换为R之中的NA值
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function c(x As IEnumerable(Of Double)) As String
+            Return base.c(list:=x _
+                .SafeQuery _
+                .Select(Function(d)
+                            If d.IsNaNImaginary Then
+                                Return "NA"
+                            Else
+                                Return CStr(d)
+                            End If
+                        End Function),
+                recursive:=False
+            )
         End Function
 
         ''' <summary>
@@ -393,10 +962,29 @@ Namespace API
                 If .Length = 0 Then
                     Return "NULL"
                 Else
-                    Dim out$ = App.NextTempName
-                    Dim exp$ = $"c({ .JoinBy(", ")}, recursive = {CStr(recursive).ToUpper})"
-                    Call $"{out} <- {exp}".__call
-                    Return out
+                    SyncLock R
+                        Dim out As var = NULL
+
+                        ' 2018-11-22 似乎R的交互式解释器有一个最长表达式的限制
+                        ' 所以在这里如果向量的申明表达式过长的画，会触发一个StackOverflow的错误
+                        ' 但是如果直接将表达式保存为脚本文件，然后使用source执行，则并不会存在这个bug
+
+                        ' 在这里为了避免出现这个问题，会需要将向量按照块进行切割，然后使用append进行合并
+                        For Each block As String() In .Split(100)
+                            Dim v$ = block.JoinBy(", ")
+
+                            If recursive Then
+                                v = $"c({v}, recursive = {CStr(recursive).ToUpper})"
+                            Else
+                                v = $"c({v})"
+                            End If
+
+                            R.call = $"{out} <- append({out}, {v});"
+                        Next
+
+                        ' Return RSystem.ref(out)
+                        Return out
+                    End SyncLock
                 End If
             End With
         End Function
@@ -431,6 +1019,23 @@ Namespace API
         End Function
 
         ''' <summary>
+        ''' Combine Values into a Vector or List
+        ''' 
+        ''' This is a generic function which combines its arguments.
+        ''' The Default method combines its arguments To form a vector. All arguments are coerced To a common type which Is the type Of the returned value, And all attributes except names are removed.
+        ''' </summary>
+        ''' <param name="list">objects to be concatenated.</param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' The output type is determined from the highest type of the components in the hierarchy NULL &lt; raw &lt; logical &lt; integer &lt; double &lt; complex &lt; character &lt; list &lt; expression. Pairlists are treated as lists, but non-vector components (such names and calls) are treated as one-element lists which cannot be unlisted even if recursive = TRUE.
+        ''' c Is sometimes used for its side effect of removing attributes except names, for example to turn an array into a vector. as.vector Is a more intuitive way to do this, but also drops names. Note too that methods other than the default are Not required to do this (And they will almost certainly preserve a class attribute).
+        ''' This Is a primitive function.
+        ''' </remarks>
+        Public Function c(ParamArray list As Boolean()) As String
+            Return c(list.Select(Function(b) b.ToString.ToUpper), recursive:=False)
+        End Function
+
+        ''' <summary>
         ''' Execute a ``c()`` vector api and returns a tmp variable name.
         ''' (默认为生成字符串数组，这个函数是针对于R字符串而言的，
         ''' <paramref name="list"/>参数之中的字符串的值都会被转义为字符串)
@@ -443,7 +1048,12 @@ Namespace API
         ''' 输入的<paramref name="list"/>将不会被转义，即输出由一系列变量所生成的一个集合
         ''' </param>
         ''' <returns></returns>
-        Public Function c(list As String(), Optional stringVector As Boolean = True) As String
+        Public Function c(list$(), Optional stringVector As Boolean = True) As String
+            ' c() == NULL in R
+            If list.IsNullOrEmpty Then
+                Return NULL
+            End If
+
             If stringVector Then
                 Return c(list.Select(AddressOf Rstring), recursive:=False)
             Else
@@ -455,14 +1065,73 @@ Namespace API
         ''' Functions to construct, coerce and check for both kinds of R lists.
         ''' (实际上这个函数就是相当于创建了一个空的<see cref="Object"/>对象)
         ''' </summary>
-        ''' <param name="objects$">objects, possibly named.(对象的名称列表)</param>
+        ''' <param name="args$">objects, possibly named.(对象的名称列表)</param>
         ''' <returns></returns>
-        Public Function list(ParamArray objects$()) As String
-            Dim var$ = App.NextTempName
+        Public Function list(ParamArray args As ArgumentReference()) As String
+            Dim var$ = RDotNetGC.Allocate
+            Dim Rscript$
 
             SyncLock R
                 With R
-                    .call = $"{var} <- list({objects.JoinBy(", ")})"
+                    Rscript = $"{var} <- list({args.ArgumentExpression.JoinBy("," & vbCrLf)});"
+                    .call = Rscript
+
+                    ' 20200109 fix for bug of var not found
+                    ' unsure....
+                    If Not base.exists(var) Then
+                        Call Console.WriteLine(Rscript)
+
+                        .call = $"{var} <- list();"
+
+                        For Each slot In args.Select(AddressOf ParameterValueAssign)
+                            .call = $"{var}[['{slot.Name}']] <- {slot.Value};"
+                        Next
+
+                        ' debug
+                        .call = $"str({var});"
+                    End If
+                End With
+            End SyncLock
+
+            Return var
+        End Function
+
+        Public Function list(obj As Dictionary(Of String, String)) As String
+            SyncLock R
+                With R
+                    Dim var$ = base.list
+
+                    For Each slot In obj
+                        .call = $"{var}$'{slot.Key}' <- {slot.Value};"
+                    Next
+
+                    Return var
+                End With
+            End SyncLock
+        End Function
+
+        ''' <summary>
+        ''' Create an empty list
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function list() As String
+            Dim var$ = RDotNetGC.Allocate
+
+            SyncLock R
+                With R
+                    .call = $"{var} <- list();"
+                End With
+            End SyncLock
+
+            Return var
+        End Function
+
+        Public Function list(ParamArray objects$()) As String
+            Dim var$ = RDotNetGC.Allocate
+
+            SyncLock R
+                With R
+                    .call = $"{var} <- list({objects.JoinBy(",")});"
                 End With
             End SyncLock
 
@@ -479,7 +1148,10 @@ Namespace API
             Get
                 SyncLock R
                     With R
-                        Return .Evaluate($"length({x})").AsInteger.ToArray.First
+                        Return .Evaluate($"length({x})") _
+                               .AsInteger _
+                               .ToArray _
+                               .First
                     End With
                 End SyncLock
             End Get
@@ -515,7 +1187,7 @@ Namespace API
                                 Optional warnConflicts As Boolean = True,
                                 Optional quietly As Boolean = False,
                                 Optional verbose As String = packages.base.getOption.verbose) As String
-            Dim var$ = App.NextTempName
+            Dim var$ = RDotNetGC.Allocate
 
             SyncLock R
                 With R
@@ -570,9 +1242,10 @@ Namespace API
         End Function
 
         ''' <summary>
-        ''' Data Frames
+        ''' ### Data Frames
         ''' 
-        ''' This function creates data frames, tightly coupled collections of variables which share many of the properties of matrices and of lists, used as the fundamental data structure by most of R's modeling software.
+        ''' This function creates data frames, tightly coupled collections of variables which share many of the properties of matrices and 
+        ''' of lists, used as the fundamental data structure by most of R's modeling software.
         ''' </summary>
         ''' <param name="x">
         ''' these arguments are Of either the form value Or tag = value. Component names are created based On the tag (If present) Or the deparsed argument itself.
@@ -617,15 +1290,38 @@ Namespace API
                                   Optional checkNames As Boolean = True,
                                   Optional stringsAsFactors As String = "default.stringsAsFactors()") As String
 
-            Dim var As String = App.NextTempName
-            Dim paramRowNames$ = If(
-                rowNames.IsNullOrEmpty,
-                "NULL",
-                base.c(rowNames, stringVector:=True))
+            Dim var As String = RDotNetGC.Allocate
+            Dim paramRowNames$
+
+            If rowNames.IsNullOrEmpty Then
+                paramRowNames = "NULL"
+            Else
+                paramRowNames = base.c(rowNames, stringVector:=True)
+            End If
 
             Call $"{var} <- data.frame({x.JoinBy(", ")}, row.names = {paramRowNames}, check.rows = {checkRows.λ},
            check.names = {checkNames.λ},
            stringsAsFactors = {stringsAsFactors})".__call
+
+            Return var
+        End Function
+
+        ''' <summary>
+        ''' ### Data Frames
+        ''' 
+        ''' This function creates data frames, tightly coupled collections of variables which share many of the properties of matrices and 
+        ''' of lists, used as the fundamental data structure by most of R's modeling software.
+        ''' </summary>
+        ''' <param name="columns"></param>
+        ''' <returns></returns>
+        Public Function dataframe(ParamArray columns As ArgumentReference()) As String
+            Dim var As String = RDotNetGC.Allocate
+
+            SyncLock R
+                With R
+                    .call = $"{var} <- data.frame({columns.ArgumentExpression.JoinBy(", " & vbCrLf)});"
+                End With
+            End SyncLock
 
             Return var
         End Function
@@ -715,7 +1411,7 @@ Namespace API
         ''' + deparse.level = 1 Or 2 constructs labels from the argument names, see the 'Value’ section below.</param>
         ''' <returns></returns>
         Public Function cbind(list As IEnumerable(Of String), Optional deparselevel% = 1) As String
-            Dim var$ = App.NextTempName
+            Dim var$ = RDotNetGC.Allocate
 
             SyncLock R
                 With R
@@ -743,7 +1439,7 @@ Namespace API
         ''' + deparse.level = 1 Or 2 constructs labels from the argument names, see the 'Value’ section below.</param>
         ''' <returns></returns>
         Public Function rbind(list As IEnumerable(Of String), Optional deparselevel% = 1) As String
-            Dim var$ = App.NextTempName
+            Dim var$ = RDotNetGC.Allocate
 
             SyncLock R
                 With R
@@ -786,7 +1482,7 @@ Namespace API
         ''' <param name="object$">an object for which a summary is desired.</param>
         ''' <returns></returns>
         Public Function summary(object$) As String
-            Dim var$ = App.NextTempName
+            Dim var$ = RDotNetGC.Allocate
 
             SyncLock R
                 With R
@@ -795,6 +1491,41 @@ Namespace API
             End SyncLock
 
             Return var
+        End Function
+
+        ''' <summary>
+        ''' ##### Sum of Vector Elements
+        ''' 
+        ''' sum returns the sum of all the values present in its arguments.
+        ''' </summary>
+        ''' <param name="ref$">numeric or complex or logical vectors.</param>
+        ''' <param name="narm">logical. Should missing values (including NaN) be removed?</param>
+        ''' <returns>
+        ''' The sum. If all of ... are of type integer or logical, then the sum is integer, and in that case the 
+        ''' result will be NA (with a warning) if integer overflow occurs. Otherwise it is a length-one numeric 
+        ''' or complex vector.
+        '''
+        ''' NB: the sum of an empty set is zero, by definition.
+        ''' </returns>
+        ''' <remarks>
+        ''' This is a generic function: methods can be defined for it directly or via the Summary group generic. 
+        ''' For this to work properly, the arguments ... should be unnamed, and dispatch is on the first argument.
+        ''' If na.rm is FALSE an NA or NaN value in any of the arguments will cause a value of NA or NaN to be 
+        ''' returned, otherwise NA and NaN values are ignored.
+        ''' Logical true values are regarded as one, false values as zero. For historical reasons, NULL is accepted 
+        ''' and treated as if it were integer(0).
+        ''' Loss of accuracy can occur when summing values of different signs: this can even occur for sufficiently 
+        ''' long integer inputs if the partial sums would cause integer overflow. Where possible extended-precision 
+        ''' accumulators are used, but this is platform-dependent.
+        ''' </remarks>
+        Public Function sum(ref$, Optional narm As Boolean = False) As String
+            SyncLock R
+                With R
+                    Dim var$ = RDotNetGC.Allocate
+                    .call = $"{var} <- sum({ref}, na.rm = {Rbool(narm)});"
+                    Return var
+                End With
+            End SyncLock
         End Function
     End Module
 End Namespace

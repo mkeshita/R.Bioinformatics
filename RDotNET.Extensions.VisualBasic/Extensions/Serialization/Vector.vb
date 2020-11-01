@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad0888831b1110cca2e3af950fbd935c, RDotNET.Extensions.VisualBasic\Extensions\Serialization\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::c1c78aabc6557b417172b2e1e7e92918, RDotNET.Extensions.VisualBasic\Extensions\Serialization\Vector.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    ' Module Vector
+    ' Module VectorExtensions
     ' 
     '     Function: ToStrings, ToStringsGeneric
     ' 
@@ -42,7 +42,7 @@
 Imports System.Runtime.CompilerServices
 Imports RDotNET.Internals
 
-Public Module Vector
+Public Module VectorExtensions
 
     ''' <summary>
     ''' 目标必须是一个character向量类型，否则会出现空值错误的

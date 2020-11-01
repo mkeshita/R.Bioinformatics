@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f22ffc4882b4110d01f64e32ed782d81, RDotNET.Extensions.VisualBasic\ScriptBuilder\Helpers\Decorates.vb"
+﻿#Region "Microsoft.VisualBasic::0c95beb8260141e2fd3f445769c48133, RDotNET.Extensions.VisualBasic\ScriptBuilder\Helpers\Decorates.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@
     ' 
     '     Enum ValueTypes
     ' 
-    '         [Path], List
+    '         [path], [vector], list
     ' 
     '  
     ' 
@@ -110,7 +110,7 @@ Namespace SymbolBuilder
         ''' <param name="name"></param>
         ''' <param name="opt">Is this parameter optional?</param>
         ''' <param name="forceFirst">是否强制当前的这个参数处于第一个序列化的位置</param>
-        Sub New(name As String, Optional type As ValueTypes = ValueTypes.String, Optional opt As Boolean = False, Optional forceFirst As Boolean = False)
+        Sub New(name As String, Optional type As ValueTypes = ValueTypes.string, Optional opt As Boolean = False, Optional forceFirst As Boolean = False)
             MyBase.New(name)
             Me.[Optional] = opt
             Me.Type = type
@@ -123,15 +123,23 @@ Namespace SymbolBuilder
     End Class
 
     Public Enum ValueTypes
-        [String] = 0
+        ''' <summary>
+        ''' 内存变量引用类型
+        ''' </summary>
+        [ref] = 0
+        [string] = 1
+        ''' <summary>
+        ''' 数组将会被转换为向量类型的表达式
+        ''' </summary>
+        [vector]
         ''' <summary>
         ''' 这个是一个字符串类型的文件路径
         ''' </summary>
-        [Path]
+        [path]
         ''' <summary>
         ''' vectors, factors or a list containing these.(list类型的参数的参数名将不会被序列化)
         ''' </summary>
-        List
+        list
     End Enum
 
     ''' <summary>

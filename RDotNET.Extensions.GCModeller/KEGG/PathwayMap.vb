@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cd9d032328898a23962383f8d786192, RDotNET.Extensions.GCModeller\KEGG\PathwayMap.vb"
+﻿#Region "Microsoft.VisualBasic::0a78b43a760487236df5b222f7294371, RDotNET.Extensions.GCModeller\KEGG\PathwayMap.vb"
 
     ' Author:
     ' 
@@ -47,8 +47,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports RDotNET.Extensions.VisualBasic
 Imports RDotNET.Extensions.VisualBasic.API
 Imports RDotNET.Extensions.VisualBasic.SymbolBuilder
-Imports SMRUCC.genomics.Assembly.KEGG
-Imports SMRUCC.genomics.Assembly.KEGG.Medical
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices
 Imports IDMap = System.Collections.Generic.KeyValuePair(Of String, Microsoft.VisualBasic.Language.List(Of String))
 
@@ -78,7 +76,7 @@ Public Module PathwayMap
                 For Each pathway As Map In maps
                     Dim map As String = App.NextTempName
                     Dim groups = pathway _
-                        .Areas _
+                        .shapes _
                         .GroupBy(Function(x)
                                      Try
                                          Return x.Type

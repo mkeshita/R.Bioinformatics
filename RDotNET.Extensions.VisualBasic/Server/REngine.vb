@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b95f9a05fb478eef96798431e63e45d0, RDotNET.Extensions.VisualBasic\Server\REngine.vb"
+﻿#Region "Microsoft.VisualBasic::00cdb4702aa904861963717968023b3f, RDotNET.Extensions.VisualBasic\Server\REngine.vb"
 
     ' Author:
     ' 
@@ -59,7 +59,7 @@ Public Module RExtensionInvoke
     ''' <param name="def"></param>
     ''' <returns></returns>
     Public Function [function](args As IEnumerable(Of String), def As String) As String
-        Dim tmp As String = App.NextTempName
+        Dim tmp As String = RDotNetGC.Allocate
 
         SyncLock R
             With R
@@ -92,7 +92,7 @@ Public Module RExtensionInvoke
     ''' <param name="var$"></param>
     ''' <returns></returns>
     <Extension> Public Function copy(var$) As String
-        Dim x$ = App.NextTempName
+        Dim x$ = RDotNetGC.Allocate
 
         SyncLock R
             With R

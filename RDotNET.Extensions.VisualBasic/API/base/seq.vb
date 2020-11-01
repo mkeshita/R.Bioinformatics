@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3a62365916b5103fee1499ffe86c10f, RDotNET.Extensions.VisualBasic\API\base\seq.vb"
+﻿#Region "Microsoft.VisualBasic::9aea69bd6efcd61aeb6f8ee5f8e13fd9, RDotNET.Extensions.VisualBasic\API\base\seq.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module base
     ' 
-    '         Function: seq
+    '         Function: seq, unique
     ' 
     ' 
     ' /********************************************************************************/
@@ -45,6 +45,16 @@ Imports RDotNET.Extensions.VisualBasic.SymbolBuilder.RScripts
 Namespace API
 
     Partial Module base
+
+        Public Function unique(ref As String) As String
+            SyncLock R
+                With R
+                    Dim var$ = RDotNetGC.Allocate
+                    .call = $"{var} <- unique({ref});"
+                    Return var
+                End With
+            End SyncLock
+        End Function
 
         ''' <summary>
         ''' Generate regular sequences. seq is a standard generic with a default method. seq.int is a primitive which can be much faster but has a few restrictions. seq_along and seq_len are very fast primitives for two common cases.

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::479a78fd97390648a59031833fdb96f2, VennDiagram\VennDiagram\CLI\VennDiagram.vb"
+﻿#Region "Microsoft.VisualBasic::d53a9cf63f9af68b0bad42929848b7cc, VennDiagram\VennDiagram\CLI\VennDiagram.vb"
 
     ' Author:
     ' 
@@ -40,17 +40,19 @@
 #End Region
 
 Imports System.ComponentModel
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.STDIO
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Terminal.STDIO
 Imports Microsoft.VisualBasic.Text
-Imports RDotNET.Extensions.Bioinformatics.VennDiagram.ModelAPI
-Imports RDotNET.Extensions.VisualBasic
-Imports RDotNET.Extensions.VisualBasic.RSystem
+Imports RDotNet.Extensions.Bioinformatics.VennDiagram.ModelAPI
+Imports RDotNet.Extensions.VisualBasic
+Imports RDotNet.Extensions.VisualBasic.API
+Imports RDotNet.Extensions.VisualBasic.RSystem
+
 
 <Package("VennTools.CLI", Category:=APICategories.CLI_MAN,
                   Description:="Tools for creating venn diagram model for the R program and venn diagram visualize drawing.",
@@ -183,7 +185,7 @@ Imports RDotNET.Extensions.VisualBasic.RSystem
 
             Call TryInit()
             Call venn.RScript.SaveTo(EXPORT, Encodings.ASCII.CodePage)
-            Call RSystem.source(EXPORT)
+            Call base.source(EXPORT)
             Call Process.Start(venn.saveTiff)
 
             Return 0
