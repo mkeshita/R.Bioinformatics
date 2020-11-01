@@ -1,4 +1,4 @@
-﻿Namespace RDotNet.Graphics
+﻿Namespace Graphics
     Public Class Raster
         Private raster As Color(,)
 

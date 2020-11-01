@@ -1,4 +1,4 @@
-﻿Namespace RDotNet.Graphics
+﻿Namespace Graphics
     ''' <summary>
     ''' Implements a set of predefined colors.
     ''' </summary>

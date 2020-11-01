@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet.Graphics
+Namespace Graphics
     ''' <summary>
     ''' 32-bit color of ABGR model.
     ''' </summary>
@@ -88,9 +88,9 @@ Namespace RDotNet.Graphics
         Public Shared Function FromUInt32(ByVal rgba As UInteger) As Color
             Dim color = New Color()
             color.alphaField = CByte((rgba And &HFF000000UI) >> 24)
-            color.blueField = CByte((rgba And &H00FF0000UI) >> 16)
-            color.greenField = CByte((rgba And &H0000FF00UI) >> 8)
-            color.redField = CByte(rgba And &H000000FFUI)
+            color.blueField = CByte((rgba And &HFF0000UI) >> 16)
+            color.greenField = CByte((rgba And &HFF00UI) >> 8)
+            color.redField = CByte(rgba And &HFFUI)
             Return color
         End Function
 

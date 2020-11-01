@@ -4,7 +4,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet.Graphics
+Namespace Graphics
     Friend Class GraphicsDeviceAdapter
         Implements IDisposable
 
@@ -298,23 +298,15 @@ Namespace RDotNet.Graphics
         Private Sub DrawRaster(ByVal raster As IntPtr, ByVal w As Integer, ByVal h As Integer, ByVal x As Double, ByVal y As Double, ByVal width As Double, ByVal height As Double, ByVal rot As Double, ByVal interpolate As Boolean, ByVal gc As IntPtr, ByVal dd As IntPtr)
             Dim context = New GraphicsContext(gc)
             Dim output = New Raster(w, h)
-            BEGIN TODO : Visual Basic does not support checked statements!
+            ' BEGIN TODO : Visual Basic does not support checked statements!
             For i = 0 To w - 1
 
                 For j = 0 To h - 1
                     output(i, j) = Color.FromUInt32(Marshal.ReadInt32(raster))
-                                        ''' Cannot convert AssignmentExpressionSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-'''    at ICSharpCode.CodeConverter.VB.NodesVisitor.VisitAssignmentExpression(AssignmentExpressionSyntax node)
-'''    at Microsoft.CodeAnalysis.CSharp.Syntax.AssignmentExpressionSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-'''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-'''    at ICSharpCode.CodeConverter.VB.CommentConvertingVisitorWrapper`1.Accept(SyntaxNode csNode, Boolean addSourceMapping)
-''' 
-''' Input:
-'''                         raster = System.IntPtr.Add(raster, sizeof(int))
-''' 
+                    raster = System.IntPtr.Add(raster, sizeof(Int))
                 Next
             Next
-            END TODO : Visual Basic does not support checked statements!
+            ' END TODO : Visual Basic does not support checked statements!
             device.DrawRaster(output, New Rectangle(x, y, width, height), rot, interpolate, context, description)
         End Sub
 
@@ -342,17 +334,7 @@ Namespace RDotNet.Graphics
 
         Private Function GetPoints(ByVal n As Integer, ByVal x As IntPtr, ByVal y As IntPtr) As IEnumerable(Of Point)
             Return Enumerable.Range(0, n).[Select](Function(index)
-                                                                                                                          ''' Cannot convert LocalDeclarationStatementSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-'''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-'''    at ICSharpCode.CodeConverter.VB.MethodBodyExecutableStatementVisitor.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
-'''    at Microsoft.CodeAnalysis.CSharp.Syntax.LocalDeclarationStatementSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-'''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-'''    at ICSharpCode.CodeConverter.VB.CommentConvertingMethodBodyVisitor.DefaultVisit(SyntaxNode node)
-''' 
-''' Input:
-'''                    var offset = sizeof(double) * index;
-''' 
-''' 
+                                                       Dim offset = sizeof(Of Double) * index
                                                        Dim px = Utility.ReadDouble(x, offset)
                                                        Dim py = Utility.ReadDouble(y, offset)
                                                        Return New Point(px, py)
@@ -365,30 +347,12 @@ Namespace RDotNet.Graphics
             End If
 
             For index = 0 To npoly - 1
-                                ''' Cannot convert LocalDeclarationStatementSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-'''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-'''    at ICSharpCode.CodeConverter.VB.MethodBodyExecutableStatementVisitor.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
-'''    at Microsoft.CodeAnalysis.CSharp.Syntax.LocalDeclarationStatementSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-'''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-'''    at ICSharpCode.CodeConverter.VB.CommentConvertingMethodBodyVisitor.DefaultVisit(SyntaxNode node)
-''' 
-''' Input:
-'''                 var offset = sizeof(int) * index;
-''' 
-''' 
+                Dim offset = sizeof(Int) * index
                 Dim n = Marshal.ReadInt32(nper, offset)
                 Yield GetPoints(n, x, y)
-                                ''' Cannot convert LocalDeclarationStatementSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-'''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-'''    at ICSharpCode.CodeConverter.VB.MethodBodyExecutableStatementVisitor.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
-'''    at Microsoft.CodeAnalysis.CSharp.Syntax.LocalDeclarationStatementSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-'''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-'''    at ICSharpCode.CodeConverter.VB.CommentConvertingMethodBodyVisitor.DefaultVisit(SyntaxNode node)
-''' 
-''' Input:
-'''                 var pointOffset = sizeof(double) * n;
-''' 
-''' 
+
+                Dim pointOffset = sizeof(Of Double) * n
+
                 x = IntPtr.Add(x, pointOffset)
                 y = IntPtr.Add(y, pointOffset)
             Next

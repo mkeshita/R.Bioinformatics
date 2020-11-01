@@ -1,10 +1,8 @@
-﻿Imports DynamicInterop
-Imports System
-Imports System.IO
+﻿Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text
-Imports System.Linq
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ApplicationServices.DynamicInterop
 
 Namespace RDotNet.NativeLibrary
 
@@ -105,11 +103,11 @@ Namespace RDotNet.NativeLibrary
         ''' </remarks>
         Public Sub SetEnvironmentVariables(ByVal Optional rPath As String = Nothing, ByVal Optional rHome As String = Nothing)
             ' 
-             * Changing the behavior in Oct 2014, following the report of
-             * https://rdotnet.codeplex.com/workitem/140
-             * Use rHome, whether from the method parameter or from the environment variable,
-             * to deduce the path to the binaries, in preference to the registry key.
-             
+            '* Changing the behavior in Oct 2014, following the report of
+            '* https://rdotnet.codeplex.com/workitem/140
+            '* Use rHome, whether from the method parameter or from the environment variable,
+            '* to deduce the path to the binaries, in preference to the registry key.
+
 
             logSetEnvVar.Clear()
             Dim platform = GetPlatform()
@@ -379,15 +377,15 @@ Namespace RDotNet.NativeLibrary
 
             Environment.SetEnvironmentVariable(envVarName, PrependToEnv(rPath, envVarName))
             ' 
-            var platform = GetPlatform();
-            if (platform == PlatformID.Win32NT)
-            {
-               var result = WindowsLibraryLoader.SetDllDirectory(rPath);
-               var buffer = new StringBuilder(100);
-               WindowsLibraryLoader.GetDllDirectory(100, buffer);
-               Console.WriteLine("DLLPath:" + buffer.ToString());
-            }
-            
+            'var platform = GetPlatform();
+            'if (platform == PlatformID.Win32NT)
+            '{
+            '   var result = WindowsLibraryLoader.SetDllDirectory(rPath);
+            '   var buffer = new StringBuilder(100);
+            '   WindowsLibraryLoader.GetDllDirectory(100, buffer);
+            '   Console.WriteLine("DLLPath:" + buffer.ToString());
+            '}
+
         End Sub
 
         Private Shared Function PrependToEnv(ByVal rPath As String, ByVal Optional envVarName As String = "PATH") As String

@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace RDotNet.Graphics
+Namespace Graphics
     Public Structure Point
         Implements IEquatable(Of Point)
 

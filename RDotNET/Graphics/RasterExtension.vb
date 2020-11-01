@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Runtime.CompilerServices
 
-Namespace RDotNet.Graphics
+Namespace Graphics
     Public Module RasterExtension
         <Extension()>
         Public Function CreateIntegerMatrix(ByVal engine As REngine, ByVal raster As Raster) As IntegerMatrix

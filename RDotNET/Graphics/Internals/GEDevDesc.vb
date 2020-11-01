@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet.Graphics.Internals
+Namespace Graphics.Internals
     <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Ansi)>
     Friend Structure GEDevDesc
         Friend dev As IntPtr

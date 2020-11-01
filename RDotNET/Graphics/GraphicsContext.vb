@@ -2,7 +2,7 @@
 Imports System
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet.Graphics
+Namespace Graphics
     Public Class GraphicsContext
         Inherits SafeHandle
 

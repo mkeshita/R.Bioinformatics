@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 
-Namespace RDotNet.Graphics
+Namespace Graphics
     Public Module REngineExtension
         <Extension()>
         Public Sub Install(ByVal engine As REngine, ByVal device As IGraphicsDevice)

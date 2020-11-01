@@ -1,6 +1,6 @@
 ﻿Imports System.Collections.Generic
 
-Namespace RDotNet.Graphics
+Namespace Graphics
     Public Interface IGraphicsDevice
         ' for R_GE_checkVersionOrDie
         'int Version { get; }

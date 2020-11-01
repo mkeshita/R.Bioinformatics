@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 
-Namespace RDotNet.Graphics.Internals
+Namespace Graphics.Internals
     <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Ansi)>
     Friend Structure GEcontext
         Friend col As Color

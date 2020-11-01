@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet.Graphics
+Namespace Graphics
     Friend Module Utility
         Public Function ReadDouble(ByVal pointer As IntPtr, ByVal offset As Integer) As Double
             Dim value = New Double(0) {}

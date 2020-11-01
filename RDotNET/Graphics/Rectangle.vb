@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace RDotNet.Graphics
+Namespace Graphics
     Public Structure Rectangle
         Implements IEquatable(Of Rectangle)
 

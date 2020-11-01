@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet.Graphics.Internals
+Namespace Graphics.Internals
     <UnmanagedFunctionPointer(CallingConvention.Cdecl)>
     Friend Delegate Sub R_GE_checkVersionOrDie(ByVal version As Integer)
     <UnmanagedFunctionPointer(CallingConvention.Cdecl)>
