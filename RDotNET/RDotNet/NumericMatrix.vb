@@ -116,7 +116,7 @@ Public Class NumericMatrix
     ''' </summary>
     Protected Overrides ReadOnly Property DataSize As Integer
         Get
-            Return
+            Return Marshal.SizeOf(GetType(Double))
         End Get
     End Property
 End Class

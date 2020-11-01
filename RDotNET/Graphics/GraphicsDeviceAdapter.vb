@@ -300,7 +300,7 @@ Namespace Graphics
 
                 For j = 0 To h - 1
                     output(i, j) = Color.FromUInt32(Marshal.ReadInt32(raster))
-                    raster = System.IntPtr.Add(raster, sizeof(Int))
+                    raster = System.IntPtr.Add(raster, Marshal.SizeOf(GetType(Integer)))
                 Next
             Next
             ' END TODO : Visual Basic does not support checked statements!
@@ -331,7 +331,7 @@ Namespace Graphics
 
         Private Function GetPoints(ByVal n As Integer, ByVal x As IntPtr, ByVal y As IntPtr) As IEnumerable(Of Point)
             Return Enumerable.Range(0, n).[Select](Function(index)
-                                                       Dim offset = sizeof(Of Double) * index
+                                                       Dim offset = Marshal.SizeOf(GetType(Double)) * index
                                                        Dim px = Utility.ReadDouble(x, offset)
                                                        Dim py = Utility.ReadDouble(y, offset)
                                                        Return New Point(px, py)
@@ -344,11 +344,11 @@ Namespace Graphics
             End If
 
             For index = 0 To npoly - 1
-                Dim offset = sizeof(Int) * index
+                Dim offset = Marshal.SizeOf(GetType(Integer)) * index
                 Dim n = Marshal.ReadInt32(nper, offset)
                 Yield GetPoints(n, x, y)
 
-                Dim pointOffset = sizeof(Of Double) * n
+                Dim pointOffset = Marshal.SizeOf(GetType(Double)) * n
 
                 x = IntPtr.Add(x, pointOffset)
                 y = IntPtr.Add(y, pointOffset)

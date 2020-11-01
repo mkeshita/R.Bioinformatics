@@ -5,7 +5,7 @@ Namespace Graphics
         <Extension()>
         Public Sub Install(ByVal engine As REngine, ByVal device As IGraphicsDevice)
             Dim adapter = New GraphicsDeviceAdapter(device)
-            engine.Disposing += Sub(sender, e) adapter.Dispose()
+            AddHandler engine.Disposing, Sub(sender, e) adapter.Dispose()
             adapter.SetEngine(engine)
         End Sub
     End Module

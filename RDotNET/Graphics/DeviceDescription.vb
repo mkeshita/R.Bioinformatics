@@ -1,6 +1,5 @@
-﻿Imports RDotNet.Graphics.Internals
-Imports System
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
+Imports RDotNet.Graphics.Internals
 
 Namespace Graphics
     Public Class DeviceDescription
@@ -274,17 +273,8 @@ Namespace Graphics
 
         Private Sub WriteDoubleArray(ByVal fieldName As String, ByVal index As Integer, ByVal value As Double)
             Dim bytes = BitConverter.GetBytes(value)
-                        ''' Cannot convert LocalDeclarationStatementSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-'''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-'''    at ICSharpCode.CodeConverter.VB.MethodBodyExecutableStatementVisitor.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
-'''    at Microsoft.CodeAnalysis.CSharp.Syntax.LocalDeclarationStatementSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-'''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-'''    at ICSharpCode.CodeConverter.VB.CommentConvertingMethodBodyVisitor.DefaultVisit(SyntaxNode node)
-''' 
-''' Input:
-'''             var offset = System.Runtime.InteropServices.Marshal.OffsetOf((System.Type)(typeof(RDotNet.Graphics.Internals.DevDesc)), (System.String)(fieldName)).ToInt32() + sizeof(double) * index;
-''' 
-''' 
+            Dim offset = Marshal.OffsetOf((GetType(RDotNet.Graphics.Internals.DevDesc)), (fieldName)).ToInt32() + Marshal.SizeOf(GetType(Double)) * index
+
             Marshal.Copy(bytes, 0, IntPtr.Add(handle, offset), bytes.Length)
         End Sub
 
