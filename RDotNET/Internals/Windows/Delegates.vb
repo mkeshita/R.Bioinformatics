@@ -3,12 +3,11 @@ Imports System.Text
 
 Namespace Internals.Windows
     <UnmanagedFunctionPointer(CallingConvention.Cdecl)>
-    <MarshalAs(UnmanagedType.Bool)>
     Friend Delegate Function blah1(
     <[In]>
     <MarshalAs(UnmanagedType.LPStr)> ByVal prompt As String,
     <MarshalAs(UnmanagedType.LPStr)> ByVal buffer As StringBuilder, ByVal length As Integer,
-    <MarshalAs(UnmanagedType.Bool)> ByVal history As Boolean) As Boolean
+    <MarshalAs(UnmanagedType.Bool)> ByVal history As Boolean) As <MarshalAs(UnmanagedType.Bool)> Boolean
     <UnmanagedFunctionPointer(CallingConvention.Cdecl)>
     Friend Delegate Sub blah2(
     <[In]>

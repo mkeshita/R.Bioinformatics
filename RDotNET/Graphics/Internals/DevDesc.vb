@@ -94,8 +94,7 @@ Namespace Graphics.Internals
     <UnmanagedFunctionPointer(CallingConvention.Cdecl)>
     Friend Delegate Sub _DevDesc_deactivate(ByVal pDevDesc As IntPtr)
     <UnmanagedFunctionPointer(CallingConvention.Cdecl)>
-    <MarshalAs(UnmanagedType.Bool)>
-    Friend Delegate Function _DevDesc_locator(<Out> ByRef x As Double, <Out> ByRef y As Double, ByVal dd As IntPtr) As Boolean
+    Friend Delegate Function _DevDesc_locator(<Out> ByRef x As Double, <Out> ByRef y As Double, ByVal dd As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
     <UnmanagedFunctionPointer(CallingConvention.Cdecl)>
     Friend Delegate Sub _DevDesc_line(ByVal x1 As Double, ByVal y1 As Double, ByVal x2 As Double, ByVal y2 As Double, ByVal gc As IntPtr, ByVal dd As IntPtr)
     <UnmanagedFunctionPointer(CallingConvention.Cdecl)>
@@ -132,8 +131,7 @@ Namespace Graphics.Internals
     Friend Delegate Function _DevDesc_getEvent(ByVal sexp As IntPtr,
     <MarshalAs(UnmanagedType.LPStr)> ByVal e As String) As IntPtr
     <UnmanagedFunctionPointer(CallingConvention.Cdecl)>
-    <MarshalAs(UnmanagedType.Bool)>
-    Friend Delegate Function _DevDesc_newFrameConfirm(ByVal dd As IntPtr) As Boolean
+    Friend Delegate Function _DevDesc_newFrameConfirm(ByVal dd As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
 
     '[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     'internal delegate void _DevDesc_textUTF8(double x, double y, [MarshalAs(UnmanagedType.LPStr)] string str, double rot, double hadj, IntPtr gc, IntPtr dd);

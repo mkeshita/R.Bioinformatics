@@ -12,7 +12,7 @@ Namespace Diagnostics
         <DebuggerBrowsable(DebuggerBrowsableState.RootHidden)>
         Public ReadOnly Property Column As DataFrameColumnDisplay()
             Get
-                Return Enumerable.Range(0, dataFrame.ColumnCount).[Select](Function(column) New DataFrameColumnDisplay(dataFrame, column)).ToArray()
+                Return Enumerable.Range(0, dataFrame.ColumnCount).[Select](Function(i) New DataFrameColumnDisplay(dataFrame, i)).ToArray()
             End Get
         End Property
     End Class
