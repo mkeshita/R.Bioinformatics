@@ -110,7 +110,7 @@ Public Class LogicalVector
     Protected Overrides ReadOnly Property DataSize As Integer
         Get
             ' Boolean is int internally.
-            Return
+            Return Marshal.SizeOf(GetType(Integer))
         End Get
     End Property
 End Class

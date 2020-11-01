@@ -23,7 +23,7 @@ Public Class Symbol : Inherits SymbolicExpression
     Public Property PrintName As String
         Get
             Dim sexp As Object = GetInternalStructure()
-            Return New InternalString(Engine, sexp.symsxp.pname).ToString()
+            Return New InternalString(Engine, DirectCast(sexp.symsxp.pname, IntPtr)).ToString()
         End Get
         Set(ByVal value As String)
             Dim pointer As IntPtr = (If(Equals(value, Nothing), Engine.NilValue, New InternalString(Engine, value))).DangerousGetHandle()

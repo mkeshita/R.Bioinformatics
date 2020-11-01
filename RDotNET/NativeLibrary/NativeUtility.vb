@@ -417,29 +417,29 @@ Namespace NativeLibrary
             Dim valueNames As String() = rCoreKey.GetValueNames()
 
             If valueNames.Length = 0 Then
-                Me.doLogSetEnvVarWarn("Did not find any value names under " & rCoreKey, logger)
+                Me.doLogSetEnvVarWarn("Did not find any value names under " & rCoreKey.ToString, logger)
                 Return RecurseFirstSubkey(rCoreKey, logger)
             Else
                 Const installPathKey = "InstallPath"
 
                 If valueNames.Contains(installPathKey) Then
-                    Me.doLogSetEnvVarInfo("Found sub-key InstallPath under " & rCoreKey, logger)
+                    Me.doLogSetEnvVarInfo("Found sub-key InstallPath under " & rCoreKey.ToString, logger)
                     installPath = CStr(rCoreKey.GetValue(installPathKey))
                 Else
-                    Me.doLogSetEnvVarInfo("Did not find sub-key InstallPath under " & rCoreKey, logger)
+                    Me.doLogSetEnvVarInfo("Did not find sub-key InstallPath under " & rCoreKey.ToString, logger)
 
                     If valueNames.Contains("Current Version") Then
-                        Me.doLogSetEnvVarInfo("Found sub-key Current Version under " & rCoreKey, logger)
+                        Me.doLogSetEnvVarInfo("Found sub-key Current Version under " & rCoreKey.ToString, logger)
                         Dim currentVersion = GetRCurrentVersionStringFromRegistry(rCoreKey)
 
                         If subKeyNames.Contains(currentVersion) Then
                             Dim rVersionCoreKey = rCoreKey.OpenSubKey(currentVersion)
                             Return GetRInstallPathFromRCoreKegKey(rVersionCoreKey, logger)
                         Else
-                            Me.doLogSetEnvVarWarn("Sub key " & currentVersion & " not found in " & rCoreKey, logger)
+                            Me.doLogSetEnvVarWarn("Sub key " & currentVersion & " not found in " & rCoreKey.ToString, logger)
                         End If
                     Else
-                        Me.doLogSetEnvVarInfo("Did not find sub-key Current Version under " & rCoreKey, logger)
+                        Me.doLogSetEnvVarInfo("Did not find sub-key Current Version under " & rCoreKey.ToString, logger)
                         Return RecurseFirstSubkey(rCoreKey, logger)
                     End If
                 End If
@@ -457,10 +457,10 @@ Namespace NativeLibrary
                 Dim versionNum = subKeyNames.Last() ' gets the latest version of R installed and registered.
                 'versionNum = subKeyNames.First(); // TEMP...
                 Dim rVersionCoreKey = rCoreKey.OpenSubKey(versionNum)
-                Me.doLogSetEnvVarInfo("As a last resort, trying to recurse into " & rVersionCoreKey, logger)
+                Me.doLogSetEnvVarInfo("As a last resort, trying to recurse into " & rVersionCoreKey.ToString, logger)
                 Return GetRInstallPathFromRCoreKegKey(rVersionCoreKey, logger)
             Else
-                Me.doLogSetEnvVarWarn("No sub-key found under " & rCoreKey, logger)
+                Me.doLogSetEnvVarWarn("No sub-key found under " & rCoreKey.ToString, logger)
                 Return Nothing
             End If
         End Function

@@ -43,7 +43,7 @@ Public Class Closure
     Public ReadOnly Property Environment As REnvironment
         Get
             Dim sexp As Object = GetInternalStructure()
-            Return New REnvironment(Engine, sexp.closxp.env)
+            Return New REnvironment(Engine, DirectCast(sexp.closxp.env, REnvironment))
         End Get
     End Property
 
