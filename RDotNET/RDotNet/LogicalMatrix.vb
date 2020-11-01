@@ -4,7 +4,7 @@ Imports System
 Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A matrix of Boolean values.
     ''' </summary>
@@ -110,4 +110,4 @@ Namespace RDotNet
             End Get
         End Property
     End Class
-End Namespace
+

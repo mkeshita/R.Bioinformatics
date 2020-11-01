@@ -2,7 +2,7 @@
 Imports System
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet
+
     ''' <summary>
     ''' An expression object.
     ''' </summary>
@@ -55,4 +55,4 @@ Namespace RDotNet
             Return Not errorOccurred
         End Function
     End Class
-End Namespace
+

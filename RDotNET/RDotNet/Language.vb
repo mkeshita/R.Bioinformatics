@@ -1,7 +1,7 @@
 ﻿Imports RDotNet.Internals
 Imports System
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A language object.
     ''' </summary>
@@ -32,4 +32,4 @@ Namespace RDotNet
             End Get
         End Property
     End Class
-End Namespace
+

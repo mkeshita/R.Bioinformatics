@@ -3,7 +3,7 @@ Imports RDotNet.Internals.Windows
 Imports System
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet
+
     ''' <summary>
     ''' Represents parameters on R's startup.
     ''' </summary>
@@ -325,4 +325,4 @@ Namespace RDotNet
             End If
         End Sub
     End Class
-End Namespace
+

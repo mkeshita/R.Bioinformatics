@@ -2,7 +2,7 @@
 Imports System
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A symbol object.
     ''' </summary>
@@ -66,4 +66,4 @@ Namespace RDotNet
             Return Marshal.OffsetOf(Engine.GetSEXPRECType(), "u").ToInt32() + Marshal.OffsetOf(Engine.GetSymSxpType(), fieldName).ToInt32()
         End Function
     End Class
-End Namespace
+

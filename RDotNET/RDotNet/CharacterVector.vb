@@ -4,7 +4,7 @@ Imports System.Collections.Generic
 Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A collection of strings.
     ''' </summary>
@@ -162,4 +162,4 @@ Namespace RDotNet
             End Get
         End Property
     End Class
-End Namespace
+

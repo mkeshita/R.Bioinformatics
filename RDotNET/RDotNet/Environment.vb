@@ -3,7 +3,7 @@ Imports RDotNet.Utilities
 Imports System
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet
+
     ''' <summary>
     ''' An environment object.
     ''' </summary>
@@ -108,4 +108,4 @@ Namespace RDotNet
             Return copy
         End Function
     End Class
-End Namespace
+

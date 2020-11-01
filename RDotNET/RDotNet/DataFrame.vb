@@ -8,7 +8,7 @@ Imports System.Linq
 Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A data frame.
     ''' </summary>
@@ -271,4 +271,4 @@ Namespace RDotNet
             Return New DataFrameDynamicMeta(parameter, Me)
         End Function
     End Class
-End Namespace
+

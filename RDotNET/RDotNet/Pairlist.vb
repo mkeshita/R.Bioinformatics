@@ -4,7 +4,7 @@ Imports System.Collections
 Imports System.Collections.Generic
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A pairlist.
     ''' </summary>
@@ -53,4 +53,4 @@ Namespace RDotNet
 
 #End Region
     End Class
-End Namespace
+

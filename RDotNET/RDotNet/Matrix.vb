@@ -5,7 +5,7 @@ Imports System.Diagnostics
 Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A matrix base.
     ''' </summary>
@@ -318,4 +318,4 @@ Namespace RDotNet
         ''' <returns>Array equivalent</returns>
         Protected MustOverride Function GetArrayFast() As T(,)
     End Class
-End Namespace
+

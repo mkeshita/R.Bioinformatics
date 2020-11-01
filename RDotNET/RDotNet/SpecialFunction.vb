@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Collections.Generic
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A special function.
     ''' </summary>
@@ -35,4 +35,4 @@ Namespace RDotNet
             Throw New NotSupportedException()
         End Function
     End Class
-End Namespace
+

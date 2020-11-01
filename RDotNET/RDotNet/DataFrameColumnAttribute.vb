@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace RDotNet
+
     ''' <summary>
     ''' Represents a column of certain data frames.
     ''' </summary>
@@ -69,4 +69,4 @@ Namespace RDotNet
             Return If(Index >= 0, Index, Array.IndexOf(If(names, Empty), Name))
         End Function
     End Class
-End Namespace
+

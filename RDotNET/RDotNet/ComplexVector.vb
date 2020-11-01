@@ -6,7 +6,7 @@ Imports System.Numerics
 Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A collection of complex numbers.
     ''' </summary>
@@ -119,4 +119,4 @@ Namespace RDotNet
             End Get
         End Property
     End Class
-End Namespace
+

@@ -7,7 +7,7 @@ Imports System.Dynamic
 Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 
-Namespace RDotNet
+
     ''' <summary>
     ''' An expression in R environment.
     ''' </summary>
@@ -306,4 +306,4 @@ Namespace RDotNet
         Public Shared Sub op_DynamicAssignment(Of K)(ByVal sexp As SymbolicExpression, ByVal name As String, ByVal value As dynamic)
         End Sub
     End Class
-End Namespace
+

@@ -4,7 +4,7 @@ Imports System.Collections.Generic
 Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A collection of real numbers in double precision.
     ''' </summary>
@@ -167,4 +167,4 @@ Namespace RDotNet
             Marshal.Copy(pointer, destination, destinationIndex, length)
         End Sub
     End Class
-End Namespace
+

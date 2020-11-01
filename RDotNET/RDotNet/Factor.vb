@@ -5,7 +5,7 @@ Imports System.Diagnostics
 Imports System.Linq
 Imports System.Security.Permissions
 
-Namespace RDotNet
+
     ''' <summary>
     ''' Represents factors.
     ''' </summary>
@@ -133,4 +133,4 @@ Namespace RDotNet
             End If
         End Sub
     End Class
-End Namespace
+

@@ -6,7 +6,7 @@ Imports System.Diagnostics
 Imports System.Linq
 Imports System.Security.Permissions
 
-Namespace RDotNet
+
     ''' <summary>
     ''' An S4 object
     ''' </summary>
@@ -124,4 +124,4 @@ Namespace RDotNet
             }).ToDictionary(Function(t) t.Name, Function(t) t.Type)
         End Function
     End Class
-End Namespace
+

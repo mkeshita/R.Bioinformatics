@@ -2,7 +2,7 @@
 Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A vector of S expressions
     ''' </summary>
@@ -103,4 +103,4 @@ Namespace RDotNet
             End Get
         End Property
     End Class
-End Namespace
+

@@ -3,7 +3,7 @@ Imports System
 Imports System.Numerics
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A collection of values.
     ''' </summary>
@@ -271,4 +271,4 @@ Namespace RDotNet
             Marshal.WriteIntPtr(pointer, offset, sexp.DangerousGetHandle())
         End Sub
     End Class
-End Namespace
+

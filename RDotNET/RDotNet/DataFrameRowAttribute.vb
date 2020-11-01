@@ -3,7 +3,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Reflection
 
-Namespace RDotNet
+
     Friend Delegate Sub Map(ByVal from As DataFrameRow, ByVal [to] As Object)
 
     ''' <summary>
@@ -52,4 +52,4 @@ Namespace RDotNet
             Next
         End Sub
     End Class
-End Namespace
+

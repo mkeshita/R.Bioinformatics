@@ -2,7 +2,7 @@
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A closure.
     ''' </summary>
@@ -73,4 +73,4 @@ Namespace RDotNet
             Return Arguments.[Select](Function(arg) arg.PrintName).ToArray()
         End Function
     End Class
-End Namespace
+

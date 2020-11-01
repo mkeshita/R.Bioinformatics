@@ -78,13 +78,13 @@ Namespace Internals.ALTREP
 
         Public ReadOnly Property named As UInteger ' NAMED_BITS
             Get
-                Return (bits And 281470681743360UI) / 4294967296
+                Return (bits And 281470681743360UL) / 4294967296
             End Get
         End Property
 
         Public ReadOnly Property extra As UInteger ' 32 - NAMED_BITS
             Get
-                Return (bits And 18446462598732800000UI) / 281474976710656
+                Return (bits And 18446462598732800000UL) / 281474976710656
             End Get
         End Property
     End Structure

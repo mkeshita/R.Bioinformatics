@@ -6,7 +6,7 @@ Imports System.Dynamic
 Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A generic list. This is also known as list in R.
     ''' </summary>
@@ -164,4 +164,4 @@ Namespace RDotNet
             SetAttribute(namesSymbol, names)
         End Sub
     End Class
-End Namespace
+

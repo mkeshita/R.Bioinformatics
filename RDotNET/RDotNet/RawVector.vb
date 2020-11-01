@@ -4,7 +4,7 @@ Imports System.Collections.Generic
 Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A sequence of byte values.
     ''' </summary>
@@ -149,4 +149,4 @@ Namespace RDotNet
             Marshal.Copy(pointer, destination, destinationIndex, length)
         End Sub
     End Class
-End Namespace
+

@@ -5,7 +5,7 @@ Imports System.Linq
 Imports System.Runtime.ExceptionServices
 Imports System.Security
 
-Namespace RDotNet
+
     ''' <summary>
     ''' A function is one of closure, built-in function, or special function.
     ''' </summary>
@@ -144,4 +144,4 @@ Namespace RDotNet
             Return createCallAndEvaluate(argument)
         End Function
     End Class
-End Namespace
+

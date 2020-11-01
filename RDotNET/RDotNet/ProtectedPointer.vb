@@ -2,7 +2,7 @@
 Imports System
 Imports System.Security.Permissions
 
-Namespace RDotNet
+
     <SecurityPermission(SecurityAction.Demand, Flags:=SecurityPermissionFlag.UnmanagedCode)>
     Friend Class ProtectedPointer
         Implements IDisposable
@@ -39,4 +39,4 @@ Namespace RDotNet
             Return p.sexp
         End Operator
     End Class
-End Namespace
+

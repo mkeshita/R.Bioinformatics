@@ -3,7 +3,7 @@ Imports System
 Imports System.Security.Permissions
 Imports System.Runtime.CompilerServices
 
-Namespace RDotNet
+
     ''' <summary>
     ''' Provides extension methods for <seecref="SymbolicExpression"/>.
     ''' </summary>
@@ -637,4 +637,4 @@ Namespace RDotNet
             Return New Factor(expression.Engine, expression.DangerousGetHandle())
         End Function
     End Module
-End Namespace
+

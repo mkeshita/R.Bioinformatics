@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace RDotNet
+
     ''' <summary>
     ''' Exception signaling that the R engine failed to evaluate a statement
     ''' </summary>
@@ -23,4 +23,4 @@ Namespace RDotNet
             MyBase.New(errorMsg, innerException)
         End Sub
     End Class
-End Namespace
+

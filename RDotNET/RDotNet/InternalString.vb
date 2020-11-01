@@ -5,7 +5,7 @@ Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 Imports System.Text
 
-Namespace RDotNet
+
     ''' <summary>
     ''' Internal string.
     ''' </summary>
@@ -111,4 +111,4 @@ Namespace RDotNet
             End Get
         End Property
     End Class
-End Namespace
+
