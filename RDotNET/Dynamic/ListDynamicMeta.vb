@@ -15,8 +15,8 @@ Namespace Dynamic
         ''' <summary>
         ''' Creates a new object dealing with the dynamic and binding logic for R lists
         ''' </summary>
-        ''' <paramname="parameter">The expression representing this new ListDynamicMeta in the binding process</param>
-        ''' <paramname="list">The runtime value of the GenericVector, that this new ListDynamicMeta represents</param>
+        ''' <param name="parameter">The expression representing this new ListDynamicMeta in the binding process</param>
+        ''' <param name="list">The runtime value of the GenericVector, that this new ListDynamicMeta represents</param>
         Public Sub New(ByVal parameter As Expressions.Expression, ByVal list As GenericVector)
             MyBase.New(parameter, list)
         End Sub
@@ -32,7 +32,7 @@ Namespace Dynamic
         ''' <summary>
         ''' Performs the binding of the dynamic get member operation.
         ''' </summary>
-        ''' <paramname="binder">
+        ''' <param name="binder">
         ''' An instance of the System.Dynamic.GetMemberBinder that represents the details of the dynamic operation.
         ''' </param>
         ''' <returns>The new System.Dynamic.DynamicMetaObject representing the result of the binding.</returns>

@@ -11,14 +11,6 @@ Namespace NativeLibrary
     ''' </summary>
     Public Class NativeUtility
 
-        ''' <summary>
-        ''' Gets the path to the folder containing R.dll that this instance found when setting environment variables
-        ''' </summary>
-
-        ''' <summary>
-        ''' Gets the path to the R home directory that this instance found when setting environment variables
-        ''' </summary>
-        Private _RPath As String, _RHome As String
         ''' <summary> Gets or sets the registry.</summary>
         '''
         ''' <value> The registry.</value>
@@ -26,7 +18,7 @@ Namespace NativeLibrary
 
         ''' <summary> Constructor.</summary>
         '''
-        ''' <paramname="registry"> (Optional)
+        ''' <param name="registry"> (Optional)
         '''                         The registry.</param>
         Public Sub New(ByVal Optional registry As IRegistry = Nothing)
             Me.Registry = (If(registry Is Nothing, New WindowsRegistry(), registry))
@@ -36,10 +28,10 @@ Namespace NativeLibrary
         ''' Gets the platform on which the current process runs.
         ''' </summary>
         ''' <remarks>
-        ''' <seecref="Environment.OSVersion"/>'s platform is not <seecref="PlatformID.MacOSX"/> even on Mac OS X.
-        ''' This method returns <seecref="PlatformID.MacOSX"/> when the current process runs on Mac OS X.
+        ''' <see cref="Environment.OSVersion"/>'s platform is not <see cref="PlatformID.MacOSX"/> even on Mac OS X.
+        ''' This method returns <see cref="PlatformID.MacOSX"/> when the current process runs on Mac OS X.
         ''' This method uses UNIX's uname command to check the operating system,
-        ''' so this method cannot check the OS correctly if the PATH environment variable is changed (will returns <seecref="PlatformID.Unix"/>).
+        ''' so this method cannot check the OS correctly if the PATH environment variable is changed (will returns <see cref="PlatformID.Unix"/>).
         ''' </remarks>
         ''' <returns>The current platform.</returns>
         Public Shared Function GetPlatform() As PlatformID
@@ -49,8 +41,8 @@ Namespace NativeLibrary
         ''' <summary>
         ''' Execute a command in a new process
         ''' </summary>
-        ''' <paramname="processName">Process name e.g. "uname"</param>
-        ''' <paramname="arguments">Arguments e.g. "-s"</param>
+        ''' <param name="processName">Process name e.g. "uname"</param>
+        ''' <param name="arguments">Arguments e.g. "-s"</param>
         ''' <returns>The output of the command to the standard output stream</returns>
         Public Shared Function ExecCommand(ByVal processName As String, ByVal arguments As String) As String
             Return PlatformUtility.ExecCommand(processName, arguments)
@@ -67,23 +59,15 @@ Namespace NativeLibrary
             End Get
         End Property
 
+        ''' <summary>
+        ''' Gets the path to the folder containing R.dll that this instance found when setting environment variables
+        ''' </summary>
         Public Property RPath As String
-            Get
-                Return _RPath
-            End Get
-            Private Set(ByVal value As String)
-                _RPath = value
-            End Set
-        End Property
 
+        ''' <summary>
+        ''' Gets the path to the R home directory that this instance found when setting environment variables
+        ''' </summary>
         Public Property RHome As String
-            Get
-                Return _RHome
-            End Get
-            Private Set(ByVal value As String)
-                _RHome = value
-            End Set
-        End Property
 
         Public Sub SetCachedEnvironmentVariables()
             If Equals(RPath, Nothing) OrElse Equals(RHome, Nothing) Then Throw New InvalidOperationException("SetCachedEnvironmentVariables requires R path and home directory to have been specified or detected")
@@ -94,9 +78,9 @@ Namespace NativeLibrary
         ''' <summary>
         ''' Sets the PATH to the R binaries and R_HOME environment variables if needed.
         ''' </summary>
-        ''' <paramname="rPath">The path of the directory containing the R native library.
+        ''' <param name="rPath">The path of the directory containing the R native library.
         ''' If null (default), this function tries to locate the path via the Windows registry, or commonly used locations on MacOS and Linux</param>
-        ''' <paramname="rHome">The path for R_HOME. If null (default), the function checks the R_HOME environment variable. If none is set,
+        ''' <param name="rHome">The path for R_HOME. If null (default), the function checks the R_HOME environment variable. If none is set,
         ''' the function uses platform specific sensible default behaviors.</param>
         ''' <remarks>
         ''' This function has been designed to limit the tedium for users, while allowing custom settings for unusual installations.
@@ -142,9 +126,9 @@ Namespace NativeLibrary
         ''' A method to help diagnose the environment variable setup process. 
         ''' This function does not change the environment, this is purely a "dry run"
         ''' </summary>
-        ''' <paramname="rPath">The path of the directory containing the R native library.
+        ''' <param name="rPath">The path of the directory containing the R native library.
         ''' If null (default), this function tries to locate the path via the Windows registry, or commonly used locations on MacOS and Linux</param>
-        ''' <paramname="rHome">The path for R_HOME. If null (default), the function checks the R_HOME environment variable. If none is set,
+        ''' <param name="rHome">The path for R_HOME. If null (default), the function checks the R_HOME environment variable. If none is set,
         ''' the function uses platform specific sensible default behaviors.</param>
         ''' <returns>A console friendly output of the paths discovery process</returns>
         Public Function FindRPaths(ByRef rPath As String, ByRef rHome As String) As String
@@ -229,8 +213,8 @@ Namespace NativeLibrary
         ''' <summary>
         ''' Try to locate the directory path to use for the R_HOME environment variable. This is used by R.NET by default; users may want to use it to diagnose problematic behaviors.
         ''' </summary>
-        ''' <paramname="rPath">Optional path to the directory containing the R shared library. This is ignored unless on a Unix platform (i.e. ignored on Windows and MacOS)</param>
-        ''' <paramname="logger">Optional logger for diagnosis</param>
+        ''' <param name="rPath">Optional path to the directory containing the R shared library. This is ignored unless on a Unix platform (i.e. ignored on Windows and MacOS)</param>
+        ''' <param name="logger">Optional logger for diagnosis</param>
         ''' <returns>The path that R.NET found suitable as a candidate for the R_HOME environment</returns>
         Public Function FindRHome(ByVal Optional rPath As String = Nothing, ByVal Optional logger As StringBuilder = Nothing) As String
             Dim platform = GetPlatform()

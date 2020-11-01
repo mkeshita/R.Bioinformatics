@@ -12,8 +12,8 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Creates a new instance for an expression vector.
         ''' </summary>
-        ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-        ''' <paramname="coerced">The pointer to an expression vector.</param>
+        ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+        ''' <param name="coerced">The pointer to an expression vector.</param>
         Friend Sub New(ByVal engine As REngine, ByVal coerced As IntPtr)
             MyBase.New(engine, coerced)
         End Sub
@@ -37,7 +37,7 @@ Imports System.Security.Permissions
         ''' Gets the element at the specified index.
         ''' </summary>
         ''' <remarks>Used for pre-R 3.5 </remarks>
-        ''' <paramname="index">The zero-based index of the element to get.</param>
+        ''' <param name="index">The zero-based index of the element to get.</param>
         ''' <returns>The element at the specified index.</returns>
         Protected Overrides Function GetValue(ByVal index As Integer) As Expression
             Dim offset = GetOffset(index)
@@ -49,7 +49,7 @@ Imports System.Security.Permissions
         ''' Gets the element at the specified index.
         ''' </summary>
         ''' <remarks>Used for R 3.5 and higher, to account for ALTREP objects</remarks>
-        ''' <paramname="index">The zero-based index of the element to get.</param>
+        ''' <param name="index">The zero-based index of the element to get.</param>
         ''' <returns>The element at the specified index.</returns>
         Protected Overrides Function GetValueAltRep(ByVal index As Integer) As Expression
             Return GetValue(index)
@@ -59,8 +59,8 @@ Imports System.Security.Permissions
         ''' Sets the element at the specified index.
         ''' </summary>
         ''' <remarks>Used for pre-R 3.5 </remarks>
-        ''' <paramname="index">The zero-based index of the element to set.</param>
-        ''' <paramname="value">The value to set</param>
+        ''' <param name="index">The zero-based index of the element to set.</param>
+        ''' <param name="value">The value to set</param>
         Protected Overrides Sub SetValue(ByVal index As Integer, ByVal value As Expression)
             Dim offset = GetOffset(index)
             Marshal.WriteIntPtr(DataPointer, offset, If(value, Engine.NilValue).DangerousGetHandle())
@@ -70,8 +70,8 @@ Imports System.Security.Permissions
         ''' Sets the element at the specified index.
         ''' </summary>
         ''' <remarks>Used for R 3.5 and higher, to account for ALTREP objects</remarks>
-        ''' <paramname="index">The zero-based index of the element to set.</param>
-        ''' <paramname="value">The value to set</param>
+        ''' <param name="index">The zero-based index of the element to set.</param>
+        ''' <param name="value">The value to set</param>
         Protected Overrides Sub SetValueAltRep(ByVal index As Integer, ByVal value As Expression)
             SetValue(index, value)
         End Sub

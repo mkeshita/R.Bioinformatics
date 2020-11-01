@@ -16,8 +16,8 @@ Public Class DataFrameRow
     ''' <summary>
     ''' Creates a new object representing a data frame row
     ''' </summary>
-    ''' <paramname="frame">R Data frame</param>
-    ''' <paramname="rowIndex">zero-based row index</param>
+    ''' <param name="frame">R Data frame</param>
+    ''' <param name="rowIndex">zero-based row index</param>
     Public Sub New(ByVal frame As DataFrame, ByVal rowIndex As Integer)
         Me.frame = frame
         rowIndexField = rowIndex
@@ -26,7 +26,7 @@ Public Class DataFrameRow
     ''' <summary>
     ''' Gets and sets the value at the specified column.
     ''' </summary>
-    ''' <paramname="index">The zero-based column index.</param>
+    ''' <param name="index">The zero-based column index.</param>
     ''' <returns>The value.</returns>
     Default Public Property Item(ByVal index As Integer) As Object
         Get
@@ -42,7 +42,7 @@ Public Class DataFrameRow
     ''' <summary>
     ''' Gets the inner representation of the value; an integer if the column is a factor
     ''' </summary>
-    ''' <paramname="index"></param>
+    ''' <param name="index"></param>
     ''' <returns></returns>
     Friend Function GetInnerValue(ByVal index As Integer) As Object
         Dim column = DataFrame(index)
@@ -57,8 +57,8 @@ Public Class DataFrameRow
     ''' <summary>
     ''' Sets the inner representation of the value; an integer if the column is a factor
     ''' </summary>
-    ''' <paramname="index"></param>
-    ''' <paramname="value"></param>
+    ''' <param name="index"></param>
+    ''' <param name="value"></param>
     Friend Sub SetInnerValue(ByVal index As Integer, ByVal value As Object)
         Dim column = DataFrame(index)
 
@@ -72,7 +72,7 @@ Public Class DataFrameRow
     ''' <summary>
     ''' Gets and sets the value at the specified column.
     ''' </summary>
-    ''' <paramname="name">The column name.</param>
+    ''' <param name="name">The column name.</param>
     ''' <returns>The value.</returns>
     Default Public Property Item(ByVal name As String) As Object
         Get
@@ -114,8 +114,8 @@ Public Class DataFrameRow
     ''' <summary>
     ''' Try to get a member to a specified value
     ''' </summary>
-    ''' <paramname="binder">Dynamic get member operation at the call site; Binder whose name should be one of the data frame column name</param>
-    ''' <paramname="result">The value of the member</param>
+    ''' <param name="binder">Dynamic get member operation at the call site; Binder whose name should be one of the data frame column name</param>
+    ''' <param name="result">The value of the member</param>
     ''' <returns>false if setting failed</returns>
     Public Overrides Function TryGetMember(ByVal binder As GetMemberBinder, <Out> ByRef result As Object) As Boolean
         Dim columnNames = DataFrame.ColumnNames
@@ -132,8 +132,8 @@ Public Class DataFrameRow
     ''' <summary>
     ''' Try to set a member to a specified value
     ''' </summary>
-    ''' <paramname="binder">Dynamic set member operation at the call site; Binder whose name should be one of the data frame column name</param>
-    ''' <paramname="value">The value to set</param>
+    ''' <param name="binder">Dynamic set member operation at the call site; Binder whose name should be one of the data frame column name</param>
+    ''' <param name="value">The value to set</param>
     ''' <returns>false if setting failed</returns>
     Public Overrides Function TrySetMember(ByVal binder As SetMemberBinder, ByVal value As Object) As Boolean
         Dim columnNames = DataFrame.ColumnNames

@@ -16,8 +16,8 @@ Public Class DynamicVector
     ''' <summary>
     ''' Creates a container for a collection of values
     ''' </summary>
-    ''' <paramname="engine">The R engine</param>
-    ''' <paramname="coerced">Pointer to the native R object, coerced to the appropriate type</param>
+    ''' <param name="engine">The R engine</param>
+    ''' <param name="coerced">Pointer to the native R object, coerced to the appropriate type</param>
     Protected Friend Sub New(ByVal engine As REngine, ByVal coerced As IntPtr)
         MyBase.New(engine, coerced)
     End Sub
@@ -41,7 +41,7 @@ Public Class DynamicVector
     ''' Gets the element at the specified index.
     ''' </summary>
     ''' <remarks>Used for R 3.5 and higher, to account for ALTREP objects</remarks>
-    ''' <paramname="index">The zero-based index of the element to get.</param>
+    ''' <param name="index">The zero-based index of the element to get.</param>
     ''' <returns>The element at the specified index.</returns>
     Protected Overrides Function GetValueAltRep(ByVal index As Integer) As Object
         Return GetValue(index)
@@ -51,7 +51,7 @@ Public Class DynamicVector
     ''' Gets the element at the specified index.
     ''' </summary>
     ''' <remarks>Used for pre-R 3.5 </remarks>
-    ''' <paramname="index">The zero-based index of the element to get.</param>
+    ''' <param name="index">The zero-based index of the element to get.</param>
     ''' <returns>The element at the specified index.</returns>
     Protected Overrides Function GetValue(ByVal index As Integer) As Object
         Dim pointer = DataPointer
@@ -103,8 +103,8 @@ Public Class DynamicVector
     ''' Sets the element at the specified index.
     ''' </summary>
     ''' <remarks>Used for R 3.5 and higher, to account for ALTREP objects</remarks>
-    ''' <paramname="index">The zero-based index of the element to set.</param>
-    ''' <paramname="value">The value to set</param>
+    ''' <param name="index">The zero-based index of the element to set.</param>
+    ''' <param name="value">The value to set</param>
     Protected Overrides Sub SetValueAltRep(ByVal index As Integer, ByVal value As Object)
         SetValue(index, value)
     End Sub
@@ -113,8 +113,8 @@ Public Class DynamicVector
     ''' Sets the element at the specified index.
     ''' </summary>
     ''' <remarks>Used for pre-R 3.5 </remarks>
-    ''' <paramname="index">The zero-based index of the element to set.</param>
-    ''' <paramname="value">The value to set</param>
+    ''' <param name="index">The zero-based index of the element to set.</param>
+    ''' <param name="value">The value to set</param>
     Protected Overrides Sub SetValue(ByVal index As Integer, ByVal value As Object)
         Dim pointer = DataPointer
         Dim offset = GetOffset(index)

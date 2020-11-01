@@ -1,9 +1,7 @@
-﻿Imports RDotNet.Internals
-Imports RDotNet.Utilities
-Imports System
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
-
+Imports RDotNet.Internals
+Imports RDotNet.Utilities
 
 ''' <summary>
 ''' A matrix of byte values.
@@ -14,10 +12,10 @@ Public Class RawMatrix
     ''' <summary>
     ''' Creates a new RawMatrix with the specified size.
     ''' </summary>
-    ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-    ''' <paramname="rowCount">The row size.</param>
-    ''' <paramname="columnCount">The column size.</param>
-    ''' <seealsocref="REngineExtension.CreateRawMatrix(REngine,Integer,Integer)"/>
+    ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+    ''' <param name="rowCount">The row size.</param>
+    ''' <param name="columnCount">The column size.</param>
+    ''' <seealso cref="REngineExtension.CreateRawMatrix(REngine,Integer,Integer)"/>
     Public Sub New(ByVal engine As REngine, ByVal rowCount As Integer, ByVal columnCount As Integer)
         MyBase.New(engine, SymbolicExpressionType.RawVector, rowCount, columnCount)
     End Sub
@@ -25,9 +23,9 @@ Public Class RawMatrix
     ''' <summary>
     ''' Creates a new RawMatrix with the specified values.
     ''' </summary>
-    ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-    ''' <paramname="matrix">The values.</param>
-    ''' <seealsocref="REngineExtension.CreateRawMatrix(REngine,)"/>
+    ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+    ''' <param name="matrix">The values.</param>
+    ''' <seealso cref="REngineExtension.CreateRawMatrix"/>
     Public Sub New(ByVal engine As REngine, ByVal matrix As Byte(,))
         MyBase.New(engine, SymbolicExpressionType.RawVector, matrix)
     End Sub
@@ -35,8 +33,8 @@ Public Class RawMatrix
     ''' <summary>
     ''' Creates a new instance for a raw matrix.
     ''' </summary>
-    ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-    ''' <paramname="coerced">The pointer to a raw matrix.</param>
+    ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+    ''' <param name="coerced">The pointer to a raw matrix.</param>
     Protected Friend Sub New(ByVal engine As REngine, ByVal coerced As IntPtr)
         MyBase.New(engine, coerced)
     End Sub
@@ -44,8 +42,8 @@ Public Class RawMatrix
     ''' <summary>
     ''' Gets or sets the element at the specified index.
     ''' </summary>
-    ''' <paramname="rowIndex">The zero-based rowIndex index of the element to get or set.</param>
-    ''' <paramname="columnIndex">The zero-based columnIndex index of the element to get or set.</param>
+    ''' <param name="rowIndex">The zero-based rowIndex index of the element to get or set.</param>
+    ''' <param name="columnIndex">The zero-based columnIndex index of the element to get or set.</param>
     ''' <returns>The element at the specified index.</returns>
     Default Public Overrides Property Item(ByVal rowIndex As Integer, ByVal columnIndex As Integer) As Byte
         Get
@@ -83,7 +81,7 @@ Public Class RawMatrix
     ''' <summary>
     ''' Initializes this R matrix, using the values in a rectangular array.
     ''' </summary>
-    ''' <paramname="matrix"></param>
+    ''' <param name="matrix"></param>
     Protected Overrides Sub InitMatrixFastDirect(ByVal matrix As Byte(,))
         Dim values = ArrayConvertOneDim(matrix)
         Marshal.Copy(values, 0, DataPointer, values.Length)

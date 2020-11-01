@@ -9,7 +9,7 @@ Imports System.Security.Permissions
     ''' <summary>
     ''' A matrix base.
     ''' </summary>
-    ''' <typeparamname="T">The element type.</typeparam>
+    ''' <typeparam name="T">The element type.</typeparam>
     <DebuggerDisplay("MatrixSize = {RowCount} x {ColumnCount}; RObjectType = {Type}")>
     <DebuggerTypeProxy(GetType(MatrixDebugView(Of)))>
     <SecurityPermission(SecurityAction.Demand, Flags:=SecurityPermissionFlag.UnmanagedCode)>
@@ -18,10 +18,10 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Creates a new matrix with the specified size.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="type">The element type.</param>
-        ''' <paramname="rowCount">The size of row.</param>
-        ''' <paramname="columnCount">The size of column.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="type">The element type.</param>
+        ''' <param name="rowCount">The size of row.</param>
+        ''' <param name="columnCount">The size of column.</param>
         Protected Sub New(ByVal engine As REngine, ByVal type As SymbolicExpressionType, ByVal rowCount As Integer, ByVal columnCount As Integer)
             MyBase.New(engine, engine.GetFunction(Of Rf_allocMatrix)()(type, rowCount, columnCount))
 
@@ -40,9 +40,9 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Creates a new matrix with the specified values.
         ''' </summary>
-        ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-        ''' <paramname="type">The element type.</param>
-        ''' <paramname="matrix">The values.</param>
+        ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+        ''' <param name="type">The element type.</param>
+        ''' <param name="matrix">The values.</param>
         Public Sub New(ByVal engine As REngine, ByVal type As SymbolicExpressionType, ByVal matrix As T(,))
             MyBase.New(engine, engine.GetFunction(Of Rf_allocMatrix)()(type, matrix.GetLength(0), matrix.GetLength(1)))
             Dim rowCount = Me.RowCount
@@ -60,14 +60,14 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Initializes this R matrix, using the values in a rectangular array.
         ''' </summary>
-        ''' <paramname="matrix"></param>
+        ''' <param name="matrix"></param>
         Protected MustOverride Sub InitMatrixFastDirect(ByVal matrix As T(,))
 
         ''' <summary>
         ''' Creates a new instance for a matrix.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="coerced">The pointer to a matrix.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="coerced">The pointer to a matrix.</param>
         Protected Sub New(ByVal engine As REngine, ByVal coerced As IntPtr)
             MyBase.New(engine, coerced)
         End Sub
@@ -75,16 +75,16 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Gets or sets the element at the specified index.
         ''' </summary>
-        ''' <paramname="rowIndex">The zero-based row index of the element to get or set.</param>
-        ''' <paramname="columnIndex">The zero-based column index of the element to get or set.</param>
+        ''' <param name="rowIndex">The zero-based row index of the element to get or set.</param>
+        ''' <param name="columnIndex">The zero-based column index of the element to get or set.</param>
         ''' <returns>The element at the specified index.</returns>
         Default Public MustOverride Property Item(ByVal rowIndex As Integer, ByVal columnIndex As Integer) As T
 
         ''' <summary>
         ''' Gets or sets the element at the specified names.
         ''' </summary>
-        ''' <paramname="rowName">The row name of the element to get or set.</param>
-        ''' <paramname="columnName">The column name of the element to get or set.</param>
+        ''' <param name="rowName">The row name of the element to get or set.</param>
+        ''' <param name="columnName">The column name of the element to get or set.</param>
         ''' <returns>The element at the specified names.</returns>
         Default Public Overridable Property Item(ByVal rowName As String, ByVal columnName As String) As T
             Get
@@ -243,8 +243,8 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Gets the offset for the specified indexes.
         ''' </summary>
-        ''' <paramname="rowIndex">The index of row.</param>
-        ''' <paramname="columnIndex">The index of column.</param>
+        ''' <param name="rowIndex">The index of row.</param>
+        ''' <param name="columnIndex">The index of column.</param>
         ''' <returns>The offset.</returns>
         Protected Function GetOffset(ByVal rowIndex As Integer, ByVal columnIndex As Integer) As Integer
             Return DataSize * (columnIndex * RowCount + rowIndex)
@@ -253,13 +253,13 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Copies the elements to the specified array.
         ''' </summary>
-        ''' <paramname="destination">The destination array.</param>
-        ''' <paramname="rowCount">The row length to copy.</param>
-        ''' <paramname="columnCount">The column length to copy.</param>
-        ''' <paramname="sourceRowIndex">The first row index of the matrix.</param>
-        ''' <paramname="sourceColumnIndex">The first column index of the matrix.</param>
-        ''' <paramname="destinationRowIndex">The first row index of the destination array.</param>
-        ''' <paramname="destinationColumnIndex">The first column index of the destination array.</param>
+        ''' <param name="destination">The destination array.</param>
+        ''' <param name="rowCount">The row length to copy.</param>
+        ''' <param name="columnCount">The column length to copy.</param>
+        ''' <param name="sourceRowIndex">The first row index of the matrix.</param>
+        ''' <param name="sourceColumnIndex">The first column index of the matrix.</param>
+        ''' <param name="destinationRowIndex">The first row index of the destination array.</param>
+        ''' <param name="destinationColumnIndex">The first column index of the destination array.</param>
         Public Sub CopyTo(ByVal destination As T(,), ByVal rowCount As Integer, ByVal columnCount As Integer, ByVal Optional sourceRowIndex As Integer = 0, ByVal Optional sourceColumnIndex As Integer = 0, ByVal Optional destinationRowIndex As Integer = 0, ByVal Optional destinationColumnIndex As Integer = 0)
             If destination Is Nothing Then
                 Throw New ArgumentNullException("destination")

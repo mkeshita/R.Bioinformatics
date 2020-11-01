@@ -1,7 +1,4 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Dynamic
-Imports System.Linq
+﻿Imports System.Dynamic
 Imports System.Linq.Expressions
 Imports System.Runtime.InteropServices
 
@@ -19,8 +16,8 @@ Namespace Dynamic
         ''' <summary>
         ''' Dynamic and binding logic for S expressions
         ''' </summary>
-        ''' <paramname="parameter">The expression representing this new SymbolicExpressionDynamicMeta in the binding process</param>
-        ''' <paramname="expression">The runtime value of this SymbolicExpression represented by this new SymbolicExpressionDynamicMeta</param>
+        ''' <param name="parameter">The expression representing this new SymbolicExpressionDynamicMeta in the binding process</param>
+        ''' <param name="expression">The runtime value of this SymbolicExpression represented by this new SymbolicExpressionDynamicMeta</param>
         Public Sub New(ByVal parameter As Expressions.Expression, ByVal expression As SymbolicExpression)
             MyBase.New(parameter, BindingRestrictions.Empty, expression)
         End Sub
@@ -28,14 +25,14 @@ Namespace Dynamic
         ''' <summary>
         ''' Creates the binding of the dynamic get member operation.
         ''' </summary>
-        ''' <typeparamname="RType">The type of R object that this dynamic meta object represents</typeparam>
-        ''' <typeparamname="BType">The type passed to define the binding restrictions</typeparam>
-        ''' <paramname="binder">The binder; its name must be one of the names of the R object represented by this meta object</param>
-        ''' <paramname="indexerNameType"></param>
+        ''' <typeparam name="RType">The type of R object that this dynamic meta object represents</typeparam>
+        ''' <typeparam name="BType">The type passed to define the binding restrictions</typeparam>
+        ''' <param name="binder">The binder; its name must be one of the names of the R object represented by this meta object</param>
+        ''' <param name="indexerNameType"></param>
         ''' <returns></returns>
         Protected Overloads Function BindGetMember(Of RType, BType)(ByVal binder As GetMemberBinder, ByVal indexerNameType As Type()) As DynamicMetaObject
-            Dim instance As ConstantExpression
-            Dim name As ConstantExpression
+            Dim instance As ConstantExpression = Nothing
+            Dim name As ConstantExpression = Nothing
             BuildInstanceAndName(Of RType)(binder, instance, name)
             Dim indexer = GetType(RType).GetProperty("Item", indexerNameType)
             Dim [call] = Expressions.Expression.Property(instance, indexer, name)
@@ -62,7 +59,7 @@ Namespace Dynamic
         ''' <summary>
         ''' Performs the binding of the dynamic get member operation.
         ''' </summary>
-        ''' <paramname="binder">
+        ''' <param name="binder">
         ''' An instance of the System.Dynamic.GetMemberBinder that represents the details of the dynamic operation.
         ''' </param>
         ''' <returns>The new System.Dynamic.DynamicMetaObject representing the result of the binding.</returns>
@@ -71,8 +68,8 @@ Namespace Dynamic
                 Return MyBase.BindGetMember(binder)
             End If
 
-            Dim instance As ConstantExpression
-            Dim name As ConstantExpression
+            Dim instance As ConstantExpression = Nothing
+            Dim name As ConstantExpression = Nothing
             BuildInstanceAndName(Of SymbolicExpression)(binder, instance, name)
             Dim getAttribute = GetType(SymbolicExpression).GetMethod("GetAttribute")
             Dim [call] = Expressions.Expression.Call(instance, getAttribute, name)

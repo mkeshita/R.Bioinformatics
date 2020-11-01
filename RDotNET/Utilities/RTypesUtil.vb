@@ -15,7 +15,7 @@ Namespace Utilities
         ''' <summary> Serialize an array of complex numbers to 
         '''           an array of doubles, alternating real and imaginary values</summary>
         '''
-        ''' <paramname="values"> The complex values to serialize</param>
+        ''' <param name="values"> The complex values to serialize</param>
         '''
         ''' <returns> A double[].</returns>
         Public Function SerializeComplexToDouble(ByVal values As Complex()) As Double()
@@ -39,9 +39,9 @@ Namespace Utilities
 
         ''' <summary> Deserialize complex from double.</summary>
         '''
-        ''' <exceptioncref="ArgumentException"> input length is not divisible by 2 </exception>
+        ''' <exception cref="ArgumentException"> input length is not divisible by 2 </exception>
         '''
-        ''' <paramname="data"> The serialised complex values, even indexes are real and odd ones imaginary</param>
+        ''' <param name="data"> The serialised complex values, even indexes are real and odd ones imaginary</param>
         '''
         ''' <returns> A Complex[].</returns>
         Public Function DeserializeComplexFromDouble(ByVal data As Double()) As Complex()

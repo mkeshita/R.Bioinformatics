@@ -32,8 +32,8 @@ Public Class SymbolicExpression
     ''' <summary>
     ''' Creates new instance of SymbolicExpression.
     ''' </summary>
-    ''' <paramname="engine">The engine.</param>
-    ''' <paramname="pointer">The pointer.</param>
+    ''' <param name="engine">The engine.</param>
+    ''' <param name="pointer">The pointer.</param>
     Protected Friend Sub New(ByVal engine As REngine, ByVal pointer As IntPtr)
         MyBase.New(IntPtr.Zero, True)
         engineField = engine
@@ -53,7 +53,7 @@ Public Class SymbolicExpression
     End Property
 
     ''' <summary>
-    ''' Gets the <seecref="REngine"/> to which this expression belongs.
+    ''' Gets the <see cref="REngine"/> to which this expression belongs.
     ''' </summary>
     Public ReadOnly Property Engine As REngine
         Get
@@ -64,7 +64,7 @@ Public Class SymbolicExpression
     ''' <summary>
     ''' Creates the delegate function for the specified function defined in the DLL.
     ''' </summary>
-    ''' <typeparamname="TDelegate">The type of delegate.</typeparam>
+    ''' <typeparam name="TDelegate">The type of delegate.</typeparam>
     ''' <returns>The delegate.</returns>
     Protected Friend Function GetFunction(Of TDelegate As Class)() As TDelegate
         Return Engine.GetFunction(Of TDelegate)()
@@ -80,7 +80,7 @@ Public Class SymbolicExpression
     End Property
 
     ''' <summary>
-    ''' Gets the <seecref="SymbolicExpressionType"/>.
+    ''' Gets the <see cref="SymbolicExpressionType"/>.
     ''' </summary>
     Public ReadOnly Property Type As SymbolicExpressionType
         Get
@@ -93,7 +93,7 @@ Public Class SymbolicExpression
     ''' <summary>
     ''' returns a new SymbolicExpressionDynamicMeta for this SEXP
     ''' </summary>
-    ''' <paramname="parameter"></param>
+    ''' <param name="parameter"></param>
     ''' <returns></returns>
     Public Overridable Function GetMetaObject(ByVal parameter As Expressions.Expression) As DynamicMetaObject Implements IDynamicMetaObjectProvider.GetMetaObject
         Return New SymbolicExpressionDynamicMeta(parameter, Me)
@@ -106,7 +106,7 @@ Public Class SymbolicExpression
     ''' <summary>
     ''' Testing the equality of SEXP, based on handle equality.
     ''' </summary>
-    ''' <paramname="other">other SEXP</param>
+    ''' <param name="other">other SEXP</param>
     ''' <returns>True if the objects have a handle that is the same, i.e. pointing to the same address in unmanaged memory</returns>
     Public Overloads Function Equals(ByVal other As SymbolicExpression) As Boolean Implements IEquatable(Of SymbolicExpression).Equals
         Return other IsNot Nothing AndAlso handle = other.handle
@@ -143,7 +143,7 @@ Public Class SymbolicExpression
     ''' <summary>
     ''' Gets the value of the specified name.
     ''' </summary>
-    ''' <paramname="attributeName">The name of attribute.</param>
+    ''' <param name="attributeName">The name of attribute.</param>
     ''' <returns>The attribute.</returns>
     Public Function GetAttribute(ByVal attributeName As String) As SymbolicExpression
         If Equals(attributeName, Nothing) Then
@@ -185,8 +185,8 @@ Public Class SymbolicExpression
     ''' <summary>
     ''' Sets the new value to the attribute of the specified name.
     ''' </summary>
-    ''' <paramname="attributeName">The name of attribute.</param>
-    ''' <paramname="value">The value</param>
+    ''' <param name="attributeName">The name of attribute.</param>
+    ''' <param name="value">The value</param>
     Public Sub SetAttribute(ByVal attributeName As String, ByVal value As SymbolicExpression)
         If Equals(attributeName, Nothing) Then
             Throw New ArgumentNullException()
@@ -223,7 +223,7 @@ Public Class SymbolicExpression
     ''' <summary>
     ''' Protects the expression from R's garbage collector.
     ''' </summary>
-    ''' <seealsocref="Unpreserve"/>
+    ''' <seealso cref="Unpreserve"/>
     Public Sub Preserve()
         If Not IsInvalid AndAlso Not isProtectedField Then
             If Engine.EnableLock Then
@@ -241,7 +241,7 @@ Public Class SymbolicExpression
     ''' <summary>
     ''' Stops protection.
     ''' </summary>
-    ''' <seealsocref="Preserve"/>
+    ''' <seealso cref="Preserve"/>
     Public Sub Unpreserve()
         If Not IsInvalid AndAlso IsProtected Then
             If Engine.EnableLock Then
@@ -279,7 +279,7 @@ Public Class SymbolicExpression
     ''' <summary>
     ''' Test the equality of this object with another. If this object is also a SymbolicExpression and points to the same R expression, returns true.
     ''' </summary>
-    ''' <paramname="obj">Other object to test for equality</param>
+    ''' <param name="obj">Other object to test for equality</param>
     ''' <returns>Returns true if pointing to the same R expression in memory.</returns>
     Public Overrides Function Equals(ByVal obj As Object) As Boolean
         Return Equals(TryCast(obj, SymbolicExpression))
@@ -288,9 +288,9 @@ Public Class SymbolicExpression
     ''' <summary>
     ''' Experimental
     ''' </summary>
-    ''' <typeparamname="K"></typeparam>
-    ''' <paramname="sexp"></param>
-    ''' <paramname="name"></param>
+    ''' <typeparam name="K"></typeparam>
+    ''' <param name="sexp"></param>
+    ''' <param name="name"></param>
     ''' <returns></returns>
     Public Shared Function op_Dynamic(Of K)(ByVal sexp As SymbolicExpression, ByVal name As String) As SymbolicExpression
         Throw New NotImplementedException()
@@ -299,10 +299,10 @@ Public Class SymbolicExpression
     ''' <summary>
     ''' Experimental
     ''' </summary>
-    ''' <typeparamname="K"></typeparam>
-    ''' <paramname="sexp"></param>
-    ''' <paramname="name"></param>
-    ''' <paramname="value"></param>
+    ''' <typeparam name="K"></typeparam>
+    ''' <param name="sexp"></param>
+    ''' <param name="name"></param>
+    ''' <param name="value"></param>
     Public Shared Sub op_DynamicAssignment(Of K)(ByVal sexp As SymbolicExpression, ByVal name As String, ByVal value As Object)
     End Sub
 End Class

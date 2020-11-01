@@ -9,8 +9,8 @@ Namespace Utilities
         ''' <summary>
         ''' Checks the equality in native memory of a pointer against a pointer to the R 'NULL' value
         ''' </summary>
-        ''' <paramname="engine">R.NET Rengine</param>
-        ''' <paramname="pointer">Pointer to test</param>
+        ''' <param name="engine">R.NET Rengine</param>
+        ''' <param name="pointer">Pointer to test</param>
         ''' <returns>True if the pointer and pointer to R NULL are equal</returns>
         <Extension()>
         Public Function EqualsRNilValue(ByVal engine As REngine, ByVal pointer As IntPtr) As Boolean
@@ -21,8 +21,8 @@ Namespace Utilities
         ''' Checks the equality in native memory of a pointer against a pointer to the R 'R_UnboundValue',
         ''' i.e. whether a symbol exists (i.e. functional equivalent to "exists('varName')" in R)
         ''' </summary>
-        ''' <paramname="engine">R.NET Rengine</param>
-        ''' <paramname="pointer">Pointer to test</param>
+        ''' <param name="engine">R.NET Rengine</param>
+        ''' <param name="pointer">Pointer to test</param>
         ''' <returns>True if the pointer is not bound to a value</returns>
         <Extension()>
         Public Function CheckUnbound(ByVal engine As REngine, ByVal pointer As IntPtr) As Boolean

@@ -14,8 +14,8 @@ Imports System.Security
         ''' <summary>
         ''' Creates a function object.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="pointer">The pointer.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="pointer">The pointer.</param>
         Protected Sub New(ByVal engine As REngine, ByVal pointer As IntPtr)
             MyBase.New(engine, pointer)
         End Sub
@@ -23,14 +23,14 @@ Imports System.Security
         ''' <summary>
         ''' Executes the function. Match the function arguments by order.
         ''' </summary>
-        ''' <paramname="args">The arguments.</param>
+        ''' <param name="args">The arguments.</param>
         ''' <returns>The result of the function evaluation</returns>
         Public MustOverride Function Invoke(ParamArray args As SymbolicExpression()) As SymbolicExpression
 
         ''' <summary>
         ''' A convenience method to executes the function. Match the function arguments by order, after evaluating each to an R expression.
         ''' </summary>
-        ''' <paramname="args">string representation of the arguments; each is evaluated to symbolic expression before being passed as argument to this object (i.e. this Function)</param>
+        ''' <param name="args">string representation of the arguments; each is evaluated to symbolic expression before being passed as argument to this object (i.e. this Function)</param>
         ''' <returns>The result of the function evaluation</returns>
         ''' <example>
         ''' <code>
@@ -43,14 +43,14 @@ Imports System.Security
         ''' <summary>
         ''' Executes the function. Match the function arguments by name.
         ''' </summary>
-        ''' <paramname="args">The arguments, indexed by argument name</param>
+        ''' <param name="args">The arguments, indexed by argument name</param>
         ''' <returns>The result of the function evaluation</returns>
         Public MustOverride Function Invoke(ByVal args As IDictionary(Of String, SymbolicExpression)) As SymbolicExpression
 
         ''' <summary>
         ''' Executes the function. Match the function arguments by name.
         ''' </summary>
-        ''' <paramname="args">one or more tuples, conceptually a pairlist of arguments. The argument names must be unique</param>
+        ''' <param name="args">one or more tuples, conceptually a pairlist of arguments. The argument names must be unique</param>
         ''' <returns>The result of the function evaluation</returns>
         Public Function InvokeNamed(ParamArray args As Tuple(Of String, SymbolicExpression)()) As SymbolicExpression
             Return InvokeNamedFast(args)
@@ -62,8 +62,8 @@ Imports System.Security
         ''' <summary>
         ''' Executes the function. Match the function arguments by name.
         ''' </summary>
-        ''' <paramname="argNames">The names of the arguments. These can be empty strings for unnamed function arguments</param>
-        ''' <paramname="args">The arguments passed to the function</param>
+        ''' <param name="argNames">The names of the arguments. These can be empty strings for unnamed function arguments</param>
+        ''' <param name="args">The arguments passed to the function</param>
         ''' <returns></returns>
         Protected Function InvokeViaPairlist(ByVal argNames As String(), ByVal args As SymbolicExpression()) As SymbolicExpression
             Dim names = New CharacterVector(Engine, argNames)
@@ -98,7 +98,7 @@ Imports System.Security
         ''' <summary>
         ''' Invoke this function with unnamed arguments.
         ''' </summary>
-        ''' <paramname="args">The arguments passed to function call.</param>
+        ''' <param name="args">The arguments passed to function call.</param>
         ''' <returns>The result of the function evaluation.</returns>
         Protected Function InvokeOrderedArguments(ByVal args As SymbolicExpression()) As SymbolicExpression
             Dim argument As IntPtr = Engine.NilValue.DangerousGetHandle()
@@ -122,7 +122,7 @@ Imports System.Security
         ''' <summary>
         ''' Invoke the function with optionally named arguments by order.
         ''' </summary>
-        ''' <paramname="args">one or more tuples, conceptually a pairlist of arguments.
+        ''' <param name="args">one or more tuples, conceptually a pairlist of arguments.
         ''' The argument names must be unique; null or empty string indicates unnamed argument. </param>
         ''' <returns>The result of the function evaluation</returns>
         Private Function InvokeNamedFast(ParamArray args As Tuple(Of String, SymbolicExpression)()) As SymbolicExpression

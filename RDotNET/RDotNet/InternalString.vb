@@ -16,7 +16,7 @@ Imports System.Text
         ''' <summary>
         ''' Convert string to utf8
         ''' </summary>
-        ''' <paramname="stringToConvert">string to convert</param>
+        ''' <param name="stringToConvert">string to convert</param>
 
         Public Shared Function NativeUtf8FromString(ByVal stringToConvert As String) As IntPtr
             Dim len = Encoding.UTF8.GetByteCount(stringToConvert)
@@ -30,7 +30,7 @@ Imports System.Text
         ''' <summary>
         ''' Convert utf8 to string
         ''' </summary>
-        ''' <paramname="utf8">utf8 to convert</param>
+        ''' <param name="utf8">utf8 to convert</param>
 
         Public Shared Function StringFromNativeUtf8(ByVal utf8 As IntPtr) As String
             Dim len = 0
@@ -47,8 +47,8 @@ Imports System.Text
         ''' <summary>
         ''' Creates a new instance.
         ''' </summary>
-        ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-        ''' <paramname="pointer">The pointer to a string.</param>
+        ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+        ''' <param name="pointer">The pointer to a string.</param>
         Public Sub New(ByVal engine As REngine, ByVal pointer As IntPtr)
             MyBase.New(engine, pointer)
         End Sub
@@ -56,8 +56,8 @@ Imports System.Text
         ''' <summary>
         ''' Creates a new instance.
         ''' </summary>
-        ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-        ''' <paramname="s">The string</param>
+        ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+        ''' <param name="s">The string</param>
         Public Sub New(ByVal engine As REngine, ByVal s As String)
             MyBase.New(engine, engine.GetFunction(Of Rf_mkChar)()(s))
         End Sub
@@ -65,7 +65,7 @@ Imports System.Text
         ''' <summary>
         ''' Converts to the string into .NET Framework string.
         ''' </summary>
-        ''' <paramname="s">The R string.</param>
+        ''' <param name="s">The R string.</param>
         ''' <returns>The .NET Framework string.</returns>
         Public Shared Widening Operator CType(ByVal s As InternalString) As String
             Return s.ToString()
@@ -73,17 +73,17 @@ Imports System.Text
 
         ''' <summary>
         ''' Gets the string representation of the string object.
-        ''' This returns <c>"NA"</c> if the value is <c>NA</c>, whereas <seecref="GetInternalValue()"/> returns <c>null</c>.
+        ''' This returns <c>"NA"</c> if the value is <c>NA</c>, whereas <see cref="GetInternalValue()"/> returns <c>null</c>.
         ''' </summary>
         ''' <returns>The string representation.</returns>
-        ''' <seealsocref="GetInternalValue()"/>
+        ''' <seealso cref="GetInternalValue()"/>
         Public Overrides Function ToString() As String
             Return StringFromNativeUtf8(DataPointer)
         End Function
 
         ''' <summary>
         ''' Gets the string representation of the string object.
-        ''' This returns <c>null</c> if the value is <c>NA</c>, whereas <seecref="ToString()"/> returns <c>"NA"</c>.
+        ''' This returns <c>null</c> if the value is <c>NA</c>, whereas <see cref="ToString()"/> returns <c>"NA"</c>.
         ''' </summary>
         ''' <returns>The string representation.</returns>
         Public Function GetInternalValue() As String

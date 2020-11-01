@@ -23,8 +23,8 @@ Public Class DataFrame
     ''' <summary>
     ''' Creates a new instance.
     ''' </summary>
-    ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-    ''' <paramname="coerced">The pointer to a data frame.</param>
+    ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+    ''' <param name="coerced">The pointer to a data frame.</param>
     Protected Friend Sub New(ByVal engine As REngine, ByVal coerced As IntPtr)
         MyBase.New(engine, coerced)
     End Sub
@@ -32,7 +32,7 @@ Public Class DataFrame
     ''' <summary>
     ''' Gets or sets the column at the specified index as a vector.
     ''' </summary>
-    ''' <paramname="columnIndex">The zero-based index of the column to get or set.</param>
+    ''' <param name="columnIndex">The zero-based index of the column to get or set.</param>
     ''' <returns>The column at the specified index.</returns>
     Default Public Overrides Property Item(ByVal columnIndex As Integer) As DynamicVector
         Get
@@ -94,8 +94,8 @@ Public Class DataFrame
     ''' <summary>
     ''' Gets or sets the element at the specified indexes.
     ''' </summary>
-    ''' <paramname="rowIndex">The row index.</param>
-    ''' <paramname="columnIndex">The column index.</param>
+    ''' <param name="rowIndex">The row index.</param>
+    ''' <param name="columnIndex">The column index.</param>
     ''' <returns>The element.</returns>
     Default Public Overloads Property Item(ByVal rowIndex As Integer, ByVal columnIndex As Integer) As Object
         Get
@@ -111,8 +111,8 @@ Public Class DataFrame
     ''' <summary>
     ''' Gets or sets the element at the specified index and name.
     ''' </summary>
-    ''' <paramname="rowIndex">The row index.</param>
-    ''' <paramname="columnName">The column name.</param>
+    ''' <param name="rowIndex">The row index.</param>
+    ''' <param name="columnName">The column name.</param>
     ''' <returns>The element.</returns>
     Default Public Overloads Property Item(ByVal rowIndex As Integer, ByVal columnName As String) As Object
         Get
@@ -128,8 +128,8 @@ Public Class DataFrame
     ''' <summary>
     ''' Gets or sets the element at the specified names.
     ''' </summary>
-    ''' <paramname="rowName">The row name.</param>
-    ''' <paramname="columnName">The column name.</param>
+    ''' <param name="rowName">The row name.</param>
+    ''' <param name="columnName">The column name.</param>
     ''' <returns>The element.</returns>
     Default Public Overloads Property Item(ByVal rowName As String, ByVal columnName As String) As Object
         Get
@@ -206,7 +206,7 @@ Public Class DataFrame
     ''' <summary>
     ''' Gets the row at the specified index.
     ''' </summary>
-    ''' <paramname="rowIndex">The index.</param>
+    ''' <param name="rowIndex">The index.</param>
     ''' <returns>The row.</returns>
     Public Function GetRow(ByVal rowIndex As Integer) As DataFrameRow
         Return New DataFrameRow(Me, rowIndex)
@@ -215,7 +215,7 @@ Public Class DataFrame
     ''' <summary>
     ''' Gets the row at the specified index mapping a specified class.
     ''' </summary>
-    ''' <typeparamname="TRow">The row type with <seecref="DataFrameRowAttribute"/>.</typeparam>
+    ''' <typeparam name="TRow">The row type with <see cref="DataFrameRowAttribute"/>.</typeparam>
     ''' <returns>The row.</returns>
     Public Function GetRow(Of TRow As {Class, New})(ByVal rowIndex As Integer) As TRow
         Dim rowType = GetType(TRow)
@@ -244,7 +244,7 @@ Public Class DataFrame
     ''' <summary>
     ''' Enumerates all the rows in the data frame mapping a specified class.
     ''' </summary>
-    ''' <typeparamname="TRow">The row type with <seecref="DataFrameRowAttribute"/>.</typeparam>
+    ''' <typeparam name="TRow">The row type with <see cref="DataFrameRowAttribute"/>.</typeparam>
     ''' <returns>The collection of the rows.</returns>
     Public Iterator Function GetRows(Of TRow As {Class, New})() As IEnumerable(Of TRow)
         Dim rowType = GetType(TRow)
@@ -265,7 +265,7 @@ Public Class DataFrame
     ''' <summary>
     ''' returns a new DataFrameDynamicMeta for this DataFrame
     ''' </summary>
-    ''' <paramname="parameter"></param>
+    ''' <param name="parameter"></param>
     ''' <returns></returns>
     Public Overrides Function GetMetaObject(ByVal parameter As Expressions.Expression) As DynamicMetaObject
         Return New DataFrameDynamicMeta(parameter, Me)

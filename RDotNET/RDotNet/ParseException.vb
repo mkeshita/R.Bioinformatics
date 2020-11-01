@@ -28,9 +28,9 @@ Public Class ParseException
     ''' <summary>
     ''' Creates a new instance with the specified error.
     ''' </summary>
-    ''' <paramname="status">The error status</param>
-    ''' <paramname="errorStatement">The statement that failed to be parsed</param>
-    ''' <paramname="errorMsg">The error message given by the native R engine</param>
+    ''' <param name="status">The error status</param>
+    ''' <param name="errorStatement">The statement that failed to be parsed</param>
+    ''' <param name="errorMsg">The error message given by the native R engine</param>
     Public Sub New(ByVal status As ParseStatus, ByVal errorStatement As String, ByVal errorMsg As String)
         MyBase.New(MakeErrorMsg(status, errorStatement, errorMsg))
         statusField = status
@@ -44,8 +44,8 @@ Public Class ParseException
     ''' <summary>
     ''' Creates a new ParseException
     ''' </summary>
-    ''' <paramname="info">The System.Runtime.Serialization.SerializationInfo that holds the serialised object data about the exception being thrown.</param>
-    ''' <paramname="context"></param>
+    ''' <param name="info">The System.Runtime.Serialization.SerializationInfo that holds the serialised object data about the exception being thrown.</param>
+    ''' <param name="context"></param>
     Protected Sub New(ByVal info As SerializationInfo, ByVal context As StreamingContext)
         MyBase.New(info, context)
         statusField = CType(info.GetValue(StatusFieldName, GetType(ParseStatus)), ParseStatus)
@@ -73,8 +73,8 @@ Public Class ParseException
     ''' <summary>
     ''' Sets the serialization info about the exception thrown
     ''' </summary>
-    ''' <paramname="info">Serialised object data.</param>
-    ''' <paramname="context">Contextual information about the source or destination</param>
+    ''' <param name="info">Serialised object data.</param>
+    ''' <param name="context">Contextual information about the source or destination</param>
     Public Overrides Sub GetObjectData(ByVal info As SerializationInfo, ByVal context As StreamingContext)
         MyBase.GetObjectData(info, context)
         info.AddValue(StatusFieldName, statusField)

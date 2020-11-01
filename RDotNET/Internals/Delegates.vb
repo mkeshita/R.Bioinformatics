@@ -32,8 +32,8 @@ Namespace Internals
     ''' <summary>
     ''' Initialise R for embedding
     ''' </summary>
-    ''' <paramname="argc">The length of argv</param>
-    ''' <paramname="argv">arguments passed to the embedded engine</param>
+    ''' <param name="argc">The length of argv</param>
+    ''' <param name="argv">arguments passed to the embedded engine</param>
     ''' <remarks>
     ''' <code>
     ''' int Rf_initEmbeddedR(int argc, char **argv)
@@ -107,7 +107,7 @@ Namespace Internals
     ''' <summary>
     ''' A delegate for the R native Rf_PrintValue function
     ''' </summary>
-    ''' <paramname="value">Pointer to a symbolic expression</param>
+    ''' <param name="value">Pointer to a symbolic expression</param>
     <UnmanagedFunctionPointer(CallingConvention.Cdecl)>
     Public Delegate Sub Rf_PrintValue(ByVal value As IntPtr)
     <UnmanagedFunctionPointer(CallingConvention.Cdecl)>

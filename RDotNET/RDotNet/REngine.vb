@@ -4,11 +4,11 @@ Imports System.Security.Permissions
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Language
 Imports RDotNet.Devices
 Imports RDotNet.Internals
 Imports RDotNet.NativeLibrary
 Imports RDotNet.Utilities
-
 
 ''' <summary>
 ''' REngine handles R environment through evaluation of R statement.
@@ -34,11 +34,13 @@ Public Class REngine
     ''' <summary>
     ''' Gets the R compatibility mode, based on the version of R used.
     ''' </summary>
+    Dim _Compatibility As RDotNet.REngine.CompatibilityMode
 
     ''' <summary>
     ''' Gets whether this object has been disposed of already.
     ''' </summary>
-    Private _Compatibility As RDotNet.REngine.CompatibilityMode, _Disposed As Boolean
+    Dim _Disposed As Boolean
+
     ''' <summary>
     ''' Flag for working on pre or post R 3.5 and its ALTREP mode.  
     ''' </summary>
@@ -73,8 +75,8 @@ Public Class REngine
     ''' <summary>
     ''' Create a new REngine instance
     ''' </summary>
-    ''' <paramname="id">The identifier of this object</param>
-    ''' <paramname="dll">The name of the file that is the shared R library, e.g. "R.dll"</param>
+    ''' <param name="id">The identifier of this object</param>
+    ''' <param name="dll">The name of the file that is the shared R library, e.g. "R.dll"</param>
     Protected Sub New(ByVal id As String, ByVal dll As String)
         MyBase.New(dll)
         idField = id
@@ -204,10 +206,10 @@ Public Class REngine
     ''' <summary>
     ''' Gets a reference to the R engine, creating and initializing it if necessary. In most cases users need not provide any parameter to this method.
     ''' </summary>
-    ''' <paramname="dll">The file name of the library to load, e.g. "R.dll" for Windows. You usually do not need need to provide this optional parameter</param>
-    ''' <paramname="initialize">Initialize the R engine after its creation. Default is true</param>
-    ''' <paramname="parameter">If 'initialize' is 'true', you can optionally specify the specific startup parameters for the R native engine</param>
-    ''' <paramname="device">If 'initialize' is 'true', you can optionally specify a character device for the R engine to use</param>
+    ''' <param name="dll">The file name of the library to load, e.g. "R.dll" for Windows. You usually do not need need to provide this optional parameter</param>
+    ''' <param name="initialize">Initialize the R engine after its creation. Default is true</param>
+    ''' <param name="parameter">If 'initialize' is 'true', you can optionally specify the specific startup parameters for the R native engine</param>
+    ''' <param name="device">If 'initialize' is 'true', you can optionally specify a character device for the R engine to use</param>
     ''' <returns>The engine.</returns>
     ''' <example>
     ''' <p>A minimalist approach is to just call GetInstance</p>
@@ -241,8 +243,8 @@ Public Class REngine
     ''' <summary>
     ''' Creates a new instance that handles R.DLL.
     ''' </summary>
-    ''' <paramname="id">ID.</param>
-    ''' <paramname="dll">The file name of the library to load, e.g. "R.dll" for Windows. You should usually not provide this optional parameter</param>
+    ''' <param name="id">ID.</param>
+    ''' <param name="dll">The file name of the library to load, e.g. "R.dll" for Windows. You should usually not provide this optional parameter</param>
     ''' <returns>The engine.</returns>
     Private Shared Function CreateInstance(ByVal id As String, ByVal Optional dll As String = Nothing) As REngine
         If Equals(id, Nothing) Then
@@ -353,7 +355,7 @@ Public Class REngine
     ''' <summary>
     ''' if the parameter is null or empty string, return the default names of the R shared library file depending on the platform
     ''' </summary>
-    ''' <paramname="dll">The name of the library provided, possibly null or empty</param>
+    ''' <param name="dll">The name of the library provided, possibly null or empty</param>
     ''' <returns>A candidate for the file name of the R shared library</returns>
     Protected Shared Function ProcessRDllFileName(ByVal dll As String) As String
         If Not String.IsNullOrEmpty(dll) Then Return dll
@@ -363,13 +365,13 @@ Public Class REngine
     Private Shared Function EncodeNonAsciiCharacters(ByVal value As String) As String
         Dim sb As StringBuilder = New StringBuilder()
 
-        For Each c In value
+        For Each C As Char In value
 
-            If AscW(c) > 127 Then
-                Dim encodedValue As String = "\u" & AscW(c).ToString("x4")
+            If AscW(C) > 127 Then
+                Dim encodedValue As String = "\u" & AscW(C).ToString("x4")
                 sb.Append(encodedValue)
             Else
-                sb.Append(c)
+                sb.Append(C)
             End If
         Next
 
@@ -379,9 +381,9 @@ Public Class REngine
     ''' <summary>
     ''' Perform the necessary setup for the PATH and R_HOME environment variables.
     ''' </summary>
-    ''' <paramname="rPath">The path of the directory containing the R native library.
+    ''' <param name="rPath">The path of the directory containing the R native library.
     ''' If null (default), this function tries to locate the path via the Windows registry, or commonly used locations on MacOS and Linux</param>
-    ''' <paramname="rHome">The path for R_HOME. If null (default), the function checks the R_HOME environment variable. If none is set,
+    ''' <param name="rHome">The path for R_HOME. If null (default), the function checks the R_HOME environment variable. If none is set,
     ''' the function uses platform specific sensible default behaviors.</param>
     ''' <remarks>
     ''' This function has been designed to limit the tedium for users, while allowing custom settings for unusual installations.
@@ -400,9 +402,9 @@ Public Class REngine
     ''' <summary>
     ''' Initialize this REngine object. Only the first call has an effect. Subsequent calls to this function are ignored.
     ''' </summary>
-    ''' <paramname="parameter">The optional startup parameters</param>
-    ''' <paramname="device">The optional character device to use for the R engine</param>
-    ''' <paramname="setupMainLoop">if true, call the functions to initialise the embedded R</param>
+    ''' <param name="parameter">The optional startup parameters</param>
+    ''' <param name="device">The optional character device to use for the R engine</param>
+    ''' <param name="setupMainLoop">if true, call the functions to initialise the embedded R</param>
     Public Sub Initialize(ByVal Optional parameter As StartupParameter = Nothing, ByVal Optional device As ICharacterDevice = Nothing, ByVal Optional setupMainLoop As Boolean = True)
         '         Console.WriteLine("REngine.Initialize start");
         If isRunningField Then Return
@@ -506,7 +508,7 @@ Public Class REngine
     ''' <summary>
     ''' Creates the command line arguments corresponding to the specified startup parameters
     ''' </summary>
-    ''' <paramname="parameter"></param>
+    ''' <param name="parameter"></param>
     ''' <returns></returns>
     ''' <remarks>While not obvious from the R documentation, it seems that command line arguments need to be passed
     ''' to get the startup parameters taken into account. Passing the StartupParameter to the API seems not to work as expected.
@@ -593,7 +595,7 @@ Public Class REngine
     ''' <summary>
     ''' Gets a symbol defined in the global environment.
     ''' </summary>
-    ''' <paramname="name">The name.</param>
+    ''' <param name="name">The name.</param>
     ''' <returns>The symbol.</returns>
     Public Function GetSymbol(ByVal name As String) As SymbolicExpression
         CheckEngineIsRunning()
@@ -603,8 +605,8 @@ Public Class REngine
     ''' <summary>
     ''' Gets a symbol defined in the global environment.
     ''' </summary>
-    ''' <paramname="name">The name.</param>
-    ''' <paramname="environment">The environment. If <c>null</c> is passed, <seecref="GlobalEnvironment"/> is used.</param>
+    ''' <param name="name">The name.</param>
+    ''' <param name="environment">The environment. If <c>null</c> is passed, <see cref="GlobalEnvironment"/> is used.</param>
     ''' <returns>The symbol.</returns>
     Public Function GetSymbol(ByVal name As String, ByVal environment As REnvironment) As SymbolicExpression
         CheckEngineIsRunning()
@@ -619,8 +621,8 @@ Public Class REngine
     ''' <summary>
     ''' Assign a value to a name in the global environment.
     ''' </summary>
-    ''' <paramname="name">The name.</param>
-    ''' <paramname="expression">The symbol.</param>
+    ''' <param name="name">The name.</param>
+    ''' <param name="expression">The symbol.</param>
     Public Sub SetSymbol(ByVal name As String, ByVal expression As SymbolicExpression)
         CheckEngineIsRunning()
         GlobalEnvironment.SetSymbol(name, expression)
@@ -629,9 +631,9 @@ Public Class REngine
     ''' <summary>
     ''' Assign a value to a name in a specific environment.
     ''' </summary>
-    ''' <paramname="name">The name.</param>
-    ''' <paramname="expression">The symbol.</param>
-    ''' <paramname="environment">The environment. If <c>null</c> is passed, <seecref="GlobalEnvironment"/> is used.</param>
+    ''' <param name="name">The name.</param>
+    ''' <param name="expression">The symbol.</param>
+    ''' <param name="environment">The environment. If <c>null</c> is passed, <see cref="GlobalEnvironment"/> is used.</param>
     Public Sub SetSymbol(ByVal name As String, ByVal expression As SymbolicExpression, ByVal environment As REnvironment)
         CheckEngineIsRunning()
 
@@ -645,8 +647,8 @@ Public Class REngine
     ''' <summary>
     ''' Evaluates a statement in the given string.
     ''' </summary>
-    ''' <paramname="statement">The statement.</param>
-    ''' <paramname="environment">The environment in which to evaluate the statement. Advanced feature.</param>
+    ''' <param name="statement">The statement.</param>
+    ''' <param name="environment">The environment in which to evaluate the statement. Advanced feature.</param>
     ''' <returns>Last evaluation.</returns>
     Public Function Evaluate(ByVal statement As String, ByVal Optional environment As REnvironment = Nothing) As SymbolicExpression
         CheckEngineIsRunning()
@@ -656,8 +658,8 @@ Public Class REngine
     ''' <summary>
     ''' Evaluates a statement in the given stream.
     ''' </summary>
-    ''' <paramname="stream">The stream.</param>
-    ''' <paramname="environment">The environment in which to evaluate the statement. Advanced feature.</param>
+    ''' <param name="stream">The stream.</param>
+    ''' <param name="environment">The environment in which to evaluate the statement. Advanced feature.</param>
     ''' <returns>Last evaluation.</returns>
     Public Function Evaluate(ByVal stream As Stream, ByVal Optional environment As REnvironment = Nothing) As SymbolicExpression
         CheckEngineIsRunning()
@@ -667,8 +669,8 @@ Public Class REngine
     ''' <summary>
     ''' Evaluates a statement in the given string.
     ''' </summary>
-    ''' <paramname="statement">The statement.</param>
-    ''' <paramname="environment">The environment in which to evaluate the statement. Advanced feature.</param>
+    ''' <param name="statement">The statement.</param>
+    ''' <param name="environment">The environment in which to evaluate the statement. Advanced feature.</param>
     ''' <returns>Each evaluation.</returns>
     Private Iterator Function Defer(ByVal statement As String, ByVal Optional environment As REnvironment = Nothing) As IEnumerable(Of SymbolicExpression)
         CheckEngineIsRunning()
@@ -679,10 +681,9 @@ Public Class REngine
 
         Using reader As TextReader = New StringReader(statement)
             Dim incompleteStatement = New StringBuilder()
-            Dim line As String
+            Dim line As Value(Of String) = ""
 
-            While Not Equals((CSharpImpl.__Assign(line, reader.ReadLine())), Nothing)
-
+            While Not (line = reader.ReadLine()) Is Nothing
                 For Each segment As String In REngine.Segment(line)
                     Dim result = Me.Parse(segment, incompleteStatement, environment)
 
@@ -697,8 +698,8 @@ Public Class REngine
     ''' <summary>
     ''' Evaluates a statement in the given stream.
     ''' </summary>
-    ''' <paramname="stream">The stream.</param>
-    ''' <paramname="environment">The environment in which to evaluate the statement. Advanced feature.</param>
+    ''' <param name="stream">The stream.</param>
+    ''' <param name="environment">The environment in which to evaluate the statement. Advanced feature.</param>
     ''' <returns>Each evaluation.</returns>
     Public Iterator Function Defer(ByVal stream As Stream, ByVal Optional environment As REnvironment = Nothing) As IEnumerable(Of SymbolicExpression)
         CheckEngineIsRunning()
@@ -713,10 +714,9 @@ Public Class REngine
 
         Using reader As TextReader = New StreamReader(stream)
             Dim incompleteStatement = New StringBuilder()
-            Dim line As String
+            Dim line As Value(Of String) = Nothing
 
-            While Not Equals((CSharpImpl.__Assign(line, reader.ReadLine())), Nothing)
-
+            While Not (line = reader.ReadLine()) Is Nothing
                 For Each segment As String In REngine.Segment(line)
                     Dim result = Me.Parse(segment, incompleteStatement, environment)
 
@@ -766,7 +766,7 @@ Public Class REngine
         Dim trimmedLine = line.Trim()
         If Equals(trimmedLine, String.Empty) Then Return New String() {}
         If trimmedLine.StartsWith("#") Then Return New String() {line}
-        Dim theRest As String
+        Dim theRest As String = Nothing
         Dim statement = splitOnFirst(line, theRest, ";"c)
         Dim result = New List(Of String)()
 
@@ -790,7 +790,7 @@ Public Class REngine
                 ' firstComment is a valid comment marker - not need to process "the rest"
             End If
 
-            Dim restFirstStatement As String
+            Dim restFirstStatement As String = Nothing
             Dim beforeComment = splitOnFirst(statement, restFirstStatement, "#"c)
         End If
 
@@ -852,8 +852,8 @@ Public Class REngine
 
     ''' <summary> Searches for the first all.</summary>
     '''
-    ''' <paramname="sourceString"> Source string.</param>
-    ''' <paramname="matchString">  The match string.</param>
+    ''' <param name="sourceString"> Source string.</param>
+    ''' <param name="matchString">  The match string.</param>
     '''
     ''' <returns> The zero-based index of the found all, or -1 if no match was found.</returns>
     Private Shared Function IndexOfAll(ByVal sourceString As String, ByVal matchString As String) As Integer()
@@ -884,7 +884,7 @@ Public Class REngine
                     End If
 
                     Using New ProtectedPointer(vector)
-                        Dim result As SymbolicExpression
+                        Dim result As SymbolicExpression = Nothing
 
                         If Not Enumerable.First(vector).TryEvaluate(If(environment Is Nothing, GlobalEnvironment, environment), result) Then
                             Throw New EvaluationException(LastErrorMessage)
@@ -914,7 +914,7 @@ Public Class REngine
     End Function
 
     ''' <summary>
-    ''' Gets or sets a value indicating whether this <seecref="RDotNet.REngine"/> auto print R evaluation results, if they are visible.
+    ''' Gets or sets a value indicating whether this <see cref="RDotNet.REngine"/> auto print R evaluation results, if they are visible.
     ''' </summary>
     ''' <value><c>true</c> if auto print; otherwise, <c>false</c>.</value>
     Public Property AutoPrint As Boolean
@@ -956,7 +956,7 @@ Public Class REngine
                 geterrmessage = vector.First()
             End If
 
-            Dim result As SymbolicExpression
+            Dim result As SymbolicExpression = Nothing
 
             If geterrmessage.TryEvaluate(GlobalEnvironment, result) Then
                 Dim msgs = result.AsCharacter().ToArray()
@@ -972,7 +972,7 @@ Public Class REngine
     ''' <summary>
     ''' Sets the command line arguments.
     ''' </summary>
-    ''' <paramname="args">The arguments.</param>
+    ''' <param name="args">The arguments.</param>
     Public Sub SetCommandLineArguments(ByVal args As String())
         CheckEngineIsRunning()
         Dim newArgs = Prepend(ID, args)
@@ -987,7 +987,7 @@ Public Class REngine
     ''' <summary>
     ''' Called on disposing of this REngine
     ''' </summary>
-    ''' <paramname="e"></param>
+    ''' <param name="e"></param>
     Protected Overridable Sub OnDisposing(ByVal e As EventArgs)
         RaiseEvent Disposing(Me, e)
     End Sub
@@ -1004,7 +1004,7 @@ Public Class REngine
     ''' <summary>
     ''' Dispose of this REngine, including using the native R API to clean up, if the parameter is true
     ''' </summary>
-    ''' <paramname="disposing">if true, release native resources, using the native R API to clean up.</param>
+    ''' <param name="disposing">if true, release native resources, using the native R API to clean up.</param>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         isRunningField = False
         OnDisposing(EventArgs.Empty)
@@ -1029,7 +1029,7 @@ Public Class REngine
     ''' <summary>
     ''' Gets the predefined symbol with the specified name.
     ''' </summary>
-    ''' <paramname="name">The name.</param>
+    ''' <param name="name">The name.</param>
     ''' <returns>The symbol.</returns>
     Public Function GetPredefinedSymbol(ByVal name As String) As SymbolicExpression
         CheckEngineIsRunning()
@@ -1045,7 +1045,7 @@ Public Class REngine
     ''' <summary>
     ''' Create a SymbolicExpression wrapping an existing native R symbolic expression
     ''' </summary>
-    ''' <paramname="sexp">A pointer to the R symbolic expression</param>
+    ''' <param name="sexp">A pointer to the R symbolic expression</param>
     ''' <returns></returns>
     Public Function CreateFromNativeSexp(ByVal sexp As IntPtr) As SymbolicExpression
         Return New SymbolicExpression(Me, sexp)
@@ -1061,11 +1061,11 @@ Public Class REngine
     ''' <summary>
     ''' Removes variables from the R global environment, and whether garbage collections should be forced
     ''' </summary>
-    ''' <paramname="garbageCollectR">if true (default) request an R garbage collection. This happens after the .NET garbage collection if both requested</param>
-    ''' <paramname="garbageCollectDotNet">If true (default), triggers CLR garbage collection and wait for pending finalizers.</param>
-    ''' <paramname="removeHiddenRVars">Should hidden variables (starting with '.', such as '.Random.seed') be removed. Default is false.</param>
-    ''' <paramname="detachPackages">If true, detach some packages and other attached resources. Default is false. See 'detach' function in R</param>
-    ''' <paramname="toDetach">names of resources to dettach, e.g. an array of names such as 'mpg', 'package:lattice'.
+    ''' <param name="garbageCollectR">if true (default) request an R garbage collection. This happens after the .NET garbage collection if both requested</param>
+    ''' <param name="garbageCollectDotNet">If true (default), triggers CLR garbage collection and wait for pending finalizers.</param>
+    ''' <param name="removeHiddenRVars">Should hidden variables (starting with '.', such as '.Random.seed') be removed. Default is false.</param>
+    ''' <param name="detachPackages">If true, detach some packages and other attached resources. Default is false. See 'detach' function in R</param>
+    ''' <param name="toDetach">names of resources to dettach, e.g. an array of names such as 'mpg', 'package:lattice'.
     ''' If null, entries found in 'search()' between the first item and 'package:base' are detached. See 'search' function documentation in R</param>
     Public Sub ClearGlobalEnvironment(ByVal Optional garbageCollectR As Boolean = True, ByVal Optional garbageCollectDotNet As Boolean = True, ByVal Optional removeHiddenRVars As Boolean = False, ByVal Optional detachPackages As Boolean = False, ByVal Optional toDetach As String() = Nothing)
         If detachPackages Then doDetachPackages(toDetach)
@@ -1121,12 +1121,4 @@ Public Class REngine
             Return stringNaSexp
         End Get
     End Property
-
-    Private Class CSharpImpl
-        <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-        Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function
-    End Class
 End Class

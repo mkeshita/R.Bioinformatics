@@ -1,9 +1,6 @@
-﻿Imports RDotNet.Internals
-Imports System
-Imports System.Collections.Generic
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
-
+Imports RDotNet.Internals
 
 ''' <summary>
 ''' A collection of Boolean values.
@@ -14,9 +11,9 @@ Public Class LogicalVector
     ''' <summary>
     ''' Creates a new empty LogicalVector with the specified length.
     ''' </summary>
-    ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-    ''' <paramname="length">The length.</param>
-    ''' <seealsocref="REngineExtension.CreateLogicalVector(REngine,Integer)"/>
+    ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+    ''' <param name="length">The length.</param>
+    ''' <seealso cref="REngineExtension.CreateLogicalVector(REngine,Integer)"/>
     Public Sub New(ByVal engine As REngine, ByVal length As Integer)
         MyBase.New(engine, SymbolicExpressionType.LogicalVector, length)
     End Sub
@@ -24,9 +21,9 @@ Public Class LogicalVector
     ''' <summary>
     ''' Creates a new LogicalVector with the specified values.
     ''' </summary>
-    ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-    ''' <paramname="vector">The values.</param>
-    ''' <seealsocref="REngineExtension.CreateLogicalVector(REngine,IEnumerable(OfBoolean))"/>
+    ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+    ''' <param name="vector">The values.</param>
+    ''' <seealso cref="REngineExtension.CreateLogicalVector"/>
     Public Sub New(ByVal engine As REngine, ByVal vector As IEnumerable(Of Boolean))
         MyBase.New(engine, SymbolicExpressionType.LogicalVector, vector)
     End Sub
@@ -34,8 +31,8 @@ Public Class LogicalVector
     ''' <summary>
     ''' Creates a new instance for a Boolean vector.
     ''' </summary>
-    ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-    ''' <paramname="coerced">The pointer to a Boolean vector.</param>
+    ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+    ''' <param name="coerced">The pointer to a Boolean vector.</param>
     Protected Friend Sub New(ByVal engine As REngine, ByVal coerced As IntPtr)
         MyBase.New(engine, coerced)
     End Sub
@@ -44,7 +41,7 @@ Public Class LogicalVector
     ''' Gets the element at the specified index.
     ''' </summary>
     ''' <remarks>Used for pre-R 3.5 </remarks>
-    ''' <paramname="index">The zero-based index of the element to get.</param>
+    ''' <param name="index">The zero-based index of the element to get.</param>
     ''' <returns>The element at the specified index.</returns>
     Protected Overrides Function GetValue(ByVal index As Integer) As Boolean
         Dim offset = GetOffset(index)
@@ -56,7 +53,7 @@ Public Class LogicalVector
     ''' Gets the element at the specified index.
     ''' </summary>
     ''' <remarks>Used for R 3.5 and higher, to account for ALTREP objects</remarks>
-    ''' <paramname="index">The zero-based index of the element to get.</param>
+    ''' <param name="index">The zero-based index of the element to get.</param>
     ''' <returns>The element at the specified index.</returns>
     Protected Overrides Function GetValueAltRep(ByVal index As Integer) As Boolean
         Dim data = GetFunction(Of LOGICAL_ELT)()(DangerousGetHandle(), CType(index, IntPtr))
@@ -67,8 +64,8 @@ Public Class LogicalVector
     ''' Sets the element at the specified index.
     ''' </summary>
     ''' <remarks>Used for pre-R 3.5 </remarks>
-    ''' <paramname="index">The zero-based index of the element to set.</param>
-    ''' <paramname="value">The value to set</param>
+    ''' <param name="index">The zero-based index of the element to set.</param>
+    ''' <param name="value">The value to set</param>
     Protected Overrides Sub SetValue(ByVal index As Integer, ByVal value As Boolean)
         Dim offset = GetOffset(index)
         Dim data = Convert.ToInt32(value)
@@ -79,8 +76,8 @@ Public Class LogicalVector
     ''' Sets the element at the specified index.
     ''' </summary>
     ''' <remarks>Used for R 3.5 and higher, to account for ALTREP objects</remarks>
-    ''' <paramname="index">The zero-based index of the element to set.</param>
-    ''' <paramname="value">The value to set</param>
+    ''' <param name="index">The zero-based index of the element to set.</param>
+    ''' <param name="value">The value to set</param>
     Protected Overrides Sub SetValueAltRep(ByVal index As Integer, ByVal value As Boolean)
         Dim data = Convert.ToInt32(value)
         GetFunction(Of SET_LOGICAL_ELT)()(DangerousGetHandle(), CType(index, IntPtr), data)

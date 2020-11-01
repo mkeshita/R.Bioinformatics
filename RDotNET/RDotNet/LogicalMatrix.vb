@@ -1,9 +1,7 @@
-﻿Imports RDotNet.Internals
-Imports RDotNet.Utilities
-Imports System
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
-
+Imports RDotNet.Internals
+Imports RDotNet.Utilities
 
 ''' <summary>
 ''' A matrix of Boolean values.
@@ -14,10 +12,10 @@ Public Class LogicalMatrix
     ''' <summary>
     ''' Creates a new empty LogicalMatrix with the specified size.
     ''' </summary>
-    ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-    ''' <paramname="rowCount">The row size.</param>
-    ''' <paramname="columnCount">The column size.</param>
-    ''' <seealsocref="REngineExtension.CreateLogicalMatrix(REngine,Integer,Integer)"/>
+    ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+    ''' <param name="rowCount">The row size.</param>
+    ''' <param name="columnCount">The column size.</param>
+    ''' <seealso cref="REngineExtension.CreateLogicalMatrix(REngine,Integer,Integer)"/>
     Public Sub New(ByVal engine As REngine, ByVal rowCount As Integer, ByVal columnCount As Integer)
         MyBase.New(engine, SymbolicExpressionType.LogicalVector, rowCount, columnCount)
     End Sub
@@ -25,9 +23,9 @@ Public Class LogicalMatrix
     ''' <summary>
     ''' Creates a new LogicalMatrix with the specified values.
     ''' </summary>
-    ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-    ''' <paramname="matrix">The values.</param>
-    ''' <seealsocref="REngineExtension.CreateLogicalMatrix(REngine,)"/>
+    ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+    ''' <param name="matrix">The values.</param>
+    ''' <seealso cref="REngineExtension.CreateLogicalMatrix"/>
     Public Sub New(ByVal engine As REngine, ByVal matrix As Boolean(,))
         MyBase.New(engine, SymbolicExpressionType.LogicalVector, matrix)
     End Sub
@@ -35,8 +33,8 @@ Public Class LogicalMatrix
     ''' <summary>
     ''' Creates a new instance for a Boolean matrix.
     ''' </summary>
-    ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-    ''' <paramname="coerced">The pointer to a Boolean matrix.</param>
+    ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+    ''' <param name="coerced">The pointer to a Boolean matrix.</param>
     Protected Friend Sub New(ByVal engine As REngine, ByVal coerced As IntPtr)
         MyBase.New(engine, coerced)
     End Sub
@@ -44,8 +42,8 @@ Public Class LogicalMatrix
     ''' <summary>
     ''' Gets or sets the element at the specified index.
     ''' </summary>
-    ''' <paramname="rowIndex">The zero-based rowIndex index of the element to get or set.</param>
-    ''' <paramname="columnIndex">The zero-based columnIndex index of the element to get or set.</param>
+    ''' <param name="rowIndex">The zero-based rowIndex index of the element to get or set.</param>
+    ''' <param name="columnIndex">The zero-based columnIndex index of the element to get or set.</param>
     ''' <returns>The element at the specified index.</returns>
     Default Public Overrides Property Item(ByVal rowIndex As Integer, ByVal columnIndex As Integer) As Boolean
         Get
@@ -85,7 +83,7 @@ Public Class LogicalMatrix
     ''' <summary>
     ''' Initializes this R matrix, using the values in a rectangular array.
     ''' </summary>
-    ''' <paramname="matrix"></param>
+    ''' <param name="matrix"></param>
     Protected Overrides Sub InitMatrixFastDirect(ByVal matrix As Boolean(,))
         Dim intValues = ArrayConvertAllOneDim(matrix, New Func(Of Boolean, Integer)(AddressOf Convert.ToInt32))
         Marshal.Copy(intValues, 0, DataPointer, intValues.Length)

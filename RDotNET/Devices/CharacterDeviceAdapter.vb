@@ -40,7 +40,7 @@ Namespace Devices
         ''' <summary>
         ''' Creates an instance.
         ''' </summary>
-        ''' <paramname="device">The implementation.</param>
+        ''' <param name="device">The implementation.</param>
         Public Sub New(ByVal device As ICharacterDevice)
             If device Is Nothing Then
                 Throw New ArgumentNullException("device")
@@ -51,7 +51,7 @@ Namespace Devices
         End Sub
 
         ''' <summary>
-        ''' Gets the implementation of <seecref="ICharacterDevice"/> interface.
+        ''' Gets the implementation of <see cref="ICharacterDevice"/> interface.
         ''' </summary>
         Public ReadOnly Property Device As ICharacterDevice
             Get

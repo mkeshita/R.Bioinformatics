@@ -6,7 +6,7 @@ Imports RDotNet.Internals
 ''' <summary>
 ''' A vector base.
 ''' </summary>
-''' <typeparamname="T">The element type.</typeparam>
+''' <typeparam name="T">The element type.</typeparam>
 <DebuggerDisplay("Length = {Length}; RObjectType = {Type}")>
 <DebuggerTypeProxy(GetType(VectorDebugView(Of)))>
 <SecurityPermission(SecurityAction.Demand, Flags:=SecurityPermissionFlag.UnmanagedCode)>
@@ -16,9 +16,9 @@ Public MustInherit Class Vector(Of T)
     ''' <summary>
     ''' Creates a new vector with the specified size.
     ''' </summary>
-    ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-    ''' <paramname="type">The element type.</param>
-    ''' <paramname="length">The length of vector.</param>
+    ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+    ''' <param name="type">The element type.</param>
+    ''' <param name="length">The length of vector.</param>
     Protected Sub New(ByVal engine As REngine, ByVal type As SymbolicExpressionType, ByVal length As Integer)
         MyBase.New(engine, engine.GetFunction(Of Rf_allocVector)()(type, length))
 
@@ -33,9 +33,9 @@ Public MustInherit Class Vector(Of T)
     ''' <summary>
     ''' Creates a new vector with the specified values.
     ''' </summary>
-    ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-    ''' <paramname="type">The element type.</param>
-    ''' <paramname="vector">The elements of vector.</param>
+    ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+    ''' <param name="type">The element type.</param>
+    ''' <param name="vector">The elements of vector.</param>
     Protected Sub New(ByVal engine As REngine, ByVal type As SymbolicExpressionType, ByVal vector As IEnumerable(Of T))
         MyBase.New(engine, engine.GetFunction(Of Rf_allocVector)()(type, vector.Count()))
         SetVector(vector.ToArray())
@@ -44,8 +44,8 @@ Public MustInherit Class Vector(Of T)
     ''' <summary>
     ''' Creates a new instance for a vector.
     ''' </summary>
-    ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-    ''' <paramname="coerced">The pointer to a vector.</param>
+    ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+    ''' <param name="coerced">The pointer to a vector.</param>
     Protected Sub New(ByVal engine As REngine, ByVal coerced As IntPtr)
         MyBase.New(engine, coerced)
     End Sub
@@ -53,7 +53,7 @@ Public MustInherit Class Vector(Of T)
     ''' <summary>
     ''' Gets or sets the element at the specified index.
     ''' </summary>
-    ''' <paramname="index">The zero-based index of the element to get or set.</param>
+    ''' <param name="index">The zero-based index of the element to get or set.</param>
     ''' <returns>The element at the specified index.</returns>
     Default Public Overridable Property Item(ByVal index As Integer) As T
         Get
@@ -98,7 +98,7 @@ Public MustInherit Class Vector(Of T)
     ''' Gets the element at the specified index.
     ''' </summary>
     ''' <remarks>Used for pre-R 3.5 </remarks>
-    ''' <paramname="index">The zero-based index of the element to get.</param>
+    ''' <param name="index">The zero-based index of the element to get.</param>
     ''' <returns>The element at the specified index.</returns>
     Protected Overridable Function GetValue(ByVal index As Integer) As T
         Throw New NotSupportedException("GetValue handling not yet supported")
@@ -108,8 +108,8 @@ Public MustInherit Class Vector(Of T)
     ''' Sets the element at the specified index.
     ''' </summary>
     ''' <remarks>Used for pre-R 3.5 </remarks>
-    ''' <paramname="index">The zero-based index of the element to set.</param>
-    ''' <paramname="value">The value to set</param>
+    ''' <param name="index">The zero-based index of the element to set.</param>
+    ''' <param name="value">The value to set</param>
     Protected Overridable Sub SetValue(ByVal index As Integer, ByVal value As T)
         Throw New NotSupportedException("SetValue handling not yet supported")
     End Sub
@@ -118,7 +118,7 @@ Public MustInherit Class Vector(Of T)
     ''' Gets the element at the specified index.
     ''' </summary>
     ''' <remarks>Used for R 3.5 and higher, to account for ALTREP objects</remarks>
-    ''' <paramname="index">The zero-based index of the element to get.</param>
+    ''' <param name="index">The zero-based index of the element to get.</param>
     ''' <returns>The element at the specified index.</returns>
     Protected Overridable Function GetValueAltRep(ByVal index As Integer) As T
         Throw New NotSupportedException("GetValueAltRep handling not yet supported")
@@ -128,8 +128,8 @@ Public MustInherit Class Vector(Of T)
     ''' Sets the element at the specified index.
     ''' </summary>
     ''' <remarks>Used for R 3.5 and higher, to account for ALTREP objects</remarks>
-    ''' <paramname="index">The zero-based index of the element to set.</param>
-    ''' <paramname="value">The value to set</param>
+    ''' <param name="index">The zero-based index of the element to set.</param>
+    ''' <param name="value">The value to set</param>
     Protected Overridable Sub SetValueAltRep(ByVal index As Integer, ByVal value As T)
         Throw New NotSupportedException("SetValueAltRep handling not yet supported")
     End Sub
@@ -138,7 +138,7 @@ Public MustInherit Class Vector(Of T)
     ''' <summary>
     ''' Initializes the content of a vector with runtime speed in mind. This method protects the R vector, then call SetVectorDirect.
     ''' </summary>
-    ''' <paramname="values">The values to put in the vector. Length must match exactly the vector size</param>
+    ''' <param name="values">The values to put in the vector. Length must match exactly the vector size</param>
     Public Sub SetVector(ByVal values As T())
         If values.Length <> Length Then Throw New ArgumentException("The length of the array provided differs from the vector length")
 
@@ -172,7 +172,7 @@ Public MustInherit Class Vector(Of T)
 
     ''' <summary> Gets alternate rep array.</summary>
     '''
-    ''' <exceptioncref="NotSupportedException"> Thrown when the requested operation is not supported.</exception>
+    ''' <exception cref="NotSupportedException"> Thrown when the requested operation is not supported.</exception>
     '''
     ''' <returns> An array of t.</returns>
     Public Overridable Function GetAltRepArray() As T()
@@ -188,13 +188,13 @@ Public MustInherit Class Vector(Of T)
     ''' <summary>
     ''' Initializes the content of a vector with runtime speed in mind. The vector must already be protected before calling this method.
     ''' </summary>
-    ''' <paramname="values">The values to put in the vector. Length must match exactly the vector size</param>
+    ''' <param name="values">The values to put in the vector. Length must match exactly the vector size</param>
     Protected MustOverride Sub SetVectorDirect(ByVal values As T())
 
     ''' <summary>
     ''' Gets or sets the element at the specified name.
     ''' </summary>
-    ''' <paramname="name">The name of the element to get or set.</param>
+    ''' <param name="name">The name of the element to get or set.</param>
     ''' <returns>The element at the specified name.</returns>
     Default Public Overridable Property Item(ByVal name As String) As T
         Get
@@ -291,10 +291,10 @@ Public MustInherit Class Vector(Of T)
     ''' <summary>
     ''' Copies the elements to the specified array.
     ''' </summary>
-    ''' <paramname="destination">The destination array.</param>
-    ''' <paramname="length">The length to copy.</param>
-    ''' <paramname="sourceIndex">The first index of the vector.</param>
-    ''' <paramname="destinationIndex">The first index of the destination array.</param>
+    ''' <param name="destination">The destination array.</param>
+    ''' <param name="length">The length to copy.</param>
+    ''' <param name="sourceIndex">The first index of the vector.</param>
+    ''' <param name="destinationIndex">The first index of the destination array.</param>
     Public Sub CopyTo(ByVal destination As T(), ByVal length As Integer, ByVal Optional sourceIndex As Integer = 0, ByVal Optional destinationIndex As Integer = 0)
         If destination Is Nothing Then
             Throw New ArgumentNullException("destination")
@@ -320,7 +320,7 @@ Public MustInherit Class Vector(Of T)
     ''' <summary>
     ''' Gets the offset for the specified index.
     ''' </summary>
-    ''' <paramname="index">The index.</param>
+    ''' <param name="index">The index.</param>
     ''' <returns>The offset.</returns>
     Protected Function GetOffset(ByVal index As Integer) As Integer
         Return DataSize * index

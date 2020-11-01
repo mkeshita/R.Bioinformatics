@@ -13,9 +13,9 @@ Namespace Devices
         ''' <summary>
         ''' Read input from console.
         ''' </summary>
-        ''' <paramname="prompt">The prompt message.</param>
-        ''' <paramname="capacity">Parameter is ignored</param>
-        ''' <paramname="history">Parameter is ignored</param>
+        ''' <param name="prompt">The prompt message.</param>
+        ''' <param name="capacity">Parameter is ignored</param>
+        ''' <param name="history">Parameter is ignored</param>
         ''' <returns>The input.</returns>
         Public Function ReadConsole(ByVal prompt As String, ByVal capacity As Integer, ByVal history As Boolean) As String Implements ICharacterDevice.ReadConsole
             Console.Write(prompt)
@@ -25,9 +25,9 @@ Namespace Devices
         ''' <summary>
         ''' Write output on console.
         ''' </summary>
-        ''' <paramname="output">The output message</param>
-        ''' <paramname="length">Parameter is ignored</param>
-        ''' <paramname="outputType">Parameter is ignored</param>
+        ''' <param name="output">The output message</param>
+        ''' <param name="length">Parameter is ignored</param>
+        ''' <param name="outputType">Parameter is ignored</param>
         Public Sub WriteConsole(ByVal output As String, ByVal length As Integer, ByVal outputType As ConsoleOutputType) Implements ICharacterDevice.WriteConsole
             Console.Write(output)
         End Sub
@@ -35,7 +35,7 @@ Namespace Devices
         ''' <summary>
         ''' Displays the message to the System.Console.
         ''' </summary>
-        ''' <paramname="message">The message.</param>
+        ''' <param name="message">The message.</param>
         Public Sub ShowMessage(ByVal message As String) Implements ICharacterDevice.ShowMessage
             Console.Write(message)
         End Sub
@@ -43,7 +43,7 @@ Namespace Devices
         ''' <summary>
         ''' This implementation has no effect
         ''' </summary>
-        ''' <paramname="which"></param>
+        ''' <param name="which"></param>
         Public Sub Busy(ByVal which As BusyType) Implements ICharacterDevice.Busy
         End Sub
 
@@ -56,7 +56,7 @@ Namespace Devices
         ''' <summary>
         ''' Ask a question to the user with three choices.
         ''' </summary>
-        ''' <paramname="question">The question to write to the console</param>
+        ''' <param name="question">The question to write to the console</param>
         ''' <returns></returns>
         Public Function Ask(ByVal question As String) As YesNoCancel Implements ICharacterDevice.Ask
             Console.Write("{0} [y/n/c]: ", question)
@@ -79,7 +79,7 @@ Namespace Devices
         ''' <summary>
         ''' Write the message to standard error output stream.
         ''' </summary>
-        ''' <paramname="message"></param>
+        ''' <param name="message"></param>
         Public Sub Suicide(ByVal message As String) Implements ICharacterDevice.Suicide
             Console.Error.WriteLine(message)
             CleanUp(StartupSaveAction.Suicide, 2, False)
@@ -109,9 +109,9 @@ Namespace Devices
         ''' <summary>
         ''' Terminate the process with the given status
         ''' </summary>
-        ''' <paramname="saveAction">Parameter is ignored</param>
-        ''' <paramname="status">The status code on exit</param>
-        ''' <paramname="runLast">Parameter is ignored</param>
+        ''' <param name="saveAction">Parameter is ignored</param>
+        ''' <param name="status">The status code on exit</param>
+        ''' <param name="runLast">Parameter is ignored</param>
         Public Sub CleanUp(ByVal saveAction As StartupSaveAction, ByVal status As Integer, ByVal runLast As Boolean) Implements ICharacterDevice.CleanUp
             Environment.Exit(status)
         End Sub
@@ -122,11 +122,11 @@ Namespace Devices
         ''' <remarks>
         ''' Only Unix.
         ''' </remarks>
-        ''' <paramname="files">The file paths.</param>
-        ''' <paramname="headers">The header before the contents is printed.</param>
-        ''' <paramname="title">Ignored by this implementation</param>
-        ''' <paramname="delete">Whether the file will be deleted.</param>
-        ''' <paramname="pager">Ignored by this implementation</param>
+        ''' <param name="files">The file paths.</param>
+        ''' <param name="headers">The header before the contents is printed.</param>
+        ''' <param name="title">Ignored by this implementation</param>
+        ''' <param name="delete">Whether the file will be deleted.</param>
+        ''' <param name="pager">Ignored by this implementation</param>
         ''' <returns>true on successful completion, false if an IOException was caught</returns>
         Public Function ShowFiles(ByVal files As String(), ByVal headers As String(), ByVal title As String, ByVal delete As Boolean, ByVal pager As String) As Boolean Implements ICharacterDevice.ShowFiles
             Dim count = files.Length
@@ -155,7 +155,7 @@ Namespace Devices
         ''' <remarks>
         ''' Only Unix.
         ''' </remarks>
-        ''' <paramname="create">To be created.</param>
+        ''' <param name="create">To be created.</param>
         ''' <returns>The length of input.</returns>
         Public Function ChooseFile(ByVal create As Boolean) As String Implements ICharacterDevice.ChooseFile
             Dim path As String = Console.ReadLine()
@@ -178,17 +178,17 @@ Namespace Devices
         ''' <summary>
         ''' This implementation does nothing
         ''' </summary>
-        ''' <paramname="file"></param>
+        ''' <param name="file"></param>
         Public Sub EditFile(ByVal file As String) Implements ICharacterDevice.EditFile
         End Sub
 
         ''' <summary>
         ''' Return the NULL SEXP; no other effect
         ''' </summary>
-        ''' <paramname="call"></param>
-        ''' <paramname="operation"></param>
-        ''' <paramname="args"></param>
-        ''' <paramname="environment"></param>
+        ''' <param name="call"></param>
+        ''' <param name="operation"></param>
+        ''' <param name="args"></param>
+        ''' <param name="environment"></param>
         ''' <returns></returns>
         Public Function LoadHistory(ByVal [call] As Language, ByVal operation As SymbolicExpression, ByVal args As Pairlist, ByVal environment As REnvironment) As SymbolicExpression Implements ICharacterDevice.LoadHistory
             Return environment.Engine.NilValue
@@ -197,10 +197,10 @@ Namespace Devices
         ''' <summary>
         ''' Return the NULL SEXP; no other effect
         ''' </summary>
-        ''' <paramname="call"></param>
-        ''' <paramname="operation"></param>
-        ''' <paramname="args"></param>
-        ''' <paramname="environment"></param>
+        ''' <param name="call"></param>
+        ''' <param name="operation"></param>
+        ''' <param name="args"></param>
+        ''' <param name="environment"></param>
         ''' <returns></returns>
         Public Function SaveHistory(ByVal [call] As Language, ByVal operation As SymbolicExpression, ByVal args As Pairlist, ByVal environment As REnvironment) As SymbolicExpression Implements ICharacterDevice.SaveHistory
             Return environment.Engine.NilValue
@@ -209,10 +209,10 @@ Namespace Devices
         ''' <summary>
         ''' Return the NULL SEXP; no other effect
         ''' </summary>
-        ''' <paramname="call"></param>
-        ''' <paramname="operation"></param>
-        ''' <paramname="args"></param>
-        ''' <paramname="environment"></param>
+        ''' <param name="call"></param>
+        ''' <param name="operation"></param>
+        ''' <param name="args"></param>
+        ''' <param name="environment"></param>
         ''' <returns></returns>
         Public Function AddHistory(ByVal [call] As Language, ByVal operation As SymbolicExpression, ByVal args As Pairlist, ByVal environment As REnvironment) As SymbolicExpression Implements ICharacterDevice.AddHistory
             Return environment.Engine.NilValue

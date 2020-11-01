@@ -8,18 +8,18 @@ Namespace Devices
         ''' <summary>
         ''' Read input from console.
         ''' </summary>
-        ''' <paramname="prompt">The prompt message.</param>
-        ''' <paramname="capacity">The buffer's capacity in byte.</param>
-        ''' <paramname="history">Whether the input should be added to any command history.</param>
+        ''' <param name="prompt">The prompt message.</param>
+        ''' <param name="capacity">The buffer's capacity in byte.</param>
+        ''' <param name="history">Whether the input should be added to any command history.</param>
         ''' <returns>The input.</returns>
         Function ReadConsole(ByVal prompt As String, ByVal capacity As Integer, ByVal history As Boolean) As String
 
         ''' <summary>
         ''' Write output on console.
         ''' </summary>
-        ''' <paramname="output">The output message</param>
-        ''' <paramname="length">The output's length in byte.</param>
-        ''' <paramname="outputType">The output type.</param>
+        ''' <param name="output">The output message</param>
+        ''' <param name="length">The output's length in byte.</param>
+        ''' <param name="outputType">The output type.</param>
         Sub WriteConsole(ByVal output As String, ByVal length As Integer, ByVal outputType As ConsoleOutputType)
 
         ''' <summary>
@@ -28,13 +28,13 @@ Namespace Devices
         ''' <remarks>
         ''' It should be brought to the user's attention immediately.
         ''' </remarks>
-        ''' <paramname="message">The message.</param>
+        ''' <param name="message">The message.</param>
         Sub ShowMessage(ByVal message As String)
 
         ''' <summary>
         ''' Invokes actions.
         ''' </summary>
-        ''' <paramname="which">The state.</param>
+        ''' <param name="which">The state.</param>
         Sub Busy(ByVal which As BusyType)
 
         ''' <summary>
@@ -45,7 +45,7 @@ Namespace Devices
         ''' <summary>
         ''' Asks user's decision.
         ''' </summary>
-        ''' <paramname="question">The question.</param>
+        ''' <param name="question">The question.</param>
         ''' <returns>User's decision.</returns>
         Function Ask(ByVal question As String) As YesNoCancel
 
@@ -55,7 +55,7 @@ Namespace Devices
         ''' <remarks>
         ''' Only Unix.
         ''' </remarks>
-        ''' <paramname="message">The message.</param>
+        ''' <param name="message">The message.</param>
         Sub Suicide(ByVal message As String)
 
         ''' <summary>
@@ -88,9 +88,9 @@ Namespace Devices
         ''' <remarks>
         ''' Only Unix.
         ''' </remarks>
-        ''' <paramname="saveAction">The save type.</param>
-        ''' <paramname="status">Exit code.</param>
-        ''' <paramname="runLast">Whether R should execute <code>.Last</code>.</param>
+        ''' <param name="saveAction">The save type.</param>
+        ''' <param name="status">Exit code.</param>
+        ''' <param name="runLast">Whether R should execute <code>.Last</code>.</param>
         Sub CleanUp(ByVal saveAction As StartupSaveAction, ByVal status As Integer, ByVal runLast As Boolean)
 
         ''' <summary>
@@ -99,11 +99,11 @@ Namespace Devices
         ''' <remarks>
         ''' Only Unix.
         ''' </remarks>
-        ''' <paramname="files">The file paths.</param>
-        ''' <paramname="headers">The header before the contents is printed.</param>
-        ''' <paramname="title">The window title.</param>
-        ''' <paramname="delete">Whether the file will be deleted.</param>
-        ''' <paramname="pager">The pager used.</param>
+        ''' <param name="files">The file paths.</param>
+        ''' <param name="headers">The header before the contents is printed.</param>
+        ''' <param name="title">The window title.</param>
+        ''' <param name="delete">Whether the file will be deleted.</param>
+        ''' <param name="pager">The pager used.</param>
         ''' <returns></returns>
         Function ShowFiles(ByVal files As String(), ByVal headers As String(), ByVal title As String, ByVal delete As Boolean, ByVal pager As String) As Boolean
 
@@ -113,7 +113,7 @@ Namespace Devices
         ''' <remarks>
         ''' Only Unix.
         ''' </remarks>
-        ''' <paramname="create">To be created.</param>
+        ''' <param name="create">To be created.</param>
         ''' <returns>The length of input.</returns>
         Function ChooseFile(ByVal create As Boolean) As String
 

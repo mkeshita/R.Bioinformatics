@@ -14,8 +14,8 @@ Public Class Pairlist
     ''' <summary>
     ''' Creates a pairlist.
     ''' </summary>
-    ''' <paramname="engine">The engine</param>
-    ''' <paramname="pointer">The pointer.</param>
+    ''' <param name="engine">The engine</param>
+    ''' <param name="pointer">The pointer.</param>
     Protected Friend Sub New(ByVal engine As REngine, ByVal pointer As IntPtr)
         MyBase.New(engine, pointer)
     End Sub

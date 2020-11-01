@@ -15,8 +15,8 @@ Namespace Dynamic
         ''' <summary>
         ''' Creates a new object dealing with the dynamic and binding logic for R data frames
         ''' </summary>
-        ''' <paramname="parameter">The expression representing this new DataFrameDynamicMeta in the binding process</param>
-        ''' <paramname="frame">The runtime value of the DataFrame, that this new DataFrameDynamicMeta represents</param>
+        ''' <param name="parameter">The expression representing this new DataFrameDynamicMeta in the binding process</param>
+        ''' <param name="frame">The runtime value of the DataFrame, that this new DataFrameDynamicMeta represents</param>
         Public Sub New(ByVal parameter As Expressions.Expression, ByVal frame As DataFrame)
             MyBase.New(parameter, frame)
         End Sub
@@ -32,7 +32,7 @@ Namespace Dynamic
         ''' <summary>
         ''' Performs the binding of the dynamic get member operation.
         ''' </summary>
-        ''' <paramname="binder">
+        ''' <param name="binder">
         ''' An instance of the System.Dynamic.GetMemberBinder that represents the details of the dynamic operation.
         ''' </param>
         ''' <returns>The new System.Dynamic.DynamicMetaObject representing the result of the binding.</returns>

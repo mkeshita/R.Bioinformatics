@@ -5,14 +5,14 @@ Imports System.Runtime.CompilerServices
 
 
     ''' <summary>
-    ''' Provides extension methods for <seecref="SymbolicExpression"/>.
+    ''' Provides extension methods for <see cref="SymbolicExpression"/>.
     ''' </summary>
     <SecurityPermission(SecurityAction.Demand, Flags:=SecurityPermissionFlag.UnmanagedCode)>
     Public Module SymbolicExpressionExtension
         ''' <summary>
         ''' Gets whether the specified expression is list.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns><c>True</c> if the specified expression is list.</returns>
         <Extension()>
         Public Function IsList(ByVal expression As SymbolicExpression) As Boolean
@@ -27,7 +27,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Converts the specified expression to a GenericVector.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The GenericVector. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsList(ByVal expression As SymbolicExpression) As GenericVector
@@ -54,7 +54,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Gets whether the specified expression is data frame.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns><c>True</c> if the specified expression is data frame.</returns>
         <Extension()>
         Public Function IsDataFrame(ByVal expression As SymbolicExpression) As Boolean
@@ -68,7 +68,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Converts the specified expression to a DataFrame.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The DataFrame. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsDataFrame(ByVal expression As SymbolicExpression) As DataFrame
@@ -82,7 +82,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Gets whether the specified expression is an S4 object.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns><c>True</c> if the specified expression is an S4 object.</returns>
         <Extension()>
         Public Function IsS4(ByVal expression As SymbolicExpression) As Boolean
@@ -96,7 +96,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Coerce the specified expression to an S4 object.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The DataFrame. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsS4(ByVal expression As SymbolicExpression) As S4Object
@@ -110,7 +110,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Gets whether the specified expression is vector.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns><c>True</c> if the specified expression is vector.</returns>
         <Extension()>
         Public Function IsVector(ByVal expression As SymbolicExpression) As Boolean
@@ -124,7 +124,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Converts the specified expression to a DynamicVector.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The DynamicVector. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsVector(ByVal expression As SymbolicExpression) As DynamicVector
@@ -139,7 +139,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Converts the specified expression to a LogicalVector.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The LogicalVector. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsLogical(ByVal expression As SymbolicExpression) As LogicalVector
@@ -154,7 +154,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Converts the specified expression to an IntegerVector.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The LogicalVector. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsInteger(ByVal expression As SymbolicExpression) As IntegerVector
@@ -169,7 +169,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Converts the specified expression to a NumericVector.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The LogicalVector. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsNumeric(ByVal expression As SymbolicExpression) As NumericVector
@@ -184,7 +184,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Converts the specified expression to a CharacterVector.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The LogicalVector. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsCharacter(ByVal expression As SymbolicExpression) As CharacterVector
@@ -206,7 +206,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Converts the specified expression to a ComplexVector.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The LogicalVector. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsComplex(ByVal expression As SymbolicExpression) As ComplexVector
@@ -221,7 +221,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Converts the specified expression to a RawVector.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The LogicalVector. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsRaw(ByVal expression As SymbolicExpression) As RawVector
@@ -236,7 +236,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Gets whether the specified expression is matrix.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns><c>True</c> if the specified expression is matrix.</returns>
         <Extension()>
         Public Function IsMatrix(ByVal expression As SymbolicExpression) As Boolean
@@ -250,7 +250,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Converts the specified expression to a LogicalMatrix.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The LogicalMatrix. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsLogicalMatrix(ByVal expression As SymbolicExpression) As LogicalMatrix
@@ -286,7 +286,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Converts the specified expression to an IntegerMatrix.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The IntegerMatrix. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsIntegerMatrix(ByVal expression As SymbolicExpression) As IntegerMatrix
@@ -322,7 +322,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Converts the specified expression to a NumericMatrix.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The NumericMatrix. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsNumericMatrix(ByVal expression As SymbolicExpression) As NumericMatrix
@@ -358,7 +358,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Converts the specified expression to a CharacterMatrix.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The CharacterMatrix. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsCharacterMatrix(ByVal expression As SymbolicExpression) As CharacterMatrix
@@ -394,7 +394,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Converts the specified expression to a ComplexMatrix.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The ComplexMatrix. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsComplexMatrix(ByVal expression As SymbolicExpression) As ComplexMatrix
@@ -430,7 +430,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Converts the specified expression to a RawMatrix.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The RawMatrix. Returns <c>null</c> if the specified expression is not vector.</returns>
         <Extension()>
         Public Function AsRawMatrix(ByVal expression As SymbolicExpression) As RawMatrix
@@ -464,9 +464,9 @@ Imports System.Runtime.CompilerServices
         End Function
 
         ''' <summary>
-        ''' Specifies the expression is an <seecref="REnvironment"/> object or not.
+        ''' Specifies the expression is an <see cref="REnvironment"/> object or not.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns><c>True</c> if it is an environment.</returns>
         <Extension()>
         Public Function IsEnvironment(ByVal expression As SymbolicExpression) As Boolean
@@ -478,9 +478,9 @@ Imports System.Runtime.CompilerServices
         End Function
 
         ''' <summary>
-        ''' Gets the expression as an <seecref="REnvironment"/>.
+        ''' Gets the expression as an <see cref="REnvironment"/>.
         ''' </summary>
-        ''' <paramname="expression">The environment.</param>
+        ''' <param name="expression">The environment.</param>
         ''' <returns>The environment.</returns>
         <Extension()>
         Public Function AsEnvironment(ByVal expression As SymbolicExpression) As REnvironment
@@ -492,9 +492,9 @@ Imports System.Runtime.CompilerServices
         End Function
 
         ''' <summary>
-        ''' Specifies the expression is an <seecref="RDotNet.Expression"/> object or not.
+        ''' Specifies the expression is an <see cref="RDotNet.Expression"/> object or not.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns><c>True</c> if it is an expression.</returns>
         <Extension()>
         Public Function IsExpression(ByVal expression As SymbolicExpression) As Boolean
@@ -506,9 +506,9 @@ Imports System.Runtime.CompilerServices
         End Function
 
         ''' <summary>
-        ''' Gets the expression as an <seecref="RDotNet.Expression"/>.
+        ''' Gets the expression as an <see cref="RDotNet.Expression"/>.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The expression.</returns>
         <Extension()>
         Public Function AsExpression(ByVal expression As SymbolicExpression) As Expression
@@ -522,7 +522,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Specifies the expression is a symbol object or not.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns><c>True</c> if it is a symbol.</returns>
         <Extension()>
         Public Function IsSymbol(ByVal expression As SymbolicExpression) As Boolean
@@ -536,7 +536,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Gets the expression as a symbol.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The symbol.</returns>
         <Extension()>
         Public Function AsSymbol(ByVal expression As SymbolicExpression) As Symbol
@@ -550,7 +550,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Specifies the expression is a language object or not.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns><c>True</c> if it is a language.</returns>
         <Extension()>
         Public Function IsLanguage(ByVal expression As SymbolicExpression) As Boolean
@@ -564,7 +564,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Gets the expression as a language.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The language.</returns>
         <Extension()>
         Public Function AsLanguage(ByVal expression As SymbolicExpression) As Language
@@ -578,7 +578,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Specifies the expression is a function object or not.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns><c>True</c> if it is a function.</returns>
         <Extension()>
         Public Function IsFunction(ByVal expression As SymbolicExpression) As Boolean
@@ -592,7 +592,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Gets the expression as a function.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The function.</returns>
         <Extension()>
         Public Function AsFunction(ByVal expression As SymbolicExpression) As [Function]
@@ -611,7 +611,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Gets whether the specified expression is factor.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns><c>True</c> if the specified expression is factor.</returns>
         <Extension()>
         Public Function IsFactor(ByVal expression As SymbolicExpression) As Boolean
@@ -626,7 +626,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Gets the expression as a factor.
         ''' </summary>
-        ''' <paramname="expression">The expression.</param>
+        ''' <param name="expression">The expression.</param>
         ''' <returns>The factor.</returns>
         <Extension()>
         Public Function AsFactor(ByVal expression As SymbolicExpression) As Factor

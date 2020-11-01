@@ -42,7 +42,7 @@
         ''' <summary>
         ''' Initializes a new instance by name.
         ''' </summary>
-        ''' <paramname="name">The name.</param>
+        ''' <param name="name">The name.</param>
         Public Sub New(ByVal name As String)
             If Equals(name, Nothing) Then
                 Throw New ArgumentNullException("name")
@@ -55,7 +55,7 @@
         ''' <summary>
         ''' Initializes a new instance by index.
         ''' </summary>
-        ''' <paramname="index">The index.</param>
+        ''' <param name="index">The index.</param>
         Public Sub New(ByVal index As Integer)
             If index < 0 Then
                 Throw New ArgumentOutOfRangeException("index")

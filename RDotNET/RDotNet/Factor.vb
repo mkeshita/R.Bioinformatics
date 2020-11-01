@@ -17,8 +17,8 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Creates a new instance for a factor vector.
         ''' </summary>
-        ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-        ''' <paramname="coerced">The pointer to a factor vector.</param>
+        ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+        ''' <param name="coerced">The pointer to a factor vector.</param>
         Protected Friend Sub New(ByVal engine As REngine, ByVal coerced As IntPtr)
             MyBase.New(engine, coerced)
         End Sub
@@ -70,8 +70,8 @@ Imports System.Security.Permissions
         ''' }
         ''' </code>
         ''' </example>
-        ''' <typeparamname="TEnum">The type of enum.</typeparam>
-        ''' <paramname="ignoreCase">The value indicating case-sensitivity.</param>
+        ''' <typeparam name="TEnum">The type of enum.</typeparam>
+        ''' <param name="ignoreCase">The value indicating case-sensitivity.</param>
         ''' <returns>Factors.</returns>
         Public Function GetFactors(Of TEnum As Structure)(ByVal Optional ignoreCase As Boolean = False) As TEnum()
             Dim enumType = GetType(TEnum)
@@ -101,7 +101,7 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Gets the value of the vector of factors at an index
         ''' </summary>
-        ''' <paramname="index">the zero-based index of the vector</param>
+        ''' <param name="index">the zero-based index of the vector</param>
         ''' <returns>The string representation of the factor, or a null reference if the value in R is NA</returns>
         Public Function GetFactor(ByVal index As Integer) As String
             Dim intValue = Me(index)
@@ -116,8 +116,8 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Sets the value of a factor vector at an index
         ''' </summary>
-        ''' <paramname="index">the zero-based index item to set in the vector</param>
-        ''' <paramname="factorValue">The value of the factor - can be a null reference</param>
+        ''' <param name="index">the zero-based index item to set in the vector</param>
+        ''' <param name="factorValue">The value of the factor - can be a null reference</param>
         Public Sub SetFactor(ByVal index As Integer, ByVal factorValue As String)
             If Equals(factorValue, Nothing) Then
                 Me(index) = NACode

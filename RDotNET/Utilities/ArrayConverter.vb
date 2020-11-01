@@ -8,10 +8,10 @@ Namespace Utilities
         ''' <summary>
         ''' Convert all elements of a rectangular array, using a function to cast/transform each element.
         ''' </summary>
-        ''' <typeparamname="T">The type of the input array elements</typeparam>
-        ''' <typeparamname="U">The type of the output array elements</typeparam>
-        ''' <paramname="array">Input array</param>
-        ''' <paramname="fun">A conversion function taking in an object of type T and returning one of type U</param>
+        ''' <typeparam name="T">The type of the input array elements</typeparam>
+        ''' <typeparam name="U">The type of the output array elements</typeparam>
+        ''' <param name="array">Input array</param>
+        ''' <param name="fun">A conversion function taking in an object of type T and returning one of type U</param>
         ''' <returns></returns>
         Public Function ArrayConvertAll(Of T, U)(ByVal array As T(,), ByVal fun As Func(Of T, U)) As U(,)
             Dim rows = array.GetLength(0)
@@ -31,10 +31,10 @@ Namespace Utilities
         ''' <summary>
         ''' Convert all elements of a rectangular, jagged array, using a function to cast/transform each element.
         ''' </summary>
-        ''' <typeparamname="T">The type of the input array elements</typeparam>
-        ''' <typeparamname="U">The type of the output array elements</typeparam>
-        ''' <paramname="array">Input array</param>
-        ''' <paramname="fun">A conversion function taking in an object of type T and returning one of type U</param>
+        ''' <typeparam name="T">The type of the input array elements</typeparam>
+        ''' <typeparam name="U">The type of the output array elements</typeparam>
+        ''' <param name="array">Input array</param>
+        ''' <param name="fun">A conversion function taking in an object of type T and returning one of type U</param>
         ''' <returns></returns>
         Public Function ArrayConvertAll(Of T, U)(ByVal array As T()(), ByVal fun As Func(Of T, U)) As U()()
             Dim rows = array.Length
@@ -62,9 +62,9 @@ Namespace Utilities
         ''' <summary>
         ''' Creates a jagged array with elements of the same length
         ''' </summary>
-        ''' <typeparamname="T">The element type of the array</typeparam>
-        ''' <paramname="outerDim">length of the outer dimension</param>
-        ''' <paramname="innerDim">length of the inner dimension</param>
+        ''' <typeparam name="T">The element type of the array</typeparam>
+        ''' <param name="outerDim">length of the outer dimension</param>
+        ''' <param name="innerDim">length of the inner dimension</param>
         ''' <returns></returns>
         Public Function CreateMatrixJagged(Of T)(ByVal outerDim As Integer, ByVal innerDim As Integer) As T()()
             Dim result = New T(outerDim - 1)() {}
@@ -80,10 +80,10 @@ Namespace Utilities
         ''' Convert all elements of a rectangular array to a vector, using a function to cast/transform each element.
         ''' The dimension reduction is column-first, appending each line of the input array into the result vector.
         ''' </summary>
-        ''' <typeparamname="T">The type of the input array elements</typeparam>
-        ''' <typeparamname="U">The type of the output array elements</typeparam>
-        ''' <paramname="array">Input array</param>
-        ''' <paramname="fun">A conversion function taking in an object of type T and returning one of type U</param>
+        ''' <typeparam name="T">The type of the input array elements</typeparam>
+        ''' <typeparam name="U">The type of the output array elements</typeparam>
+        ''' <param name="array">Input array</param>
+        ''' <param name="fun">A conversion function taking in an object of type T and returning one of type U</param>
         ''' <returns></returns>
         Public Function ArrayConvertAllOneDim(Of T, U)(ByVal array As T(,), ByVal fun As Func(Of T, U)) As U()
             Dim rows = array.GetLength(0)
@@ -104,8 +104,8 @@ Namespace Utilities
         ''' Convert a rectangular array to a vector.
         ''' The dimension reduction is column-first, appending each line of the input array into the result vector.
         ''' </summary>
-        ''' <typeparamname="U"></typeparam>
-        ''' <paramname="array"></param>
+        ''' <typeparam name="U"></typeparam>
+        ''' <param name="array"></param>
         ''' <returns></returns>
         Public Function ArrayConvertOneDim(Of U)(ByVal array As U(,)) As U()
             Return ArrayConvertAllOneDim(array, Function(value) value)
@@ -116,12 +116,12 @@ Namespace Utilities
         ''' Convert all elements of a vector into a rectangular array, using a function to cast/transform each element.
         ''' Vector to matrix augmentation is done column first, i.e. "appending" successive lines to the bottom of the new matrix
         ''' </summary>
-        ''' <typeparamname="T">The type of the input array elements</typeparam>
-        ''' <typeparamname="U">The type of the output array elements</typeparam>
-        ''' <paramname="array">Input array</param>
-        ''' <paramname="fun">A conversion function taking in an object of type T and returning one of type U</param>
-        ''' <paramname="rows">The number of rows in the output</param>
-        ''' <paramname="cols">The number of columns in the output</param>
+        ''' <typeparam name="T">The type of the input array elements</typeparam>
+        ''' <typeparam name="U">The type of the output array elements</typeparam>
+        ''' <param name="array">Input array</param>
+        ''' <param name="fun">A conversion function taking in an object of type T and returning one of type U</param>
+        ''' <param name="rows">The number of rows in the output</param>
+        ''' <param name="cols">The number of columns in the output</param>
         ''' <returns></returns>
         Public Function ArrayConvertAllTwoDim(Of T, U)(ByVal array As T(), ByVal fun As Func(Of T, U), ByVal rows As Integer, ByVal cols As Integer) As U(,)
             If cols < 0 Then Throw New ArgumentException("negative number for column numbers")
@@ -144,10 +144,10 @@ Namespace Utilities
         ''' Converts a vector into a rectangular array.
         ''' Vector to matrix augmentation is done column first, i.e. "appending" successive lines to the bottom of the new matrix
         ''' </summary>
-        ''' <typeparamname="U">The type of the output array elements</typeparam>
-        ''' <paramname="array">Input array</param>
-        ''' <paramname="rows">The number of rows in the output</param>
-        ''' <paramname="cols">The number of columns in the output</param>
+        ''' <typeparam name="U">The type of the output array elements</typeparam>
+        ''' <param name="array">Input array</param>
+        ''' <param name="rows">The number of rows in the output</param>
+        ''' <param name="cols">The number of columns in the output</param>
         ''' <returns></returns>
         Public Function ArrayConvertAllTwoDim(Of U)(ByVal array As U(), ByVal rows As Integer, ByVal cols As Integer) As U(,)
             Return ArrayConvertAllTwoDim(array, Function(value) value, rows, cols)
@@ -156,10 +156,10 @@ Namespace Utilities
         ''' <summary>
         ''' Subset an array
         ''' </summary>
-        ''' <typeparamname="T">The type of the input array elements</typeparam>
-        ''' <paramname="array">Input array</param>
-        ''' <paramname="from">Index of the first element to subset</param>
-        ''' <paramname="to">Index of the last element to subset</param>
+        ''' <typeparam name="T">The type of the input array elements</typeparam>
+        ''' <param name="array">Input array</param>
+        ''' <param name="from">Index of the first element to subset</param>
+        ''' <param name="to">Index of the last element to subset</param>
         ''' <returns></returns>
         Public Function Subset(Of T)(ByVal array As T(), ByVal from As Integer, ByVal [to] As Integer) As T()
             If from > [to] Then Throw New ArgumentException("Inconsistent subset: from > to")

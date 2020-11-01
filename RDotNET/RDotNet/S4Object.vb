@@ -27,8 +27,8 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Create a new S4 object
         ''' </summary>
-        ''' <paramname="engine">R engine</param>
-        ''' <paramname="pointer">pointer to native S4 SEXP</param>
+        ''' <param name="engine">R engine</param>
+        ''' <param name="pointer">pointer to native S4 SEXP</param>
         Protected Friend Sub New(ByVal engine As REngine, ByVal pointer As IntPtr)
             MyBase.New(engine, pointer)
             If dotSlotNamesFunc Is Nothing Then dotSlotNamesFunc = MyBase.Engine.Evaluate("invisible(.slotNames)").AsFunction()
@@ -37,7 +37,7 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Gets/sets the value of a slot
         ''' </summary>
-        ''' <paramname="name"></param>
+        ''' <param name="name"></param>
         ''' <returns></returns>
         Default Public Property Item(ByVal name As String) As SymbolicExpression
             Get
@@ -69,7 +69,7 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Is a slot name valid.
         ''' </summary>
-        ''' <paramname="slotName">the name of the slot</param>
+        ''' <param name="slotName">the name of the slot</param>
         ''' <returns>whether a slot name is present in the object</returns>
         Public Function HasSlot(ByVal slotName As String) As Boolean
             Using s = New ProtectedPointer(Engine, GetFunction(Of Rf_mkString)()(InternalString.NativeUtf8FromString(slotName)))

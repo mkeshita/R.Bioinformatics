@@ -16,8 +16,8 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Creates a new empty GenericVector with the specified length.
         ''' </summary>
-        ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-        ''' <paramname="length">The length.</param>
+        ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+        ''' <param name="length">The length.</param>
         Public Sub New(ByVal engine As REngine, ByVal length As Integer)
             MyBase.New(engine, engine.GetFunction(Of Rf_allocVector)()(SymbolicExpressionType.List, length))
         End Sub
@@ -25,8 +25,8 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Creates a new GenericVector with the specified values.
         ''' </summary>
-        ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-        ''' <paramname="list">The values.</param>
+        ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+        ''' <param name="list">The values.</param>
         Public Sub New(ByVal engine As REngine, ByVal list As IEnumerable(Of SymbolicExpression))
             MyBase.New(engine, SymbolicExpressionType.List, list)
         End Sub
@@ -34,8 +34,8 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' Creates a new instance for a list.
         ''' </summary>
-        ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-        ''' <paramname="coerced">The pointer to a list.</param>
+        ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+        ''' <param name="coerced">The pointer to a list.</param>
         Protected Friend Sub New(ByVal engine As REngine, ByVal coerced As IntPtr)
             MyBase.New(engine, coerced)
         End Sub
@@ -44,7 +44,7 @@ Imports System.Security.Permissions
         ''' Gets the element at the specified index.
         ''' </summary>
         ''' <remarks>Used for pre-R 3.5 </remarks>
-        ''' <paramname="index">The zero-based index of the element to get.</param>
+        ''' <param name="index">The zero-based index of the element to get.</param>
         ''' <returns>The element at the specified index.</returns>
         Protected Overrides Function GetValue(ByVal index As Integer) As SymbolicExpression
             Dim offset = GetOffset(index)
@@ -56,7 +56,7 @@ Imports System.Security.Permissions
         ''' Gets the element at the specified index.
         ''' </summary>
         ''' <remarks>Used for R 3.5 and higher, to account for ALTREP objects</remarks>
-        ''' <paramname="index">The zero-based index of the element to get.</param>
+        ''' <param name="index">The zero-based index of the element to get.</param>
         ''' <returns>The element at the specified index.</returns>
         Protected Overrides Function GetValueAltRep(ByVal index As Integer) As SymbolicExpression
             Return GetValue(index)
@@ -66,8 +66,8 @@ Imports System.Security.Permissions
         ''' Sets the element at the specified index.
         ''' </summary>
         ''' <remarks>Used for pre-R 3.5 </remarks>
-        ''' <paramname="index">The zero-based index of the element to set.</param>
-        ''' <paramname="value">The value to set</param>
+        ''' <param name="index">The zero-based index of the element to set.</param>
+        ''' <param name="value">The value to set</param>
         Protected Overrides Sub SetValue(ByVal index As Integer, ByVal value As SymbolicExpression)
             Dim offset = GetOffset(index)
             Marshal.WriteIntPtr(DataPointer, offset, If(value, Engine.NilValue).DangerousGetHandle())
@@ -77,8 +77,8 @@ Imports System.Security.Permissions
         ''' Sets the element at the specified index.
         ''' </summary>
         ''' <remarks>Used for R 3.5 and higher, to account for ALTREP objects</remarks>
-        ''' <paramname="index">The zero-based index of the element to set.</param>
-        ''' <paramname="value">The value to set</param>
+        ''' <param name="index">The zero-based index of the element to set.</param>
+        ''' <param name="value">The value to set</param>
         Protected Overrides Sub SetValueAltRep(ByVal index As Integer, ByVal value As SymbolicExpression)
             SetValue(index, value)
         End Sub
@@ -126,7 +126,7 @@ Imports System.Security.Permissions
         End Property
 
         ''' <summary>
-        ''' Converts into a <seecref="RDotNet.Pairlist"/>.
+        ''' Converts into a <see cref="RDotNet.Pairlist"/>.
         ''' </summary>
         ''' <returns>The pairlist.</returns>
         Public Function ToPairlist() As Pairlist
@@ -136,7 +136,7 @@ Imports System.Security.Permissions
         ''' <summary>
         ''' returns a new ListDynamicMeta for this Generic Vector
         ''' </summary>
-        ''' <paramname="parameter"></param>
+        ''' <param name="parameter"></param>
         ''' <returns></returns>
         Public Overrides Function GetMetaObject(ByVal parameter As Expressions.Expression) As DynamicMetaObject
             Return New ListDynamicMeta(parameter, Me)
@@ -144,7 +144,7 @@ Imports System.Security.Permissions
 
         ''' <summary> Sets the names of the vector. </summary>
         '''
-        ''' <paramname="names"> A variable-length parameters list containing names.</param>
+        ''' <param name="names"> A variable-length parameters list containing names.</param>
         Public Sub SetNames(ParamArray names As String())
             Dim cv As CharacterVector = New CharacterVector(Engine, names)
             SetNames(cv)
@@ -152,9 +152,9 @@ Imports System.Security.Permissions
 
         ''' <summary> Sets the names of the vector.</summary>
         '''
-        ''' <exceptioncref="ArgumentException"> Incorrect length, not equal to vector length</exception>
+        ''' <exception cref="ArgumentException"> Incorrect length, not equal to vector length</exception>
         '''
-        ''' <paramname="names"> A variable-length parameters list containing names.</param>
+        ''' <param name="names"> A variable-length parameters list containing names.</param>
         Public Sub SetNames(ByVal names As CharacterVector)
             If names.Length <> Length Then
                 Throw New ArgumentException("Names vector must be same length as list")

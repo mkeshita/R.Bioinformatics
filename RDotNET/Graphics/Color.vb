@@ -83,7 +83,7 @@ Namespace Graphics
         ''' <summary>
         ''' Gets a color from 32-bit value.
         ''' </summary>
-        ''' <paramname="rgba">UInt32.</param>
+        ''' <param name="rgba">UInt32.</param>
         ''' <returns>The color.</returns>
         Public Shared Function FromUInt32(ByVal rgba As UInteger) As Color
             Dim color = New Color()
@@ -97,9 +97,9 @@ Namespace Graphics
         ''' <summary>
         ''' Gets a color from bytes.
         ''' </summary>
-        ''' <paramname="red">Red.</param>
-        ''' <paramname="green">Green.</param>
-        ''' <paramname="blue">Blue.</param>
+        ''' <param name="red">Red.</param>
+        ''' <param name="green">Green.</param>
+        ''' <param name="blue">Blue.</param>
         ''' <returns>The color.</returns>
         Public Shared Function FromRgb(ByVal red As Byte, ByVal green As Byte, ByVal blue As Byte) As Color
             Dim color = New Color()
@@ -113,10 +113,10 @@ Namespace Graphics
         ''' <summary>
         ''' Gets a color from bytes.
         ''' </summary>
-        ''' <paramname="alpha">Alpha.</param>
-        ''' <paramname="red">Red.</param>
-        ''' <paramname="green">Green.</param>
-        ''' <paramname="blue">Blue.</param>
+        ''' <param name="alpha">Alpha.</param>
+        ''' <param name="red">Red.</param>
+        ''' <param name="green">Green.</param>
+        ''' <param name="blue">Blue.</param>
         ''' <returns>The color.</returns>
         Public Shared Function FromArgb(ByVal alpha As Byte, ByVal red As Byte, ByVal green As Byte, ByVal blue As Byte) As Color
             Dim color = New Color()

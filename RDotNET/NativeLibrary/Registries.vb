@@ -9,7 +9,7 @@ Namespace NativeLibrary
 
         ''' <summary> Gets a value of a key-value pair</summary>
         '''
-        ''' <paramname="name"> The name.</param>
+        ''' <param name="name"> The name.</param>
         '''
         ''' <returns> The value.</returns>
         Function GetValue(ByVal name As String) As Object
@@ -22,7 +22,7 @@ Namespace NativeLibrary
 
         ''' <summary> Opens sub key.</summary>
         '''
-        ''' <paramname="name"> The name.</param>
+        ''' <param name="name"> The name.</param>
         '''
         ''' <returns> An IRegistryKey.</returns>
         Function OpenSubKey(ByVal name As String) As IRegistryKey
@@ -74,7 +74,7 @@ Namespace NativeLibrary
         Implements IRegistryKey
         ''' <summary> Constructor.</summary>
         '''
-        ''' <paramname="realKey"> The real key.</param>
+        ''' <param name="realKey"> The real key.</param>
         Public Sub New(ByVal realKey As Microsoft.Win32.RegistryKey)
             Me.realKey = realKey
         End Sub
@@ -98,7 +98,7 @@ Namespace NativeLibrary
 
         ''' <summary> Gets a value of a key-value pair.</summary>
         '''
-        ''' <paramname="name"> The name.</param>
+        ''' <param name="name"> The name.</param>
         '''
         ''' <returns> The value.</returns>
         Public Function GetValue(ByVal name As String) As Object Implements IRegistryKey.GetValue
@@ -115,7 +115,7 @@ Namespace NativeLibrary
 
         ''' <summary> Opens sub key.</summary>
         '''
-        ''' <paramname="name"> The name.</param>
+        ''' <param name="name"> The name.</param>
         '''
         ''' <returns> An IRegistryKey.</returns>
         Public Function OpenSubKey(ByVal name As String) As IRegistryKey Implements IRegistryKey.OpenSubKey

@@ -7,14 +7,14 @@ Imports System.Runtime.CompilerServices
 
 
     ''' <summary>
-    ''' Provides extension methods for <seecref="REngine"/>.
+    ''' Provides extension methods for <see cref="REngine"/>.
     ''' </summary>
     Public Module REngineExtension
         ''' <summary>
         ''' Creates a new empty CharacterVector with the specified length.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="length">The length.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="length">The length.</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateCharacterVector(ByVal engine As REngine, ByVal length As Integer) As CharacterVector
@@ -32,8 +32,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new empty ComplexVector with the specified length.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="length">The length.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="length">The length.</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateComplexVector(ByVal engine As REngine, ByVal length As Integer) As ComplexVector
@@ -51,8 +51,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new empty IntegerVector with the specified length.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="length">The length.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="length">The length.</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateIntegerVector(ByVal engine As REngine, ByVal length As Integer) As IntegerVector
@@ -70,8 +70,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new empty LogicalVector with the specified length.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="length">The length.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="length">The length.</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateLogicalVector(ByVal engine As REngine, ByVal length As Integer) As LogicalVector
@@ -89,8 +89,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new empty NumericVector with the specified length.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="length">The length.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="length">The length.</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateNumericVector(ByVal engine As REngine, ByVal length As Integer) As NumericVector
@@ -108,8 +108,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new empty RawVector with the specified length.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="length">The length.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="length">The length.</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateRawVector(ByVal engine As REngine, ByVal length As Integer) As RawVector
@@ -127,8 +127,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new CharacterVector with the specified values.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="vector">The values.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="vector">The values.</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateCharacterVector(ByVal engine As REngine, ByVal vector As IEnumerable(Of String)) As CharacterVector
@@ -146,8 +146,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new ComplexVector with the specified values.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="vector">The values.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="vector">The values.</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateComplexVector(ByVal engine As REngine, ByVal vector As IEnumerable(Of Complex)) As ComplexVector
@@ -165,8 +165,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new IntegerVector with the specified values.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="vector">The values.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="vector">The values.</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateIntegerVector(ByVal engine As REngine, ByVal vector As IEnumerable(Of Integer)) As IntegerVector
@@ -184,8 +184,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new LogicalVector with the specified values.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="vector">The values.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="vector">The values.</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateLogicalVector(ByVal engine As REngine, ByVal vector As IEnumerable(Of Boolean)) As LogicalVector
@@ -203,8 +203,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new NumericVector with the specified values.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="vector">The values.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="vector">The values.</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateNumericVector(ByVal engine As REngine, ByVal vector As IEnumerable(Of Double)) As NumericVector
@@ -222,8 +222,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new RawVector with the specified values.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="vector">The values.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="vector">The values.</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateRawVector(ByVal engine As REngine, ByVal vector As IEnumerable(Of Byte)) As RawVector
@@ -241,8 +241,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Create a vector with a single value
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="value">The value</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="value">The value</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateCharacter(ByVal engine As REngine, ByVal value As String) As CharacterVector
@@ -252,8 +252,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Create a vector with a single value
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="value">The value</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="value">The value</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateComplex(ByVal engine As REngine, ByVal value As Complex) As ComplexVector
@@ -263,8 +263,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Create a vector with a single value
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="value">The value</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="value">The value</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateLogical(ByVal engine As REngine, ByVal value As Boolean) As LogicalVector
@@ -274,8 +274,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Create a vector with a single value
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="value">The value</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="value">The value</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateNumeric(ByVal engine As REngine, ByVal value As Double) As NumericVector
@@ -285,8 +285,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Create an integer vector with a single value
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="value">The value</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="value">The value</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateInteger(ByVal engine As REngine, ByVal value As Integer) As IntegerVector
@@ -296,8 +296,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Create a vector with a single value
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="value">The value</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="value">The value</param>
         ''' <returns>The new vector.</returns>
         <Extension()>
         Public Function CreateRaw(ByVal engine As REngine, ByVal value As Byte) As RawVector
@@ -307,9 +307,9 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new empty CharacterMatrix with the specified size.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="rowCount">The row size.</param>
-        ''' <paramname="columnCount">The column size.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="rowCount">The row size.</param>
+        ''' <param name="columnCount">The column size.</param>
         ''' <returns>The new matrix.</returns>
         <Extension()>
         Public Function CreateCharacterMatrix(ByVal engine As REngine, ByVal rowCount As Integer, ByVal columnCount As Integer) As CharacterMatrix
@@ -327,9 +327,9 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new empty ComplexMatrix with the specified size.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="rowCount">The row size.</param>
-        ''' <paramname="columnCount">The column size.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="rowCount">The row size.</param>
+        ''' <param name="columnCount">The column size.</param>
         ''' <returns>The new matrix.</returns>
         <Extension()>
         Public Function CreateComplexMatrix(ByVal engine As REngine, ByVal rowCount As Integer, ByVal columnCount As Integer) As ComplexMatrix
@@ -347,9 +347,9 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new empty IntegerMatrix with the specified size.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="rowCount">The row size.</param>
-        ''' <paramname="columnCount">The column size.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="rowCount">The row size.</param>
+        ''' <param name="columnCount">The column size.</param>
         ''' <returns>The new matrix.</returns>
         <Extension()>
         Public Function CreateIntegerMatrix(ByVal engine As REngine, ByVal rowCount As Integer, ByVal columnCount As Integer) As IntegerMatrix
@@ -367,9 +367,9 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new empty LogicalMatrix with the specified size.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="rowCount">The row size.</param>
-        ''' <paramname="columnCount">The column size.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="rowCount">The row size.</param>
+        ''' <param name="columnCount">The column size.</param>
         ''' <returns>The new matrix.</returns>
         <Extension()>
         Public Function CreateLogicalMatrix(ByVal engine As REngine, ByVal rowCount As Integer, ByVal columnCount As Integer) As LogicalMatrix
@@ -387,9 +387,9 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new empty NumericMatrix with the specified size.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="rowCount">The row size.</param>
-        ''' <paramname="columnCount">The column size.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="rowCount">The row size.</param>
+        ''' <param name="columnCount">The column size.</param>
         ''' <returns>The new matrix.</returns>
         <Extension()>
         Public Function CreateNumericMatrix(ByVal engine As REngine, ByVal rowCount As Integer, ByVal columnCount As Integer) As NumericMatrix
@@ -407,9 +407,9 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new empty RawMatrix with the specified size.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="rowCount">The row size.</param>
-        ''' <paramname="columnCount">The column size.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="rowCount">The row size.</param>
+        ''' <param name="columnCount">The column size.</param>
         ''' <returns>The new matrix.</returns>
         <Extension()>
         Public Function CreateRawMatrix(ByVal engine As REngine, ByVal rowCount As Integer, ByVal columnCount As Integer) As RawMatrix
@@ -427,8 +427,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new CharacterMatrix with the specified values.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="matrix">The values.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="matrix">The values.</param>
         ''' <returns>The new matrix.</returns>
         <Extension()>
         Public Function CreateCharacterMatrix(ByVal engine As REngine, ByVal matrix As String(,)) As CharacterMatrix
@@ -446,8 +446,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new ComplexMatrix with the specified values.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="matrix">The values.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="matrix">The values.</param>
         ''' <returns>The new matrix.</returns>
         <Extension()>
         Public Function CreateComplexMatrix(ByVal engine As REngine, ByVal matrix As Complex(,)) As ComplexMatrix
@@ -465,8 +465,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new IntegerMatrix with the specified values.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="matrix">The values.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="matrix">The values.</param>
         ''' <returns>The new matrix.</returns>
         <Extension()>
         Public Function CreateIntegerMatrix(ByVal engine As REngine, ByVal matrix As Integer(,)) As IntegerMatrix
@@ -484,8 +484,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new LogicalMatrix with the specified values.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="matrix">The values.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="matrix">The values.</param>
         ''' <returns>The new matrix.</returns>
         <Extension()>
         Public Function CreateLogicalMatrix(ByVal engine As REngine, ByVal matrix As Boolean(,)) As LogicalMatrix
@@ -503,8 +503,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new NumericMatrix with the specified values.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="matrix">The values.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="matrix">The values.</param>
         ''' <returns>The new matrix.</returns>
         <Extension()>
         Public Function CreateNumericMatrix(ByVal engine As REngine, ByVal matrix As Double(,)) As NumericMatrix
@@ -522,8 +522,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new RawMatrix with the specified values.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="matrix">The values.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="matrix">The values.</param>
         ''' <returns>The new matrix.</returns>
         <Extension()>
         Public Function CreateRawMatrix(ByVal engine As REngine, ByVal matrix As Byte(,)) As RawMatrix
@@ -541,13 +541,13 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Create an R data frame from managed arrays and objects.
         ''' </summary>
-        ''' <paramname="engine">R engine</param>
-        ''' <paramname="columns">The columns with the values for the data frame. These must be array of supported types (double, string, bool, integer, byte)</param>
-        ''' <paramname="columnNames">Column names. default: null.</param>
-        ''' <paramname="rowNames">Row names. Default null.</param>
-        ''' <paramname="checkRows">Check rows. See data.frame R documentation</param>
-        ''' <paramname="checkNames">See data.frame R documentation</param>
-        ''' <paramname="stringsAsFactors">Should columns of strings be considered as factors (categories). See data.frame R documentation</param>
+        ''' <param name="engine">R engine</param>
+        ''' <param name="columns">The columns with the values for the data frame. These must be array of supported types (double, string, bool, integer, byte)</param>
+        ''' <param name="columnNames">Column names. default: null.</param>
+        ''' <param name="rowNames">Row names. Default null.</param>
+        ''' <param name="checkRows">Check rows. See data.frame R documentation</param>
+        ''' <param name="checkNames">See data.frame R documentation</param>
+        ''' <param name="stringsAsFactors">Should columns of strings be considered as factors (categories). See data.frame R documentation</param>
         ''' <returns></returns>
         <Extension()>
         Public Function CreateDataFrame(ByVal engine As REngine, ByVal columns As IEnumerable(), ByVal Optional columnNames As String() = Nothing, ByVal Optional rowNames As String() = Nothing, ByVal Optional checkRows As Boolean = False, ByVal Optional checkNames As Boolean = True, ByVal Optional stringsAsFactors As Boolean = True) As DataFrame
@@ -600,8 +600,8 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new environment.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
-        ''' <paramname="parent">The parent environment.</param>
+        ''' <param name="engine">The engine.</param>
+        ''' <param name="parent">The parent environment.</param>
         ''' <returns>The newly created environment.</returns>
         <Extension()>
         Public Function CreateEnvironment(ByVal engine As REngine, ByVal parent As REnvironment) As REnvironment
@@ -623,7 +623,7 @@ Imports System.Runtime.CompilerServices
         ''' <summary>
         ''' Creates a new isolated environment.
         ''' </summary>
-        ''' <paramname="engine">The engine.</param>
+        ''' <param name="engine">The engine.</param>
         ''' <returns>The newly created isolated environment.</returns>
         <Extension()>
         Public Function CreateIsolatedEnvironment(ByVal engine As REngine) As REnvironment

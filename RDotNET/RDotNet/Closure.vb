@@ -11,8 +11,8 @@ Public Class Closure
     ''' <summary>
     ''' Creates a closure object.
     ''' </summary>
-    ''' <paramname="engine">The engine.</param>
-    ''' <paramname="pointer">The pointer.</param>
+    ''' <param name="engine">The engine.</param>
+    ''' <param name="pointer">The pointer.</param>
     Protected Friend Sub New(ByVal engine As REngine, ByVal pointer As IntPtr)
         MyBase.New(engine, pointer)
     End Sub
@@ -50,7 +50,7 @@ Public Class Closure
     ''' <summary>
     ''' Invoke this function, using an ordered list of unnamed arguments.
     ''' </summary>
-    ''' <paramname="args">The arguments of the function</param>
+    ''' <param name="args">The arguments of the function</param>
     ''' <returns>The result of the evaluation</returns>
     Public Overloads Overrides Function Invoke(ParamArray args As SymbolicExpression()) As SymbolicExpression
         'int count = Arguments.Count;
@@ -62,7 +62,7 @@ Public Class Closure
     ''' <summary>
     ''' Invoke this function, using named arguments provided as key-value pairs
     ''' </summary>
-    ''' <paramname="args">the representation of named arguments, as a dictionary</param>
+    ''' <param name="args">the representation of named arguments, as a dictionary</param>
     ''' <returns>The result of the evaluation</returns>
     Public Overloads Overrides Function Invoke(ByVal args As IDictionary(Of String, SymbolicExpression)) As SymbolicExpression
         Dim a = args.ToArray()

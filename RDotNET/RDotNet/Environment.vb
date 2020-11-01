@@ -12,8 +12,8 @@ Public Class REnvironment
     ''' <summary>
     ''' Creates an environment object.
     ''' </summary>
-    ''' <paramname="engine">The <seecref="REngine"/> handling this instance.</param>
-    ''' <paramname="pointer">The pointer to an environment.</param>
+    ''' <param name="engine">The <see cref="REngine"/> handling this instance.</param>
+    ''' <param name="pointer">The pointer to an environment.</param>
     Protected Friend Sub New(ByVal engine As REngine, ByVal pointer As IntPtr)
         MyBase.New(engine, pointer)
     End Sub
@@ -21,8 +21,8 @@ Public Class REnvironment
     ''' <summary>
     ''' Creates a new environment object.
     ''' </summary>
-    ''' <paramname="engine">The engine.</param>
-    ''' <paramname="parent">The parent environment.</param>
+    ''' <param name="engine">The engine.</param>
+    ''' <param name="parent">The parent environment.</param>
     Public Sub New(ByVal engine As REngine, ByVal parent As REnvironment)
         MyBase.New(engine, engine.GetFunction(Of Rf_NewEnvironment)()(engine.NilValue.DangerousGetHandle(), engine.NilValue.DangerousGetHandle(), parent.handle))
     End Sub
@@ -41,7 +41,7 @@ Public Class REnvironment
     ''' <summary>
     ''' Gets a symbol defined in this environment.
     ''' </summary>
-    ''' <paramname="name">The name.</param>
+    ''' <param name="name">The name.</param>
     ''' <returns>The symbol.</returns>
     Public Function GetSymbol(ByVal name As String) As SymbolicExpression
         If Equals(name, Nothing) Then
@@ -72,8 +72,8 @@ Public Class REnvironment
     ''' <summary>
     ''' Defines a symbol in this environment.
     ''' </summary>
-    ''' <paramname="name">The name.</param>
-    ''' <paramname="expression">The symbol.</param>
+    ''' <param name="name">The name.</param>
+    ''' <param name="expression">The symbol.</param>
     Public Sub SetSymbol(ByVal name As String, ByVal expression As SymbolicExpression)
         If Equals(name, Nothing) Then
             Throw New ArgumentNullException("name", "'name' cannot be null")
@@ -98,7 +98,7 @@ Public Class REnvironment
     ''' <summary>
     ''' Gets the symbol names defined in this environment.
     ''' </summary>
-    ''' <paramname="all">Including special functions or not.</param>
+    ''' <param name="all">Including special functions or not.</param>
     ''' <returns>Symbol names.</returns>
     Public Function GetSymbolNames(ByVal Optional all As Boolean = False) As String()
         Dim symbolNames = New CharacterVector(Engine, GetFunction(Of R_lsInternal)()(handle, all))
