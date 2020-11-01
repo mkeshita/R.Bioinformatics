@@ -1,6 +1,6 @@
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
 
-Namespace Graphics.Internals
+Namespace RDotNet.Graphics.Internals
     <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Ansi)>
     Friend Structure GEcontext
         Friend col As Color
@@ -15,7 +15,6 @@ Namespace Graphics.Internals
         Friend ps As Double
         Friend lineheight As Double
         Friend fontface As FontFace
-
         <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=201)>
         Friend fontfamily As String
     End Structure

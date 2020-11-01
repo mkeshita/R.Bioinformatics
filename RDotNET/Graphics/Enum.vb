@@ -1,5 +1,4 @@
-Namespace Graphics
-
+﻿Namespace RDotNet.Graphics
     Public Enum LineEnd
         Round = 1
         Butt = 2

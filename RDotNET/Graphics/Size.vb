@@ -1,58 +1,62 @@
-Namespace Graphics
+﻿Imports System
+
+Namespace RDotNet.Graphics
     Public Structure Size
         Implements IEquatable(Of Size)
-        Private m_height As Double
-        Private m_width As Double
 
-        Public Sub New(width As Double, height As Double)
-            Me.m_width = width
-            Me.m_height = height
+        Private heightField As Double
+        Private widthField As Double
+
+        Public Sub New(ByVal width As Double, ByVal height As Double)
+            widthField = width
+            heightField = height
         End Sub
 
-        Public Property Width() As Double
+        Public Property Width As Double
             Get
-                Return Me.m_width
+                Return widthField
             End Get
-            Set
-                Me.m_width = value
+            Set(ByVal value As Double)
+                widthField = value
             End Set
         End Property
 
-        Public Property Height() As Double
+        Public Property Height As Double
             Get
-                Return Me.m_height
+                Return heightField
             End Get
-            Set
-                Me.m_height = value
+            Set(ByVal value As Double)
+                heightField = value
             End Set
         End Property
 
 #Region "IEquatable<Size> Members"
 
-        Public Overloads Function Equals(other As Size) As Boolean Implements IEquatable(Of Size).Equals
-            Return (Me = other)
+        Public Overloads Function Equals(ByVal other As Size) As Boolean Implements IEquatable(Of Size).Equals
+            Return Me = other
         End Function
 
 #End Region
 
-        Public Shared Operator =(size1 As Size, size2 As Size) As Boolean
+        Public Shared Operator =(ByVal size1 As Size, ByVal size2 As Size) As Boolean
             Return size1.Width = size2.Width AndAlso size1.Height = size2.Height
         End Operator
 
-        Public Shared Operator <>(size1 As Size, size2 As Size) As Boolean
-            Return Not (size1 = size2)
+        Public Shared Operator <>(ByVal size1 As Size, ByVal size2 As Size) As Boolean
+            Return Not size1 = size2
         End Operator
 
         Public Overrides Function GetHashCode() As Integer
-            Const Prime As Integer = 31
+            Const Prime = 31
             Return Prime * Width.GetHashCode() + Height.GetHashCode()
         End Function
 
-        Public Overrides Function Equals(obj As Object) As Boolean
+        Public Overrides Function Equals(ByVal obj As Object) As Boolean
             If TypeOf obj Is Size Then
                 Dim size = CType(obj, Size)
-                Return (Me = size)
+                Return Me = size
             End If
+
             Return False
         End Function
     End Structure

@@ -1,23 +1,26 @@
-Namespace Graphics
+﻿Imports System
+
+Namespace RDotNet.Graphics
     Public Class GraphicsDeviceEventArgs
         Inherits EventArgs
-        Private ReadOnly m_context As GraphicsContext
-        Private ReadOnly m_description As DeviceDescription
 
-        Public Sub New(description As DeviceDescription, Optional context As GraphicsContext = Nothing)
-            Me.m_description = description
-            Me.m_context = context
+        Private ReadOnly contextField As GraphicsContext
+        Private ReadOnly descriptionField As DeviceDescription
+
+        Public Sub New(ByVal description As DeviceDescription, ByVal Optional context As GraphicsContext = Nothing)
+            descriptionField = description
+            contextField = context
         End Sub
 
-        Public ReadOnly Property Description() As DeviceDescription
+        Public ReadOnly Property Description As DeviceDescription
             Get
-                Return Me.m_description
+                Return descriptionField
             End Get
         End Property
 
-        Public ReadOnly Property Context() As GraphicsContext
+        Public ReadOnly Property Context As GraphicsContext
             Get
-                Return Me.m_context
+                Return contextField
             End Get
         End Property
     End Class
