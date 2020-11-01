@@ -4,7 +4,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.DynamicInterop
 
-Namespace RDotNet.NativeLibrary
+Namespace NativeLibrary
 
     ''' <summary>
     ''' Collection of utility methods for operating systems.

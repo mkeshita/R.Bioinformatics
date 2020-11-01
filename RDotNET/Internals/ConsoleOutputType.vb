@@ -1,4 +1,4 @@
-﻿Namespace RDotNet.Internals
+﻿Namespace Internals
     ''' <summary>
     ''' Specifies console to output.
     ''' </summary>

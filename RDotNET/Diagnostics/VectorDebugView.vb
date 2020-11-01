@@ -1,6 +1,6 @@
 ﻿Imports System.Diagnostics
 
-Namespace RDotNet.Diagnostics
+Namespace Diagnostics
     Friend Class VectorDebugView(Of T)
         Private ReadOnly vector As Vector(Of T)
 

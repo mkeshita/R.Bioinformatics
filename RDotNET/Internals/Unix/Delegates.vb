@@ -2,7 +2,7 @@
 Imports System.Runtime.InteropServices
 Imports System.Text
 
-Namespace RDotNet.Internals.Unix
+Namespace Internals.Unix
     <UnmanagedFunctionPointer(CallingConvention.Cdecl)>
     Friend Delegate Sub ptr_R_Suicide(
     <[In]>

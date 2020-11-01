@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet.Internals.ALTREP
+Namespace Internals.ALTREP
     <StructLayout(LayoutKind.Sequential, Pack:=1)>
     Friend Structure SEXPREC
         Private header As SEXPREC_HEADER

@@ -1,4 +1,4 @@
-﻿Namespace RDotNet.Internals
+﻿Namespace Internals
     ''' <summary>
     ''' Specifies the restore action.
     ''' </summary>

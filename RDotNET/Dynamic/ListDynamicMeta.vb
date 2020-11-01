@@ -3,7 +3,7 @@ Imports System.Collections.Generic
 Imports System.Dynamic
 Imports System.Linq
 
-Namespace RDotNet.Dynamic
+Namespace Dynamic
     ''' <summary>
     ''' Dynamic and binding logic for R lists
     ''' </summary>

@@ -1,10 +1,9 @@
-﻿Imports System
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
 Imports RDotNet.Utilities
 Imports UnixRStart = RDotNet.Internals.Unix.RStart
 Imports WindowsRStart = RDotNet.Internals.Windows.RStart
 
-Namespace RDotNet.Internals
+Namespace Internals
     <UnmanagedFunctionPointer(CallingConvention.Cdecl)>
     Friend Delegate Sub R_setStartTime()
     <UnmanagedFunctionPointer(CallingConvention.Cdecl)>

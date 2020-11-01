@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet.Internals.PreALTREP
+Namespace Internals.PreALTREP
     <StructLayout(LayoutKind.Sequential)>
     Friend Structure SEXPREC_HEADER
         Public sxpinfo As sxpinfo

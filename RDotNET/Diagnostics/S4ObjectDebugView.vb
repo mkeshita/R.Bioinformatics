@@ -1,7 +1,7 @@
 ﻿Imports System.Diagnostics
 Imports System.Linq
 
-Namespace RDotNet.Diagnostics
+Namespace Diagnostics
     Friend Class S4ObjectDebugView
         Private ReadOnly s4obj As S4Object
 

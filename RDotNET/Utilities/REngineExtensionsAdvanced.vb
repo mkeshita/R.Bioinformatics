@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Runtime.CompilerServices
 
-Namespace RDotNet.Utilities
+Namespace Utilities
     ''' <summary>
     ''' Advanced, less usual extension methods for the R.NET REngine
     ''' </summary>

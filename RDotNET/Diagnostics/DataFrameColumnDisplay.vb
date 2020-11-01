@@ -1,6 +1,6 @@
 ﻿Imports System.Diagnostics
 
-Namespace RDotNet.Diagnostics
+Namespace Diagnostics
     <DebuggerDisplay("{Display,nq}")>
     Friend Class DataFrameColumnDisplay
         <DebuggerBrowsable(DebuggerBrowsableState.Never)>

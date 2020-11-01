@@ -1,4 +1,4 @@
-﻿Namespace RDotNet.Internals
+﻿Namespace Internals
     ''' <summary>
     ''' Type of R's working.
     ''' </summary>

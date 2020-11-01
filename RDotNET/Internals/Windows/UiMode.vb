@@ -1,4 +1,4 @@
-﻿Namespace RDotNet.Internals.Windows
+﻿Namespace Internals.Windows
     ''' <summary>
     ''' User interface mode
     ''' </summary>

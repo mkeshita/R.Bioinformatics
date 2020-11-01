@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Numerics
 
-Namespace RDotNet.Utilities
+Namespace Utilities
     ' Based on R_ext/Complex.h definition
     Friend Structure Rcomplex
         Public r As Double

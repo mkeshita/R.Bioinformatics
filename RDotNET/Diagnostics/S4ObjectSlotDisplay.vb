@@ -1,7 +1,7 @@
 ﻿Imports System.Diagnostics
 Imports System.Linq
 
-Namespace RDotNet.Diagnostics
+Namespace Diagnostics
     <DebuggerDisplay("{Display,nq}")>
     Friend Class S4ObjectSlotDisplay
         <DebuggerBrowsable(DebuggerBrowsableState.Never)>

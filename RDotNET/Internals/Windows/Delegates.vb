@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Text
 
-Namespace RDotNet.Internals.Windows
+Namespace Internals.Windows
     <UnmanagedFunctionPointer(CallingConvention.Cdecl)>
     <MarshalAs(UnmanagedType.Bool)>
     Friend Delegate Function blah1(

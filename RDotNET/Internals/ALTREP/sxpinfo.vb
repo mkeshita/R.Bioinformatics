@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 
-Namespace RDotNet.Internals.ALTREP
+Namespace Internals.ALTREP
     ' Definition of the struct available at: https://cran.r-project.org/doc/manuals/r-release/R-ints.html#Rest-of-header
     ' Formally defined in Rinternals.h: https://github.com/wch/r-source/blob/trunk/src/include/Rinternals.h
     ' Note that this structure was greatly changed in the R 3.5 release, using the platform-dependent pointer size (represented

@@ -1,6 +1,6 @@
 ﻿Imports RDotNet.Internals
 
-Namespace RDotNet.Devices
+Namespace Devices
     ''' <summary>
     ''' A console class handles user's inputs and outputs.
     ''' </summary>

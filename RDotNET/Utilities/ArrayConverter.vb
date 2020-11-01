@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace RDotNet.Utilities
+Namespace Utilities
     ''' <summary>
     ''' A set of helpers to convert, query and transform arrays
     ''' </summary>

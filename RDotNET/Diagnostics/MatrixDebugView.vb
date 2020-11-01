@@ -1,6 +1,6 @@
 ﻿Imports System.Diagnostics
 
-Namespace RDotNet.Diagnostics
+Namespace Diagnostics
     Friend Class MatrixDebugView(Of T)
         Private ReadOnly matrix As Matrix(Of T)
 

@@ -5,7 +5,7 @@ Imports System.Linq
 Imports System.Linq.Expressions
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet.Dynamic
+Namespace Dynamic
     ''' <summary>
     ''' Dynamic and binding logic for S expressions
     ''' </summary>

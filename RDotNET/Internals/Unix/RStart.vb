@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Runtime.InteropServices
 
-Namespace RDotNet.Internals.Unix
+Namespace Internals.Unix
     <StructLayout(LayoutKind.Sequential)>
     Friend Structure RStart
         <MarshalAs(UnmanagedType.Bool)>

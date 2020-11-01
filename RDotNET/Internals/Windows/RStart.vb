@@ -2,7 +2,7 @@
 Imports System.Runtime.InteropServices
 Imports UnixRStruct = RDotNet.Internals.Unix.RStart
 
-Namespace RDotNet.Internals.Windows
+Namespace Internals.Windows
     <StructLayout(LayoutKind.Sequential)>
     Friend Structure RStart
         Friend Common As UnixRStruct

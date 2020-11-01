@@ -2,7 +2,7 @@
 Imports System
 Imports System.IO
 
-Namespace RDotNet.Devices
+Namespace Devices
     ''' <summary>
     ''' The default IO device, using the System.Console
     ''' </summary>

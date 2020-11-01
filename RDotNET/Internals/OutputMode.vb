@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace RDotNet.Internals
+Namespace Internals
     ''' <summary>
     ''' Specifies output mode.
     ''' </summary>

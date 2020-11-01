@@ -1,7 +1,7 @@
 ﻿Imports RDotNet.Internals
 Imports System
 
-Namespace RDotNet.Devices
+Namespace Devices
     ''' <summary>
     ''' A sink with (almost) no effect, similar in purpose to /dev/null
     ''' </summary>

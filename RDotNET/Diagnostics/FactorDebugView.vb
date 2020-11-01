@@ -1,7 +1,7 @@
 ﻿Imports System.Diagnostics
 Imports System.Linq
 
-Namespace RDotNet.Diagnostics
+Namespace Diagnostics
     Friend Class FactorDebugView
         Private ReadOnly factor As Factor
 

@@ -5,7 +5,7 @@ Imports System
 Imports System.Runtime.InteropServices
 Imports System.Text
 
-Namespace RDotNet.Devices
+Namespace Devices
     Friend Class CharacterDeviceAdapter
         Implements IDisposable
         ''' <summary>

@@ -1,5 +1,5 @@
 ﻿
-Namespace RDotNet.NativeLibrary
+Namespace NativeLibrary
     ''' <summary> Interface for registry keys.</summary>
     Public Interface IRegistryKey
         ''' <summary> Gets sub key names.</summary>
